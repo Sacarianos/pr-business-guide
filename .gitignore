@@ -1,20 +1,14 @@
 # dependencies
 node_modules/
-.pnpm-store/
 
 # build output
 dist/
 .astro/
-.output/
 
-# secrets — the OpenRouter key never lands in the repo
+# secrets
 .env
 .env.*
 !.env.example
-.dev.vars
-
-# cloudflare
-.wrangler/
 
 # editors / os
 .DS_Store

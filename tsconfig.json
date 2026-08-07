@@ -1,0 +1,14 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*.ts", "**/*.astro"],
+  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    // The test suite runs through Node's native type-stripping rather than a
+    // build step, so nothing here may emit or rewrite syntax. `erasableSyntaxOnly`
+    // makes the compiler reject the constructs Node cannot strip (enums,
+    // parameter properties, namespaces) at typecheck time instead of at runtime.
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+    "noEmit": true
+  }
+}

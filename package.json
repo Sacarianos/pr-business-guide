@@ -1,0 +1,27 @@
+{
+  "name": "cud-guia",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Guía de Apertura de Negocios en Puerto Rico — site, content, and research",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "test": "node --test \"test/**/*.test.ts\""
+  },
+  "allowScripts": {
+    "esbuild": false
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^24.13.3",
+    "astro": "^7.2.0",
+    "typescript": "^6.0.3"
+  }
+}
