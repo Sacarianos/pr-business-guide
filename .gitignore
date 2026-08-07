@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build output
+dist/
+.astro/
+.output/
+
+# secrets — the OpenRouter key never lands in the repo
+.env
+.env.*
+!.env.example
+.dev.vars
+
+# cloudflare
+.wrangler/
+
+# editors / os
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json

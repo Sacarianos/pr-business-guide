@@ -1,0 +1,3 @@
+# Normalize to LF in the repository. Content is YAML and Markdown consumed by
+# Astro builds and a Cloudflare Worker; CRLF has no business in either.
+* text=auto eol=lf
