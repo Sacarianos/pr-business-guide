@@ -1,4 +1,4 @@
-# cud-guia
+# PR Business Guide
 
 Guía de Apertura de Negocios en Puerto Rico — the site, the content, and the research behind both.
 
