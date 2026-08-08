@@ -14,6 +14,7 @@ import {
   type Answers,
   type Content,
 } from '../lib/decision-tree.ts';
+import { sourcingLabel } from '../lib/sourcing-label.ts';
 
 const dataEl = document.getElementById('tool-content');
 if (!dataEl?.textContent) throw new Error('tool.ts: #tool-content is missing');
@@ -114,9 +115,7 @@ function render(): void {
   const patenteValue = patente ? (patente.amount === 0 ? '$0' : formatMoney(patente.amount)) : '—';
   const patenteMark =
     patente && patente.sourcing !== 'primary'
-      ? `<span class="mark mark-${patente.sourcing}">${
-          patente.sourcing === 'secondary' ? 'sin confirmar' : 'sin verificar'
-        }</span>`
+      ? `<span class="mark mark-${patente.sourcing}">${sourcingLabel(patente.sourcing)}</span>`
       : '';
 
   glanceEl!.innerHTML = `

@@ -33,6 +33,7 @@ export const claimFields = {
     })
     .optional(),
 };
+export type Sourcing = z.infer<typeof claimFields.sourcing>;
 
 export const stepSchema = z.object({
   title: bilingual,
@@ -126,6 +127,10 @@ export type GapData = z.infer<typeof gapSchema>;
 // only ever show the one branch the reader already picked — this is the
 // side-by-side a reader needs *before* answering that question.
 export const entityFormSchema = z.object({
+  // Reading order for the comparison table (least to most structure), same
+  // reason questionSchema carries one: content/entities.yaml's key order
+  // isn't guaranteed to survive the YAML loader.
+  order: z.number().int(),
   name: bilingual,
   liability: bilingual,
   filing: bilingual,

@@ -6,6 +6,13 @@
 # docs/research/starting-a-business-in-puerto-rico.md, "1. Choose and form
 # the legal entity".
 #
+# Keyed `sole`, not `dba`, to match the vocabulary the rest of the codebase
+# already uses for this entity type — `Answers['entity']` in
+# src/lib/decision-tree.ts and the `entity-sole-proprietor` step id in
+# content/steps.yaml. `order` fixes the table's reading order (least to most
+# structure) independent of the YAML loader's key order, same reason
+# content/questions.yaml carries one.
+#
 # `sourcing` on `llc` and `corp` deliberately mirrors the `unverified` mark
 # already on their matching steps (`entity-organize-llc`,
 # `entity-incorporate-corp`) rather than the `primary` a reader might expect
@@ -17,7 +24,8 @@
 # of the two (consistent with the two steps this table summarizes), and
 # `formationCost` says which half is the open question.
 
-dba:
+sole:
+  order: 1
   name:
     es: "Individuo (DBA)"
     en: "Sole proprietor (DBA)"
@@ -48,6 +56,7 @@ dba:
   sourcing: primary
 
 llc:
+  order: 2
   name:
     es: "LLC (Compañía de Responsabilidad Limitada)"
     en: "LLC"
@@ -70,10 +79,12 @@ llc:
   annualObligation:
     es: >-
       $150/año antes del 15 de abril, confirmado en dos portales .pr.gov.
-      Desde 2025 es solo el pago — ya no exige informe anual.
+      <b>Nunca ha exigido informe anual</b> — solo el pago (a diferencia de
+      la corporación, que sí lo exigía antes de 2025).
     en: >-
-      $150/yr due before April 15, confirmed on two .pr.gov portals. Since
-      2025 it's payment only — no annual report is required anymore.
+      $150/yr due before April 15, confirmed on two .pr.gov portals.
+      <b>Never required an annual report</b> — only the fee (unlike the
+      corporation, which did require one before 2025).
   note:
     es: >-
       La elección de clasificación contributiva en PR es <b>aparte de la
@@ -87,6 +98,7 @@ llc:
   sourcing: unverified
 
 corp:
+  order: 3
   name:
     es: "Corporación"
     en: "Corporation"

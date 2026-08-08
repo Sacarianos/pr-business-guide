@@ -43,6 +43,7 @@ const validIncentive = {
 };
 
 const validEntity = {
+  order: 1,
   name: es_en,
   liability: es_en,
   filing: es_en,
