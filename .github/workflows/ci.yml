@@ -1,0 +1,70 @@
+# CI was deliberately absent from the backlog — the deadline call was to
+# spend the time on content and the agent rather than on scaffolding. It
+# earns its place now for two reasons that did not hold when that call was
+# made: there is a real suite to protect, and two of this repository's
+# stated invariants are otherwise only claims.
+#
+#   1. `--ignore-scripts` below is the enforcement of `allowScripts` in
+#      package.json. That field is documentation — no lavamoat, nothing
+#      reads it — so README's claim that "the build, typecheck, and test
+#      suite all pass from a clean install with the script denied" is
+#      untested anywhere else. Here it either holds or the run goes red.
+#   2. The 22.18.0 entry in the matrix is the exact floor `engines.node`
+#      declares. test/toolchain.test.ts exists to guard that floor, but it
+#      can only ever assert about the Node it happens to be running on; the
+#      matrix is what actually runs it on the floor. Below 22.18 the suite
+#      does not fail an assertion, it fails to load — so a regression here
+#      would otherwise surface as an unrelated-looking crash on a
+#      contributor's machine.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A superseded push has nothing useful left to say.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      # Both entries matter on their own, so let a failure on one still
+      # report the other rather than cancelling it.
+      fail-fast: false
+      matrix:
+        node-version:
+          - '22.18.0' # the declared floor — see note 2 above
+          - '24' # current, where development actually happens
+    name: node ${{ matrix.node-version }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      # `npm ci` for the lockfile, `--ignore-scripts` for the decision
+      # recorded in package.json's `allowScripts`. esbuild is the only
+      # dependency that asks to run one, and it does not need to — its
+      # platform binary arrives through optional dependencies.
+      - name: Install with no dependency scripts
+        run: npm ci --ignore-scripts
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # `pretest` builds first, so this covers the static build and the
+      # published content.json too: the suite loads dist/content.json as its
+      # fixture, which is what 0001 means by "the build is validated by
+      # being used". A build failure fails the tests, by design.
+      - name: Test
+        run: npm test
