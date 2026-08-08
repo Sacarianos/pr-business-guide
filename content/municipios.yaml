@@ -1,4 +1,4 @@
-# Municipal patente comparison (schema: src/content.config.ts). Populated by
+# Municipal patente comparison (schema: src/lib/content-schema.ts). Populated by
 # G-03; the estimator that consumes this is G-09.
 #
 # Rates are on business volume attributable to the municipality (Ley 107-2020,

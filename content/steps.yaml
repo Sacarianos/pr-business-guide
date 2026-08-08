@@ -1,4 +1,4 @@
-# Sequence steps (schema: src/content.config.ts). Populated by G-03 from
+# Sequence steps (schema: src/lib/content-schema.ts). Populated by G-03 from
 # docs/research/starting-a-business-in-puerto-rico.md and
 # design/handoff/Guia Negocios PR.dc.html.
 #
@@ -8,7 +8,7 @@
 # that never had a task shape, like "the Reglamento Conjunto is legally
 # unstable") is folded in here too, as steps carrying `severity: warn` or
 # `stop` rather than a literal action — the schema note in
-# src/content.config.ts already anticipates steps being "actions, artifacts,
+# src/lib/content-schema.ts already anticipates steps being "actions, artifacts,
 # recurring duties, decisions."
 #
 # `sourcing` extracts the handoff's inline vt() badges into the structured
@@ -497,6 +497,37 @@ crim-personal-property-return:
       it must be requested</b>. This figure comes from the Colegio de
       CPA de Puerto Rico and was not verified against the statute text.
       Late filing penalties run 5% per 30-day period, capped at 25%.
+  recurring: true
+  sourcing: secondary
+
+# Same duty as above, for readers whose volume already puts the $50,000
+# exemption out of reach. Two entries rather than one conditional
+# paragraph, following the same pattern as the entity and IVU branches:
+# which one a reader sees is decision-tree logic (G-06), keyed on the
+# ≤$150,000 net-volume test.
+crim-personal-property-return-above-ceiling:
+  title:
+    es: "Planilla de bienes muebles · CRIM"
+    en: "Personal property return · CRIM"
+  agency: { es: "CRIM", en: "CRIM" }
+  timing: { es: "15 de mayo, anual", en: "15 May, annually" }
+  cost: { es: "Según tasación", en: "By assessed value" }
+  note:
+    es: >-
+      Cubre inventario, maquinaria, equipo, muebles y enseres — por eso
+      le pega mucho más duro al retail y a los restaurantes que a un
+      consultor con una laptop. <b>Con el volumen que indicaste quedas
+      sobre el techo de $150,000</b>, así que la exención de $50,000 de
+      tasación no aplica; hay que presupuestar la contribución completa
+      sobre lo tasado. Las penalidades por radicar tarde corren a 5% por
+      cada período de 30 días, con tope de 25%.
+    en: >-
+      Covers inventory, machinery, equipment, furniture and fixtures —
+      which is why this bites retail and food service far harder than a
+      consultant with a laptop. <b>At the volume you gave, you are above
+      the $150,000 ceiling</b>, so the $50,000 valuation exemption does
+      not apply — budget for the full assessed-value tax. Late filing
+      penalties run 5% per 30-day period, capped at 25%.
   recurring: true
   sourcing: secondary
 

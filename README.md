@@ -24,12 +24,19 @@ valuable content on the page, not an exception to be smoothed over.
 ## Layout
 
 ```
-content/          content collections (content/*.yaml), validated by src/content.config.ts
+content/          content collections (content/*.yaml), validated by src/lib/content-schema.ts
 docs/research/    the research document
 issues/           the tracker — 0001 is the spec of record, BACKLOG.md decomposes it
-src/pages/        Astro pages
-test/             node:test suites, run with no build step
+src/lib/          the schemas and the decision-tree module — no DOM, no network, no clock
+src/pages/        Astro pages, plus content.json as a published static asset
+src/scripts/      the one client-side island, hand-written and framework-free
+test/             node:test suites, run against the built content.json
 ```
+
+The schemas live in `src/lib/content-schema.ts` as plain Zod rather than inside
+`src/content.config.ts`, which only wires them into Astro's collection loader. That split is what
+lets the test suite and the decision-tree module import them without pulling in the `astro:content`
+virtual module.
 
 ## Working on it
 
@@ -41,21 +48,25 @@ Requires Node ≥ 22.18 (see `engines`). Install with `npm install`.
 | `npm run build` | Static build into `dist/` |
 | `npm run preview` | Serve the built output |
 | `npm run typecheck` | `astro check` over `.astro` and `.ts` |
-| `npm test` | `node --test` over `test/**/*.test.ts` |
+| `npm test` | `astro build`, then `node --test` over `test/**/*.test.ts` |
 
 ### Why the test suite has no framework
 
 The spec settles two test seams, one per repository. This repository's is the `decision-tree` module: a
 pure function taking answers plus content and returning a result, with no DOM, no network, and no clock.
-A 44-assertion Node suite exists in the prior artifact and runs against exactly that interface; porting it
-here unchanged is [G-07](issues/BACKLOG.md), and it can only arrive unchanged if the runner stays plain
-`node:test`. Nothing in `test/` yet asserts guide behaviour — only the toolchain preconditions that port
-depends on.
+The suite runs against exactly that interface, and it stays plain `node:test` — no framework, no runner
+config, no transpile step for the test code itself.
 
-That dependency is also why `tsconfig.json` sets `erasableSyntaxOnly`, and why the Node floor is 22.18
-rather than the 22.12 Astro itself asks for: the suite runs TypeScript through Node's native
-type-stripping rather than a build step, which became the unflagged default on the 22.x line in 22.18.0.
-Below that, the suite does not fail an assertion — it fails to load.
+That is why `tsconfig.json` sets `erasableSyntaxOnly`, and why the Node floor is 22.18 rather than the
+22.12 Astro itself asks for: the suite runs TypeScript through Node's native type-stripping, which became
+the unflagged default on the 22.x line in 22.18.0. Below that, the suite does not fail an assertion — it
+fails to load.
+
+`npm test` does run `astro build` first, through `pretest`. That is not a build step for the tests; it is
+the fixture. The spec is deliberate that the content build is *not* a separate seam — "tests feed the real
+built `content.json` into Seam A as a fixture, so the build is validated by being used" — so the suite
+loads `dist/content.json`, the same artifact `cud-agente` fetches, rather than a hand-maintained copy that
+could drift from the YAML it claims to mirror.
 
 ### Why dependency install scripts are blocked
 
