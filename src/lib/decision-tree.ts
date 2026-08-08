@@ -88,6 +88,15 @@ export function hasEnoughAnswers(questions: Content['questions'], answers: Answe
 export type PatenteEstimate = {
   amount: number;
   why: Bilingual;
+  // Document provenance of the rate the estimate rests on, carried through
+  // from the municipio. G-09 is explicit that rates which could not be
+  // confirmed "must surface as uncertain rather than being rendered as
+  // plain numbers", and the number itself is the place a reader is most
+  // likely to take at face value — so the mark travels with it rather than
+  // being left for the caller to look up. `primary` on the statewide
+  // Art. 7.206 exemption, which rests on statute rather than on any
+  // municipal ordinance.
+  sourcing: MunicipioData['sourcing'];
 };
 
 const unconfirmedSuffix = (m: MunicipioData): Bilingual =>
@@ -97,6 +106,36 @@ const unconfirmedSuffix = (m: MunicipioData): Bilingual =>
         es: ' (tasa sin confirmar — ver la nota del municipio).',
         en: ' (unconfirmed rate — see the municipality note).',
       };
+
+// The shared tail of every percentage-based bracket, flat or tiered: apply
+// the rate, floor it at the municipio's statutory minimum, and say which
+// rate was used. Only the wording differs between the two, so they share
+// everything else rather than each carrying their own copy of the
+// arithmetic.
+function ratedEstimate(
+  percent: number,
+  volume: number,
+  m: MunicipioData,
+  bracket: 'flat' | 'tier',
+): PatenteEstimate {
+  const suffix = unconfirmedSuffix(m);
+  const floor = m.minimum ?? 25;
+  const pct = (percent * 100).toFixed(2);
+  return {
+    amount: Math.max(volume * percent, floor),
+    sourcing: m.sourcing,
+    why:
+      bracket === 'flat'
+        ? {
+            es: `Tasa ${pct}% (mínimo $${floor}).${suffix.es}`,
+            en: `Rate ${pct}% ($${floor} minimum).${suffix.en}`,
+          }
+        : {
+            es: `Escalón de ${m.name}: ${pct}% (mínimo $${floor}).${suffix.es}`,
+            en: `${m.name} tier: ${pct}% ($${floor} minimum).${suffix.en}`,
+          },
+  };
+}
 
 // Patente municipal estimator (G-09). Deliberately data-driven rather than
 // a per-municipality switch: content/municipios.yaml already models every
@@ -126,6 +165,7 @@ export function patente(
   if (volume <= 5000) {
     return {
       amount: 0,
+      sourcing: 'primary',
       why: {
         es: 'Volumen ≤ $5,000 — exento por el Art. 7.206.',
         en: 'Volume ≤ $5,000 — exempt under Art. 7.206.',
@@ -136,29 +176,19 @@ export function patente(
   if (!muniKey) return null;
   const m = municipios[muniKey];
   if (!m) return null;
-  const suffix = unconfirmedSuffix(m);
 
-  if (m.rate.type === 'flat') {
-    const floor = m.minimum ?? 25;
-    const amount = Math.max(volume * m.rate.percent, floor);
-    const pct = (m.rate.percent * 100).toFixed(2);
-    return {
-      amount,
-      why: {
-        es: `Tasa ${pct}% (mínimo $${floor}).${suffix.es}`,
-        en: `Rate ${pct}% ($${floor} minimum).${suffix.en}`,
-      },
-    };
-  }
+  if (m.rate.type === 'flat') return ratedEstimate(m.rate.percent, volume, m, 'flat');
 
   const tiers = m.rate.tiers;
   const index = tiers.findIndex((t) => t.upTo === null || volume <= t.upTo);
   const tier = tiers[index === -1 ? tiers.length - 1 : index]!;
 
   if (tier.percent === 0) {
+    const suffix = unconfirmedSuffix(m);
     if (index === 0) {
       return {
         amount: 0,
+        sourcing: m.sourcing,
         why: {
           es: `${m.name} exime este volumen.`,
           en: `${m.name} exempts this volume.`,
@@ -168,6 +198,7 @@ export function patente(
     const flat = m.minimum ?? 25;
     return {
       amount: flat,
+      sourcing: m.sourcing,
       why: {
         es: `${m.name} cobra $${flat} fijos en este tramo.${suffix.es}`,
         en: `${m.name} charges a flat $${flat} in this bracket.${suffix.en}`,
@@ -175,16 +206,7 @@ export function patente(
     };
   }
 
-  const floor = m.minimum ?? 25;
-  const amount = Math.max(volume * tier.percent, floor);
-  const pct = (tier.percent * 100).toFixed(2);
-  return {
-    amount,
-    why: {
-      es: `Escalón de ${m.name}: ${pct}% (mínimo $${floor}).${suffix.es}`,
-      en: `${m.name} tier: ${pct}% ($${floor} minimum).${suffix.en}`,
-    },
-  };
+  return ratedEstimate(tier.percent, volume, m, 'tier');
 }
 
 export function formatMoney(amount: number): string {
@@ -247,8 +269,17 @@ function stepIds(answers: Answers, municipio: MunicipioData | null): string[] {
   ids.push('patente-municipal');
   if (municipio && municipio.permits == null) ids.push('confirm-delegated-hierarchy');
 
+  // The $50,000 CRIM exemption turns on net volume ≤$150,000, so above
+  // that ceiling the reader gets the variant that says where they actually
+  // stand rather than a conditional they have to evaluate themselves. With
+  // volume unanswered the base entry is right: it states the test without
+  // claiming the reader passes it.
   if (answers.type === 'retail' || answers.type === 'food' || answers.type === 'mfg') {
-    ids.push('crim-personal-property-return');
+    ids.push(
+      answers.vol != null && answers.vol > 150_000
+        ? 'crim-personal-property-return-above-ceiling'
+        : 'crim-personal-property-return',
+    );
   }
 
   if (answers.vol != null && answers.vol > 3_000_000) ids.push('above-3m-obligations-change');
@@ -288,22 +319,45 @@ function incentiveIds(answers: Answers): string[] {
   return ids;
 }
 
-function withPatenteEstimate(s: StepResult, estimate: PatenteEstimate | null): StepResult {
-  if (!estimate) return s;
-  const yourEstimate =
-    estimate.amount === 0
-      ? { es: '$0', en: '$0' }
-      : {
-          es: `${formatMoney(estimate.amount)}/año en estado estable`,
-          en: `${formatMoney(estimate.amount)}/yr steady state`,
-        };
+// Fills in the two fields of the patente step that only become knowable
+// once a municipality and a volume are on the table: the cost, which the
+// content can only state as "by volume", and the agency, which the content
+// can only call "the municipality" (story 10 asks for the ambiguity to be
+// resolved, and `permits.delegated` is already loaded to resolve it).
+//
+// Both are plain bilingual data. The estimate's own prose (`why`), the
+// municipio's note, and the unconfirmed-rate mark deliberately do *not*
+// get spliced into `note` here — this module has no business emitting
+// markup (0001 puts it behind Seam A: "no DOM"), and everything the
+// renderer needs is already on `Result.patente` and `Result.municipio`.
+function withPatenteEstimate(
+  s: StepResult,
+  estimate: PatenteEstimate | null,
+  municipio: MunicipioData | null,
+): StepResult {
+  const agency = municipio
+    ? {
+        es: municipio.permits?.delegated
+          ? `Municipio de ${municipio.name} (autoridad delegada)`
+          : `Municipio de ${municipio.name}`,
+        en: municipio.permits?.delegated
+          ? `Municipality of ${municipio.name} (delegated authority)`
+          : `Municipality of ${municipio.name}`,
+      }
+    : s.agency;
+
+  if (!estimate) return { ...s, agency };
+
   return {
     ...s,
-    cost: yourEstimate,
-    note: {
-      es: `${s.note.es}<br><b>Tu estimado: ${estimate.amount === 0 ? '$0' : formatMoney(estimate.amount) + ' al año'}.</b> ${estimate.why.es}`,
-      en: `${s.note.en}<br><b>Your estimate: ${estimate.amount === 0 ? '$0' : formatMoney(estimate.amount) + ' per year'}.</b> ${estimate.why.en}`,
-    },
+    agency,
+    cost:
+      estimate.amount === 0
+        ? { es: '$0', en: '$0' }
+        : {
+            es: `${formatMoney(estimate.amount)}/año en estado estable`,
+            en: `${formatMoney(estimate.amount)}/yr steady state`,
+          },
   };
 }
 
@@ -313,7 +367,7 @@ export function buildSequence(answers: Answers, content: Content): Result {
 
   const steps = stepIds(answers, municipio).map((id) => {
     const s = step(content, id);
-    return id === 'patente-municipal' ? withPatenteEstimate(s, estimate) : s;
+    return id === 'patente-municipal' ? withPatenteEstimate(s, estimate, municipio) : s;
   });
 
   const incentives = incentiveIds(answers).map((id) => incentive(content, id));

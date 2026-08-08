@@ -44,7 +44,13 @@ function readAnswer(id: string): string | number | null {
 }
 
 function writeAnswer(id: string, value: string | number | null): void {
-  (answers as unknown as Record<string, string | number | null>)[id] = value;
+  const store = answers as unknown as Record<string, string | number | null>;
+  store[id] = value;
+  // `driving` is only ever asked once hiring === 'yes'. Hiding it is not
+  // enough: an answer left behind from an earlier 'yes' would silently
+  // re-apply — and re-add the chauffeur's-insurance step — the moment the
+  // reader switched back, without them ever seeing the question again.
+  if (id === 'hiring' && value !== 'yes') store.driving = null;
   render();
 }
 
@@ -99,11 +105,19 @@ function render(): void {
   resultsEl!.hidden = false;
 
   const result = buildSequence(answers, content);
-  const patenteValue = result.patente
-    ? result.patente.amount === 0
-      ? '$0'
-      : formatMoney(result.patente.amount)
-    : '—';
+  const { patente, municipio } = result;
+
+  // G-09: a rate that could not be confirmed "must surface as uncertain
+  // rather than being rendered as plain numbers" — so the mark sits on the
+  // figure itself, which is what a reader takes at face value, not only in
+  // the prose underneath it.
+  const patenteValue = patente ? (patente.amount === 0 ? '$0' : formatMoney(patente.amount)) : '—';
+  const patenteMark =
+    patente && patente.sourcing !== 'primary'
+      ? `<span class="mark mark-${patente.sourcing}">${
+          patente.sourcing === 'secondary' ? 'sin confirmar' : 'sin verificar'
+        }</span>`
+      : '';
 
   glanceEl!.innerHTML = `
     <div class="glance-cell">
@@ -116,7 +130,13 @@ function render(): void {
     </div>
     <div class="glance-cell">
       <span class="glance-label">Patente estimada</span>
-      <span class="glance-value">${patenteValue}</span>
+      <span class="glance-value">${patenteValue} ${patenteMark}</span>
+      ${patente ? `<span class="glance-sub">${escapeHtml(patente.why.es)}</span>` : ''}
+      ${
+        municipio?.note
+          ? `<span class="glance-sub glance-muni-note">${municipio.note.es}</span>`
+          : ''
+      }
     </div>
   `;
 

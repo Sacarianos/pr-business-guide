@@ -1,5 +1,5 @@
 # Applicable incentives, e.g. the Act 60 relevance gate (schema:
-# src/content.config.ts). Populated by G-03; gating logic is G-14.
+# src/lib/content-schema.ts). Populated by G-03; gating logic is G-14.
 #
 # Which of these apply to a given reader depends on their answers (entity,
 # type, exportsvc, young) — that gating is G-14/G-06, not content. This is the

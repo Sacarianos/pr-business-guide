@@ -102,7 +102,7 @@ describe('seven scenarios', () => {
     assert.ok(ids.includes('reglamento-conjunto-legally-unstable'));
     assert.ok(ids.includes('sanitary-license'));
     assert.ok(ids.includes('food-handler-certification'));
-    assert.ok(ids.includes('crim-personal-property-return'));
+    assert.ok(ids.includes('crim-personal-property-return'), '$50k volume is under the CRIM ceiling');
     assert.ok(ids.includes('drivers-social-security'), 'driving === yes');
     assert.ok(ids.includes('christmas-bonus-and-21-employee-cliff'));
     assert.ok(ids.includes('vacation-sick-leave-accrual'));
@@ -137,19 +137,35 @@ describe('seven scenarios', () => {
     const ids = stepIds(r);
     assert.ok(ids.includes('entity-incorporate-corp'));
     assert.ok(!ids.includes('construction-permit'), 'buildout === no');
-    assert.ok(ids.includes('crim-personal-property-return'));
     assert.ok(ids.includes('above-3m-obligations-change'));
     assert.ok(ids.includes('cfse-individual-track'));
     assert.ok(ids.includes('ivu-monthly-general'));
+
+    // At $3.5M the $50,000 CRIM exemption is out of reach, so the reader
+    // gets the variant that says so rather than the conditional one.
+    assert.ok(ids.includes('crim-personal-property-return-above-ceiling'));
+    assert.ok(!ids.includes('crim-personal-property-return'));
+    const crim = r.steps.find((s) => s.id === 'crim-personal-property-return-above-ceiling')!;
+    assert.match(crim.note.es, /sobre el techo de \$150,000/);
+    assert.match(crim.note.en, /above the \$150,000 ceiling/);
 
     const incIds = incentiveIds(r);
     assert.ok(incIds.includes('act60-not-applicable'));
     assert.ok(!incIds.includes('pridco-industrial-space'), 'retail is not mfg');
 
-    // Ponce is `secondary`-sourced — the estimate must say so.
+    // Ponce is `secondary`-sourced — the estimate must carry that mark, in
+    // the structured field as well as in the prose, so the UI can flag the
+    // number itself rather than only the sentence under it (G-09).
     assert.equal(r.patente?.amount, Math.max(3_500_000 * 0.005, 25));
+    assert.equal(r.patente?.sourcing, 'secondary');
     assert.match(r.patente!.why.es, /sin confirmar/);
     assert.match(r.patente!.why.en, /unconfirmed/);
+
+    // Story 10: the agency is resolved from the municipality, not left as
+    // the content's generic "Municipio".
+    const patenteStep = r.steps.find((s) => s.id === 'patente-municipal')!;
+    assert.match(patenteStep.agency.es, /Ponce/);
+    assert.match(patenteStep.agency.en, /Ponce/);
   });
 
   test('4. mfg, undecided entity, mobile premises, Camuy under the statewide $5,000 floor', () => {
@@ -256,6 +272,17 @@ describe('patente() — tier and boundary behavior', () => {
   test('the statewide $5,000 exemption applies at the boundary regardless of municipality', () => {
     assert.equal(patente('sanjuan', 5000, content.municipios)!.amount, 0);
     assert.equal(patente('bayamon', 5000, content.municipios)!.amount, 0);
+  });
+
+  test('every estimate carries the sourcing of the rate it rests on', () => {
+    // `other` is the statutory-ceiling fallback, not any real municipality's
+    // confirmed rate — the loudest mark in the set, and the one most likely
+    // to be mistaken for a real figure.
+    assert.equal(patente('other', 20000, content.municipios)!.sourcing, 'unverified');
+    assert.equal(patente('ponce', 20000, content.municipios)!.sourcing, 'secondary');
+    assert.equal(patente('bayamon', 20000, content.municipios)!.sourcing, 'primary');
+    // The statewide exemption rests on statute, not on any ordinance.
+    assert.equal(patente('other', 1000, content.municipios)!.sourcing, 'primary');
   });
 
   test("San Juan's own exemption extends to $12,500, past the statewide floor", () => {

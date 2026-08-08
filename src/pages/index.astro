@@ -324,6 +324,34 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     font-size: 26px;
     font-variant-numeric: tabular-nums;
   }
+  .glance-sub {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--ink-3);
+  }
+  .glance-muni-note {
+    font-style: italic;
+  }
+  /* Sourcing marks (G-15's sourcing axis). `unverified` is the loudest of
+     the two shown here; `primary` gets no mark at all, since an unmarked
+     figure is the confirmed default. */
+  .mark {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    vertical-align: middle;
+    white-space: nowrap;
+    padding: 2px 5px;
+    border: 1px solid currentColor;
+  }
+  .mark-secondary {
+    color: var(--ambar);
+  }
+  .mark-unverified {
+    color: var(--derogado);
+  }
 
   h2 {
     font-family: 'Libre Franklin', sans-serif;

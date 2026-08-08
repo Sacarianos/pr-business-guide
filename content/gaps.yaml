@@ -1,4 +1,4 @@
-# "What I could not verify" (schema: src/content.config.ts). Populated by
+# "What I could not verify" (schema: src/lib/content-schema.ts). Populated by
 # G-03; rendered permanently by G-16.
 
 ogpe-fee-schedule:

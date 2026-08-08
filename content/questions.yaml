@@ -1,4 +1,4 @@
-# Decision-tree questions (schema: src/content.config.ts). Populated by G-03;
+# Decision-tree questions (schema: src/lib/content-schema.ts). Populated by G-03;
 # branching between questions is decision-tree logic (G-06/G-08), not content.
 #
 # Keys match the answer-state keys the decision tree consumes (S.type, S.entity,
