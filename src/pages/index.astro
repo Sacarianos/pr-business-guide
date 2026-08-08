@@ -1,10 +1,11 @@
 ---
 // The ten-question flow (G-08) and the patente estimator it surfaces
-// (G-09), followed by the process overview diagram (G-10). Content is
-// server-rendered from content/*.yaml — only the question panel needs
-// client JS, wired up in src/scripts/tool.ts. Step cards and the municipal
-// table (G-11/G-12) are later tickets; this page currently ends where the
-// diagram's figcaption does.
+// (G-09), followed by the process overview diagram (G-10) and the step
+// cards' agency/timing/cost/blocks fields (G-11, rendered client-side in
+// src/scripts/tool.ts). Content is server-rendered from content/*.yaml —
+// only the question panel needs client JS. The municipal comparison table
+// (G-12) is a later ticket; this page currently ends where the diagram's
+// figcaption does.
 import { loadContent } from '../lib/load-content';
 import ProcessDiagram from '../components/ProcessDiagram.astro';
 
@@ -336,40 +337,46 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     border-bottom: 1px solid var(--rule);
     margin-bottom: 32px;
   }
-  .glance-cell {
+  /* `:global()` below: everything rendered inside `[data-glance]`,
+     `[data-sequence]`, and `[data-incentives]` is built client-side via
+     `innerHTML` in src/scripts/tool.ts, so Astro never sees these elements
+     in the template and never stamps them with the scoping attribute this
+     component's other rules rely on — an unscoped selector here is a
+     no-op, not a mistake. */
+  :global(.glance-cell) {
     padding: 14px 16px;
     display: flex;
     flex-direction: column;
     gap: 4px;
   }
-  .glance-cell:not(:first-child) {
+  :global(.glance-cell:not(:first-child)) {
     border-left: 1px solid var(--rule-soft);
   }
-  .glance-label {
+  :global(.glance-label) {
     font-family: 'IBM Plex Mono', monospace;
     text-transform: uppercase;
     font-size: 9.5px;
     letter-spacing: 0.6px;
     color: var(--ink-3);
   }
-  .glance-value {
+  :global(.glance-value) {
     font-family: 'Libre Franklin', sans-serif;
     font-weight: 800;
     font-size: 26px;
     font-variant-numeric: tabular-nums;
   }
-  .glance-sub {
+  :global(.glance-sub) {
     font-size: 12.5px;
     line-height: 1.45;
     color: var(--ink-3);
   }
-  .glance-muni-note {
+  :global(.glance-muni-note) {
     font-style: italic;
   }
   /* Sourcing marks (G-15's sourcing axis). `unverified` is the loudest of
      the two shown here; `primary` gets no mark at all, since an unmarked
      figure is the confirmed default. */
-  .mark {
+  :global(.mark) {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 9.5px;
     font-weight: 500;
@@ -380,10 +387,10 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     padding: 2px 5px;
     border: 1px solid currentColor;
   }
-  .mark-secondary {
+  :global(.mark-secondary) {
     color: var(--ambar);
   }
-  .mark-unverified {
+  :global(.mark-unverified) {
     color: var(--derogado);
   }
 
@@ -400,7 +407,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     margin: 0 0 40px;
     padding: 0;
   }
-  .step {
+  :global(.step) {
     display: flex;
     gap: 12px;
     padding: 16px 0;
@@ -408,40 +415,49 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     border-left: 2px solid transparent;
     padding-left: 10px;
   }
-  .step[data-severity='key'] {
+  :global(.step[data-severity='key']) {
     border-left-color: var(--sello);
   }
-  .step[data-severity='warn'] {
+  :global(.step[data-severity='warn']) {
     border-left-color: var(--ambar);
   }
-  .step[data-severity='stop'] {
+  :global(.step[data-severity='stop']) {
     border-left-color: var(--derogado);
   }
-  .step-num {
+  :global(.step-num) {
     flex: 0 0 30px;
     font-family: 'IBM Plex Mono', monospace;
     font-weight: 700;
     color: var(--sello);
   }
-  .step-title {
+  :global(.step-title) {
     font-family: 'Libre Franklin', sans-serif;
     font-size: 16px;
     font-weight: 700;
     margin: 0 0 6px;
   }
-  .step-meta {
+  :global(.step-meta) {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 10.5px;
     color: var(--ink-3);
     margin: 0 0 6px;
   }
-  .step-note {
+  :global(.step-blocks) {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--sello);
+    margin: 0 0 6px;
+  }
+  :global(.step-blocks b) {
+    font-weight: 600;
+  }
+  :global(.step-note) {
     font-size: 15.5px;
     line-height: 1.55;
     color: var(--ink-2);
     margin: 0;
   }
-  .step-note :global(a) {
+  :global(.step-note a) {
     color: var(--sello);
   }
 
@@ -450,16 +466,16 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     gap: 12px;
     margin-bottom: 24px;
   }
-  .incentive-card {
+  :global(.incentive-card) {
     border-left: 2px solid var(--verificado);
     padding: 4px 0 4px 12px;
   }
-  .incentive-card h4 {
+  :global(.incentive-card h4) {
     font-family: 'Libre Franklin', sans-serif;
     font-size: 15px;
     margin: 0 0 4px;
   }
-  .incentive-card p {
+  :global(.incentive-card p) {
     font-size: 14.5px;
     color: var(--ink-2);
     margin: 0;

@@ -40,6 +40,15 @@ export const stepSchema = z.object({
   timing: bilingual,
   cost: bilingual,
   note: bilingual,
+  // What this step gates, in plain prose (G-11, story 11/12 — e.g. Registro
+  // de Comerciantes must exist before the Permiso Único application). Kept
+  // as free bilingual text rather than a step-id reference: the handoff's
+  // blocking relationships are few, already stated in each step's own
+  // `note`, and named loosely enough ("todo lo que sigue") that a real
+  // dependency graph would be manufacturing structure the content doesn't
+  // have. This field exists so the one or two blocking steps a reader must
+  // not skip are scannable on the card itself, not buried in a paragraph.
+  blocks: bilingual.optional(),
   // `key` = nothing else can proceed without this step; `warn` = worth a
   // reader's attention; `stop` = hard blocker. Absent means routine.
   severity: z.enum(['key', 'warn', 'stop']).optional(),

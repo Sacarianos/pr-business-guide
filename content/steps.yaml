@@ -140,6 +140,9 @@ entity-undecided:
       owner's home. If the business carries inventory, signs a lease,
       or hires anyone, the wall is usually worth it.
   severity: warn
+  blocks:
+    es: "Todos los pasos siguientes"
+    en: "Every step that follows"
   sourcing: primary
 
 # ---- Federal / tax registration ----
@@ -201,6 +204,9 @@ merchant-registration:
       circular; secondary sources say free, but no government page
       affirmatively states $0.
   severity: key
+  blocks:
+    es: "El Permiso Único y la póliza del CFSE"
+    en: "The Permiso Único and the CFSE policy"
   sourcing: primary
 
 # ---- Premises: commercial ----
@@ -229,6 +235,9 @@ zoning-verification:
       mistake in this whole process — and the one that cannot be undone
       by paperwork.
   severity: key
+  blocks:
+    es: "Firmar el lease"
+    en: "Signing the lease"
   sourcing: primary
 
 construction-permit:
@@ -252,6 +261,9 @@ construction-permit:
       record. This track was not researched in depth — budget generously
       and get a professional estimate early.
   severity: warn
+  blocks:
+    es: "El permiso de uso y el Permiso Único"
+    en: "The use permit and the Permiso Único"
   sourcing: unverified
 
 permiso-unico:
@@ -294,6 +306,9 @@ permiso-unico:
       schedule could not be located on any primary source, and the
       renewal interval is genuinely unknown.
   severity: key
+  blocks:
+    es: "Abrir el negocio"
+    en: "Opening the business"
   sourcing: unverified
 
 fire-inspection:
