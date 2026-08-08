@@ -148,6 +148,7 @@ function render(): void {
       <div class="step-body">
         <h4 class="step-title">${escapeHtml(s.title.es)}</h4>
         <p class="step-meta">${escapeHtml(s.agency.es)} · ${escapeHtml(s.timing.es)} · ${escapeHtml(s.cost.es)}</p>
+        ${s.blocks ? `<p class="step-blocks">→ Bloquea: <b>${escapeHtml(s.blocks.es)}</b></p>` : ''}
         <p class="step-note">${s.note.es}</p>
       </div>
     </li>`,
