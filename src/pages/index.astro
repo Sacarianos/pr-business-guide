@@ -1,11 +1,12 @@
 ---
 // The ten-question flow (G-08) and the patente estimator it surfaces
-// (G-09). Content is server-rendered from content/*.yaml — only the
-// question panel needs client JS, wired up in src/scripts/tool.ts. The
-// process diagram, step cards, and municipal table (G-10/G-11/G-12) are
-// later tickets; this page currently ends where the tool's own results
-// list does.
+// (G-09), followed by the process overview diagram (G-10). Content is
+// server-rendered from content/*.yaml — only the question panel needs
+// client JS, wired up in src/scripts/tool.ts. Step cards and the municipal
+// table (G-11/G-12) are later tickets; this page currently ends where the
+// diagram's figcaption does.
 import { loadContent } from '../lib/load-content';
+import ProcessDiagram from '../components/ProcessDiagram.astro';
 
 const content = await loadContent();
 
@@ -95,6 +96,30 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
         </div>
       </div>
     </main>
+
+    <section class="diagram-section">
+      <div class="section-head">
+        <span class="section-num">2</span>
+        <h2>La forma del proceso</h2>
+      </div>
+      <p class="section-dek">
+        Dos cadenas corren en paralelo y terminan en un solo permiso. La de arriba es papeleo:
+        días, y casi gratis. La de abajo es la que se lleva los meses.
+      </p>
+      <figure class="diagram-figure">
+        <div class="diagram-frame">
+          <ProcessDiagram />
+        </div>
+        <figcaption>
+          Las dos cadenas son independientes hasta que se encuentran. Lo que la gente hace mal es
+          la flecha marcada en ámbar: el Certificado de Registro de Comerciante es un
+          <em>insumo</em> de la solicitud de permiso, así que quien deja Hacienda para el final
+          descubre que no puede radicar. Las obligaciones municipales y patronales cuelgan del
+          mismo punto pero no bloquean nada — la patente se notifica <em>después</em> de empezar,
+          no antes.
+        </figcaption>
+      </figure>
+    </section>
 
     <script type="application/json" id="tool-content" set:html={contentJson} is:inline />
     <script src="../scripts/tool.ts"></script>
@@ -429,5 +454,49 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     font-size: 14.5px;
     color: var(--ink-2);
     margin: 0;
+  }
+
+  .diagram-section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 54px 24px 60px;
+    border-top: 1px solid var(--rule);
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+  .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--sello);
+    letter-spacing: -0.02em;
+  }
+  .section-head h2 {
+    margin: 0;
+  }
+  .section-dek {
+    color: var(--ink-2);
+    margin: 0 0 30px 27px;
+    max-width: 66ch;
+  }
+  .diagram-figure {
+    margin: 0;
+  }
+  .diagram-frame {
+    overflow-x: auto;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 20px;
+  }
+  .diagram-figure figcaption {
+    font-size: 15.5px;
+    color: var(--ink-2);
+    margin-top: 16px;
+    max-width: 76ch;
+    line-height: 1.55;
   }
 </style>
