@@ -24,6 +24,7 @@ valuable content on the page, not an exception to be smoothed over.
 ## Layout
 
 ```
+content/          content collections (content/*.yaml), validated by src/content.config.ts
 docs/research/    the research document
 issues/           the tracker — 0001 is the spec of record, BACKLOG.md decomposes it
 src/pages/        Astro pages
