@@ -16,6 +16,7 @@ import {
   municipioSchema,
   incentiveSchema,
   gapSchema,
+  entityFormSchema,
 } from '../src/lib/content-schema.ts';
 
 const es_en = { es: 'es', en: 'en' };
@@ -41,6 +42,16 @@ const validIncentive = {
   sourcing: 'primary',
 };
 
+const validEntity = {
+  name: es_en,
+  liability: es_en,
+  filing: es_en,
+  defaultTax: es_en,
+  formationCost: es_en,
+  annualObligation: es_en,
+  sourcing: 'primary',
+};
+
 test('a step missing `sourcing` fails validation', () => {
   const { sourcing, ...withoutSourcing } = validStep;
   assert.throws(() => stepSchema.parse(withoutSourcing));
@@ -57,6 +68,12 @@ test('an incentive missing `sourcing` fails validation', () => {
   const { sourcing, ...withoutSourcing } = validIncentive;
   assert.throws(() => incentiveSchema.parse(withoutSourcing));
   assert.doesNotThrow(() => incentiveSchema.parse(validIncentive));
+});
+
+test('an entity form missing `sourcing` fails validation', () => {
+  const { sourcing, ...withoutSourcing } = validEntity;
+  assert.throws(() => entityFormSchema.parse(withoutSourcing));
+  assert.doesNotThrow(() => entityFormSchema.parse(validEntity));
 });
 
 test('`sourcing` rejects values outside primary/secondary/unverified', () => {

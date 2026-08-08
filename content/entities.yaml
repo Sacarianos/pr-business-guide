@@ -1,0 +1,121 @@
+# Entity comparison — DBA vs LLC vs corporación (schema:
+# src/lib/content-schema.ts, entityFormSchema). G-12: not covered by the
+# design handoff, whose only entity-form content is the per-branch prose
+# inside `S.entity` (now content/steps.yaml's `entity-*` steps). This is the
+# side-by-side a reader wants *before* picking a branch, sourced from
+# docs/research/starting-a-business-in-puerto-rico.md, "1. Choose and form
+# the legal entity".
+#
+# `sourcing` on `llc` and `corp` deliberately mirrors the `unverified` mark
+# already on their matching steps (`entity-organize-llc`,
+# `entity-incorporate-corp`) rather than the `primary` a reader might expect
+# from the liability/tax columns alone: the research found the *observed*
+# annual fee ($150, due 15 Apr) confirmed on two .pr.gov portals, but could
+# not confirm the *formation* fee (the $250 LLC / $150 corp figures) on any
+# primary source — only on secondary accounting-firm sites. One `sourcing`
+# field can't carry two different confidence levels, so it takes the lower
+# of the two (consistent with the two steps this table summarizes), and
+# `formationCost` says which half is the open question.
+
+dba:
+  name:
+    es: "Individuo (DBA)"
+    en: "Sole proprietor (DBA)"
+  liability:
+    es: "Ninguna — los bienes personales responden por las deudas del negocio."
+    en: "None — personal assets answer for the business's debts."
+  filing:
+    es: "Ninguna radicación en el Registro de Corporaciones y Entidades."
+    en: "No filing with the Registro de Corporaciones y Entidades."
+  defaultTax:
+    es: "Tasas individuales; el dueño radica su propia planilla."
+    en: "Individual rates; the owner files their own personal return."
+  formationCost:
+    es: "$0"
+    en: "$0"
+  annualObligation:
+    es: "Ninguna con el Depto. de Estado — no hay entidad que mantener."
+    en: "None with the Dept. of State — there's no entity to maintain."
+  note:
+    es: >-
+      La guía del propio Departamento de Estado es clara: no hace falta
+      incorporarse para operar en Puerto Rico — la gente se incorpora para
+      <b>proteger lo suyo</b>, no porque la ley lo exija.
+    en: >-
+      The Dept. of State's own guidance is blunt: incorporation isn't
+      required to operate in Puerto Rico — people incorporate to
+      <b>protect what's theirs</b>, not because the law demands it.
+  sourcing: primary
+
+llc:
+  name:
+    es: "LLC (Compañía de Responsabilidad Limitada)"
+    en: "LLC"
+  liability:
+    es: "Sí — protege los bienes personales del dueño."
+    en: "Yes — shields the owner's personal assets."
+  filing:
+    es: "Certificado de organización en el RCE, con agente residente en PR."
+    en: "Certificate of organization at the RCE, with a PR-resident registered agent."
+  defaultTax:
+    es: >-
+      Tributa como corporación <b>por defecto</b> — al revés de como
+      funciona a nivel federal. Puede elegirse tratamiento de sociedad.
+    en: >-
+      Taxed as a corporation <b>by default</b> — the opposite of the US
+      federal default. Partnership treatment may be elected.
+  formationCost:
+    es: "Piso legal $50 (Art. 21.01); cifra observada ~$250 (sin confirmar en fuente primaria)."
+    en: "Statutory floor $50 (Art. 21.01); observed figure ~$250 (unconfirmed in a primary source)."
+  annualObligation:
+    es: >-
+      $150/año antes del 15 de abril, confirmado en dos portales .pr.gov.
+      Desde 2025 es solo el pago — ya no exige informe anual.
+    en: >-
+      $150/yr due before April 15, confirmed on two .pr.gov portals. Since
+      2025 it's payment only — no annual report is required anymore.
+  note:
+    es: >-
+      La elección de clasificación contributiva en PR es <b>aparte de la
+      federal</b>; equivocarse significa radicar la planilla que no es y,
+      potencialmente, pagar contribución dos veces. Esta decisión la debe
+      llevar un CPA de Puerto Rico.
+    en: >-
+      PR's tax-classification election is <b>separate from the federal
+      one</b>; getting it wrong means filing the wrong return and,
+      potentially, stacking two layers of tax. Take this one to a PR CPA.
+  sourcing: unverified
+
+corp:
+  name:
+    es: "Corporación"
+    en: "Corporation"
+  liability:
+    es: "Sí — protege los bienes personales del dueño."
+    en: "Yes — shields the owner's personal assets."
+  filing:
+    es: "Certificado de incorporación en el RCE, con agente residente en PR."
+    en: "Certificate of incorporation at the RCE, with a PR-resident registered agent."
+  defaultTax:
+    es: "Tributa como corporación."
+    en: "Taxed as a corporation."
+  formationCost:
+    es: "Piso legal $100 (Art. 17.01); cifra observada ~$150 (sin confirmar en fuente primaria)."
+    en: "Statutory floor $100 (Art. 17.01); observed figure ~$150 (unconfirmed in a primary source)."
+  annualObligation:
+    es: >-
+      $150/año antes del 15 de abril, confirmado en dos portales .pr.gov.
+      Desde 2025 es solo el pago — ya no exige informe anual.
+    en: >-
+      $150/yr due before April 15, confirmed on two .pr.gov portals. Since
+      2025 it's payment only — no annual report is required anymore.
+  note:
+    es: >-
+      Antes de 2025 se exigía un informe anual certificado con hoja de
+      balance; para años 2025 en adelante solo se debe el cargo del
+      Art. 17.01, sin informe.
+    en: >-
+      Before 2025 a certified annual report with a balance sheet was
+      required; for tax years 2025 onward only the Art. 17.01 fee is
+      owed, with no report.
+  sourcing: unverified

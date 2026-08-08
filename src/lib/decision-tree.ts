@@ -12,6 +12,7 @@
 // each bilingual field.
 import type {
   Bilingual,
+  EntityFormData,
   GapData,
   IncentiveData,
   MunicipioData,
@@ -25,6 +26,11 @@ export type Content = {
   municipios: Record<string, MunicipioData>;
   incentives: Record<string, IncentiveData>;
   gaps: (GapData & { id: string })[];
+  // Standalone comparison content (G-12) — never read by buildSequence
+  // below, same as `gaps`; carried on `Content` only so the page and
+  // content.json (G-04) keep loading through the one shared path
+  // load-content.ts exists to guarantee.
+  entities: Record<string, EntityFormData>;
 };
 
 export type Answers = {
