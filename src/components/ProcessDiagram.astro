@@ -1,0 +1,186 @@
+---
+// G-10 — the "whole shape of the process" diagram: two chains (legal/tax
+// identity, premises/permit) converging on the Permiso Único, the parallel
+// obligations that don't gate opening, and the week 0/2/6/14+ timeline.
+//
+// Ported coordinate-for-coordinate from design/handoff's `diagram()`
+// method (design/handoff/Guia Negocios PR.dc.html) per the handoff's own
+// fidelity instruction ("recreate pixel-perfectly; do not restyle" —
+// design/handoff/README.md) and the BACKLOG's G-08/G-10 note ("fully
+// specified in the handoff ... porting is mechanical"). The handoff builds
+// this with React.createElement; here it's plain static SVG (DiagramLane
+// for the repeated box/label/arrow row shape), since G-10 depends only on
+// G-04, not on the bilingual toggle (G-19) — the page it lives on is still
+// Spanish-only, so this component is too. Re-parameterize on `lang` when
+// G-19 lands.
+//
+// Colors resolve through the CSS custom properties already defined on
+// index.astro's :root (--sello, --ambar, --rule, --surface, --verificado,
+// etc.), so this component carries no styling of its own beyond the
+// coordinates and font stacks the handoff specifies.
+import DiagramLane, { type Node } from './DiagramLane.astro';
+
+const MONO = "'IBM Plex Mono', monospace";
+const SERIF = "'Newsreader', serif";
+
+const diagramAria =
+  'Diagrama de flujo: una cadena de identidad legal y contributiva y una cadena de local corren en paralelo y desembocan en el Permiso Único, que consolida cinco certificaciones y condiciona la apertura. Las obligaciones municipales y patronales se ramifican en paralelo y no bloquean la apertura.';
+
+// The vertical connectors from lane B's chain down into lane C sit under
+// each lane's box centers — 84px in from each box's left edge (half its
+// 168px width), same column DiagramLane's own BOX_X uses internally.
+const NODE_X = [36, 248, 460, 672].map((x) => x + 84);
+
+const laneANodes: Node[] = [
+  { x: 120, title: 'Elegir forma legal', sub: 'LLC · Corp · DBA' },
+  { x: 332, title: 'Registrar entidad', sub: 'Depto. de Estado · RCE' },
+  { x: 544, title: 'EIN federal', sub: 'IRS · gratis · minutos' },
+  { x: 756, title: 'Registro de Comerciantes', sub: 'Hacienda · SURI' },
+];
+
+const laneBNodes: Node[] = [
+  { x: 120, title: 'Buscar local', sub: '2–8 semanas' },
+  { x: 332, title: 'Verificar zonificación', sub: 'por № catastro · antes de firmar' },
+  { x: 544, title: 'Firmar el lease', sub: 'o comprar' },
+  { x: 756, title: 'Permiso de construcción', sub: 'solo si remodelas' },
+];
+
+const bundleItems = [
+  '· Permiso de uso',
+  '· Exclusión categórica',
+  '· Prevención de incendios',
+  '· Salud ambiental',
+  '· Licencia sanitaria (alimentos)',
+];
+
+// d1 (patente municipal) always applies, so its box is solid and it's the
+// only one with a two-line subtitle (hence the explicit `y`, 2px higher
+// than the other three, to make room for it); d2–d4 only apply once the
+// reader is hiring, so their boxes render dashed (`dashFrom={1}` below,
+// matching `boxes(468, 56, 1)` in the source).
+const laneCNodes: Node[] = [
+  { x: 120, y: 488, title: 'Patente municipal', sub: 'notificar ≤30 días', sub2: 'de haber comenzado' },
+  { x: 332, y: 490, title: 'DTRH', sub: 'desempleo + SINOT' },
+  { x: 544, y: 490, title: 'CFSE', sub: 'seguro obrero' },
+  { x: 756, y: 490, title: 'Seguro choferil', sub: 'si alguien conduce' },
+];
+
+const ongoingItems = [
+  'IVU mensual · día 20',
+  'Estimada trimestral',
+  'Planilla anual · Hacienda',
+  'Cargo anual Estado · 15 abr',
+  'Volumen de negocios · 15 abr',
+];
+
+const timelineLabels = [
+  { x: 36, label: 'SEMANA 0' },
+  { x: 300, label: 'SEMANA 2' },
+  { x: 560, label: 'SEMANA 6' },
+  { x: 770, label: 'SEMANA 14+' },
+];
+
+const timelineCaptions = [
+  { x: 36, text: 'entidad + EIN + SURI' },
+  { x: 200, text: 'búsqueda de local y arrendamiento' },
+  { x: 430, text: 'Permiso Único — inspecciones, la parte que no se acelera' },
+];
+---
+
+<svg
+  viewBox="0 0 1180 700"
+  role="img"
+  aria-label={diagramAria}
+  style={`display:block;min-width:960px;width:100%;height:auto;color:var(--ink);font-family:'Libre Franklin', sans-serif;`}
+>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+    </marker>
+    <marker id="ar-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--sello)" />
+    </marker>
+  </defs>
+
+  {/* Lane A — legal and tax identity */}
+  <text x="36" y="44" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">IDENTIDAD LEGAL Y CONTRIBUTIVA</text>
+  <text x="36" y="61" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">En serie, pero rápido — menos de una semana en total. Unos $150–250 en cargos de gobierno.</text>
+  <DiagramLane boxY={76} boxHeight={52} nodeY={98} arrowY={102} nodes={laneANodes} />
+
+  {/* The ordering rule people get wrong */}
+  <rect x="36" y="152" width="700" height="62" fill="none" stroke="var(--ambar)" stroke-opacity="0.55" />
+  <text x="52" y="174" font-size="10" font-family={MONO} letter-spacing="1.2" fill="var(--ambar)">REGLA DE ORDEN QUE SE EQUIVOCA CON FRECUENCIA</text>
+  <text x="52" y="193" font-size="12.5" font-family={SERIF} fill="currentColor">El Registro de Comerciantes tiene que existir antes de la solicitud del Permiso Único —</text>
+  <text x="52" y="208" font-size="12.5" font-family={SERIF} fill="currentColor">la radicación exige el certificado como anejo. Hacerlo al revés te deja varado.</text>
+  <path d="M 736 183 L 800 183 L 800 140" fill="none" stroke="var(--ambar)" stroke-opacity="0.7" stroke-dasharray="3 3" marker-end="url(#ar)" />
+
+  {/* Lane B — premises and permit, the critical path */}
+  <text x="36" y="252" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">LOCAL Y PERMISO — LA RUTA CRÍTICA</text>
+  <text x="36" y="269" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">Semanas o meses. Es la única parte que no se acelera por más organizado que seas.</text>
+  <DiagramLane boxY={284} boxHeight={52} dashFrom={3} nodeY={306} arrowY={310} nodes={laneBNodes} />
+
+  {/* Both chains converge on the Permiso Único */}
+  <rect x="904" y="150" width="240" height="96" fill="var(--sello)" />
+  <text x="1024" y="182" font-size="15" font-weight="800" letter-spacing="-0.3" fill="var(--surface)" text-anchor="middle">PERMISO ÚNICO</text>
+  <text x="1024" y="202" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">OGPe · o municipio autónomo</text>
+  <text x="1024" y="219" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">con jerarquía delegada</text>
+  <text x="1024" y="236" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">sbp.ogpe.pr.gov</text>
+
+  <path d="M 840 102 L 872 102 L 872 176 L 898 176" fill="none" stroke="var(--sello)" stroke-width="1.6" marker-end="url(#ar-a)" />
+  <path d="M 840 310 L 872 310 L 872 222 L 898 222" fill="none" stroke="var(--sello)" stroke-width="1.6" marker-end="url(#ar-a)" />
+
+  {/* What the permit bundles */}
+  <line x1="1024" y1="246" x2="1024" y2="272" stroke="currentColor" stroke-opacity="0.45" />
+  <rect x="904" y="272" width="240" height="132" fill="none" stroke="var(--sello)" stroke-opacity="0.5" />
+  <text x="918" y="291" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--sello)">CONSOLIDA EN UNA SOLA SOLICITUD</text>
+  <g font-size="11.5" font-family={SERIF} fill="currentColor">
+    {bundleItems.map((c, i) => (
+      <text x="918" y={311 + i * 18}>{c}</text>
+    ))}
+  </g>
+
+  {/* Open for business */}
+  <line x1="1024" y1="404" x2="1024" y2="432" stroke="currentColor" stroke-opacity="0.45" marker-end="url(#ar)" />
+  <rect x="904" y="436" width="240" height="52" fill="none" stroke="currentColor" stroke-width="2" />
+  <text x="1024" y="461" font-size="14" font-weight="800" letter-spacing="-0.3" fill="currentColor" text-anchor="middle">ABIERTO AL PÚBLICO</text>
+  <text x="1024" y="477" font-size="10" font-family={MONO} fill="currentColor" opacity="0.6" text-anchor="middle">legalmente en operación</text>
+
+  {/* Lane C — parallel obligations that don't gate opening */}
+  <path d="M 756 128 L 756 140 L 868 140 L 868 424 L 120 424" fill="none" stroke="currentColor" stroke-opacity="0.38" stroke-dasharray="5 4" />
+  <text x="884" y="420" font-size="9.5" font-family={MONO} letter-spacing="1" fill="currentColor" opacity="0.55">no bloquean la apertura</text>
+  <text x="36" y="452" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">OBLIGACIONES EN PARALELO</text>
+
+  <g stroke="currentColor" stroke-opacity="0.38" marker-end="url(#ar)">
+    {NODE_X.map((x) => (
+      <line x1={x} y1="424" x2={x} y2="464" />
+    ))}
+  </g>
+  <DiagramLane boxY={468} boxHeight={56} dashFrom={1} nodeY={490} nodes={laneCNodes} />
+  <text x="248" y="542" font-size="10" font-family={MONO} fill="currentColor" opacity="0.55">— — —  solo si contratas empleados  — — —</text>
+
+  {/* Recurring compliance */}
+  <line x1="1024" y1="488" x2="1024" y2="512" stroke="currentColor" stroke-opacity="0.45" marker-end="url(#ar)" />
+  <rect x="904" y="516" width="240" height="126" fill="none" stroke="var(--rule)" />
+  <text x="918" y="535" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--sello)">CUMPLIMIENTO RECURRENTE</text>
+  <g font-size="11.5" font-family={SERIF} fill="currentColor">
+    {ongoingItems.map((o, i) => (
+      <text x="918" y={555 + i * 18}>{o}</text>
+    ))}
+  </g>
+
+  {/* Timeline */}
+  <line x1="36" y1="586" x2="840" y2="586" stroke="currentColor" stroke-opacity="0.25" />
+  <g font-size="10" font-family={MONO} fill="currentColor" opacity="0.55">
+    {timelineLabels.map((t) => (
+      <text x={t.x} y="606">{t.label}</text>
+    ))}
+  </g>
+  <rect x="36" y="620" width="120" height="8" fill="var(--verificado)" opacity="0.55" />
+  <rect x="160" y="620" width="200" height="8" fill="var(--ambar)" opacity="0.5" />
+  <rect x="364" y="620" width="476" height="8" fill="var(--sello)" opacity="0.55" />
+  <g font-size="10.5" font-family={SERIF} fill="currentColor" opacity="0.62">
+    {timelineCaptions.map((c) => (
+      <text x={c.x} y="648">{c.text}</text>
+    ))}
+  </g>
+</svg>
