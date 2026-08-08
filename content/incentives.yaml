@@ -1,3 +1,191 @@
 # Applicable incentives, e.g. the Act 60 relevance gate (schema:
 # src/content.config.ts). Populated by G-03; gating logic is G-14.
-[]
+#
+# Which of these apply to a given reader depends on their answers (entity,
+# type, exportsvc, young) — that gating is G-14/G-06, not content. This is the
+# full catalog. `note` may contain inline HTML (<b>, <em>, <a>) per the
+# design handoff's rendering convention.
+
+first-semester-provisional-patente:
+  title:
+    es: "Patente provisional del primer semestre — Art. 7.210"
+    en: "First-semester provisional patente — Art. 7.210"
+  note:
+    es: >-
+      Automática, no cuesta nada, y la mayoría de los dueños la pierden por
+      no notificar al municipio dentro de 30 días de comenzar. Notifica a
+      tiempo y <b>todo el semestre de apertura queda exento de pago</b>. Es
+      el incentivo más seguro que hay y nadie te lo está vendiendo.
+    en: >-
+      Automatic, costs nothing, and most owners lose it by not notifying
+      the municipality within 30 days of starting. Notify on time and the
+      <b>entire opening semester is exempt from payment</b>. This is the
+      most reliably obtainable incentive in the whole system and nobody
+      markets it to you.
+  sourcing: primary
+
+optional-tax-1022-07:
+  title:
+    es: "Contribución opcional §1022.07 — 6% del bruto"
+    en: "Optional tax §1022.07 — 6% of gross"
+  note:
+    es: >-
+      Una corporación de servicios puede elegir una contribución opcional de
+      <b>6% del ingreso bruto hasta $100,000</b> en lugar del régimen normal
+      de 18.5% más sobretasa. Pierdes todas las deducciones, pero para una
+      consultoría chiquita casi siempre sale más simple y más barato. Corre
+      los dos números con un CPA antes de elegir. Aplica solo a servicios
+      profesionales organizados como LLC o corporación.
+    en: >-
+      A service corporation may elect an optional tax of <b>6% of gross
+      income up to $100,000</b> in lieu of the normal 18.5% plus surtax
+      regime. You forfeit all deductions, but for a lean consultancy it is
+      often dramatically simpler and cheaper. Run both numbers with a CPA
+      before electing. Applies only to professional services organized as
+      an LLC or corporation.
+  sourcing: primary
+
+young-entrepreneur-exemption:
+  title:
+    es: "Joven empresario — exención sobre los primeros $500,000"
+    en: "Young entrepreneur — exemption on the first $500,000"
+  note:
+    es: >-
+      Los dueños de <b>16 a 35 años</b> con cuarto año (o matriculados)
+      pueden obtener una exención sobre los <b>primeros $500,000 de
+      ingreso bruto por tres años</b>, mediante un Acuerdo con la Compañía
+      de Comercio y Exportación bajo la Ley 135-2014 / Ley 60 §2100.01.
+      Para un negocio de esta escala este es probablemente el incentivo
+      individual más grande disponible — corre con eso temprano.
+    en: >-
+      Owners aged <b>16–35</b> with a high school diploma (or currently
+      enrolled) can obtain an exemption on the <b>first $500,000 of gross
+      income for three years</b>, via an Agreement with the Compañía de
+      Comercio y Exportación under Ley 135-2014 / Ley 60 §2100.01. For a
+      business at this scale this is likely the single largest incentive
+      available — pursue it early.
+  sourcing: primary
+
+pyme-120-2014-rates:
+  title:
+    es: "Ley 120-2014 — tasas PYME de 5% / 10% / 15%"
+    en: "Ley 120-2014 — PYME rates of 5% / 10% / 15%"
+  note:
+    es: >-
+      Una <em>PYME Elegible Nueva</em> cualificada con acuerdo de empleo
+      paga una contribución normal reducida de 5%, 10% y 15% en los años
+      uno al tres. Pregúntale al DDEC por esto cuando preguntes por lo
+      demás.
+    en: >-
+      A qualifying <em>PYME Elegible Nueva</em> with an employment
+      agreement pays a reduced normal tax of 5%, 10% and 15% across years
+      one through three. Worth asking DDEC about at the same time as
+      anything else.
+  sourcing: primary
+
+act60-export-services:
+  title:
+    es: "Ley 60 Cap. 3 — exportación de servicios, 4% fijo"
+    en: "Act 60 Ch. 3 — export services, 4% fixed"
+  note:
+    es: >-
+      Puede que sí cualifique. La prueba es estricta: los servicios tienen
+      que beneficiar a una persona extranjera <b>sin nexo con Puerto
+      Rico</b>. Los beneficios corren 15 años — <b>4% fijo de
+      contribución sobre ingresos</b>, <b>75% de exención</b> en
+      contribución sobre la propiedad, <b>50% de exención</b> en
+      patentes, y 100% de exención en distribuciones a los dueños. El
+      requisito de empleo es mucho más estrecho de lo que se dice: aplica
+      <b>solo sobre $3,000,000</b> de volumen anual, y ahí es apenas
+      <b>un</b> empleado a tiempo completo para decretos de exportación.
+      Solicitud: $5 de cargo por transacción + $1,000 de cargo por
+      servicio en <a href="https://incentives.ddec.pr.gov/">incentives.ddec.pr.gov</a>.
+    en: >-
+      You may actually qualify. The test is strict: services must benefit
+      a foreign person <b>with no nexus to Puerto Rico</b>. Benefits run
+      15 years — <b>4% fixed income tax</b>, <b>75% exemption</b> on
+      property taxes, <b>50% exemption</b> on patentes, and 100%
+      exemption on distributions to owners. The employment requirement is
+      far narrower than commonly stated: it applies <b>only above
+      $3,000,000</b> of annual volume, and is then just <b>one</b>
+      full-time employee for export decrees. Application: $5 transaction
+      fee + $1,000 service fee via
+      <a href="https://incentives.ddec.pr.gov/">incentives.ddec.pr.gov</a>.
+  sourcing: secondary
+
+act60-not-applicable:
+  title:
+    es: "La Ley 60 no aplica — y conviene saberlo ya"
+    en: "Act 60 does not apply — and it is better to know now"
+  note:
+    es: >-
+      El Capítulo 3 se sostiene enteramente sobre servir a personas
+      extranjeras <b>sin nexo con Puerto Rico</b>. Una tienda o un
+      restaurante que le vende a gente que vive aquí tiene, por
+      definición, nexo con Puerto Rico. El capítulo de inversionista
+      individual del que habla la gente es un régimen contributivo
+      <em>personal</em> para inversionistas que se mudan — no tiene nada
+      que ver con abrir un negocio. Al que te llene el plan de negocios
+      con la Ley 60, algo te está vendiendo. Los incentivos reales son
+      los municipales y los de PYME.
+    en: >-
+      Chapter 3 is premised entirely on serving foreign persons with
+      <b>no nexus to Puerto Rico</b>. A store or restaurant selling to
+      people who live here has, by definition, a Puerto Rico nexus. The
+      individual-investor chapter people talk about is a
+      <em>personal</em> tax regime for relocating investors — it has
+      nothing to do with opening a business. Anyone padding a business
+      plan with Act 60 is selling something. The real incentives are
+      municipal and PYME-level.
+  sourcing: primary
+
+pridco-industrial-space:
+  title:
+    es: "PRIDCO — espacio industrial ya zonificado"
+    en: "PRIDCO — industrial space already zoned"
+  note:
+    es: >-
+      PRIDCO tiene más de 1,500 propiedades en 77 de 78 municipios, a
+      rentas competitivas. Para un manufacturero o distribuidor esto es
+      un atajo genuino por el problema de permisos: <b>el espacio ya
+      carga zonificación industrial</b>. El Capítulo 6 de la Ley 60
+      (manufactura) también otorga término de 15 años y exención
+      municipal total de patente para el semestre de apertura más los
+      dos semestres del año fiscal siguiente.
+    en: >-
+      PRIDCO holds 1,500+ properties across 77 of 78 municipalities, at
+      competitive rents. For a manufacturer or distributor this is a
+      genuine shortcut through the permitting problem: <b>the space
+      already carries industrial zoning</b>. Act 60 Chapter 6
+      (manufacturing) also grants a 15-year term and total municipal
+      patente exemption for the opening semester plus the two semesters
+      of the following fiscal year.
+  sourcing: primary
+
+bde-technical-assistance:
+  title:
+    es: "BDE — y la asistencia técnica gratuita que casi nadie usa"
+    en: "BDE — and the free technical assistance almost nobody uses"
+  note:
+    es: >-
+      El Banco de Desarrollo Económico corre préstamos a término, líneas
+      de crédito, préstamos de preparación para emergencias de hasta
+      $50,000, e «Impulso a Tu Negocio». Más útil ahora mismo: el
+      <b>Programa de Asistencia Técnica SSBCI</b> — $3.9 millones de
+      fondos federales del Tesoro que proveen <b>servicios legales,
+      contables y de asesoría financiera gratis</b>. Poca gente lo usa y
+      sirve ahora mismo. La <b>Oficina de Distrito de la SBA en PR</b> y
+      el <b>SBDC de PR</b> añaden consejería individual gratuita y ayuda
+      con proyecciones financieras. Puerto Rico está plenamente dentro
+      del sistema SBA — aplican 7(a), 504 y microcréditos.
+    en: >-
+      The Banco de Desarrollo Económico runs term loans, credit lines,
+      emergency-preparedness loans up to $50,000, and "Impulso a Tu
+      Negocio." More useful right now: the <b>SSBCI Technical Assistance
+      Program</b> — $3.9M in federal Treasury funding providing <b>free
+      legal, accounting and financial advisory services</b>. Underused
+      and directly relevant. The <b>SBA PR District Office</b> and the
+      <b>PR SBDC</b> add free one-on-one counseling and help with
+      financial projections. Puerto Rico sits fully inside the SBA
+      system — 7(a), 504 and microloans all apply.
+  sourcing: primary

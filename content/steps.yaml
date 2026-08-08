@@ -1,3 +1,843 @@
 # Sequence steps (schema: src/content.config.ts). Populated by G-03 from
-# docs/research/starting-a-business-in-puerto-rico.md.
-[]
+# docs/research/starting-a-business-in-puerto-rico.md and
+# design/handoff/Guia Negocios PR.dc.html.
+#
+# This is the full catalog of steps that could appear in a reader's
+# sequence — which ones actually show up, in what order, is decision-tree
+# logic (G-06/G-08), not content. The design handoff's `warn` array (things
+# that never had a task shape, like "the Reglamento Conjunto is legally
+# unstable") is folded in here too, as steps carrying `severity: warn` or
+# `stop` rather than a literal action — the schema note in
+# src/content.config.ts already anticipates steps being "actions, artifacts,
+# recurring duties, decisions."
+#
+# `sourcing` extracts the handoff's inline vt() badges into the structured
+# field the schema wants. Where a step mixes a well-sourced legal
+# requirement with a specific unconfirmed figure, `sourcing` reflects the
+# step's central, most decision-relevant claim; the remaining caveat is kept
+# as plain text in `note` (or, where it's a substantial open question, moved
+# to content/gaps.yaml and cross-referenced by key in this file's comments).
+
+# ---- Entity formation ----
+
+entity-sole-proprietor:
+  title:
+    es: "Operar como individuo (DBA)"
+    en: "Operate as a sole proprietor (DBA)"
+  agency: { es: "—", en: "—" }
+  timing: { es: "—", en: "—" }
+  cost: { es: "$0", en: "$0" }
+  note:
+    es: >-
+      No se radica nada en el Departamento de Estado. El precio es alto:
+      <b>los bienes personales responden por el negocio</b>. La propia
+      guía del Departamento lo dice claro: no hay que incorporarse, la
+      gente se incorpora para proteger lo suyo.
+    en: >-
+      Nothing is filed with the Departamento de Estado. The trade-off is
+      total: <b>personal assets answer for the business</b>. The
+      Departamento's own guidance is blunt that incorporation isn't
+      required — people incorporate to protect personal assets.
+  sourcing: primary
+
+entity-organize-llc:
+  title:
+    es: "Organizar la LLC"
+    en: "Organize the LLC"
+  agency: { es: "Depto. de Estado · RCE", en: "Dept. of State · RCE" }
+  timing: { es: "1–5 días laborables", en: "1–5 business days" }
+  cost: { es: "~$250 (sin confirmar)", en: "~$250 (unconfirmed)" }
+  note:
+    es: >-
+      Se radica en <a href="https://rcp.estado.pr.gov/">rcp.estado.pr.gov</a>.
+      Se necesita un <b>agente residente con dirección física en Puerto
+      Rico</b>; un apartado postal no cumple con el Art. 3.02. Hay
+      servicio expedito de $100 (24h), $200 (mismo día) y $500 (2h). La
+      ley fija un piso de $50, pero el Secretario puede cambiar los
+      cargos por carta circular. La cifra de $250 sale de fuentes
+      secundarias — no se pudo confirmar en ninguna página de gobierno.
+    en: >-
+      Filed at <a href="https://rcp.estado.pr.gov/">rcp.estado.pr.gov</a>.
+      Requires a <b>registered agent with a physical Puerto Rico
+      address</b> — a P.O. box does not satisfy Art. 3.02. Expedited
+      tiers exist at $100 (24h) / $200 (same day) / $500 (2h). The
+      statute sets a $50 floor, but the Secretary may reset fees by
+      circular letter. The $250 figure comes only from secondary
+      sources — it could not be confirmed on any government page.
+  sourcing: unverified
+
+entity-llc-tax-classification:
+  title:
+    es: "Decidir la clasificación contributiva de la LLC"
+    en: "Decide the LLC's PR tax classification"
+  agency: { es: "Hacienda", en: "Hacienda" }
+  timing: { es: "Al organizarse", en: "At formation" }
+  cost: { es: "—", en: "—" }
+  note:
+    es: >-
+      <b>Una LLC de Puerto Rico tributa como corporación por defecto</b>,
+      al revés de como funciona a nivel federal, y es la trampa más
+      común para quien llega con la costumbre de allá afuera. Se puede
+      elegir tratamiento de sociedad, y <b>la elección de PR es aparte
+      de la federal</b>. Equivocarse es radicar la planilla que no es y
+      terminar pagando contribución dos veces. Esta decisión la debe
+      llevar un CPA de Puerto Rico.
+    en: >-
+      <b>A Puerto Rico LLC is taxed as a corporation by default</b> —
+      the opposite of the US federal default, and the single most
+      common trap for anyone bringing mainland instincts. Partnership
+      treatment may be elected, and <b>the PR election is separate from
+      the federal one</b>. Getting it wrong means filing the wrong
+      return and possibly stacking two layers of tax. Take this one to
+      a PR CPA.
+  severity: warn
+  sourcing: primary
+
+entity-incorporate-corp:
+  title:
+    es: "Incorporar"
+    en: "Incorporate"
+  agency: { es: "Depto. de Estado · RCE", en: "Dept. of State · RCE" }
+  timing: { es: "1–5 días laborables", en: "1–5 business days" }
+  cost: { es: "~$150 (sin confirmar)", en: "~$150 (unconfirmed)" }
+  note:
+    es: >-
+      Se radica en <a href="https://rcp.estado.pr.gov/">rcp.estado.pr.gov</a>.
+      Se necesita un <b>agente residente con dirección física en Puerto
+      Rico</b>; un apartado postal no cumple con el Art. 3.02. Hay
+      servicio expedito de $100 (24h), $200 (mismo día) y $500 (2h). La
+      ley fija un piso de $100, pero el Secretario puede cambiar los
+      cargos por carta circular. La cifra de $150 sale de fuentes
+      secundarias — no se pudo confirmar en ninguna página de gobierno.
+    en: >-
+      Filed at <a href="https://rcp.estado.pr.gov/">rcp.estado.pr.gov</a>.
+      Requires a <b>registered agent with a physical Puerto Rico
+      address</b> — a P.O. box does not satisfy Art. 3.02. Expedited
+      tiers exist at $100 (24h) / $200 (same day) / $500 (2h). The
+      statute sets a $100 floor, but the Secretary may reset fees by
+      circular letter. The $150 figure comes only from secondary
+      sources — it could not be confirmed on any government page.
+  sourcing: unverified
+
+entity-undecided:
+  title:
+    es: "Decidir la forma legal antes de seguir"
+    en: "Decide the entity form before anything else"
+  agency: { es: "—", en: "—" }
+  timing: { es: "Primero", en: "First" }
+  cost: { es: "—", en: "—" }
+  note:
+    es: >-
+      Esto define todo lo que sigue. En corto: un DBA no radica nada y
+      no protege nada; una LLC o corporación cuesta unos cientos de
+      pesos y pone una pared entre el negocio y la casa de quien lo
+      opera. Si hay inventario, se firma un lease, o se contrata a
+      alguien, esa pared casi siempre vale la pena.
+    en: >-
+      This gates everything downstream. The short version: a DBA files
+      nothing and shields nothing; an LLC or corporation costs a few
+      hundred dollars and puts a wall between the business and the
+      owner's home. If the business carries inventory, signs a lease,
+      or hires anyone, the wall is usually worth it.
+  severity: warn
+  sourcing: primary
+
+# ---- Federal / tax registration ----
+
+ein-federal:
+  title:
+    es: "Obtener el EIN federal"
+    en: "Get the federal EIN"
+  agency: { es: "IRS", en: "IRS" }
+  timing: { es: "Minutos, en línea", en: "Minutes, online" }
+  cost: { es: "$0", en: "$0" }
+  note:
+    es: >-
+      En <a href="https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online">irs.gov</a>.
+      El IRS lo dice claro: <b>nunca hay que pagar por un EIN</b>. Los
+      sitios que cobran están revendiendo un formulario que es gratis.
+      Un EIN por persona responsable por día.
+    en: >-
+      At <a href="https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online">irs.gov</a>.
+      The IRS says it plainly: <b>you never have to pay for an EIN</b> —
+      sites that charge are reselling a free form. One EIN per
+      responsible party per day.
+  sourcing: primary
+
+merchant-registration:
+  title:
+    es: "Registro de Comerciantes"
+    en: "Merchant Registration Certificate"
+  agency: { es: "Hacienda · SURI", en: "Hacienda · SURI" }
+  timing:
+    es: "ANTES de comenzar a operar"
+    en: "BEFORE you begin operating"
+  cost: { es: "$0 (asumido)", en: "$0 (assumed)" }
+  note:
+    es: >-
+      En <a href="https://suri.hacienda.pr.gov/">suri.hacienda.pr.gov</a>.
+      La ley es clara: se radica <b>antes</b> de comenzar a operar (Ley
+      1-2011 §4060.01(b)). Las guías que dicen «dentro de 30 días» están
+      confundiendo esto con otro deber: notificar <em>cambios</em>
+      dentro de 30 días. Un registro <b>por cada local físico</b>; SURI
+      no acepta dos en la misma dirección. El certificado se exhibe, y
+      <b>vence a los dos años</b> sin período de gracia establecido. Al
+      aprobarlo, Hacienda clasifica al comerciante como agente retenedor
+      o no retenedor para el IVU — que quede bien desde el registro.
+      Ningún cargo aparece en la ley ni en la carta circular; las
+      fuentes secundarias dicen que es gratis, pero ninguna página de
+      gobierno lo afirma.
+    en: >-
+      At <a href="https://suri.hacienda.pr.gov/">suri.hacienda.pr.gov</a>.
+      The statute is unambiguous — file <b>before</b> beginning to
+      operate (Ley 1-2011 §4060.01(b)). Guides that say "within 30 days"
+      are confusing this with a different duty: notifying <em>changes</em>
+      within 30 days. One registration <b>per physical location</b>;
+      SURI will not accept two at the same address. The certificate must
+      be displayed, and it <b>expires after two years</b> with no stated
+      grace period. At approval Hacienda classifies the merchant as
+      withholding or non-withholding agent for IVU — get that right at
+      registration. No fee appears anywhere in the statute or the
+      circular; secondary sources say free, but no government page
+      affirmatively states $0.
+  severity: key
+  sourcing: primary
+
+# ---- Premises: commercial ----
+
+zoning-verification:
+  title:
+    es: "Verificar la zonificación por número de catastro"
+    en: "Verify zoning by cadastral number"
+  agency: { es: "Junta de Planificación", en: "Planning Board" }
+  timing:
+    es: "Mismo día — antes de firmar nada"
+    en: "Same day — before signing anything"
+  cost: { es: "$0", en: "$0" }
+  note:
+    es: >-
+      Se consulta el número de catastro en
+      <a href="https://gis.jp.pr.gov/mipr/">gis.jp.pr.gov/mipr</a>
+      <b>antes de firmar el lease</b>. Coger un local cuya zonificación
+      no aguanta el uso previsto es el error más caro que se puede
+      cometer aquí, y el único que no se arregla con papeleo.
+    en: >-
+      Check the cadastral number at
+      <a href="https://gis.jp.pr.gov/mipr/">gis.jp.pr.gov/mipr</a>
+      <b>before signing a lease</b>. A lease on a property whose zoning
+      will not carry the intended use is the most expensive avoidable
+      mistake in this whole process — and the one that cannot be undone
+      by paperwork.
+  severity: key
+  sourcing: primary
+
+construction-permit:
+  title:
+    es: "Permiso de construcción"
+    en: "Construction permit"
+  agency: { es: "OGPe o municipio", en: "OGPe or municipality" }
+  timing: { es: "Semanas a meses", en: "Weeks to months" }
+  cost: { es: "Varía", en: "Varies" }
+  note:
+    es: >-
+      Va antes del permiso de uso y del Permiso Único. En ciertos casos,
+      planos certificados por un profesional autorizado sustituyen la
+      revisión regular. Normalmente lo lleva el arquitecto o ingeniero
+      de récord. Esta vía no se investigó a fondo — conviene presupuestar
+      de más y conseguir un estimado con tiempo.
+    en: >-
+      Precedes the use permit and the Permiso Único. Certified plans by
+      an authorized professional can substitute for conventional review
+      in defined cases. Usually driven by the architect or engineer of
+      record. This track was not researched in depth — budget generously
+      and get a professional estimate early.
+  severity: warn
+  sourcing: unverified
+
+permiso-unico:
+  title:
+    es: "Permiso Único"
+    en: "Permiso Único"
+  agency: { es: "OGPe o municipio autónomo", en: "OGPe or autonomous municipality" }
+  timing: { es: "Semanas — la ruta crítica", en: "Weeks — the critical path" }
+  cost:
+    es: "10% al radicar, balance tras evaluación"
+    en: "10% at filing, balance after evaluation"
+  note:
+    es: >-
+      Se radica por el Single Business Portal en
+      <a href="https://sbp.ogpe.pr.gov/">sbp.ogpe.pr.gov</a>, con OGPe o
+      con el municipio si tiene autoridad delegada. Una sola solicitud
+      consolida el permiso de uso, la exclusión categórica, la
+      certificación de prevención de incendios, la certificación de
+      salud ambiental y las licencias sanitarias. <b>No se puede pedir
+      sin la autorización de uso del negocio</b>, y el Registro de
+      Comerciantes es un anejo obligatorio de la solicitud — hay que
+      tenerlo antes de radicar, no después. Coger un Profesional
+      Autorizado (PA) es lo normal para cualquier cosa que no sea un
+      cambio de nombre, y casi siempre se paga solo en el tiempo que
+      ahorra. No se halló el tarifario vigente de OGPe en ninguna fuente
+      primaria, y el intervalo de renovación es genuinamente
+      desconocido.
+    en: >-
+      Filed through the Single Business Portal at
+      <a href="https://sbp.ogpe.pr.gov/">sbp.ogpe.pr.gov</a>, with OGPe
+      or with the municipality if it holds delegated authority. One
+      application consolidates the use permit, categorical exclusion,
+      fire prevention certification, environmental health certification
+      and sanitary licenses. <b>It cannot be requested without the use
+      authorization for the business</b>, and the Merchant Registration
+      Certificate is a mandatory attachment to the application — it must
+      exist before filing, not after. Hiring an Authorized Professional
+      (PA) is standard practice for anything beyond a name change and
+      usually pays for itself in elapsed time. OGPe's current fee
+      schedule could not be located on any primary source, and the
+      renewal interval is genuinely unknown.
+  severity: key
+  sourcing: unverified
+
+fire-inspection:
+  title:
+    es: "Inspección de Bomberos"
+    en: "Fire department inspection"
+  agency: { es: "Negociado de Bomberos", en: "Fire Bureau" }
+  timing: { es: "Dentro del Permiso Único", en: "Inside the Permiso Único" }
+  cost: { es: "$60–$100+ por partida", en: "$60–$100+ per item" }
+  note:
+    es: >-
+      Va incluida en el Permiso Único, pero es la parte que más se cae.
+      Base para locales bajo 1,000 pies²: extintores ABC de 5 lb, uno
+      por cada 75 pies; luces de emergencia en las rutas de evacuación;
+      sistema eléctrico conforme a AEE; y <b>puertas que abran hacia
+      afuera</b>. Las puertas que abren hacia adentro son el error
+      clásico de buildout, y obligan a romper y hacerlo otra vez.
+    en: >-
+      Bundled into the Permiso Único, but it is the component most
+      likely to fail. Baseline for premises under 1,000 sq ft: 5 lb ABC
+      extinguishers one per 75 feet, emergency lighting on evacuation
+      routes, AEE-compliant electrical, and <b>doors that open
+      outward</b>. Inward-opening doors are a classic retail buildout
+      failure that requires physical rework.
+  sourcing: primary
+
+sanitary-license:
+  title:
+    es: "Licencia sanitaria"
+    en: "Sanitary license"
+  agency: { es: "Depto. de Salud", en: "Dept. of Health" }
+  timing:
+    es: "+3 a 8 semanas sobre la base"
+    en: "+3 to 8 weeks over the baseline"
+  cost: { es: "Desde $35 · inspección $100", en: "From $35 · $100 inspection" }
+  note:
+    es: >-
+      También va dentro del Permiso Único, pero tiene sus propios
+      requisitos: local ya cogido, certificación de Bomberos en mano,
+      patentes municipales, un <b>sistema de agua potable certificado
+      por el Depto. de Salud</b>, planos y especificaciones, y una
+      inspección sanitaria preoperacional. Quienes hacen esto todos los
+      días lo dicen claro: hay que esperar <b>semanas, no días</b>,
+      antes de la inspección. La lista de requisitos viene de gente que
+      hace el trámite, no de una página de gobierno.
+    en: >-
+      Also bundled into the Permiso Único, but it carries its own
+      prerequisites: premises already leased, Bomberos certification in
+      hand, patentes municipales, a <b>potable water system certified
+      by the Departamento de Salud</b>, plans and specifications, and a
+      pre-operational sanitary inspection. Practitioner guidance is
+      candid — expect <b>weeks, not days</b>, before they inspect. The
+      prerequisite list comes from practitioner sources, not a
+      government page.
+  severity: warn
+  sourcing: secondary
+
+food-handler-certification:
+  title:
+    es: "Certificación de manejo seguro de alimentos"
+    en: "Food safety manager certification"
+  agency: { es: "NRFSP / ServSafe", en: "NRFSP / ServSafe" }
+  timing: { es: "Antes de abrir", en: "Before opening" }
+  cost: { es: "Precio de mercado", en: "Market rate" }
+  note:
+    es: >-
+      Vigente por tres años. Aparte de los <em>certificados de salud</em>
+      individuales que emite el Depto. de Salud para cada manipulador.
+    en: >-
+      Valid for three years. Separate from the individual
+      <em>certificados de salud</em> issued by the Departamento de Salud
+      for each handler.
+  sourcing: secondary
+
+# ---- Premises: home ----
+
+home-based-permiso-unico-question:
+  title:
+    es: "¿Se necesita Permiso Único? — pregunta abierta"
+    en: "Is a Permiso Único required? — open question"
+  agency: { es: "OGPe", en: "OGPe" }
+  timing: { es: "Aclarar temprano", en: "Clarify early" }
+  cost: { es: "Desconocido", en: "Unknown" }
+  note:
+    es: >-
+      <b>Esto está genuinamente sin resolver.</b> El Art. 8.4A de la Ley
+      161-2009 alcanza a <em>«todo negocio nuevo o existente»</em> — todo
+      negocio, punto. Pero el propio encuadre de OGPe habla de
+      <em>usos</em> no residenciales. Alguien trabajando desde un cuarto
+      de la casa, sin clientes entrando ni rótulo, cae justo ahí en el
+      medio. Es la pregunta más frecuente de este arquetipo y no se pudo
+      resolver desde ninguna fuente primaria. Llamar a OGPe y sacar la
+      respuesta para el caso específico antes de asumir para un lado o
+      para el otro.
+    en: >-
+      <b>This is genuinely unresolved.</b> Ley 161-2009 Art. 8.4A reaches
+      <em>"todo negocio nuevo o existente"</em> — every business, full
+      stop. But OGPe's own framing is about non-residential
+      <em>uses</em>. Someone working from a spare room with no client
+      traffic and no signage sits precisely in that gap. It is the
+      highest-frequency question for this archetype and could not be
+      resolved from any primary source. Call OGPe and get the answer for
+      the specific case before assuming either way.
+  severity: warn
+  sourcing: unverified
+
+# ---- Premises: mobile ----
+
+provisional-patente-occasional-sales:
+  title:
+    es: "Patente provisional para ventas ocasionales"
+    en: "Provisional patente for occasional sales"
+  agency: { es: "Municipio", en: "Municipality" }
+  timing: { es: "Antes de cada actividad", en: "Before each activity" }
+  cost: { es: "Varía", en: "Varies" }
+  note:
+    es: >-
+      Un negocio que hace ventas ocasionales tiene que sacar una
+      <b>patente provisional</b> en ese municipio y reportar el volumen
+      <b>dentro de 24 horas</b> de terminar la actividad. Si el volumen
+      de ventas ocasionales se queda bajo $7,000, el pago de la patente
+      provisional satisface la obligación. Los negocios móviles también
+      cargan un cargo de $60 de Bomberos.
+    en: >-
+      A business making occasional sales must acquire a <b>provisional
+      patente</b> in that municipality and report volume <b>within 24
+      hours</b> of the activity ending. If occasional-sales volume stays
+      under $7,000, the provisional patente payment satisfies the
+      obligation. Mobile businesses also carry a $60 Bomberos fee.
+  sourcing: primary
+
+# ---- Municipal / property tax (applies broadly) ----
+
+patente-municipal:
+  title:
+    es: "Patente municipal"
+    en: "Patente municipal"
+  agency: { es: "Municipio", en: "Municipality" }
+  timing:
+    es: "Notificar ≤30 días de comenzar"
+    en: "Notify within 30 days of starting"
+  cost: { es: "Según volumen", en: "By volume" }
+  note:
+    es: >-
+      Se notifica al Director de Finanzas <b>dentro de 30 días de
+      comenzar la actividad</b> y se recibe una <b>patente provisional
+      exenta de pago por todo ese semestre</b> (Art. 7.210). No cuesta
+      nada y la mayoría de los dueños la pierden por no notificar a
+      tiempo — son los chavos más fáciles de todo el proceso. La
+      declaración de volumen de negocios vence <b>dentro de los 5 días
+      laborables siguientes al 15 de abril</b>, no el 15. Tiene que
+      llevar una certificación de que los anejos de Hacienda adjuntos
+      son copias fieles; <b>radicada sin esa certificación, cuenta como
+      no radicada</b>. El pago es semestral, por adelantado, el 1 de
+      julio y el 2 de enero, con <b>5% de descuento</b> por pagar
+      completo al radicar. La tasa exacta y el mínimo dependen del
+      municipio — ver content/municipios.yaml.
+    en: >-
+      Notify the Director de Finanzas <b>within 30 days of starting the
+      activity</b> and receive a <b>provisional patente exempt from
+      payment for that entire semester</b> (Art. 7.210). It costs
+      nothing and most owners forfeit it simply by not notifying in
+      time — this is the easiest money in the process. The declaración
+      de volumen de negocios is due <b>within 5 business days following
+      15 April</b> — not on the 15th. It must carry a certification that
+      the attached Hacienda schedules are true copies; <b>filed without
+      that certification, it counts as not filed</b>. Payment is
+      semiannual, in advance, on 1 July and 2 January, with a <b>5%
+      discount</b> for paying in full at filing. The exact rate and
+      minimum depend on the municipality — see content/municipios.yaml.
+  severity: key
+  recurring: true
+  sourcing: primary
+
+crim-personal-property-return:
+  title:
+    es: "Planilla de bienes muebles · CRIM"
+    en: "Personal property return · CRIM"
+  agency: { es: "CRIM", en: "CRIM" }
+  timing: { es: "15 de mayo, anual", en: "15 May, annually" }
+  cost: { es: "Según tasación", en: "By assessed value" }
+  note:
+    es: >-
+      Cubre inventario, maquinaria, equipo, muebles y enseres — por eso
+      le pega mucho más duro al retail y a los restaurantes que a un
+      consultor con una laptop. Un negocio dedicado a la venta al detal
+      de bienes y servicios no profesionales, con volumen neto ≤$150,000
+      y sin deuda de años anteriores que radique a tiempo, probablemente
+      cualifica para la <b>exención de $50,000 de tasación</b> — pero
+      <b>no es automática, hay que solicitarla</b>. Esta cifra viene del
+      Colegio de CPA de Puerto Rico, no se verificó contra el texto de
+      la ley. Las penalidades por radicar tarde corren a 5% por cada
+      período de 30 días, con tope de 25%.
+    en: >-
+      Covers inventory, machinery, equipment, furniture and fixtures —
+      which is why this bites retail and food service far harder than a
+      consultant with a laptop. A business engaged in retail sales of
+      goods and non-professional services, with net volume ≤$150,000 and
+      no prior-year debt, filed on time, likely qualifies for the
+      <b>$50,000 valuation exemption</b> — but <b>it is not automatic,
+      it must be requested</b>. This figure comes from the Colegio de
+      CPA de Puerto Rico and was not verified against the statute text.
+      Late filing penalties run 5% per 30-day period, capped at 25%.
+  recurring: true
+  sourcing: secondary
+
+# ---- Hiring: yes ----
+
+employer-registration-dtrh:
+  title:
+    es: "Registro de patrono · DTRH"
+    en: "Employer registration · DTRH"
+  agency: { es: "Depto. del Trabajo", en: "Dept. of Labor" }
+  timing: { es: "Días, en línea", en: "Days, online" }
+  cost: { es: "Según experiencia", en: "Experience-rated" }
+  note:
+    es: >-
+      Un solo registro en <a href="https://www.trabajo.pr.gov/">trabajo.pr.gov</a>
+      cubre tanto el seguro por desempleo como el SINOT (incapacidad
+      temporal no ocupacional). Bases salariales tributables: <b>$7,000</b>
+      para desempleo, <b>$9,000</b> para SINOT, más una contribución
+      especial de 1% de los salarios tributables. Las tasas van por
+      experiencia y no están publicadas — no se pudo conseguir la tasa
+      de patrono nuevo para 2026.
+    en: >-
+      One registration at <a href="https://www.trabajo.pr.gov/">trabajo.pr.gov</a>
+      covers both unemployment insurance and SINOT (temporary
+      non-occupational disability). Taxable wage bases: <b>$7,000</b>
+      for unemployment, <b>$9,000</b> for SINOT, plus a special
+      contribution of 1% of taxable wages. Actual contribution rates
+      are experience-rated and not published — a 2026 new-employer rate
+      could not be obtained.
+  sourcing: unverified
+
+cfse-policy:
+  title:
+    es: "Póliza del CFSE"
+    en: "CFSE workers' comp policy"
+  agency: { es: "Fondo del Seguro del Estado", en: "State Insurance Fund" }
+  timing: { es: "Antes del primer empleado", en: "Before your first employee" }
+  cost: { es: "No publicado", en: "Not published" }
+  note:
+    es: >-
+      <b>Toda persona que emplee a una o más personas tiene que tener
+      póliza del CFSE.</b> Es el único que da esa póliza; no hay mercado
+      privado donde cotizar. Esto no es papeleo de relleno: <b>operar
+      sin póliza quita la protección de remedio exclusivo</b> y expone
+      personalmente a responsabilidad civil por un accidente laboral.
+      El CFSE pide el Registro de Comerciantes.
+    en: >-
+      <b>Every person employing one or more people must hold a CFSE
+      policy.</b> It is a monopoly public insurer — there is no private
+      market to shop. This is not a paperwork formality: <b>operating
+      without a policy strips the exclusive-remedy protection</b> and
+      exposes the employer personally to tort liability for a
+      workplace injury. CFSE asks for the Merchant Registration
+      Certificate.
+  severity: stop
+  sourcing: primary
+
+drivers-social-security:
+  title:
+    es: "Seguro Social Choferil"
+    en: "Chauffeur's Social Security"
+  agency: { es: "DTRH", en: "DTRH" }
+  timing: { es: "Con el primer conductor", en: "With the first driver" }
+  cost:
+    es: "$0.30/sem patrono + $0.50/sem empleado"
+    en: "$0.30/wk employer + $0.50/wk employee"
+  note:
+    es: >-
+      Cubre a cualquier empleado a quien el patrono exija o permita
+      conducir <b>usual y regularmente</b> como parte integral del
+      trabajo — sin importar cuántas horas. Una tienda con un
+      repartidor, o un dependiente que hace gestiones en un vehículo del
+      negocio, está dentro. Cuesta centavos y se le pasa a casi todo el
+      mundo.
+    en: >-
+      Covers any employee the employer requires or permits to drive
+      <b>usually and regularly</b> as an integral part of the work — for
+      any number of hours. A store with a delivery driver, or a clerk
+      who runs supply errands in a company vehicle, is in scope.
+      Trivially cheap and very commonly missed.
+  sourcing: primary
+
+new-hire-reporting-asume:
+  title:
+    es: "Reporte de nuevos empleados · ASUME"
+    en: "New hire reporting · ASUME"
+  agency: { es: "ASUME", en: "ASUME" }
+  timing: { es: "20 días del primer día", en: "20 days from first day" }
+  cost: { es: "$0", en: "$0" }
+  note:
+    es: >-
+      Hay que reportarlo <b>aunque el empleado renuncie o sea despedido
+      antes de que pasen los 20 días</b>. La regla de 20 días viene de
+      guías de suplidores de nómina; no se encontró una página primaria
+      de ASUME o DTRH que la establezca.
+    en: >-
+      Must be reported <b>even if the employee quits or is fired before
+      the 20 days elapse</b>. The 20-day rule comes from payroll-vendor
+      guides — a primary ASUME or DTRH page stating it could not be
+      found.
+  sourcing: secondary
+
+christmas-bonus-and-21-employee-cliff:
+  title:
+    es: "El bono de Navidad y el precipicio de los 21 empleados"
+    en: "The Christmas bonus and the 21-employee cliff"
+  agency: { es: "—", en: "—" }
+  timing: { es: "A más tardar el 15 de diciembre", en: "By 15 December" }
+  cost: { es: "—", en: "—" }
+  note:
+    es: >-
+      Para empleados contratados en o después del 26 de enero de 2017
+      que trabajen ≥700 horas en el período del 1 de octubre al 30 de
+      septiembre: <b>2% del salario, con tope de $300</b> si hay 20
+      empleados o menos, <b>tope de $600</b> con 21 o más. Pasar de 20 a
+      21 duplica el tope por empleado — vale la pena tenerlo presente al
+      planificar el crecimiento. Estas cifras vienen de resúmenes
+      profesionales, no del texto de la ley.
+    en: >-
+      For employees hired on or after 26 January 2017 and working ≥700
+      hours in the 1 Oct–30 Sep period: <b>2% of salary, capped at
+      $300</b> with 20 or fewer employees, <b>capped at $600</b> at 21
+      or more. Crossing from 20 to 21 doubles the per-employee cap — a
+      real planning consideration when growing. These figures come from
+      professional summaries, not the statute text.
+  severity: warn
+  sourcing: secondary
+
+vacation-sick-leave-accrual:
+  title:
+    es: "Vacaciones y enfermedad acumulan desde el principio"
+    en: "Vacation and sick leave accrue from day one"
+  agency: { es: "—", en: "—" }
+  timing: { es: "Desde el período probatorio", en: "From the probationary period" }
+  cost: { es: "—", en: "—" }
+  note:
+    es: >-
+      La licencia por enfermedad acumula a <b>1 día por mes para todos
+      los empleados, desde el inicio del período probatorio</b>. Las
+      vacaciones acumulan a ½ día por mes en el primer año, subiendo con
+      la antigüedad. El umbral para acumular es 130 horas trabajadas al
+      mes.
+    en: >-
+      Sick leave accrues at <b>1 day per month for all employees, from
+      the start of the probationary period</b>. Vacation accrues at ½
+      day/month in year one, rising with tenure. The threshold to accrue
+      at all is 130 hours worked per month.
+  severity: warn
+  sourcing: secondary
+
+# ---- Hiring: no ----
+
+cfse-individual-track:
+  title:
+    es: "CFSE — vía de dueño individual"
+    en: "CFSE — individual owner track"
+  agency: { es: "Fondo del Seguro del Estado", en: "State Insurance Fund" }
+  timing: { es: "Opcional sin empleados", en: "Optional with no employees" }
+  cost: { es: "Varía", en: "Varies" }
+  note:
+    es: >-
+      Sin empleados, las obligaciones patronales no aplican. El CFSE sí
+      tiene una vía <b>individual</b> para dueños de negocio y
+      contratistas independientes — las entidades corporativas y las
+      LLC <b>no se aceptan</b> en esa vía, y se pide el Certificado de
+      Registro de Comerciante.
+    en: >-
+      With no employees the employer obligations do not attach. CFSE
+      does run an <b>individual</b> track for business owners and
+      independent contractors — note that corporate entities and LLCs
+      are <b>not accepted</b> on that track, and it asks for the
+      Merchant Registration Certificate.
+  sourcing: primary
+
+# ---- IVU / SUT ----
+
+ivu-monthly-general:
+  title:
+    es: "IVU — cobro y remesa mensual"
+    en: "IVU — collection and monthly remittance"
+  agency: { es: "Hacienda · SURI", en: "Hacienda · SURI" }
+  timing: { es: "Día 20 de cada mes", en: "By the 20th of each month" }
+  cost: { es: "—", en: "—" }
+  note:
+    es: >-
+      <b>Tasa combinada de 11.5%</b> — 10.5% estatal más 1% municipal.
+      Se radica el Modelo SC 2915 electrónicamente <b>para el día 20 del
+      mes siguiente</b>. <b>Se radica aunque no haya habido ventas
+      tributables</b> — una planilla en cero sigue siendo una planilla.
+      El 1% municipal sigue al municipio donde ocurrió la venta, lo que
+      importa si se abre un segundo local. El Código de Rentas Internas
+      consolidado todavía lee 6% y nunca menciona 10.5% en 1,104
+      páginas; la tasa vigente es 11.5% — confirmada por Hacienda — pero
+      nunca hay que citar el §4020.01 para sustentarla.
+    en: >-
+      <b>Combined rate 11.5%</b> — 10.5% state plus 1% municipal. File
+      Modelo SC 2915 electronically by the <b>20th of the following
+      month</b>. <b>File even in months with no taxable sales</b> — a
+      zero return is still a return. The municipal 1% follows the
+      municipality where the sale occurred, which matters when opening
+      a second location. The consolidated tax code still reads 6% and
+      never mentions 10.5% in 1,104 pages; the operative rate is
+      11.5% — confirmed by Hacienda — but never cite §4020.01 for it.
+  recurring: true
+  sourcing: primary
+
+ivu-monthly-b2b-professional:
+  title:
+    es: "IVU — servicios B2B y profesionales designados, 4%"
+    en: "IVU — B2B and designated professional services, 4%"
+  agency: { es: "Hacienda · SURI", en: "Hacienda · SURI" }
+  timing: { es: "Día 20 de cada mes", en: "By the 20th of each month" }
+  cost: { es: "—", en: "—" }
+  note:
+    es: >-
+      <b>La tasa probablemente es 4%, no 11.5%.</b> Los servicios
+      prestados a otros comerciantes (B2B) y los servicios profesionales
+      designados cargan un IVU estatal especial de 4% — y <b>nada de eso
+      va al municipio</b>. Los servicios profesionales designados
+      incluyen legales, CPA, ingeniería y agrimensura, arquitectura,
+      agronomía, geología, corretaje y tasación de bienes raíces. Cobrar
+      11.5% por error es cobrarle de más al cliente y radicar mal. No se
+      encontró que lo hayan derogado, pero tampoco una confirmación de
+      Hacienda de 2025 o 2026 de que el 4% siga en pie.
+    en: >-
+      <b>The rate is probably 4%, not 11.5%.</b> Services rendered to
+      other merchants (B2B) and designated professional services carry
+      a special 4% state IVU — and <b>none of it goes to the
+      municipality</b>. Designated professional services include legal,
+      CPA, engineering and surveying, architecture, agronomy, geology,
+      real estate brokerage and appraisal. Charging 11.5% by mistake is
+      both an overcharge to the client and a filing error. No repeal was
+      found, but also no 2025- or 2026-dated Hacienda confirmation that
+      the 4% regime still stands.
+  recurring: true
+  sourcing: secondary
+
+# ---- Cross-cutting warnings ----
+
+reglamento-conjunto-legally-unstable:
+  title:
+    es: "El Reglamento Conjunto está en terreno legalmente inestable"
+    en: "The Reglamento Conjunto is on legally unstable ground"
+  agency: { es: "—", en: "—" }
+  timing: { es: "—", en: "—" }
+  cost: { es: "—", en: "—" }
+  note:
+    es: >-
+      El Tribunal Supremo declaró <b>nulo el Reglamento Conjunto 2020 el
+      15 de marzo de 2023</b> por carecer del análisis de costo-beneficio
+      que exige la LPAU, y el litigio seguía vivo hasta octubre de 2025.
+      Como el <b>período de vigencia, los cargos y los estándares de
+      inspección del Permiso Único viven todos en ese reglamento</b>, el
+      intervalo de renovación no se puede establecer desde ninguna
+      fuente primaria. Las fuentes secundarias dicen anual. <b>Hay que
+      leer la fecha de vencimiento en el propio documento de permiso</b>
+      y no confiar en un número de memoria.
+    en: >-
+      The Tribunal Supremo declared the <b>Reglamento Conjunto 2020 null
+      on 15 March 2023</b> for lacking the cost-benefit analysis the
+      LPAU requires, and litigation was still live as of October 2025.
+      Because the Permiso Único's <b>validity period, fees and
+      inspection standards all live in that regulation</b>, the renewal
+      interval cannot be stated from any primary source. Secondary
+      sources say annual. <b>Read the expiration date off the permit
+      document itself</b> and do not trust a remembered number.
+  severity: stop
+  sourcing: unverified
+
+confirm-delegated-hierarchy:
+  title:
+    es: "Confirmar si el municipio tiene jerarquía delegada"
+    en: "Confirm whether the municipality holds delegated hierarchy"
+  agency: { es: "—", en: "—" }
+  timing: { es: "—", en: "—" }
+  cost: { es: "—", en: "—" }
+  note:
+    es: >-
+      Esto determina si se radica en OGPe o en el municipio — proceso
+      distinto, tiempos distintos, oficina distinta. La lista
+      autoritativa disponible es de <b>agosto de 2016</b>: Aguadilla,
+      Barranquitas, Bayamón, Cabo Rojo, Caguas, Carolina, Cidra,
+      Guaynabo, Humacao, Ponce y San Juan. Casi seguro está incompleta a
+      estas alturas — hay que llamar y confirmar.
+    en: >-
+      This determines whether to file with OGPe or with the
+      municipality — different process, different timeline, different
+      office. The authoritative list available dates from <b>August
+      2016</b>: Aguadilla, Barranquitas, Bayamón, Cabo Rojo, Caguas,
+      Carolina, Cidra, Guaynabo, Humacao, Ponce and San Juan. Almost
+      certainly incomplete by now — call and confirm.
+  severity: warn
+  sourcing: unverified
+
+above-3m-obligations-change:
+  title:
+    es: "Sobre $3M cambian las obligaciones"
+    en: "Above $3M the obligations change"
+  agency: { es: "—", en: "—" }
+  timing: { es: "—", en: "—" }
+  cost: { es: "—", en: "—" }
+  note:
+    es: >-
+      Sobre $3,000,000 de volumen se cruza el umbral de estados
+      financieros auditados bajo el §1061.15 de la Ley 1-2011 — que
+      entonces también hay que anejar a la declaración municipal de
+      volumen, y <b>una declaración radicada sin ellos cuenta como no
+      radicada</b>. Es además el umbral en que cualquier decreto de Ley
+      60 adquiere requisito de empleo.
+    en: >-
+      Above $3,000,000 of volume the audited-financial-statements
+      threshold under Ley 1-2011 §1061.15 is crossed — which then must
+      also be attached to the municipal volume declaration, and <b>a
+      declaration filed without them counts as not filed</b>. It is also
+      the threshold at which any Act 60 decree acquires an employment
+      requirement.
+  severity: warn
+  sourcing: primary
+
+state-annual-fee-survives:
+  title:
+    es: "El cargo anual del Depto. de Estado sigue vivo aunque el informe murió"
+    en: "The State fee survives even though the annual report died"
+  agency: { es: "Depto. de Estado", en: "Dept. of State" }
+  timing: { es: "15 de abril, anual", en: "15 April, annually" }
+  cost: { es: "$150 (observado)", en: "$150 (observed)" }
+  note:
+    es: >-
+      Desde 2025 las corporaciones ya no radican informe anual — pero
+      <b>el cargo anual sigue venciendo</b>, observado en <b>$150 para
+      el 15 de abril</b>. Una LLC que lo pase por alto tres años
+      consecutivos ve su certificado de organización <b>cancelado</b>;
+      una corporación arriesga revocación a los dos. El error más común
+      es asumir que si no hay informe, no se debe nada.
+    en: >-
+      For 2025 onward corporations no longer file an annual report —
+      but <b>the annual fee is still due</b>, observed at <b>$150 by 15
+      April</b>. An LLC that misses it for three consecutive years has
+      its certificate of organization <b>cancelled</b>; a corporation
+      risks revocation after two. The most common failure mode is
+      assuming that no report means nothing is owed.
+  severity: warn
+  recurring: true
+  sourcing: primary

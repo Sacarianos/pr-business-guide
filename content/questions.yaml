@@ -1,3 +1,154 @@
 # Decision-tree questions (schema: src/content.config.ts). Populated by G-03;
 # branching between questions is decision-tree logic (G-06/G-08), not content.
-[]
+#
+# Keys match the answer-state keys the decision tree consumes (S.type, S.entity,
+# etc. in the design handoff's build()) so G-06/G-08 can address a question and
+# its answer by the same name. `driving` is only ever shown when `hiring` is
+# answered `yes` — that branching rule lives in G-06, not here.
+
+type:
+  order: 1
+  label:
+    es: "¿Qué vas a abrir?"
+    en: "What are you opening?"
+  input: options
+  options:
+    - value: retail
+      label: { es: "Tienda / retail", en: "Store / retail" }
+    - value: food
+      label: { es: "Restaurante / cafetería", en: "Restaurant / café" }
+    - value: prof
+      label: { es: "Servicios profesionales", en: "Professional services" }
+    - value: mfg
+      label: { es: "Manufactura / distribución", en: "Manufacturing / distribution" }
+
+entity:
+  order: 2
+  label:
+    es: "Forma legal"
+    en: "Entity form"
+  input: options
+  options:
+    - value: llc
+      label: { es: "LLC", en: "LLC" }
+    - value: corp
+      label: { es: "Corporación", en: "Corporation" }
+    - value: sole
+      label: { es: "Individuo / DBA", en: "Sole proprietor / DBA" }
+    - value: unsure
+      label: { es: "No estoy seguro", en: "Not sure yet" }
+
+premises:
+  order: 3
+  label:
+    es: "¿Dónde vas a operar?"
+    en: "Where will you operate?"
+  input: options
+  options:
+    - value: commercial
+      label: { es: "Local comercial", en: "Commercial premises" }
+    - value: home
+      label: { es: "Mi casa, sin clientes", en: "My home, no client traffic" }
+    - value: mobile
+      label: { es: "Móvil / pop-up", en: "Mobile / pop-up" }
+
+buildout:
+  order: 4
+  label:
+    es: "¿Vas a remodelar o hacer buildout?"
+    en: "Will you remodel or build out?"
+  input: options
+  options:
+    - value: "yes"
+      label: { es: "Sí", en: "Yes" }
+    - value: "no"
+      label: { es: "No, entro y opero", en: "No, move in and operate" }
+
+muni:
+  order: 5
+  label:
+    es: "Municipio"
+    en: "Municipality"
+  hint:
+    es: "Cambia tu tasa de patente y también si radicas los permisos en OGPe o en el municipio."
+    en: "Changes both your patente rate and whether you file permits with OGPe or the municipality."
+  input: select
+  options:
+    - value: sanjuan
+      label: { es: "San Juan", en: "San Juan" }
+    - value: bayamon
+      label: { es: "Bayamón", en: "Bayamón" }
+    - value: caguas
+      label: { es: "Caguas", en: "Caguas" }
+    - value: carolina
+      label: { es: "Carolina", en: "Carolina" }
+    - value: guaynabo
+      label: { es: "Guaynabo", en: "Guaynabo" }
+    - value: ponce
+      label: { es: "Ponce", en: "Ponce" }
+    - value: mayaguez
+      label: { es: "Mayagüez", en: "Mayagüez" }
+    - value: penuelas
+      label: { es: "Peñuelas", en: "Peñuelas" }
+    - value: camuy
+      label: { es: "Camuy", en: "Camuy" }
+    - value: other
+      label: { es: "Otro municipio", en: "Another municipality" }
+
+vol:
+  order: 6
+  label:
+    es: "Volumen bruto estimado del primer año"
+    en: "Expected first-year gross volume"
+  hint:
+    es: "Volumen de negocios, no ganancia. Determina la patente, la exención del CRIM y los umbrales de auditoría."
+    en: "Business volume, not profit. Drives the patente, the CRIM exemption, and audit thresholds."
+  input: number
+
+hiring:
+  order: 7
+  label:
+    es: "¿Vas a contratar empleados?"
+    en: "Hiring employees?"
+  input: options
+  options:
+    - value: "yes"
+      label: { es: "Sí", en: "Yes" }
+    - value: "no"
+      label: { es: "Solo yo", en: "Just me" }
+
+driving:
+  order: 8
+  label:
+    es: "¿Alguien va a conducir como parte del trabajo?"
+    en: "Will anyone drive as part of the job?"
+  input: options
+  options:
+    - value: "yes"
+      label: { es: "Sí — delivery o gestiones", en: "Yes — delivery or errands" }
+    - value: "no"
+      label: { es: "No", en: "No" }
+
+exportsvc:
+  order: 9
+  label:
+    es: "¿Le vendes a clientes fuera de PR sin nexo local?"
+    en: "Do you sell to clients outside PR with no local nexus?"
+  input: options
+  options:
+    - value: "yes"
+      label: { es: "Sí, exporto", en: "Yes, I export" }
+    - value: "no"
+      label: { es: "No, vendo aquí", en: "No, I sell here" }
+
+young:
+  order: 10
+  label:
+    es: "¿Tienes entre 16 y 35 años con cuarto año?"
+    en: "Are you 16–35 with a high school diploma?"
+  input: options
+  options:
+    - value: "yes"
+      label: { es: "Sí", en: "Yes" }
+    - value: "no"
+      label: { es: "No", en: "No" }
