@@ -1,0 +1,82 @@
+---
+// One row of the process diagram (G-10): a box per step, a title+subtitle
+// label centered under each, and an optional row of arrows connecting
+// them. Lanes A, B, and C in ProcessDiagram.astro are all this same shape
+// — mirrors the handoff's `boxes()` / `node()` / `arrowsH()` helpers
+// (design/handoff/Guia Negocios PR.dc.html:864-875), factored into one
+// component instead of the three inlined copies the direct port started
+// with.
+export interface Node {
+  x: number;
+  // Only lane C's nodes need to override the lane's shared `nodeY` — its
+  // first node (patente municipal) sits 2px higher to make room for a
+  // second subtitle line the other three don't have.
+  y?: number;
+  title: string;
+  sub: string;
+  sub2?: string;
+}
+
+interface Props {
+  boxY: number;
+  boxHeight: number;
+  // Box index (into BOX_X) at and after which the box renders dashed —
+  // omit for a lane where every step is mandatory.
+  dashFrom?: number;
+  nodeY: number;
+  // Omit to skip the horizontal arrow row (lane C connects vertically
+  // instead, drawn by the caller).
+  arrowY?: number;
+  nodes: Node[];
+}
+
+const { boxY, boxHeight, dashFrom, nodeY, arrowY, nodes } = Astro.props;
+
+const MONO = "'IBM Plex Mono', monospace";
+const BOX_X = [36, 248, 460, 672];
+const ARROW_SPANS: [number, number][] = [
+  [204, 242],
+  [416, 454],
+  [628, 666],
+];
+---
+
+<g stroke="var(--rule)" fill="var(--surface)">
+  {
+    BOX_X.map((x, i) => (
+      <rect
+        x={x}
+        y={boxY}
+        width="168"
+        height={boxHeight}
+        stroke-dasharray={dashFrom != null && i >= dashFrom ? '4 3' : undefined}
+      />
+    ))
+  }
+</g>
+<g>
+  {
+    nodes.map((n) => (
+      <text x={n.x} y={n.y ?? nodeY} text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">
+        {n.title}
+        <tspan x={n.x} dy={n.sub2 ? '16' : '17'} font-size="10" font-weight="400" font-family={MONO} opacity="0.6">
+          {n.sub}
+        </tspan>
+        {n.sub2 && (
+          <tspan x={n.x} dy="13" font-size="10" font-weight="400" font-family={MONO} opacity="0.6">
+            {n.sub2}
+          </tspan>
+        )}
+      </text>
+    ))
+  }
+</g>
+{
+  arrowY != null && (
+    <g stroke="currentColor" stroke-opacity="0.5" marker-end="url(#ar)">
+      {ARROW_SPANS.map(([a, b]) => (
+        <line x1={a} y1={arrowY} x2={b} y2={arrowY} />
+      ))}
+    </g>
+  )
+}

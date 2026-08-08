@@ -27,6 +27,7 @@ valuable content on the page, not an exception to be smoothed over.
 content/          content collections (content/*.yaml), validated by src/lib/content-schema.ts
 docs/research/    the research document
 issues/           the tracker — 0001 is the spec of record, BACKLOG.md decomposes it
+src/components/   presentational Astro components with no content of their own (e.g. the process diagram)
 src/lib/          the schemas and the decision-tree module — no DOM, no network, no clock
 src/pages/        Astro pages, plus content.json as a published static asset
 src/scripts/      the one client-side island, hand-written and framework-free

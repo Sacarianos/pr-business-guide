@@ -4,37 +4,41 @@
 // obligations that don't gate opening, and the week 0/2/6/14+ timeline.
 //
 // Ported coordinate-for-coordinate from design/handoff's `diagram()`
-// method (design/handoff/Guia Negocios PR.dc.html) per 0001's fidelity
-// instruction ("recreate pixel-perfectly; do not restyle") and the
-// BACKLOG's G-08/G-10 note ("fully specified in the handoff ... porting is
-// mechanical"). The handoff builds this with React.createElement; here it's
-// plain static SVG, since G-10 depends only on G-04, not on the bilingual
-// toggle (G-19) — the page it lives on is still Spanish-only, so this
-// component is too. Re-parameterize on `lang` when G-19 lands.
+// method (design/handoff/Guia Negocios PR.dc.html) per the handoff's own
+// fidelity instruction ("recreate pixel-perfectly; do not restyle" —
+// design/handoff/README.md) and the BACKLOG's G-08/G-10 note ("fully
+// specified in the handoff ... porting is mechanical"). The handoff builds
+// this with React.createElement; here it's plain static SVG (DiagramLane
+// for the repeated box/label/arrow row shape), since G-10 depends only on
+// G-04, not on the bilingual toggle (G-19) — the page it lives on is still
+// Spanish-only, so this component is too. Re-parameterize on `lang` when
+// G-19 lands.
 //
 // Colors resolve through the CSS custom properties already defined on
 // index.astro's :root (--sello, --ambar, --rule, --surface, --verificado,
 // etc.), so this component carries no styling of its own beyond the
 // coordinates and font stacks the handoff specifies.
+import DiagramLane, { type Node } from './DiagramLane.astro';
+
 const MONO = "'IBM Plex Mono', monospace";
 const SERIF = "'Newsreader', serif";
 
 const diagramAria =
   'Diagrama de flujo: una cadena de identidad legal y contributiva y una cadena de local corren en paralelo y desembocan en el Permiso Único, que consolida cinco certificaciones y condiciona la apertura. Las obligaciones municipales y patronales se ramifican en paralelo y no bloquean la apertura.';
 
-// Shared box column: every lane's four steps sit on the same x positions,
-// just at different y/height — mirrors the handoff's `boxes()` helper.
-const BOX_X = [36, 248, 460, 672];
-const NODE_X = [120, 332, 544, 756];
+// The vertical connectors from lane B's chain down into lane C sit under
+// each lane's box centers — 84px in from each box's left edge (half its
+// 168px width), same column DiagramLane's own BOX_X uses internally.
+const NODE_X = [36, 248, 460, 672].map((x) => x + 84);
 
-const laneANodes = [
+const laneANodes: Node[] = [
   { x: 120, title: 'Elegir forma legal', sub: 'LLC · Corp · DBA' },
   { x: 332, title: 'Registrar entidad', sub: 'Depto. de Estado · RCE' },
   { x: 544, title: 'EIN federal', sub: 'IRS · gratis · minutos' },
   { x: 756, title: 'Registro de Comerciantes', sub: 'Hacienda · SURI' },
 ];
 
-const laneBNodes = [
+const laneBNodes: Node[] = [
   { x: 120, title: 'Buscar local', sub: '2–8 semanas' },
   { x: 332, title: 'Verificar zonificación', sub: 'por № catastro · antes de firmar' },
   { x: 544, title: 'Firmar el lease', sub: 'o comprar' },
@@ -50,10 +54,11 @@ const bundleItems = [
 ];
 
 // d1 (patente municipal) always applies, so its box is solid and it's the
-// only one with a two-line subtitle; d2–d4 only apply once the reader is
-// hiring, so their boxes render dashed (BOX_X index >= 1 in `boxes(468,
-// 56, 1)` in the source).
-const laneCNodes = [
+// only one with a two-line subtitle (hence the explicit `y`, 2px higher
+// than the other three, to make room for it); d2–d4 only apply once the
+// reader is hiring, so their boxes render dashed (`dashFrom={1}` below,
+// matching `boxes(468, 56, 1)` in the source).
+const laneCNodes: Node[] = [
   { x: 120, y: 488, title: 'Patente municipal', sub: 'notificar ≤30 días', sub2: 'de haber comenzado' },
   { x: 332, y: 490, title: 'DTRH', sub: 'desempleo + SINOT' },
   { x: 544, y: 490, title: 'CFSE', sub: 'seguro obrero' },
@@ -68,23 +73,17 @@ const ongoingItems = [
   'Volumen de negocios · 15 abr',
 ];
 
-const arrowSpans: [number, number][] = [
-  [204, 242],
-  [416, 454],
-  [628, 666],
+const timelineLabels = [
+  { x: 36, label: 'SEMANA 0' },
+  { x: 300, label: 'SEMANA 2' },
+  { x: 560, label: 'SEMANA 6' },
+  { x: 770, label: 'SEMANA 14+' },
 ];
 
-const timelineLabels: [number, string][] = [
-  [36, 'SEMANA 0'],
-  [300, 'SEMANA 2'],
-  [560, 'SEMANA 6'],
-  [770, 'SEMANA 14+'],
-];
-
-const timelineCaptions: [number, string][] = [
-  [36, 'entidad + EIN + SURI'],
-  [200, 'búsqueda de local y arrendamiento'],
-  [430, 'Permiso Único — inspecciones, la parte que no se acelera'],
+const timelineCaptions = [
+  { x: 36, text: 'entidad + EIN + SURI' },
+  { x: 200, text: 'búsqueda de local y arrendamiento' },
+  { x: 430, text: 'Permiso Único — inspecciones, la parte que no se acelera' },
 ];
 ---
 
@@ -106,25 +105,7 @@ const timelineCaptions: [number, string][] = [
   {/* Lane A — legal and tax identity */}
   <text x="36" y="44" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">IDENTIDAD LEGAL Y CONTRIBUTIVA</text>
   <text x="36" y="61" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">En serie, pero rápido — menos de una semana en total. Unos $150–250 en cargos de gobierno.</text>
-
-  <g stroke="var(--rule)" fill="var(--surface)">
-    {BOX_X.map((x) => (
-      <rect x={x} y="76" width="168" height="52" />
-    ))}
-  </g>
-  <g>
-    {laneANodes.map((n) => (
-      <text x={n.x} y="98" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">
-        {n.title}
-        <tspan x={n.x} dy="17" font-size="10" font-weight="400" font-family={MONO} opacity="0.6">{n.sub}</tspan>
-      </text>
-    ))}
-  </g>
-  <g stroke="currentColor" stroke-opacity="0.5" marker-end="url(#ar)">
-    {arrowSpans.map(([a, b]) => (
-      <line x1={a} y1="102" x2={b} y2="102" />
-    ))}
-  </g>
+  <DiagramLane boxY={76} boxHeight={52} nodeY={98} arrowY={102} nodes={laneANodes} />
 
   {/* The ordering rule people get wrong */}
   <rect x="36" y="152" width="700" height="62" fill="none" stroke="var(--ambar)" stroke-opacity="0.55" />
@@ -136,25 +117,7 @@ const timelineCaptions: [number, string][] = [
   {/* Lane B — premises and permit, the critical path */}
   <text x="36" y="252" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">LOCAL Y PERMISO — LA RUTA CRÍTICA</text>
   <text x="36" y="269" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">Semanas o meses. Es la única parte que no se acelera por más organizado que seas.</text>
-
-  <g stroke="var(--rule)" fill="var(--surface)">
-    {BOX_X.map((x, i) => (
-      <rect x={x} y="284" width="168" height="52" stroke-dasharray={i >= 3 ? '4 3' : undefined} />
-    ))}
-  </g>
-  <g>
-    {laneBNodes.map((n) => (
-      <text x={n.x} y="306" text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">
-        {n.title}
-        <tspan x={n.x} dy="17" font-size="10" font-weight="400" font-family={MONO} opacity="0.6">{n.sub}</tspan>
-      </text>
-    ))}
-  </g>
-  <g stroke="currentColor" stroke-opacity="0.5" marker-end="url(#ar)">
-    {arrowSpans.map(([a, b]) => (
-      <line x1={a} y1="310" x2={b} y2="310" />
-    ))}
-  </g>
+  <DiagramLane boxY={284} boxHeight={52} dashFrom={3} nodeY={306} arrowY={310} nodes={laneBNodes} />
 
   {/* Both chains converge on the Permiso Único */}
   <rect x="904" y="150" width="240" height="96" fill="var(--sello)" />
@@ -192,20 +155,7 @@ const timelineCaptions: [number, string][] = [
       <line x1={x} y1="424" x2={x} y2="464" />
     ))}
   </g>
-  <g stroke="var(--rule)" fill="var(--surface)">
-    {BOX_X.map((x, i) => (
-      <rect x={x} y="468" width="168" height="56" stroke-dasharray={i >= 1 ? '4 3' : undefined} />
-    ))}
-  </g>
-  <g>
-    {laneCNodes.map((n) => (
-      <text x={n.x} y={n.y} text-anchor="middle" font-size="12.5" font-weight="600" fill="currentColor">
-        {n.title}
-        <tspan x={n.x} dy={n.sub2 ? '16' : '17'} font-size="10" font-weight="400" font-family={MONO} opacity="0.6">{n.sub}</tspan>
-        {n.sub2 && <tspan x={n.x} dy="13" font-size="10" font-weight="400" font-family={MONO} opacity="0.6">{n.sub2}</tspan>}
-      </text>
-    ))}
-  </g>
+  <DiagramLane boxY={468} boxHeight={56} dashFrom={1} nodeY={490} nodes={laneCNodes} />
   <text x="248" y="542" font-size="10" font-family={MONO} fill="currentColor" opacity="0.55">— — —  solo si contratas empleados  — — —</text>
 
   {/* Recurring compliance */}
@@ -221,16 +171,16 @@ const timelineCaptions: [number, string][] = [
   {/* Timeline */}
   <line x1="36" y1="586" x2="840" y2="586" stroke="currentColor" stroke-opacity="0.25" />
   <g font-size="10" font-family={MONO} fill="currentColor" opacity="0.55">
-    {timelineLabels.map(([x, t]) => (
-      <text x={x} y="606">{t}</text>
+    {timelineLabels.map((t) => (
+      <text x={t.x} y="606">{t.label}</text>
     ))}
   </g>
   <rect x="36" y="620" width="120" height="8" fill="var(--verificado)" opacity="0.55" />
   <rect x="160" y="620" width="200" height="8" fill="var(--ambar)" opacity="0.5" />
   <rect x="364" y="620" width="476" height="8" fill="var(--sello)" opacity="0.55" />
   <g font-size="10.5" font-family={SERIF} fill="currentColor" opacity="0.62">
-    {timelineCaptions.map(([x, t]) => (
-      <text x={x} y="648">{t}</text>
+    {timelineCaptions.map((c) => (
+      <text x={c.x} y="648">{c.text}</text>
     ))}
   </g>
 </svg>
