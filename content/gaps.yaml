@@ -1,3 +1,72 @@
 # "What I could not verify" (schema: src/content.config.ts). Populated by
 # G-03; rendered permanently by G-16.
-[]
+
+ogpe-fee-schedule:
+  text:
+    es: >-
+      OGPe no publica un tarifario que se pudiera encontrar; solo el
+      mecanismo de pagar 10% al radicar y el balance después de la
+      evaluación. Cualquier costo del Permiso Único en esta guía es un
+      estimado, no un número sustentado.
+    en: >-
+      OGPe publishes no fee schedule that could be found — only the
+      mechanic that you pay 10% at filing and the balance after
+      evaluation. Any Permiso Único cost figure in this guide is an
+      estimate, not a sourced number.
+  relatesTo: permiso-unico
+
+permiso-unico-renewal-interval:
+  text:
+    es: >-
+      El intervalo de renovación del Permiso Único no se pudo establecer
+      desde ninguna fuente primaria, porque el reglamento que lo gobierna
+      lleva en litigio desde 2023.
+    en: >-
+      The Permiso Único renewal interval could not be established from
+      any primary source, because the governing regulation has been in
+      litigation since 2023.
+  relatesTo: permiso-unico
+
+delegated-municipalities-list-stale:
+  text:
+    es: >-
+      La lista de municipios con autoridad delegada de permisos es de
+      agosto de 2016 y casi seguro está desactualizada.
+    en: >-
+      The delegated-permit-authority municipality list dates from August
+      2016 and is almost certainly stale.
+  relatesTo: confirm-delegated-hierarchy
+
+cfse-dtrh-rates-2026:
+  text:
+    es: >-
+      Las primas del CFSE y las tasas de desempleo/SINOT del DTRH para
+      2026 no están publicadas — solo se establecen las bases salariales.
+    en: >-
+      CFSE premium rates and 2026 DTRH unemployment/SINOT rates are
+      unpublished — only the wage bases are stated.
+  relatesTo: employer-registration-dtrh
+
+home-based-permiso-unico-ambiguous:
+  text:
+    es: >-
+      Si un negocio en casa sin tráfico de clientes necesita Permiso
+      Único es genuinamente ambiguo en la ley — y es justo la pregunta
+      que más le importa a ese lector.
+    en: >-
+      Whether a home-based business with no client traffic needs a
+      Permiso Único at all is genuinely ambiguous in the statute — and
+      it is the question that matters most to that reader.
+  relatesTo: home-based-permiso-unico-question
+
+llc-classification-determinaciones-administrativas:
+  text:
+    es: >-
+      Las reglas de clasificación contributiva de la LLC descansan en las
+      Determinaciones Administrativas 22-10 y 23-01 de Hacienda, ninguna
+      de las cuales se pudo recuperar en texto completo.
+    en: >-
+      The LLC tax classification rules rest on Hacienda Determinaciones
+      Administrativas 22-10 and 23-01, neither of which could be
+      retrieved in full text.
+  relatesTo: entity-llc-tax-classification

@@ -1,3 +1,178 @@
 # Municipal patente comparison (schema: src/content.config.ts). Populated by
 # G-03; the estimator that consumes this is G-09.
-[]
+#
+# Rates are on business volume attributable to the municipality (Ley 107-2020,
+# Código Municipal, Art. 7.202). Art. 7.202(b) sets a 0.50% ceiling on
+# non-financial business; municipalities may set lower or tiered rates. The
+# general floor is $25 (Art. 7.202(d)) — encoded per-municipio below as
+# `minimum`, except San Juan, where the exempt band and the $25 flat band
+# cannot both be expressed by a single top-level minimum (see its note).
+# `sourcing: primary` mirrors the handoff's `verified: true`; `secondary`
+# mirrors `verified: false` where a rate is reported but not confirmed against
+# a primary text; `unverified` is used only for the generic statutory-ceiling
+# fallback, which is not any specific municipality's confirmed rate.
+
+sanjuan:
+  name: "San Juan"
+  sourcing: primary
+  rate:
+    type: tiered
+    tiers:
+      - { upTo: 12500, percent: 0 }
+      - { upTo: 100000, percent: 0 }
+      - { upTo: 300000, percent: 0.002 }
+      - { upTo: null, percent: 0.005 }
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "tramite.sanjuan.pr — radicación electrónica obligatoria"
+    en: "tramite.sanjuan.pr — electronic filing compulsory"
+  note:
+    es: >-
+      Volumen ≤$12,500 exento. De $12,501 a $100,000, $25 fijos (no un
+      porcentaje — el campo `tiers` de arriba lo aproxima con 0%, pero el
+      cargo real en esa banda es un monto fijo de $25, no $0; ver G-09).
+      De $100,001 a $300,000, 0.20%. Sobre $300,000, 0.50%. Radicación
+      electrónica obligatoria en tramite.sanjuan.pr. También corre un
+      portal de incentivos en emprendimiento.sanjuan.pr.
+    en: >-
+      Volume ≤$12,500 is exempt. From $12,501 to $100,000, a flat $25 (not
+      a percentage — the `tiers` field above approximates this band at
+      0%, but the real charge there is a flat $25, not $0; see G-09). From
+      $100,001 to $300,000, 0.20%. Above $300,000, 0.50%. Electronic
+      filing is compulsory at tramite.sanjuan.pr. It also runs a
+      business-incentive portal at emprendimiento.sanjuan.pr.
+
+bayamon:
+  name: "Bayamón"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "ivubayamon.org"
+    en: "ivubayamon.org"
+  note:
+    es: "5% de descuento si pagas el año completo al radicar. La página municipal todavía cita la derogada Ley 113."
+    en: "5% discount if you pay the full year at filing. The municipal page still cites the repealed Ley 113."
+
+caguas:
+  name: "Caguas"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "Recaudador Virtual"
+    en: "Recaudador Virtual"
+  note:
+    es: "Radica por Recaudador Virtual."
+    en: "Files through Recaudador Virtual."
+
+carolina:
+  name: "Carolina"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "municipiocarolina.com"
+    en: "municipiocarolina.com"
+
+guaynabo:
+  name: "Guaynabo"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "epay.guaynabocity.gov.pr"
+    en: "epay.guaynabocity.gov.pr"
+
+ponce:
+  name: "Ponce"
+  sourcing: secondary
+  rate:
+    type: tiered
+    tiers:
+      - { upTo: 499999, percent: 0.003 }
+      - { upTo: null, percent: 0.005 }
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "ponce.recaudadorvirtual.com"
+    en: "ponce.recaudadorvirtual.com"
+  note:
+    es: "Tasa leída de una tabla del Colegio de CPA con posible desalineación de columnas — confírmala contra la ordenanza municipal."
+    en: "Rate read from a CPA association table with possible column drift — confirm against the municipal ordinance."
+
+mayaguez:
+  name: "Mayagüez"
+  sourcing: unverified
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "mayaguez.recaudadorvirtual.com"
+    en: "mayaguez.recaudadorvirtual.com"
+  note:
+    es: "Tasa incierta y posiblemente escalonada. No aparece en la lista de 2016 de autoridad delegada, así que asume OGPe hasta confirmar."
+    en: "Rate uncertain and possibly tiered. Not on the 2016 delegated-authority list, so assume OGPe until confirmed."
+
+penuelas:
+  name: "Peñuelas"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.004
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  note:
+    es: "Por debajo del techo estatutario — un ahorro genuino, aunque modesto."
+    en: "Below the statutory ceiling — a genuine, if modest, saving."
+
+camuy:
+  name: "Camuy"
+  sourcing: primary
+  rate:
+    type: tiered
+    tiers:
+      - { upTo: 5000, percent: 0 }
+      - { upTo: 200000, percent: 0.004 }
+      - { upTo: null, percent: 0.005 }
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "Tabla 2024-25"
+    en: "2024-25 table"
+  note:
+    es: >-
+      Escalonado. Cifras de la tabla 2024-25. Bajo $5,000 la tasa es $25
+      fijos (el `tiers` de arriba lo aproxima con 0%, no $0 — ver G-09);
+      en la práctica ese volumen ya cae bajo la exención estatal de
+      $5,000 del Art. 7.206, que exime del todo.
+    en: >-
+      Tiered. Figures from the 2024-25 table. Below $5,000 the charge is
+      a flat $25 (the `tiers` field above approximates this at 0%, not
+      $0 — see G-09); in practice that volume already falls under the
+      statewide $5,000 exemption in Art. 7.206, which exempts it entirely.
+
+other:
+  name: "Otro municipio"
+  sourcing: unverified
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  note:
+    es: "Techo estatutario general del Art. 7.202(b), no una tasa confirmada para tu municipio específico. Confirma la tasa real antes de presupuestar."
+    en: "The general statutory ceiling from Art. 7.202(b), not a confirmed rate for your specific municipality. Confirm the actual rate before budgeting on it."
