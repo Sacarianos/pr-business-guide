@@ -1,7 +1,21 @@
 ---
-// Bootstrap placeholder. The real page is assembled from `content/*.yaml`
-// starting at G-03; the process overview and step cards land at G-10 and G-11,
-// and the research date becomes a proper freshness stamp at G-17.
+// The ten-question flow (G-08) and the patente estimator it surfaces
+// (G-09). Content is server-rendered from content/*.yaml — only the
+// question panel needs client JS, wired up in src/scripts/tool.ts. The
+// process diagram, step cards, and municipal table (G-10/G-11/G-12) are
+// later tickets; this page currently ends where the tool's own results
+// list does.
+import { loadContent } from '../lib/load-content';
+
+const content = await loadContent();
+
+// Embedded so the client script has content immediately, with no extra
+// request race against G-04's published content.json (that asset is for
+// cud-agente, a different consumer with a different lifecycle — fetching
+// it here would just be a second, slower copy of what SSR already has).
+// `<`-escaping keeps a literal `</script>` inside any note's HTML
+// from ever being able to close this tag early.
+const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
 ---
 
 <html lang="es">
@@ -9,14 +23,383 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Guía de Apertura de Negocios en Puerto Rico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Franklin:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <main>
+    <header class="masthead">
+      <p class="eyebrow">Guía práctica, no asesoría legal</p>
       <h1>Guía de Apertura de Negocios en Puerto Rico</h1>
-      <p>
-        Esta guía todavía no tiene contenido. La investigación que la respalda está
-        en el repositorio; lo que falta es presentarla.
+      <p class="dek">
+        Contesta hasta diez preguntas y arma tu propia secuencia — agencia, plazo y costo por
+        cada paso — con los incentivos y la patente municipal que te tocan.
       </p>
+    </header>
+
+    <main class="tool">
+      <div class="tool-grid">
+        <div class="questions" data-questions>
+          {
+            content.questions.map((q) => (
+              <div class="question" data-question={q.id}>
+                <div class="question-head">
+                  <span class="question-num">{q.order}</span>
+                  <label class="question-label">{q.label.es}</label>
+                </div>
+                {q.hint && <p class="question-hint">{q.hint.es}</p>}
+                {q.input === 'options' && (
+                  <div class="options" role="group" aria-label={q.label.es}>
+                    {q.options?.map((o) => (
+                      <button type="button" class="option" data-option={o.value}>
+                        {o.label.es}
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {q.input === 'select' && (
+                  <select aria-label={q.label.es}>
+                    <option value="">—</option>
+                    {q.options?.map((o) => <option value={o.value}>{o.label.es}</option>)}
+                  </select>
+                )}
+                {q.input === 'number' && (
+                  <input type="number" min="0" step="1" aria-label={q.label.es} />
+                )}
+              </div>
+            ))
+          }
+          <button type="button" class="start-over" data-start-over>
+            Empezar de nuevo
+          </button>
+        </div>
+
+        <div class="results">
+          <div class="empty-state" data-empty-state>
+            Contesta al menos tres preguntas para ver tu secuencia.
+          </div>
+          <div class="results-content" data-results hidden>
+            <div class="at-a-glance" data-glance></div>
+            <section>
+              <h2>Tu secuencia</h2>
+              <ol class="sequence" data-sequence></ol>
+            </section>
+            <section>
+              <h2>Incentivos aplicables</h2>
+              <div class="incentives" data-incentives></div>
+            </section>
+          </div>
+        </div>
+      </div>
     </main>
+
+    <script type="application/json" id="tool-content" set:html={contentJson} is:inline />
+    <script src="../scripts/tool.ts"></script>
   </body>
 </html>
+
+<style>
+  :root {
+    --paper: #f4f2ed;
+    --surface: #fbfaf7;
+    --ink: #16191c;
+    --ink-2: #4b5259;
+    --ink-3: #7a828a;
+    --rule: #cfcbc2;
+    --rule-soft: #e2ded6;
+    --sello: #0d5c63;
+    --ambar: #b96a00;
+    --derogado: #c22b20;
+    --verificado: #1f7a55;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #14171b;
+      --surface: #1b1f24;
+      --ink: #e8e6e1;
+      --ink-2: #a9afb6;
+      --ink-3: #79818a;
+      --rule: #333a43;
+      --rule-soft: #272d35;
+      --sello: #5fb8bf;
+      --ambar: #d9a441;
+      --derogado: #e58080;
+      --verificado: #6bb894;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Newsreader', serif;
+    font-size: 17px;
+    line-height: 1.62;
+  }
+
+  .masthead {
+    background: var(--surface);
+    border-bottom: 2px solid var(--ink);
+    padding: 44px 24px 32px;
+  }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--sello);
+    margin: 0 0 10px;
+  }
+  h1 {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 5vw, 48px);
+    letter-spacing: -0.03em;
+    margin: 0 0 12px;
+  }
+  .dek {
+    max-width: 62ch;
+    font-size: 18px;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  .tool {
+    padding: 32px 24px 64px;
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+  .tool-grid {
+    display: grid;
+    grid-template-columns: 330px 1fr;
+    gap: 40px;
+  }
+  @media (max-width: 860px) {
+    .tool-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .questions {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding-right: 4px;
+  }
+  .question[hidden] {
+    display: none;
+  }
+  .question-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .question-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    color: var(--sello);
+  }
+  .question-label {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .question-hint {
+    margin: 6px 0 0 26px;
+    font-size: 11.5px;
+    color: var(--ink-3);
+  }
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0 0 26px;
+  }
+  .option {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 13px;
+    padding: 7px 12px;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    color: var(--ink-2);
+    cursor: pointer;
+    transition:
+      border-color 0.12s,
+      background 0.12s,
+      color 0.12s;
+  }
+  .option:hover {
+    border-color: var(--sello);
+  }
+  .option:focus-visible {
+    outline: 2px solid var(--sello);
+    outline-offset: 2px;
+  }
+  .option.is-selected {
+    background: var(--sello);
+    border-color: var(--sello);
+    color: var(--surface);
+    font-weight: 600;
+  }
+  select,
+  input[type='number'] {
+    margin: 10px 0 0 26px;
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 14px;
+    padding: 7px 10px;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    color: var(--ink);
+    max-width: calc(100% - 26px);
+  }
+  .start-over {
+    font-family: 'IBM Plex Mono', monospace;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.6px;
+    padding: 10px 14px;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    color: var(--ink-2);
+    cursor: pointer;
+    align-self: flex-start;
+  }
+  .start-over:hover {
+    border-color: var(--sello);
+    color: var(--sello);
+  }
+
+  .results {
+    min-width: 0;
+  }
+  .empty-state {
+    border: 1px dashed var(--rule);
+    padding: 64px 24px;
+    text-align: center;
+    font-style: italic;
+    color: var(--ink-3);
+  }
+  .results-content[hidden],
+  .empty-state[hidden] {
+    display: none;
+  }
+
+  .at-a-glance {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 32px;
+  }
+  .glance-cell {
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .glance-cell:not(:first-child) {
+    border-left: 1px solid var(--rule-soft);
+  }
+  .glance-label {
+    font-family: 'IBM Plex Mono', monospace;
+    text-transform: uppercase;
+    font-size: 9.5px;
+    letter-spacing: 0.6px;
+    color: var(--ink-3);
+  }
+  .glance-value {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 800;
+    font-size: 26px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  h2 {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 700;
+    font-size: clamp(20px, 2.6vw, 28px);
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+  }
+
+  .sequence {
+    list-style: none;
+    margin: 0 0 40px;
+    padding: 0;
+  }
+  .step {
+    display: flex;
+    gap: 12px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    border-left: 2px solid transparent;
+    padding-left: 10px;
+  }
+  .step[data-severity='key'] {
+    border-left-color: var(--sello);
+  }
+  .step[data-severity='warn'] {
+    border-left-color: var(--ambar);
+  }
+  .step[data-severity='stop'] {
+    border-left-color: var(--derogado);
+  }
+  .step-num {
+    flex: 0 0 30px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    color: var(--sello);
+  }
+  .step-title {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 6px;
+  }
+  .step-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-3);
+    margin: 0 0 6px;
+  }
+  .step-note {
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .step-note :global(a) {
+    color: var(--sello);
+  }
+
+  .incentives {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .incentive-card {
+    border-left: 2px solid var(--verificado);
+    padding: 4px 0 4px 12px;
+  }
+  .incentive-card h4 {
+    font-family: 'Libre Franklin', sans-serif;
+    font-size: 15px;
+    margin: 0 0 4px;
+  }
+  .incentive-card p {
+    font-size: 14.5px;
+    color: var(--ink-2);
+    margin: 0;
+  }
+</style>
