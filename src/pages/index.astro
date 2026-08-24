@@ -43,7 +43,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Franklin:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
     {
@@ -428,18 +428,57 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
 </html>
 
 <style>
+  /* Design tokens. Palette "Deep harbour": the teal that was already the
+     best colour on the page becomes the single primary, and the ground
+     moves from the old cream (#f4f2ed) to a cool near-white.
+
+     The constraint driving the whole palette: `sourcing` and `practice`
+     use red/amber/green to mean unverified/unconfirmed/verified (0001),
+     so those three carry real meaning and the primary has to stay clear
+     of them or the marks stop reading as signal.
+
+     Every value below is >= 4.5:1 against its own ground (WCAG AA for
+     normal text) in both themes. The previous palette failed that on two
+     tokens — --ink-3 at 3.48:1 and --ambar at 3.66:1 — while both were
+     being used at 9.5-11.5px. Re-check with a contrast calculator before
+     changing any of these. */
   :root {
-    --paper: #f4f2ed;
-    --surface: #fbfaf7;
-    --ink: #16191c;
-    --ink-2: #4b5259;
-    --ink-3: #7a828a;
-    --rule: #cfcbc2;
-    --rule-soft: #e2ded6;
-    --sello: #0d5c63;
-    --ambar: #b96a00;
-    --derogado: #c22b20;
-    --verificado: #1f7a55;
+    --paper: #f7f9fa;
+    --surface: #ffffff;
+    --surface-2: #eef2f5;
+    --ink: #0d1518;
+    --ink-2: #46545e;
+    --ink-3: #5f6e79;
+    --rule: #dbe3ea;
+    --rule-soft: #eaeff4;
+    --sello: #0a5f6b;
+    --on-sello: #ffffff;
+    --ambar: #8a5a06;
+    --derogado: #a8231b;
+    --verificado: #16663f;
+
+    /* One type scale, seven steps. Replaces the eighteen ad-hoc sizes
+       (9.5/10/10.5/11/11.5/12.5/13/13.5/14/14.5/15/15.5/16/17/18/26/28/56)
+       that accumulated across G-08..G-20. Nothing sits below 11.5px now:
+       the smallest text on this page carries agency, deadline, cost and
+       sourcing, which is not footnote material. */
+    --fs-display: clamp(34px, 4.4vw, 52px);
+    --fs-h2: clamp(23px, 2.6vw, 30px);
+    --fs-h3: 19px;
+    --fs-body: 16.5px;
+    --fs-small: 14.5px;
+    --fs-meta: 12.5px;
+    --fs-label: 11.5px;
+
+    /* Three families, each with one job. The serif body face is gone:
+       it was the loudest element of an editorial costume this page had
+       no reason to wear, and the prose it set (a step note, a gap) runs
+       40-80 words, well short of where a serif earns its keep. The
+       tool/record distinction the copy makes is carried by measure,
+       size and leading instead of by a fourth family. */
+    --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+    --font-body: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
     /* One shared content measure for every section, masthead included —
        previously the masthead had no max-width at all while every section
        below it centered at 1180px, so the H1 sat flush against the left
@@ -449,19 +488,25 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
        flat, undifferentiated page background on each side. */
     --page-w: 1600px;
   }
+  /* Only the colour tokens are redefined here — never a component rule,
+     so nothing can end up defined in one theme and missing in the other.
+     Contrast against #0c1114: ink 16.99, ink-2 9.33, ink-3 5.55,
+     sello 9.08, verificado 8.89, ambar 9.27, derogado 7.83. */
   @media (prefers-color-scheme: dark) {
     :root {
-      --paper: #14171b;
-      --surface: #1b1f24;
-      --ink: #e8e6e1;
-      --ink-2: #a9afb6;
-      --ink-3: #79818a;
-      --rule: #333a43;
-      --rule-soft: #272d35;
-      --sello: #5fb8bf;
-      --ambar: #d9a441;
-      --derogado: #e58080;
-      --verificado: #6bb894;
+      --paper: #0c1114;
+      --surface: #131a1f;
+      --surface-2: #1a232a;
+      --ink: #eef3f6;
+      --ink-2: #a9b8c2;
+      --ink-3: #7d8d98;
+      --rule: #26333c;
+      --rule-soft: #1c262d;
+      --sello: #4fc3cf;
+      --on-sello: #062024;
+      --ambar: #e0ad4e;
+      --derogado: #f08a82;
+      --verificado: #62c493;
     }
   }
 
@@ -472,9 +517,10 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     margin: 0;
     background: var(--paper);
     color: var(--ink);
-    font-family: 'Newsreader', serif;
-    font-size: 17px;
-    line-height: 1.62;
+    font-family: var(--font-body);
+    font-size: var(--fs-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* G-19: the bilingual toggle. Every string on the page that isn't
@@ -505,8 +551,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     padding: 8px 24px;
   }
   .brand-mark {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
     font-weight: 600;
     letter-spacing: 1.2px;
     color: var(--ink-3);
@@ -516,8 +562,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     border: 1px solid var(--rule);
   }
   .lang-btn {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
     font-weight: 600;
     letter-spacing: 0.5px;
     padding: 5px 12px;
@@ -549,23 +595,23 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     padding: 0 24px;
   }
   .eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
     letter-spacing: 1.2px;
     text-transform: uppercase;
     color: var(--sello);
     margin: 0 0 10px;
   }
   h1 {
-    font-family: 'Libre Franklin', sans-serif;
+    font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(28px, 4vw, 56px);
+    font-size: var(--fs-display);
     letter-spacing: -0.03em;
     margin: 0 0 12px;
   }
   .dek {
     max-width: 62ch;
-    font-size: 18px;
+    font-size: var(--fs-h3);
     color: var(--ink-2);
     margin: 0;
   }
@@ -585,8 +631,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
   .alert-label {
     flex: 0 0 210px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
     text-transform: uppercase;
     letter-spacing: 0.8px;
     color: var(--sello);
@@ -594,7 +640,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
   .alert-body {
     margin: 0;
-    font-size: 14.5px;
+    font-size: var(--fs-small);
     line-height: 1.55;
     color: var(--ink-2);
     max-width: 76ch;
@@ -645,19 +691,26 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     gap: 10px;
   }
   .question-num {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--font-mono);
     font-weight: 600;
     color: var(--sello);
   }
+  /* The question itself and its hint are the two things a reader has to
+     read to answer, so both sit above the mechanical size the old values
+     mapped to — a 13px label and an 11.5px hint were the smallest text on
+     a panel whose entire job is being answered. */
   .question-label {
-    font-family: 'Libre Franklin', sans-serif;
+    font-family: var(--font-display);
     font-weight: 600;
-    font-size: 13px;
+    font-size: var(--fs-h3);
+    line-height: 1.3;
   }
   .question-hint {
     margin: 6px 0 0 26px;
-    font-size: 11.5px;
+    font-size: var(--fs-small);
+    line-height: 1.45;
     color: var(--ink-3);
+    max-width: 46ch;
   }
   .options {
     display: flex;
@@ -666,9 +719,9 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     margin: 10px 0 0 26px;
   }
   .option {
-    font-family: 'Libre Franklin', sans-serif;
-    font-size: 13px;
-    padding: 7px 12px;
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
+    padding: 9px 14px;
     border: 1px solid var(--rule);
     background: var(--surface);
     color: var(--ink-2);
@@ -694,8 +747,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   select,
   input[type='number'] {
     margin: 10px 0 0 26px;
-    font-family: 'Libre Franklin', sans-serif;
-    font-size: 14px;
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
     padding: 7px 10px;
     border: 1px solid var(--rule);
     background: var(--surface);
@@ -703,9 +756,9 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     max-width: calc(100% - 26px);
   }
   .start-over {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--font-mono);
     text-transform: uppercase;
-    font-size: 11px;
+    font-size: var(--fs-label);
     letter-spacing: 0.6px;
     padding: 10px 14px;
     border: 1px solid var(--rule);
@@ -757,20 +810,20 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     border-left: 1px solid var(--rule-soft);
   }
   :global(.glance-label) {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--font-mono);
     text-transform: uppercase;
-    font-size: 9.5px;
+    font-size: var(--fs-label);
     letter-spacing: 0.6px;
     color: var(--ink-3);
   }
   :global(.glance-value) {
-    font-family: 'Libre Franklin', sans-serif;
+    font-family: var(--font-display);
     font-weight: 800;
-    font-size: 26px;
+    font-size: var(--fs-h2);
     font-variant-numeric: tabular-nums;
   }
   :global(.glance-sub) {
-    font-size: 12.5px;
+    font-size: var(--fs-meta);
     line-height: 1.45;
     color: var(--ink-3);
   }
@@ -781,8 +834,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
      the two shown here; `primary` gets no mark at all, since an unmarked
      figure is the confirmed default. */
   :global(.mark) {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9.5px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.6px;
@@ -806,7 +859,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   :global(.practice-banner) {
     margin: 10px 0 0;
     padding: 8px 10px;
-    font-size: 13.5px;
+    font-size: var(--fs-small);
     line-height: 1.5;
   }
   .practice-contradicted,
@@ -823,8 +876,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   :global(.practice-attribution) {
     display: block;
     margin-top: 2px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
     opacity: 0.85;
   }
   .entities-practice-row td {
@@ -834,9 +887,9 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
 
   h2 {
-    font-family: 'Libre Franklin', sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(20px, 2.6vw, 28px);
+    font-size: var(--fs-h2);
     letter-spacing: -0.02em;
     margin: 0 0 12px;
   }
@@ -850,7 +903,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
      numbered `.section-num` badge (see `.section-head`), which this
      sub-section inside the results panel doesn't have. */
   .recurring-dek {
-    font-size: 14px;
+    font-size: var(--fs-small);
     color: var(--ink-3);
     margin: 0 0 16px;
     max-width: 60ch;
@@ -874,25 +927,27 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
   :global(.step-num) {
     flex: 0 0 30px;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--font-mono);
     font-weight: 700;
     color: var(--sello);
   }
   :global(.step-title) {
-    font-family: 'Libre Franklin', sans-serif;
-    font-size: 16px;
+    font-family: var(--font-display);
+    font-size: var(--fs-h3);
     font-weight: 700;
     margin: 0 0 6px;
   }
+  /* Agency, deadline and cost — story 10's whole ask, and the line a
+     reader acts on. Sits at meta rather than label size for that reason. */
   :global(.step-meta) {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-meta);
     color: var(--ink-3);
     margin: 0 0 6px;
   }
   :global(.step-blocks) {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
     color: var(--sello);
     margin: 0 0 6px;
   }
@@ -903,13 +958,13 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
      amber like the sourcing marks' `.mark-secondary` (a caution, not an
      error), distinct from `.step-blocks`' teal (a sequencing fact). */
   :global(.step-professional) {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
     color: var(--ambar);
     margin: 0 0 6px;
   }
   :global(.step-note) {
-    font-size: 15.5px;
+    font-size: var(--fs-body);
     line-height: 1.55;
     color: var(--ink-2);
     margin: 0;
@@ -928,12 +983,12 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     padding: 4px 0 4px 12px;
   }
   :global(.incentive-card h4) {
-    font-family: 'Libre Franklin', sans-serif;
-    font-size: 15px;
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
     margin: 0 0 4px;
   }
   :global(.incentive-card p) {
-    font-size: 14.5px;
+    font-size: var(--fs-small);
     color: var(--ink-2);
     margin: 0;
   }
@@ -951,8 +1006,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     margin-bottom: 6px;
   }
   .section-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 26px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-h2);
     font-weight: 600;
     color: var(--sello);
     letter-spacing: -0.02em;
@@ -976,7 +1031,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     max-width: 66ch;
     padding: 10px 14px;
     border: 1px dashed var(--rule);
-    font-size: 13.5px;
+    font-size: var(--fs-small);
     line-height: 1.55;
     color: var(--ink-3);
   }
@@ -993,7 +1048,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     padding: 20px;
   }
   .diagram-figure figcaption {
-    font-size: 15.5px;
+    font-size: var(--fs-body);
     color: var(--ink-2);
     margin-top: 16px;
     max-width: 76ch;
@@ -1015,7 +1070,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     width: 100%;
     min-width: 760px;
     border-collapse: collapse;
-    font-size: 14px;
+    font-size: var(--fs-small);
   }
   .entities-table th,
   .entities-table td {
@@ -1025,18 +1080,18 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     border-bottom: 1px solid var(--rule-soft);
   }
   .entities-table thead th {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: var(--font-mono);
     text-transform: uppercase;
-    font-size: 10.5px;
+    font-size: var(--fs-label);
     letter-spacing: 0.5px;
     color: var(--ink-3);
     border-bottom: 2px solid var(--ink);
     font-weight: 600;
   }
   .entities-table tbody th {
-    font-family: 'Libre Franklin', sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
-    font-size: 14.5px;
+    font-size: var(--fs-small);
     white-space: nowrap;
   }
   .entities-table tbody tr:last-child th,
@@ -1051,8 +1106,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   .entities-professional {
     display: block;
     margin-top: 4px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
     font-weight: 400;
     text-transform: none;
     color: var(--ambar);
@@ -1064,7 +1119,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     gap: 10px;
   }
   .entities-note {
-    font-size: 14.5px;
+    font-size: var(--fs-small);
     color: var(--ink-2);
     line-height: 1.55;
     margin: 0;
@@ -1092,7 +1147,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     margin: 0;
     padding: 2px 0 2px 16px;
     border-left: 2px solid var(--ambar);
-    font-size: 15.5px;
+    font-size: var(--fs-body);
     line-height: 1.55;
     color: var(--ink-2);
     max-width: 80ch;
@@ -1100,8 +1155,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   .gap-relates {
     display: block;
     margin-top: 6px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--ink-3);
