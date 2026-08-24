@@ -160,12 +160,27 @@ function applyStaticText(): void {
 
     for (const optionEl of block.querySelectorAll<HTMLButtonElement>('[data-option]')) {
       const o = q.options?.find((opt) => opt.value === optionEl.dataset.option);
-      if (o) optionEl.textContent = o.label[lang];
+      if (!o) continue;
+      // Writes into the label/detail spans rather than the button's own
+      // textContent (G-27): assigning to the button would flatten both
+      // spans away and the option would lose its detail line on the first
+      // language switch.
+      const labelSpan = optionEl.querySelector<HTMLElement>('.option-label');
+      if (labelSpan) labelSpan.textContent = o.label[lang];
+      const detailSpan = optionEl.querySelector<HTMLElement>('.option-detail');
+      if (detailSpan && o.detail) detailSpan.innerHTML = o.detail[lang];
     }
     for (const optionEl of block.querySelectorAll<HTMLOptionElement>('select option[value]')) {
       if (optionEl.value === '') continue;
       const o = q.options?.find((opt) => opt.value === optionEl.value);
       if (o) optionEl.textContent = o.label[lang];
+    }
+
+    if (q.help) {
+      const summaryEl = block.querySelector<HTMLElement>('[data-help-summary]');
+      if (summaryEl) summaryEl.textContent = q.help.summary[lang];
+      const bodyEl = block.querySelector<HTMLElement>('[data-help-body]');
+      if (bodyEl) bodyEl.innerHTML = q.help.body[lang];
     }
   }
 

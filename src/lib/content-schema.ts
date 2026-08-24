@@ -82,11 +82,28 @@ export const questionSchema = z.object({
   label: bilingual,
   hint: bilingual.optional(),
   input: z.enum(['options', 'select', 'number']),
+  // Progressive disclosure for the terms a first-time reader silently
+  // guesses wrong (G-27). Modelled on the GOV.UK `details` component
+  // rather than a hover tooltip: tooltips are unreachable on touch and
+  // invisible to screen readers, and this is exactly the content a reader
+  // on a phone most needs. `summary` is the clickable line, `body` the
+  // revealed explanation; `body` may carry inline HTML (<b>, <em>, <a>)
+  // per the same convention `note` follows elsewhere in this schema.
+  help: z
+    .object({
+      summary: bilingual,
+      body: bilingual,
+    })
+    .optional(),
   options: z
     .array(
       z.object({
         value: z.string(),
         label: bilingual,
+        // One line of "what picking this actually means for you", shown
+        // under the option label before the reader commits. Distinct from
+        // `help`, which explains the question; this explains one answer.
+        detail: bilingual.optional(),
       }),
     )
     .optional(),

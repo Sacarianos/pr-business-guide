@@ -178,7 +178,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
                   <div class="options" role="group" aria-label={q.label.es}>
                     {q.options?.map((o) => (
                       <button type="button" class="option" data-option={o.value}>
-                        {o.label.es}
+                        <span class="option-label">{o.label.es}</span>
+                        {o.detail && <span class="option-detail" set:html={o.detail.es} />}
                       </button>
                     ))}
                   </div>
@@ -191,6 +192,16 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
                 )}
                 {q.input === 'number' && (
                   <input type="number" min="0" step="1" aria-label={q.label.es} />
+                )}
+                {/* G-27: progressive disclosure, GOV.UK `details` pattern —
+                    closed by default so the panel stays scannable, and inline
+                    rather than a tooltip so it works on touch and reads to a
+                    screen reader. */}
+                {q.help && (
+                  <details class="q-help">
+                    <summary data-help-summary>{q.help.summary.es}</summary>
+                    <div class="q-help-body" data-help-body set:html={q.help.body.es} />
+                  </details>
                 )}
               </div>
             ))
@@ -452,6 +463,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     --rule: #dbe3ea;
     --rule-soft: #eaeff4;
     --sello: #0a5f6b;
+    --sello-tint: #e6f0f1;
     --on-sello: #ffffff;
     --ambar: #8a5a06;
     --derogado: #a8231b;
@@ -503,6 +515,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
       --rule: #26333c;
       --rule-soft: #1c262d;
       --sello: #4fc3cf;
+      --sello-tint: #10333a;
       --on-sello: #062024;
       --ambar: #e0ad4e;
       --derogado: #f08a82;
@@ -712,24 +725,41 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     color: var(--ink-3);
     max-width: 46ch;
   }
+  /* One per row rather than a wrapping pill row (G-27): options now carry
+     a `detail` line explaining what picking them means, which a pill can't
+     hold. Options without one just render as a taller, easier-to-hit
+     target, which is the right trade on a phone anyway. */
   .options {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 8px;
     margin: 10px 0 0 26px;
   }
   .option {
-    font-family: var(--font-display);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    text-align: left;
+    font-family: var(--font-body);
     font-size: var(--fs-small);
-    padding: 9px 14px;
-    border: 1px solid var(--rule);
+    padding: 11px 14px;
+    border: 1.5px solid var(--rule);
     background: var(--surface);
     color: var(--ink-2);
     cursor: pointer;
     transition:
       border-color 0.12s,
-      background 0.12s,
-      color 0.12s;
+      background 0.12s;
+  }
+  .option-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .option-detail {
+    font-size: var(--fs-meta);
+    line-height: 1.4;
+    color: var(--ink-3);
   }
   .option:hover {
     border-color: var(--sello);
@@ -738,11 +768,68 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     outline: 2px solid var(--sello);
     outline-offset: 2px;
   }
+  /* Selected reads as a tint plus a heavier rule rather than a solid fill:
+     a filled swatch would put two lines of text, one of them secondary, on
+     a saturated ground and cost the contrast the palette just bought. */
   .option.is-selected {
-    background: var(--sello);
+    background: var(--sello-tint);
     border-color: var(--sello);
-    color: var(--surface);
+  }
+  .option.is-selected .option-label {
+    color: var(--sello);
+  }
+
+  /* G-27: the explainer, closed by default. `<details>` rather than a
+     custom widget so it is keyboard- and screen-reader-correct for free,
+     and findable by in-page search even while collapsed in most browsers. */
+  .q-help {
+    margin: 10px 0 0 26px;
+  }
+  .q-help summary {
+    cursor: pointer;
+    color: var(--sello);
+    font-size: var(--fs-small);
     font-weight: 600;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 3px 0;
+  }
+  .q-help summary::-webkit-details-marker {
+    display: none;
+  }
+  .q-help summary::before {
+    content: '?';
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    font-weight: 600;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  .q-help summary:focus-visible {
+    outline: 2px solid var(--sello);
+    outline-offset: 3px;
+  }
+  .q-help[open] summary {
+    margin-bottom: 9px;
+  }
+  .q-help-body {
+    font-size: var(--fs-small);
+    line-height: 1.55;
+    color: var(--ink-2);
+    border-left: 2px solid var(--rule);
+    padding-left: 14px;
+    max-width: 52ch;
+  }
+  .q-help-body b {
+    color: var(--ink);
   }
   select,
   input[type='number'] {
