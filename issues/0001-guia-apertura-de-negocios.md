@@ -149,7 +149,9 @@ Two consequences follow. First, the 24th is a **deadline, not a checkpoint**, an
 2. Agent wired in — the AI-engineering story.
 3. Eval suite and model sweep — what makes the agent credible rather than impressive.
 
-Claude Design sync and CI are explicitly *not* on the path to the 24th. If the agent is not working by roughly day ten, ship the site alone and present the agent as in progress.
+CI is explicitly *not* on the path to the 24th. If the agent is not working by roughly day ten, ship the site alone and present the agent as in progress.
+
+**Amendment, 2026-08-07 — Claude Design sync tried and blocked.** Originally excluded alongside CI, briefly reinstated as [G-26](BACKLOG.md) once the bootstrap page shipped with no styling at all. Blocked the same day: this environment's Claude Design authorization is a separate identity from Jaime's `claude.ai` account, so projects created from either side are invisible to the other, and `/design-login` isn't available here to link them. Visual work proceeds as plain CSS against the Astro dev server, outside the tracker.
 
 ## Testing Decisions
 
