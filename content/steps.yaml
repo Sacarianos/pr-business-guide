@@ -91,6 +91,7 @@ entity-llc-tax-classification:
       return and possibly stacking two layers of tax. Take this one to
       a PR CPA.
   severity: warn
+  professional: cpa
   sourcing: primary
 
 entity-incorporate-corp:
@@ -309,6 +310,7 @@ permiso-unico:
   blocks:
     es: "Abrir el negocio"
     en: "Opening the business"
+  professional: attorney
   sourcing: unverified
 
 fire-inspection:

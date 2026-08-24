@@ -16,7 +16,12 @@ import {
   type Content,
   type StepResult,
 } from '../lib/decision-tree.ts';
-import { practiceAttribution, practiceHeadline, sourcingLabel } from '../lib/sourcing-label.ts';
+import {
+  practiceAttribution,
+  practiceHeadline,
+  professionalLabel,
+  sourcingLabel,
+} from '../lib/sourcing-label.ts';
 
 const dataEl = document.getElementById('tool-content');
 if (!dataEl?.textContent) throw new Error('tool.ts: #tool-content is missing');
@@ -123,6 +128,12 @@ function practiceBanner(practice: StepResult['practice']): string {
     </p>`;
 }
 
+// G-18: this decision needs a CPA or attorney, not just this guide.
+function professionalNote(professional: StepResult['professional']): string {
+  if (!professional) return '';
+  return `<p class="step-professional">→ Consulta con ${escapeHtml(professionalLabel(professional))}</p>`;
+}
+
 // Shared by the one-time sequence and the recurring-obligations list
 // (G-13): same card shape either way, differing only in what marks a step's
 // position — a sequence number for the one-time list, the recurring badge
@@ -135,6 +146,7 @@ function stepCard(s: StepResult, mark: string): string {
         <h4 class="step-title">${escapeHtml(s.title.es)} ${sourcingMark(s.sourcing)}</h4>
         <p class="step-meta">${escapeHtml(s.agency.es)} · ${escapeHtml(s.timing.es)} · ${escapeHtml(s.cost.es)}</p>
         ${s.blocks ? `<p class="step-blocks">→ Bloquea: <b>${escapeHtml(s.blocks.es)}</b></p>` : ''}
+        ${professionalNote(s.professional)}
         <p class="step-note">${s.note.es}</p>
         ${practiceBanner(s.practice)}
       </div>
@@ -204,6 +216,7 @@ function render(): void {
       (inc) => `
     <div class="incentive-card">
       <h4>${escapeHtml(inc.title.es)} ${sourcingMark(inc.sourcing)}</h4>
+      ${professionalNote(inc.professional)}
       <p>${inc.note.es}</p>
       ${practiceBanner(inc.practice)}
     </div>`,

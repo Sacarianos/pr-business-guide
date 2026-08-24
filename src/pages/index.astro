@@ -8,7 +8,12 @@
 // reader's answers.
 import { loadContent } from '../lib/load-content';
 import ProcessDiagram from '../components/ProcessDiagram.astro';
-import { practiceAttribution, practiceHeadline, sourcingLabel } from '../lib/sourcing-label';
+import {
+  practiceAttribution,
+  practiceHeadline,
+  professionalLabel,
+  sourcingLabel,
+} from '../lib/sourcing-label';
 import { researchDateLabel } from '../lib/freshness';
 
 const content = await loadContent();
@@ -191,6 +196,11 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
                       {e.sourcing !== 'primary' && (
                         <span class={`mark mark-${e.sourcing}`}>
                           {sourcingLabel(e.sourcing as 'secondary' | 'unverified')}
+                        </span>
+                      )}
+                      {e.professional && (
+                        <span class="entities-professional">
+                          → Consulta con {professionalLabel(e.professional)}
                         </span>
                       )}
                     </th>
@@ -656,6 +666,15 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   :global(.step-blocks b) {
     font-weight: 600;
   }
+  /* G-18: this decision needs a CPA or attorney, not just this guide —
+     amber like the sourcing marks' `.mark-secondary` (a caution, not an
+     error), distinct from `.step-blocks`' teal (a sequencing fact). */
+  :global(.step-professional) {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ambar);
+    margin: 0 0 6px;
+  }
   :global(.step-note) {
     font-size: 15.5px;
     line-height: 1.55;
@@ -776,6 +795,16 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   .entities-table td {
     color: var(--ink-2);
     line-height: 1.5;
+  }
+  /* G-18: this decision needs a CPA or attorney, not just this guide. */
+  .entities-professional {
+    display: block;
+    margin-top: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: none;
+    color: var(--ambar);
   }
   .entities-notes {
     margin-top: 20px;

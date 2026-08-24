@@ -43,6 +43,7 @@ optional-tax-1022-07:
       often dramatically simpler and cheaper. Run both numbers with a CPA
       before electing. Applies only to professional services organized as
       an LLC or corporation.
+  professional: cpa
   sourcing: primary
 
 young-entrepreneur-exemption:
@@ -111,6 +112,7 @@ act60-export-services:
       full-time employee for export decrees. Application: $5 transaction
       fee + $1,000 service fee via
       <a href="https://incentives.ddec.pr.gov/">incentives.ddec.pr.gov</a>.
+  professional: attorney
   sourcing: secondary
 
 act60-not-applicable:

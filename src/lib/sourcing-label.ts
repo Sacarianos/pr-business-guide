@@ -4,7 +4,7 @@
 // src/scripts/tool.ts (the client-rendered patente mark) and
 // src/pages/index.astro (the server-rendered entity table, G-12), so the
 // same figure reads the same way regardless of which section renders it.
-import type { Sourcing, StepData } from './content-schema.ts';
+import type { Professional, Sourcing, StepData } from './content-schema.ts';
 
 export function sourcingLabel(sourcing: Exclude<Sourcing, 'primary'>): string {
   return sourcing === 'secondary' ? 'sin confirmar' : 'sin verificar';
@@ -36,4 +36,11 @@ export function practiceHeadline(status: Practice['status']): string | null {
 export function practiceAttribution(practice: Practice): string {
   const date = practice.at instanceof Date ? practice.at : new Date(practice.at);
   return `${practice.by} — ${date.toISOString().slice(0, 10)}`;
+}
+
+// G-18 (0001, story 28): which decisions this guide can't finish for the
+// reader. `undefined` means self-service is fine — most decisions are — so
+// this only ever has to answer for the two professions that come up.
+export function professionalLabel(professional: NonNullable<Professional>): string {
+  return professional === 'cpa' ? 'un CPA de Puerto Rico' : 'un abogado';
 }

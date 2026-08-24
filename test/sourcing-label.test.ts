@@ -8,6 +8,7 @@ import { test } from 'node:test';
 import {
   practiceAttribution,
   practiceHeadline,
+  professionalLabel,
   sourcingLabel,
 } from '../src/lib/sourcing-label.ts';
 
@@ -29,6 +30,11 @@ test('practiceAttribution: formats "by — YYYY-MM-DD" from a Date instance', ()
     at: new Date('2026-08-24T00:00:00Z'),
   });
   assert.equal(attribution, 'Alan Taveras / CUD — 2026-08-24');
+});
+
+test('professionalLabel: cpa reads "un CPA de Puerto Rico", attorney reads "un abogado"', () => {
+  assert.equal(professionalLabel('cpa'), 'un CPA de Puerto Rico');
+  assert.equal(professionalLabel('attorney'), 'un abogado');
 });
 
 test('practiceAttribution: formats the same way when `at` arrives as a JSON-round-tripped string', () => {

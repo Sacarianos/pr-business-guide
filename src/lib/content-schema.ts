@@ -35,6 +35,17 @@ export const claimFields = {
 };
 export type Sourcing = z.infer<typeof claimFields.sourcing>;
 
+// G-18 (0001, story 28: "I want to be told which decisions need a CPA or
+// attorney, so that I know where self-service ends"). A third axis,
+// orthogonal to `sourcing`/`practice`: not about how well a claim is
+// documented, but about which decisions this guide can't finish for the
+// reader. Kept off `claimFields` rather than made universal — a municipio's
+// tax rate isn't a "decision" a reader routes to a professional, so
+// `municipioSchema` doesn't carry it; `stepSchema`, `incentiveSchema`, and
+// `entityFormSchema` each opt in individually.
+export const professional = z.enum(['cpa', 'attorney']).optional();
+export type Professional = z.infer<typeof professional>;
+
 export const stepSchema = z.object({
   title: bilingual,
   agency: bilingual,
@@ -60,6 +71,8 @@ export const stepSchema = z.object({
   // deferred (0001, "Step remains untyped, with a slot reserved"). Kept as
   // a free string so adding the enum later is additive, not a migration.
   kind: z.string().optional(),
+  // G-18: this decision needs a CPA or attorney, not just this guide.
+  professional,
   ...claimFields,
 });
 export type StepData = z.infer<typeof stepSchema>;
@@ -110,6 +123,8 @@ export type MunicipioData = z.infer<typeof municipioSchema>;
 export const incentiveSchema = z.object({
   title: bilingual,
   note: bilingual,
+  // G-18: this decision needs a CPA or attorney, not just this guide.
+  professional,
   ...claimFields,
 });
 export type IncentiveData = z.infer<typeof incentiveSchema>;
@@ -138,6 +153,8 @@ export const entityFormSchema = z.object({
   formationCost: bilingual,
   annualObligation: bilingual,
   note: bilingual.optional(),
+  // G-18: this decision needs a CPA or attorney, not just this guide.
+  professional,
   ...claimFields,
 });
 export type EntityFormData = z.infer<typeof entityFormSchema>;

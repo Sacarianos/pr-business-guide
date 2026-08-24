@@ -103,6 +103,15 @@ test('`practice.status` covers confirmed/contradicted/unknown — the axis ortho
   );
 });
 
+test('`professional` is optional and, when present, is either cpa or attorney (G-18)', () => {
+  assert.doesNotThrow(() => stepSchema.parse(validStep));
+  assert.equal(stepSchema.parse(validStep).professional, undefined);
+  assert.doesNotThrow(() => stepSchema.parse({ ...validStep, professional: 'cpa' }));
+  assert.doesNotThrow(() => incentiveSchema.parse({ ...validIncentive, professional: 'attorney' }));
+  assert.doesNotThrow(() => entityFormSchema.parse({ ...validEntity, professional: 'cpa' }));
+  assert.throws(() => stepSchema.parse({ ...validStep, professional: 'notary' }));
+});
+
 test('bilingual fields require both es and en', () => {
   assert.throws(() => bilingual.parse({ es: 'solo español' }));
   assert.doesNotThrow(() => bilingual.parse(es_en));
