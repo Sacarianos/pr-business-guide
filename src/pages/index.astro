@@ -1,15 +1,24 @@
 ---
 // The ten-question flow (G-08) and the patente estimator it surfaces
-// (G-09), followed by the process overview diagram (G-10) and the step
-// cards' agency/timing/cost/blocks fields (G-11, rendered client-side in
-// src/scripts/tool.ts). Content is server-rendered from content/*.yaml —
-// only the question panel needs client JS. The municipal comparison table
-// (G-12) is a later ticket; this page currently ends where the diagram's
-// figcaption does.
+// (G-09), followed by the process overview diagram (G-10), the step cards'
+// agency/timing/cost/blocks fields (G-11, rendered client-side in
+// src/scripts/tool.ts), and the entity comparison table (G-12). Content is
+// server-rendered from content/*.yaml — only the question panel needs
+// client JS; the entity table needs none, since it doesn't depend on the
+// reader's answers.
 import { loadContent } from '../lib/load-content';
 import ProcessDiagram from '../components/ProcessDiagram.astro';
+import { sourcingLabel } from '../lib/sourcing-label';
 
 const content = await loadContent();
+
+// Sorted by each entry's own `order` field (least to most structure: sole →
+// LLC → corporación) rather than content/entities.yaml's key order, which
+// YAML doesn't guarantee is preserved through the loader — same reason
+// `questions` carries an `order` field and is sorted the same way.
+const entities = Object.entries(content.entities)
+  .map(([id, e]) => ({ id, ...e }))
+  .sort((a, b) => a.order - b.order);
 
 // Embedded so the client script has content immediately, with no extra
 // request race against G-04's published content.json (that asset is for
@@ -129,6 +138,61 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
           no antes.
         </figcaption>
       </figure>
+    </section>
+
+    <section class="entities-section">
+      <div class="section-head">
+        <span class="section-num">3</span>
+        <h2>DBA, LLC o corporación</h2>
+      </div>
+      <p class="section-dek">
+        La forma legal de la pregunta 2 define casi todo lo que sigue. Esta es la comparación
+        completa, no solo la rama que te tocó.
+      </p>
+      <div class="entities-table-wrap">
+        <table class="entities-table">
+          <thead>
+            <tr>
+              <th scope="col">Forma</th>
+              <th scope="col">Protección de bienes</th>
+              <th scope="col">Radicación</th>
+              <th scope="col">Contribución por defecto</th>
+              <th scope="col">Costo de formación</th>
+              <th scope="col">Obligación anual</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              entities.map((e) => (
+                <tr>
+                  <th scope="row">
+                    {e.name.es}
+                    {e.sourcing !== 'primary' && (
+                      <span class={`mark mark-${e.sourcing}`}>
+                        {sourcingLabel(e.sourcing as 'secondary' | 'unverified')}
+                      </span>
+                    )}
+                  </th>
+                  <td>{e.liability.es}</td>
+                  <td>{e.filing.es}</td>
+                  <td set:html={e.defaultTax.es} />
+                  <td>{e.formationCost.es}</td>
+                  <td set:html={e.annualObligation.es} />
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="entities-notes">
+        {
+          entities
+            .filter((e) => e.note)
+            .map((e) => (
+              <p class="entities-note" set:html={`<strong>${e.name.es}:</strong> ${e.note!.es}`} />
+            ))
+        }
+      </div>
     </section>
 
     <script type="application/json" id="tool-content" set:html={contentJson} is:inline />
@@ -523,5 +587,69 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     margin-top: 16px;
     max-width: 76ch;
     line-height: 1.55;
+  }
+
+  .entities-section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 54px 24px 64px;
+    border-top: 1px solid var(--rule);
+  }
+  .entities-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+  }
+  .entities-table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .entities-table th,
+  .entities-table td {
+    text-align: left;
+    padding: 12px 14px;
+    vertical-align: top;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .entities-table thead th {
+    font-family: 'IBM Plex Mono', monospace;
+    text-transform: uppercase;
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    color: var(--ink-3);
+    border-bottom: 2px solid var(--ink);
+    font-weight: 600;
+  }
+  .entities-table tbody th {
+    font-family: 'Libre Franklin', sans-serif;
+    font-weight: 700;
+    font-size: 14.5px;
+    white-space: nowrap;
+  }
+  .entities-table tbody tr:last-child th,
+  .entities-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .entities-table td {
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+  .entities-notes {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .entities-note {
+    font-size: 14.5px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    margin: 0;
+    max-width: 80ch;
+  }
+  .entities-note strong {
+    color: var(--ink);
   }
 </style>

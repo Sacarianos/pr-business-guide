@@ -33,6 +33,7 @@ export const claimFields = {
     })
     .optional(),
 };
+export type Sourcing = z.infer<typeof claimFields.sourcing>;
 
 export const stepSchema = z.object({
   title: bilingual,
@@ -120,3 +121,23 @@ export const gapSchema = z.object({
   relatesTo: z.string().optional(),
 });
 export type GapData = z.infer<typeof gapSchema>;
+
+// Entity comparison (G-12): DBA vs LLC vs corporación, standing on its own
+// rather than folded into the `entity-*` steps in steps.yaml, since those
+// only ever show the one branch the reader already picked — this is the
+// side-by-side a reader needs *before* answering that question.
+export const entityFormSchema = z.object({
+  // Reading order for the comparison table (least to most structure), same
+  // reason questionSchema carries one: content/entities.yaml's key order
+  // isn't guaranteed to survive the YAML loader.
+  order: z.number().int(),
+  name: bilingual,
+  liability: bilingual,
+  filing: bilingual,
+  defaultTax: bilingual,
+  formationCost: bilingual,
+  annualObligation: bilingual,
+  note: bilingual.optional(),
+  ...claimFields,
+});
+export type EntityFormData = z.infer<typeof entityFormSchema>;
