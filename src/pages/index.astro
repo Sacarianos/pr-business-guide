@@ -9,6 +9,7 @@
 import { loadContent } from '../lib/load-content';
 import ProcessDiagram from '../components/ProcessDiagram.astro';
 import { practiceAttribution, practiceHeadline, sourcingLabel } from '../lib/sourcing-label';
+import { researchDateLabel } from '../lib/freshness';
 
 const content = await loadContent();
 
@@ -50,6 +51,17 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
         cada paso — con los incentivos y la patente municipal que te tocan.
       </p>
     </header>
+
+    <div class="alert-strip">
+      <span class="alert-label">Vigencia</span>
+      <p class="alert-body">
+        Investigación compilada el {researchDateLabel()}. Mucho de lo que circula en línea cita la
+        Ley 113-1974 (derogada en 2020) para la patente municipal, exige el informe anual que las
+        corporaciones ya no radican desde 2025, o describe términos de la Ley 60 anteriores a la
+        enmienda de 2026. Si algo en esta guía entra en conflicto con lo que leíste en otro sitio,
+        confía en la fecha, no en el número de resultados de Google.
+      </p>
+    </div>
 
     <main class="tool">
       <div class="section-head">
@@ -313,6 +325,45 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     font-size: 18px;
     color: var(--ink-2);
     margin: 0;
+  }
+
+  /* G-17: research date + freshness stamp. Per the design handoff's Alert
+     strip spec — a 210px label column beside the body text, top-ruled —
+     minus the countdown alert cut on 2026-08-07 (0001 amendment); this is
+     the one alert that survives. */
+  .alert-strip {
+    display: flex;
+    gap: 18px;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    border-top: 1px solid var(--rule);
+    background: var(--surface);
+  }
+  .alert-label {
+    flex: 0 0 210px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--sello);
+    padding-top: 2px;
+  }
+  .alert-body {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 76ch;
+  }
+  @media (max-width: 640px) {
+    .alert-strip {
+      flex-direction: column;
+      gap: 6px;
+    }
+    .alert-label {
+      flex: none;
+    }
   }
 
   .tool {
