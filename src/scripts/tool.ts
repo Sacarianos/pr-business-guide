@@ -16,7 +16,7 @@ import {
   type Content,
   type StepResult,
 } from '../lib/decision-tree.ts';
-import { sourcingLabel } from '../lib/sourcing-label.ts';
+import { practiceAttribution, practiceHeadline, sourcingLabel } from '../lib/sourcing-label.ts';
 
 const dataEl = document.getElementById('tool-content');
 if (!dataEl?.textContent) throw new Error('tool.ts: #tool-content is missing');
@@ -99,6 +99,30 @@ startOverBtn?.addEventListener('click', () => {
   render();
 });
 
+// A claim's sourcing mark (G-15/G-09): `primary` is the confirmed default
+// and gets no mark at all. Shared by step cards, incentive cards, and
+// src/pages/index.astro's entity table, via sourcing-label.ts.
+function sourcingMark(sourcing: 'primary' | 'secondary' | 'unverified'): string {
+  return sourcing === 'primary'
+    ? ''
+    : `<span class="mark mark-${sourcing}">${sourcingLabel(sourcing)}</span>`;
+}
+
+// `practice.contradicted` is the loudest state on the page (G-15) — a
+// filled banner, not the bordered `mark` tag `sourcingMark` produces above,
+// so it reads as more urgent than a plain unverified figure.
+// `practice.unknown` has nothing worth saying and renders nothing.
+function practiceBanner(practice: StepResult['practice']): string {
+  if (!practice) return '';
+  const headline = practiceHeadline(practice.status);
+  if (!headline) return '';
+  return `
+    <p class="practice-banner practice-${practice.status}">
+      <b>${escapeHtml(headline)}</b>
+      <span class="practice-attribution">${escapeHtml(practiceAttribution(practice))}</span>
+    </p>`;
+}
+
 // Shared by the one-time sequence and the recurring-obligations list
 // (G-13): same card shape either way, differing only in what marks a step's
 // position — a sequence number for the one-time list, the recurring badge
@@ -108,10 +132,11 @@ function stepCard(s: StepResult, mark: string): string {
     <li class="step" data-severity="${s.severity ?? ''}">
       <span class="step-num">${mark}</span>
       <div class="step-body">
-        <h4 class="step-title">${escapeHtml(s.title.es)}</h4>
+        <h4 class="step-title">${escapeHtml(s.title.es)} ${sourcingMark(s.sourcing)}</h4>
         <p class="step-meta">${escapeHtml(s.agency.es)} · ${escapeHtml(s.timing.es)} · ${escapeHtml(s.cost.es)}</p>
         ${s.blocks ? `<p class="step-blocks">→ Bloquea: <b>${escapeHtml(s.blocks.es)}</b></p>` : ''}
         <p class="step-note">${s.note.es}</p>
+        ${practiceBanner(s.practice)}
       </div>
     </li>`;
 }
@@ -148,10 +173,7 @@ function render(): void {
   // figure itself, which is what a reader takes at face value, not only in
   // the prose underneath it.
   const patenteValue = patente ? (patente.amount === 0 ? '$0' : formatMoney(patente.amount)) : '—';
-  const patenteMark =
-    patente && patente.sourcing !== 'primary'
-      ? `<span class="mark mark-${patente.sourcing}">${sourcingLabel(patente.sourcing)}</span>`
-      : '';
+  const patenteMark = patente ? sourcingMark(patente.sourcing) : '';
 
   glanceEl!.innerHTML = `
     <div class="glance-cell">
@@ -181,8 +203,9 @@ function render(): void {
     .map(
       (inc) => `
     <div class="incentive-card">
-      <h4>${escapeHtml(inc.title.es)}</h4>
+      <h4>${escapeHtml(inc.title.es)} ${sourcingMark(inc.sourcing)}</h4>
       <p>${inc.note.es}</p>
+      ${practiceBanner(inc.practice)}
     </div>`,
     )
     .join('');

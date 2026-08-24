@@ -8,7 +8,7 @@
 // reader's answers.
 import { loadContent } from '../lib/load-content';
 import ProcessDiagram from '../components/ProcessDiagram.astro';
-import { sourcingLabel } from '../lib/sourcing-label';
+import { practiceAttribution, practiceHeadline, sourcingLabel } from '../lib/sourcing-label';
 
 const content = await loadContent();
 
@@ -172,21 +172,35 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
           <tbody>
             {
               entities.map((e) => (
-                <tr>
-                  <th scope="row">
-                    {e.name.es}
-                    {e.sourcing !== 'primary' && (
-                      <span class={`mark mark-${e.sourcing}`}>
-                        {sourcingLabel(e.sourcing as 'secondary' | 'unverified')}
-                      </span>
-                    )}
-                  </th>
-                  <td>{e.liability.es}</td>
-                  <td>{e.filing.es}</td>
-                  <td set:html={e.defaultTax.es} />
-                  <td>{e.formationCost.es}</td>
-                  <td set:html={e.annualObligation.es} />
-                </tr>
+                <Fragment>
+                  <tr>
+                    <th scope="row">
+                      {e.name.es}
+                      {e.sourcing !== 'primary' && (
+                        <span class={`mark mark-${e.sourcing}`}>
+                          {sourcingLabel(e.sourcing as 'secondary' | 'unverified')}
+                        </span>
+                      )}
+                    </th>
+                    <td>{e.liability.es}</td>
+                    <td>{e.filing.es}</td>
+                    <td set:html={e.defaultTax.es} />
+                    <td>{e.formationCost.es}</td>
+                    <td set:html={e.annualObligation.es} />
+                  </tr>
+                  {e.practice && practiceHeadline(e.practice.status) && (
+                    <tr class="entities-practice-row">
+                      <td colspan="6">
+                        <p class={`practice-banner practice-${e.practice.status}`}>
+                          <strong>{practiceHeadline(e.practice.status)}</strong>{' '}
+                          <span class="practice-attribution">
+                            {practiceAttribution(e.practice)}
+                          </span>
+                        </p>
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
               ))
             }
           </tbody>
@@ -464,6 +478,41 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
   :global(.mark-unverified) {
     color: var(--derogado);
+  }
+
+  /* `practice.contradicted` (G-15) is the loudest state on the page —
+     a filled banner, not the bordered `.mark` tag above, so it reads as
+     more urgent than a plain unverified figure. `.practice-confirmed` is
+     reassurance, not a warning, so it stays outlined rather than filled. */
+  .practice-banner,
+  :global(.practice-banner) {
+    margin: 10px 0 0;
+    padding: 8px 10px;
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .practice-contradicted,
+  :global(.practice-contradicted) {
+    background: var(--derogado);
+    color: var(--surface);
+  }
+  .practice-confirmed,
+  :global(.practice-confirmed) {
+    border: 1px solid var(--verificado);
+    color: var(--verificado);
+  }
+  .practice-attribution,
+  :global(.practice-attribution) {
+    display: block;
+    margin-top: 2px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    opacity: 0.85;
+  }
+  .entities-practice-row td {
+    padding-top: 0;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule-soft);
   }
 
   h2 {
