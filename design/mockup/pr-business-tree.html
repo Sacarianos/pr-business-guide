@@ -1,0 +1,1220 @@
+<title>Abrir un Negocio en Puerto Rico — Guía y Árbol de Decisiones</title>
+
+<style>
+  :root {
+    --paper:#EDF0F3; --surface:#FFFFFF; --surface-2:#E3E8ED;
+    --ink:#0F1620; --ink-2:#47535F; --ink-3:#6F7C89;
+    --rule:#C7D0D8; --rule-soft:#DBE2E8;
+    --sello:#0D5C63; --sello-soft:#DCEAEB;
+    --ambar:#8A5800; --ambar-soft:#F6EBD5;
+    --derogado:#99282A; --derog-soft:#F7E2E2;
+    --verificado:#26624A; --verif-soft:#DDEBE3;
+    --shadow:0 1px 2px rgba(15,22,32,.06), 0 4px 14px rgba(15,22,32,.05);
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --serif:Georgia,"Iowan Old Style",Charter,"Times New Roman",serif;
+    --mono:ui-monospace,"Cascadia Mono",Consolas,"SF Mono",Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#0F1620; --surface:#161F2B; --surface-2:#1E2938;
+      --ink:#E4EAF0; --ink-2:#A6B4C2; --ink-3:#7C8B9B;
+      --rule:#2C3949; --rule-soft:#232F3D;
+      --sello:#4FB3BD; --sello-soft:#17333A;
+      --ambar:#D9A441; --ambar-soft:#33280F;
+      --derogado:#E58080; --derog-soft:#38191A;
+      --verificado:#6BB894; --verif-soft:#16301F;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 4px 16px rgba(0,0,0,.3);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#EDF0F3;--surface:#FFFFFF;--surface-2:#E3E8ED;
+    --ink:#0F1620;--ink-2:#47535F;--ink-3:#6F7C89;
+    --rule:#C7D0D8;--rule-soft:#DBE2E8;
+    --sello:#0D5C63;--sello-soft:#DCEAEB;
+    --ambar:#8A5800;--ambar-soft:#F6EBD5;
+    --derogado:#99282A;--derog-soft:#F7E2E2;
+    --verificado:#26624A;--verif-soft:#DDEBE3;
+    --shadow:0 1px 2px rgba(15,22,32,.06),0 4px 14px rgba(15,22,32,.05);
+  }
+  :root[data-theme="dark"]{
+    --paper:#0F1620;--surface:#161F2B;--surface-2:#1E2938;
+    --ink:#E4EAF0;--ink-2:#A6B4C2;--ink-3:#7C8B9B;
+    --rule:#2C3949;--rule-soft:#232F3D;
+    --sello:#4FB3BD;--sello-soft:#17333A;
+    --ambar:#D9A441;--ambar-soft:#33280F;
+    --derogado:#E58080;--derog-soft:#38191A;
+    --verificado:#6BB894;--verif-soft:#16301F;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+  h1,h2,h3,h4,.ui{font-family:var(--sans)}
+
+  /* ---------- language bar ---------- */
+  .langbar{border-bottom:1px solid var(--rule-soft);background:var(--surface)}
+  .langbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:10px;padding-bottom:10px;flex-wrap:wrap}
+  .site{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+  .seg{display:inline-flex;border:1px solid var(--rule);border-radius:2px;overflow:hidden}
+  .seg button{
+    font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    padding:6px 14px;border:0;background:var(--surface);color:var(--ink-3);cursor:pointer;
+    transition:background .12s,color .12s;
+  }
+  .seg button + button{border-left:1px solid var(--rule)}
+  .seg button:hover{color:var(--ink)}
+  .seg button[aria-pressed="true"]{background:var(--sello);color:var(--surface);font-weight:700}
+  .seg button:focus-visible{outline:2px solid var(--sello);outline-offset:-2px}
+
+  /* ---------- masthead ---------- */
+  .masthead{border-bottom:2px solid var(--ink);padding:38px 0 0;background:var(--surface)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sello);margin:0 0 14px}
+  h1{font-size:clamp(30px,5.2vw,54px);line-height:1.02;letter-spacing:-.03em;font-weight:800;margin:0 0 16px;text-wrap:balance}
+  h1 .thin{font-weight:300;color:var(--ink-2);display:block;font-size:.56em;letter-spacing:-.01em;margin-top:8px}
+  .dek{font-size:18px;color:var(--ink-2);margin:0 0 30px;max-width:62ch}
+
+  .alerts{display:grid;gap:1px;background:var(--rule);border-top:1px solid var(--rule)}
+  @media (min-width:820px){.alerts{grid-template-columns:1fr 1fr}}
+  .alert{background:var(--surface);padding:20px 24px}
+  .alert .tag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;display:inline-block;padding:3px 7px;border:1px solid currentColor;border-radius:2px;margin-bottom:10px}
+  .alert.cliff{color:var(--derogado)}
+  .alert.stale{color:var(--ambar)}
+  .alert p{margin:0;color:var(--ink);font-size:15px;line-height:1.5}
+  .alert strong{font-family:var(--sans);font-weight:700}
+  .countdown{font-family:var(--mono);font-weight:700}
+
+  section{padding:56px 0;border-bottom:1px solid var(--rule-soft)}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+  .sec-num{font-family:var(--mono);font-size:12px;color:var(--sello);letter-spacing:.08em}
+  h2{font-size:clamp(22px,3vw,30px);letter-spacing:-.02em;font-weight:700;margin:0;text-wrap:balance}
+  .sec-dek{color:var(--ink-2);margin:6px 0 28px;max-width:68ch;font-size:16px}
+
+  figure{margin:0}
+  .svg-scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:18px;box-shadow:var(--shadow)}
+  .svg-scroll svg{display:block;min-width:960px;width:100%;height:auto;color:var(--ink)}
+  figcaption{font-size:14px;color:var(--ink-2);margin-top:14px;max-width:74ch}
+
+  .tool{display:grid;gap:28px;align-items:start}
+  @media (min-width:940px){.tool{grid-template-columns:380px 1fr;gap:40px}}
+  .qpanel{display:flex;flex-direction:column;gap:22px;position:sticky;top:16px}
+  @media (max-width:939px){.qpanel{position:static}}
+
+  fieldset{border:0;padding:0;margin:0}
+  legend{font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:-.01em;color:var(--ink);padding:0;margin-bottom:9px;display:block}
+  legend .q{font-family:var(--mono);color:var(--sello);font-size:11px;margin-right:7px}
+
+  .opts{display:flex;flex-wrap:wrap;gap:6px}
+  .opt{font-family:var(--sans);font-size:13px;line-height:1.25;padding:7px 11px;border:1px solid var(--rule);border-radius:2px;background:var(--surface);color:var(--ink-2);cursor:pointer;transition:background .12s,border-color .12s,color .12s}
+  .opt:hover{border-color:var(--sello);color:var(--ink)}
+  .opt:focus-visible{outline:2px solid var(--sello);outline-offset:2px}
+  .opt[aria-pressed="true"]{background:var(--sello);border-color:var(--sello);color:var(--surface);font-weight:600}
+
+  select,input[type="number"]{font-family:var(--sans);font-size:14px;padding:8px 10px;border:1px solid var(--rule);border-radius:2px;background:var(--surface);color:var(--ink);width:100%}
+  select:focus-visible,input:focus-visible{outline:2px solid var(--sello);outline-offset:1px}
+  .hint{font-family:var(--sans);font-size:12px;color:var(--ink-3);margin-top:6px}
+
+  .reset{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:none;border:1px solid var(--rule);color:var(--ink-3);padding:7px 12px;border-radius:2px;cursor:pointer;align-self:flex-start}
+  .reset:hover{border-color:var(--derogado);color:var(--derogado)}
+  .reset:focus-visible{outline:2px solid var(--sello);outline-offset:2px}
+
+  .results{min-height:300px}
+  .empty{border:1px dashed var(--rule);border-radius:3px;padding:44px 30px;text-align:center;color:var(--ink-3);font-family:var(--sans);font-size:14px}
+
+  .rgroup{margin-bottom:34px}
+  .rgroup > h3{font-size:12px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--rule-soft);font-weight:400}
+
+  ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:flex;flex-direction:column;gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);border-radius:3px;overflow:hidden}
+  ol.steps > li{counter-increment:s;background:var(--surface);padding:16px 18px 16px 52px;position:relative}
+  ol.steps > li::before{content:counter(s,decimal-leading-zero);position:absolute;left:16px;top:17px;font-family:var(--mono);font-size:11px;color:var(--sello);font-weight:700}
+  .st-name{font-family:var(--sans);font-weight:700;font-size:15px;letter-spacing:-.01em;display:block;margin-bottom:3px}
+  .st-meta{font-family:var(--mono);font-size:11px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:4px 14px;margin-bottom:8px}
+  .st-meta b{font-weight:400;color:var(--ink-2)}
+  .st-note{font-size:14.5px;line-height:1.5;color:var(--ink-2);margin:0}
+  .st-note a{color:var(--sello)}
+  li.flag-key{border-left:3px solid var(--sello)}
+  li.flag-warn{border-left:3px solid var(--ambar)}
+  li.flag-stop{border-left:3px solid var(--derogado)}
+
+  .card{background:var(--surface);border:1px solid var(--rule);border-radius:3px;padding:16px 18px;margin-bottom:10px}
+  .card h4{margin:0 0 5px;font-size:14.5px;font-weight:700;letter-spacing:-.01em}
+  .card p{margin:0;font-size:14.5px;color:var(--ink-2);line-height:1.5}
+  .card a{color:var(--sello)}
+  .card.good{border-left:3px solid var(--verificado)}
+  .card.warn{border-left:3px solid var(--ambar)}
+  .card.stop{border-left:3px solid var(--derogado)}
+
+  .numbers{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);border-radius:3px;overflow:hidden}
+  .num{background:var(--surface);padding:15px 16px}
+  .num .lab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:5px}
+  .num .val{font-family:var(--sans);font-size:21px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;display:block;line-height:1.15}
+  .num .sub{font-family:var(--sans);font-size:11.5px;color:var(--ink-3);display:block;margin-top:4px;line-height:1.35}
+
+  .vt{font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;padding:2px 5px;border-radius:2px;border:1px solid;white-space:nowrap;vertical-align:1px}
+  .vt-p{color:var(--verificado);border-color:var(--verificado);background:var(--verif-soft)}
+  .vt-s{color:var(--ambar);border-color:var(--ambar);background:var(--ambar-soft)}
+  .vt-u{color:var(--derogado);border-color:var(--derogado);background:var(--derog-soft)}
+
+  .tscroll{overflow-x:auto;border:1px solid var(--rule);border-radius:3px;background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-family:var(--sans);font-size:14px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  th{font-size:11px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:400;background:var(--surface-2)}
+  tbody tr:last-child td{border-bottom:0}
+  td.n{font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:13px}
+
+  .legend-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .legend-item{display:flex;gap:11px;align-items:flex-start}
+  .legend-item p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.45}
+
+  footer{padding:40px 0 60px;color:var(--ink-3);font-size:13.5px}
+  footer a{color:var(--sello)}
+  footer p{max-width:74ch}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="langbar">
+  <div class="wrap">
+    <span class="site" data-i="brand"></span>
+    <div class="seg" role="group" aria-label="Language / Idioma">
+      <button type="button" id="lang-es" aria-pressed="true">Español</button>
+      <button type="button" id="lang-en" aria-pressed="false">English</button>
+    </div>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow" data-i="eyebrow"></p>
+    <h1><span data-i="h1"></span><span class="thin" data-i="h1sub"></span></h1>
+    <p class="dek" data-i="dek"></p>
+  </div>
+  <div class="alerts">
+    <div class="alert cliff">
+      <span class="tag" data-i="al1tag"></span>
+      <p data-h="al1body"></p>
+    </div>
+    <div class="alert stale">
+      <span class="tag" data-i="al2tag"></span>
+      <p data-h="al2body"></p>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2 data-i="s1h"></h2></div>
+    <p class="sec-dek" data-i="s1dek"></p>
+
+    <figure>
+      <div class="svg-scroll">
+        <svg viewBox="0 0 1180 700" role="img" id="diagram">
+          <defs>
+            <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+            </marker>
+            <marker id="ar-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--sello)"/>
+            </marker>
+          </defs>
+          <g font-family="system-ui, -apple-system, Segoe UI, sans-serif">
+
+            <text x="36" y="44" font-size="11" font-family="ui-monospace, Consolas, monospace" letter-spacing="1.6" fill="var(--sello)" data-i="g.laneA"></text>
+            <text x="36" y="60" font-size="11.5" fill="currentColor" opacity=".62" data-i="g.laneAsub"></text>
+
+            <g stroke="currentColor" stroke-opacity=".34" fill="var(--surface)">
+              <rect x="36" y="76" width="168" height="52" rx="3"/>
+              <rect x="248" y="76" width="168" height="52" rx="3"/>
+              <rect x="460" y="76" width="168" height="52" rx="3"/>
+              <rect x="672" y="76" width="168" height="52" rx="3"/>
+            </g>
+            <g font-size="12.5" fill="currentColor" text-anchor="middle">
+              <text x="120" y="98" data-i="g.a1"><tspan x="120" dy="16" font-size="10.5" opacity=".6" data-i="g.a1s"></tspan></text>
+              <text x="332" y="98" data-i="g.a2"><tspan x="332" dy="16" font-size="10.5" opacity=".6" data-i="g.a2s"></tspan></text>
+              <text x="544" y="98" data-i="g.a3"><tspan x="544" dy="16" font-size="10.5" opacity=".6" data-i="g.a3s"></tspan></text>
+              <text x="756" y="98" data-i="g.a4"><tspan x="756" dy="16" font-size="10.5" opacity=".6" data-i="g.a4s"></tspan></text>
+            </g>
+            <g stroke="currentColor" stroke-opacity=".5" marker-end="url(#ar)">
+              <line x1="204" y1="102" x2="242" y2="102"/>
+              <line x1="416" y1="102" x2="454" y2="102"/>
+              <line x1="628" y1="102" x2="666" y2="102"/>
+            </g>
+
+            <rect x="36" y="152" width="700" height="62" rx="3" fill="var(--ambar-soft)" stroke="var(--ambar)" stroke-opacity=".45"/>
+            <text x="52" y="174" font-size="11" font-family="ui-monospace, Consolas, monospace" letter-spacing="1.2" fill="var(--ambar)" data-i="g.ruleTag"></text>
+            <text x="52" y="193" font-size="12.5" fill="currentColor" data-i="g.rule1"></text>
+            <text x="52" y="208" font-size="12.5" fill="currentColor" data-i="g.rule2"></text>
+            <path d="M 736 183 L 800 183 L 800 140" fill="none" stroke="var(--ambar)" stroke-opacity=".7" stroke-dasharray="3 3" marker-end="url(#ar)"/>
+
+            <text x="36" y="252" font-size="11" font-family="ui-monospace, Consolas, monospace" letter-spacing="1.6" fill="var(--sello)" data-i="g.laneB"></text>
+            <text x="36" y="268" font-size="11.5" fill="currentColor" opacity=".62" data-i="g.laneBsub"></text>
+
+            <g stroke="currentColor" stroke-opacity=".34" fill="var(--surface)">
+              <rect x="36" y="284" width="168" height="52" rx="3"/>
+              <rect x="248" y="284" width="168" height="52" rx="3"/>
+              <rect x="460" y="284" width="168" height="52" rx="3"/>
+              <rect x="672" y="284" width="168" height="52" rx="3" stroke-dasharray="4 3"/>
+            </g>
+            <g font-size="12.5" fill="currentColor" text-anchor="middle">
+              <text x="120" y="306" data-i="g.b1"><tspan x="120" dy="16" font-size="10.5" opacity=".6" data-i="g.b1s"></tspan></text>
+              <text x="332" y="306" data-i="g.b2"><tspan x="332" dy="16" font-size="10.5" opacity=".6" data-i="g.b2s"></tspan></text>
+              <text x="544" y="306" data-i="g.b3"><tspan x="544" dy="16" font-size="10.5" opacity=".6" data-i="g.b3s"></tspan></text>
+              <text x="756" y="306" data-i="g.b4"><tspan x="756" dy="16" font-size="10.5" opacity=".6" data-i="g.b4s"></tspan></text>
+            </g>
+            <g stroke="currentColor" stroke-opacity=".5" marker-end="url(#ar)">
+              <line x1="204" y1="310" x2="242" y2="310"/>
+              <line x1="416" y1="310" x2="454" y2="310"/>
+              <line x1="628" y1="310" x2="666" y2="310"/>
+            </g>
+
+            <rect x="904" y="150" width="240" height="96" rx="3" fill="var(--sello)"/>
+            <text x="1024" y="182" font-size="15" font-weight="700" fill="var(--surface)" text-anchor="middle">PERMISO ÚNICO</text>
+            <text x="1024" y="202" font-size="10.5" fill="var(--surface)" opacity=".85" text-anchor="middle" data-i="g.p1"></text>
+            <text x="1024" y="220" font-size="10.5" fill="var(--surface)" opacity=".85" text-anchor="middle" data-i="g.p2"></text>
+            <text x="1024" y="236" font-size="10.5" fill="var(--surface)" opacity=".85" text-anchor="middle">sbp.ogpe.pr.gov</text>
+
+            <path d="M 840 102 L 872 102 L 872 176 L 898 176" fill="none" stroke="var(--sello)" stroke-width="1.6" marker-end="url(#ar-a)"/>
+            <path d="M 840 310 L 872 310 L 872 222 L 898 222" fill="none" stroke="var(--sello)" stroke-width="1.6" marker-end="url(#ar-a)"/>
+
+            <line x1="1024" y1="246" x2="1024" y2="272" stroke="currentColor" stroke-opacity=".45"/>
+            <rect x="904" y="272" width="240" height="132" rx="3" fill="var(--sello-soft)" stroke="var(--sello)" stroke-opacity=".4"/>
+            <text x="918" y="291" font-size="10" font-family="ui-monospace, Consolas, monospace" letter-spacing=".9" fill="var(--sello)" data-i="g.bundle"></text>
+            <g font-size="11.5" fill="currentColor">
+              <text x="918" y="311" data-i="g.c1"></text>
+              <text x="918" y="329" data-i="g.c2"></text>
+              <text x="918" y="347" data-i="g.c3"></text>
+              <text x="918" y="365" data-i="g.c4"></text>
+              <text x="918" y="383" data-i="g.c5"></text>
+            </g>
+
+            <line x1="1024" y1="404" x2="1024" y2="432" stroke="currentColor" stroke-opacity=".45" marker-end="url(#ar)"/>
+            <rect x="904" y="436" width="240" height="52" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+            <text x="1024" y="461" font-size="14" font-weight="800" fill="currentColor" text-anchor="middle" letter-spacing="-.3" data-i="g.open"></text>
+            <text x="1024" y="477" font-size="10" fill="currentColor" opacity=".6" text-anchor="middle" data-i="g.opensub"></text>
+
+            <path d="M 756 128 L 756 140 L 868 140 L 868 424 L 120 424" fill="none" stroke="currentColor" stroke-opacity=".38" stroke-dasharray="5 4"/>
+            <text x="884" y="420" font-size="10" font-family="ui-monospace, Consolas, monospace" letter-spacing="1" fill="currentColor" opacity=".55" data-i="g.noblock"></text>
+            <text x="36" y="452" font-size="11" font-family="ui-monospace, Consolas, monospace" letter-spacing="1.6" fill="var(--sello)" data-i="g.laneC"></text>
+
+            <g stroke="currentColor" stroke-opacity=".38" marker-end="url(#ar)">
+              <line x1="120" y1="424" x2="120" y2="464"/>
+              <line x1="332" y1="424" x2="332" y2="464"/>
+              <line x1="544" y1="424" x2="544" y2="464"/>
+              <line x1="756" y1="424" x2="756" y2="464"/>
+            </g>
+            <g stroke="currentColor" stroke-opacity=".34" fill="var(--surface)">
+              <rect x="36" y="468" width="168" height="56" rx="3"/>
+              <rect x="248" y="468" width="168" height="56" rx="3" stroke-dasharray="4 3"/>
+              <rect x="460" y="468" width="168" height="56" rx="3" stroke-dasharray="4 3"/>
+              <rect x="672" y="468" width="168" height="56" rx="3" stroke-dasharray="4 3"/>
+            </g>
+            <g font-size="12.5" fill="currentColor" text-anchor="middle">
+              <text x="120" y="488" data-i="g.d1"><tspan x="120" dy="15" font-size="10.5" opacity=".6" data-i="g.d1s"></tspan><tspan x="120" dy="13" font-size="10.5" opacity=".6" data-i="g.d1s2"></tspan></text>
+              <text x="332" y="490" data-i="g.d2"><tspan x="332" dy="15" font-size="10.5" opacity=".6" data-i="g.d2s"></tspan></text>
+              <text x="544" y="490" data-i="g.d3"><tspan x="544" dy="15" font-size="10.5" opacity=".6" data-i="g.d3s"></tspan></text>
+              <text x="756" y="490" data-i="g.d4"><tspan x="756" dy="15" font-size="10.5" opacity=".6" data-i="g.d4s"></tspan></text>
+            </g>
+            <text x="248" y="542" font-size="10.5" font-family="ui-monospace, Consolas, monospace" fill="currentColor" opacity=".55" data-i="g.onlyhire"></text>
+
+            <line x1="1024" y1="488" x2="1024" y2="512" stroke="currentColor" stroke-opacity=".45" marker-end="url(#ar)"/>
+            <rect x="904" y="516" width="240" height="126" rx="3" fill="var(--surface)" stroke="currentColor" stroke-opacity=".3"/>
+            <text x="918" y="535" font-size="10" font-family="ui-monospace, Consolas, monospace" letter-spacing=".9" fill="var(--sello)" data-i="g.ongoing"></text>
+            <g font-size="11.5" fill="currentColor">
+              <text x="918" y="555" data-i="g.o1"></text>
+              <text x="918" y="573" data-i="g.o2"></text>
+              <text x="918" y="591" data-i="g.o3"></text>
+              <text x="918" y="609" data-i="g.o4"></text>
+              <text x="918" y="627" data-i="g.o5"></text>
+            </g>
+
+            <line x1="36" y1="586" x2="840" y2="586" stroke="currentColor" stroke-opacity=".25"/>
+            <text x="36" y="606" font-size="10.5" font-family="ui-monospace, Consolas, monospace" fill="currentColor" opacity=".55" data-i="g.w0"></text>
+            <text x="300" y="606" font-size="10.5" font-family="ui-monospace, Consolas, monospace" fill="currentColor" opacity=".55" data-i="g.w2"></text>
+            <text x="560" y="606" font-size="10.5" font-family="ui-monospace, Consolas, monospace" fill="currentColor" opacity=".55" data-i="g.w6"></text>
+            <text x="770" y="606" font-size="10.5" font-family="ui-monospace, Consolas, monospace" fill="currentColor" opacity=".55" data-i="g.w14"></text>
+            <rect x="36" y="620" width="120" height="9" rx="2" fill="var(--verificado)" opacity=".55"/>
+            <rect x="160" y="620" width="200" height="9" rx="2" fill="var(--ambar)" opacity=".5"/>
+            <rect x="364" y="620" width="476" height="9" rx="2" fill="var(--sello)" opacity=".55"/>
+            <text x="36" y="648" font-size="10.5" fill="currentColor" opacity=".62" data-i="g.t1"></text>
+            <text x="200" y="648" font-size="10.5" fill="currentColor" opacity=".62" data-i="g.t2"></text>
+            <text x="430" y="648" font-size="10.5" fill="currentColor" opacity=".62" data-i="g.t3"></text>
+          </g>
+        </svg>
+      </div>
+      <figcaption data-h="s1cap"></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2 data-i="s2h"></h2></div>
+    <p class="sec-dek" data-i="s2dek"></p>
+
+    <div class="tool">
+      <form class="qpanel" id="qs">
+        <fieldset><legend><span class="q">01</span><span data-i="q.type"></span></legend>
+          <div class="opts" data-key="type">
+            <button type="button" class="opt" data-v="retail" data-i="o.retail"></button>
+            <button type="button" class="opt" data-v="food" data-i="o.food"></button>
+            <button type="button" class="opt" data-v="prof" data-i="o.prof"></button>
+            <button type="button" class="opt" data-v="mfg" data-i="o.mfg"></button>
+          </div></fieldset>
+
+        <fieldset><legend><span class="q">02</span><span data-i="q.entity"></span></legend>
+          <div class="opts" data-key="entity">
+            <button type="button" class="opt" data-v="llc" data-i="o.llc"></button>
+            <button type="button" class="opt" data-v="corp" data-i="o.corp"></button>
+            <button type="button" class="opt" data-v="sole" data-i="o.sole"></button>
+            <button type="button" class="opt" data-v="unsure" data-i="o.unsure"></button>
+          </div></fieldset>
+
+        <fieldset><legend><span class="q">03</span><span data-i="q.premises"></span></legend>
+          <div class="opts" data-key="premises">
+            <button type="button" class="opt" data-v="commercial" data-i="o.commercial"></button>
+            <button type="button" class="opt" data-v="home" data-i="o.home"></button>
+            <button type="button" class="opt" data-v="mobile" data-i="o.mobile"></button>
+          </div></fieldset>
+
+        <fieldset><legend><span class="q">04</span><span data-i="q.buildout"></span></legend>
+          <div class="opts" data-key="buildout">
+            <button type="button" class="opt" data-v="yes" data-i="o.byes"></button>
+            <button type="button" class="opt" data-v="no" data-i="o.bno"></button>
+          </div></fieldset>
+
+        <fieldset><legend><span class="q">05</span><span data-i="q.muni"></span></legend>
+          <select id="muni">
+            <option value="" data-i="o.pick"></option>
+            <option value="sanjuan">San Juan</option>
+            <option value="bayamon">Bayamón</option>
+            <option value="caguas">Caguas</option>
+            <option value="carolina">Carolina</option>
+            <option value="guaynabo">Guaynabo</option>
+            <option value="ponce">Ponce</option>
+            <option value="mayaguez">Mayagüez</option>
+            <option value="penuelas">Peñuelas</option>
+            <option value="camuy">Camuy</option>
+            <option value="other" data-i="o.othermuni"></option>
+          </select>
+          <p class="hint" data-i="q.munihint"></p></fieldset>
+
+        <fieldset><legend><span class="q">06</span><span data-i="q.vol"></span></legend>
+          <input type="number" id="vol" min="0" step="1000" placeholder="250000"/>
+          <p class="hint" data-i="q.volhint"></p></fieldset>
+
+        <fieldset><legend><span class="q">07</span><span data-i="q.hiring"></span></legend>
+          <div class="opts" data-key="hiring">
+            <button type="button" class="opt" data-v="yes" data-i="o.hyes"></button>
+            <button type="button" class="opt" data-v="no" data-i="o.hno"></button>
+          </div></fieldset>
+
+        <fieldset id="fs-driving" hidden><legend><span class="q">08</span><span data-i="q.driving"></span></legend>
+          <div class="opts" data-key="driving">
+            <button type="button" class="opt" data-v="yes" data-i="o.dyes"></button>
+            <button type="button" class="opt" data-v="no" data-i="o.dno"></button>
+          </div></fieldset>
+
+        <fieldset><legend><span class="q">09</span><span data-i="q.export"></span></legend>
+          <div class="opts" data-key="exportsvc">
+            <button type="button" class="opt" data-v="yes" data-i="o.eyes"></button>
+            <button type="button" class="opt" data-v="no" data-i="o.eno"></button>
+          </div></fieldset>
+
+        <fieldset><legend><span class="q">10</span><span data-i="q.young"></span></legend>
+          <div class="opts" data-key="young">
+            <button type="button" class="opt" data-v="yes" data-i="o.yyes"></button>
+            <button type="button" class="opt" data-v="no" data-i="o.yno"></button>
+          </div></fieldset>
+
+        <button type="button" class="reset" id="reset" data-i="ui.reset"></button>
+      </form>
+
+      <div class="results" id="out" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2 data-i="s3h"></h2></div>
+    <p class="sec-dek" data-i="s3dek"></p>
+    <div class="tscroll">
+      <table>
+        <thead><tr>
+          <th data-i="t.muni"></th><th data-i="t.rate"></th><th data-i="t.permits"></th><th data-i="t.portal"></th>
+        </tr></thead>
+        <tbody id="munibody"></tbody>
+      </table>
+    </div>
+    <p class="sec-dek" style="margin-top:20px" data-h="s3foot"></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><h2 data-i="s4h"></h2></div>
+    <p class="sec-dek" data-i="s4dek"></p>
+    <div class="legend-grid">
+      <div class="legend-item"><span class="vt vt-p" data-i="vt.p"></span><p data-i="vt.pd"></p></div>
+      <div class="legend-item"><span class="vt vt-s" data-i="vt.s"></span><p data-i="vt.sd"></p></div>
+      <div class="legend-item"><span class="vt vt-u" data-i="vt.u"></span><p data-i="vt.ud"></p></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <p data-h="f1"></p><p data-h="f2"></p><p data-h="f3"></p>
+</div></footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var D = {};
+
+  /* ==================== SPANISH ==================== */
+  D.es = {
+    brand: "Puerto Rico · Guía de apertura de negocios",
+    eyebrow: "Guía operativa · derivada de fuentes primarias",
+    h1: "Abrir un negocio en Puerto Rico",
+    h1sub: "Cada bifurcación del camino, de la entidad al permiso al incentivo",
+    dek: "Contesta lo que aplique a tu caso y esto arma tu secuencia real — con la agencia, la fecha límite, el costo, y una marca honesta de cuán bien sustentada está cada cifra.",
+    al1tag: "Una fecha límite en movimiento",
+    al1body: "<strong>Decretos de inversionista bajo la Ley 60: quedan <span class='countdown' id='cd'>—</span> para solicitar.</strong> La Ley 38-2026 dividió el régimen por fecha de radicación. Solicita en o antes del 31 de diciembre de 2026 y los intereses, dividendos y ganancias posteriores a la residencia se quedan en 0% (para ingresos reconocidos antes de 2036). Radica desde el 1 de enero de 2027 y pasa a 4%.",
+    al2tag: "Casi toda la guía en línea está desactualizada",
+    al2body: "<strong>La Ley 113-1974 está derogada.</strong> La patente municipal se rige por la <strong>Ley 107-2020, Libro VII, Cap. III</strong> desde 2020 — y aun así los portales municipales siguen citando la ley muerta. Aparte, el <em>informe anual</em> corporativo quedó eliminado desde 2025; solo sobrevive el cargo.",
+
+    s1h: "La forma del proceso",
+    s1dek: "Dos cadenas corren en paralelo y desembocan en un solo permiso. La de arriba es papeleo — días, y casi gratis. La de abajo es la ruta crítica, y es donde se van los meses.",
+    s1cap: "Las dos cadenas son independientes hasta que se encuentran. Lo que la gente hace mal es la flecha marcada en ámbar: el Certificado de Registro de Comerciante es un <em>insumo</em> de la solicitud de permiso, así que quien deja Hacienda para el final descubre que no puede radicar. Las obligaciones municipales y patronales cuelgan del mismo punto pero no bloquean nada — la patente se notifica <em>después</em> de empezar, no antes.",
+
+    g: {
+      laneA: "IDENTIDAD LEGAL Y CONTRIBUTIVA",
+      laneAsub: "En serie, pero rápido — menos de una semana en total. Unos $150–250 en cargos de gobierno.",
+      a1: "Elegir forma legal", a1s: "LLC · Corp · DBA",
+      a2: "Registrar entidad", a2s: "Depto. de Estado · RCE",
+      a3: "EIN federal", a3s: "IRS · gratis · minutos",
+      a4: "Registro de Comerciantes", a4s: "Hacienda · SURI",
+      ruleTag: "REGLA DE ORDEN QUE SE EQUIVOCA CON FRECUENCIA",
+      rule1: "El Registro de Comerciantes tiene que existir antes de la solicitud del Permiso Único —",
+      rule2: "la radicación exige el certificado como anejo. Hacerlo al revés te deja varado.",
+      laneB: "LOCAL Y PERMISO — LA RUTA CRÍTICA",
+      laneBsub: "Semanas o meses. Es la única parte que no se acelera con ser organizado.",
+      b1: "Buscar local", b1s: "2–8 semanas",
+      b2: "Verificar zonificación", b2s: "por № catastro · antes de firmar",
+      b3: "Firmar arrendamiento", b3s: "o comprar",
+      b4: "Permiso de construcción", b4s: "solo si remodelas",
+      p1: "OGPe · o municipio autónomo", p2: "con jerarquía delegada",
+      bundle: "CONSOLIDA EN UNA SOLA SOLICITUD",
+      c1: "· Permiso de uso", c2: "· Exclusión categórica", c3: "· Prevención de incendios",
+      c4: "· Salud ambiental", c5: "· Licencia sanitaria (alimentos)",
+      open: "ABIERTO AL PÚBLICO", opensub: "legalmente en operación",
+      noblock: "no bloquean la apertura",
+      laneC: "OBLIGACIONES EN PARALELO",
+      d1: "Patente municipal", d1s: "notificar ≤30 días", d1s2: "de haber comenzado",
+      d2: "DTRH", d2s: "desempleo + SINOT",
+      d3: "CFSE", d3s: "seguro obrero",
+      d4: "Seguro choferil", d4s: "si alguien conduce",
+      onlyhire: "— — —  solo si contratas empleados  — — —",
+      ongoing: "CUMPLIMIENTO RECURRENTE",
+      o1: "IVU mensual · día 20", o2: "Estimada trimestral", o3: "Planilla anual · Hacienda",
+      o4: "Cargo anual Estado · 15 abr", o5: "Volumen de negocios · 15 abr",
+      w0: "SEMANA 0", w2: "SEMANA 2", w6: "SEMANA 6", w14: "SEMANA 14+",
+      t1: "entidad + EIN + SURI", t2: "búsqueda de local y arrendamiento",
+      t3: "Permiso Único — inspecciones, la parte que no se acelera"
+    },
+
+    s2h: "Tu ruta",
+    s2dek: "La secuencia de arriba es igual para todos. Lo que cambia es qué ramas aplican, cuánto te cuesta de verdad la patente, y cuáles incentivos son reales y cuáles son folclor de internet.",
+    q: {
+      type: "¿Qué vas a abrir?", entity: "Forma legal", premises: "¿Dónde vas a operar?",
+      buildout: "¿Vas a remodelar o hacer buildout?", muni: "Municipio",
+      munihint: "Cambia tanto tu tasa de patente como si radicas permisos en OGPe o en el municipio.",
+      vol: "Volumen bruto estimado del primer año",
+      volhint: "Volumen de negocios, no ganancia. Determina la patente, la exención del CRIM y los umbrales de auditoría.",
+      hiring: "¿Vas a contratar empleados?", driving: "¿Alguien va a conducir como parte del trabajo?",
+      export: "¿Le vendes a clientes fuera de PR sin nexo local?",
+      young: "¿Tienes entre 16 y 35 años con cuarto año?"
+    },
+    o: {
+      retail: "Tienda / retail", food: "Restaurante / cafetería", prof: "Servicios profesionales", mfg: "Manufactura / distribución",
+      llc: "LLC", corp: "Corporación", sole: "Individuo / DBA", unsure: "No estoy seguro",
+      commercial: "Local comercial", home: "Mi casa, sin clientes", mobile: "Móvil / pop-up",
+      byes: "Sí", bno: "No, entro y opero",
+      pick: "Selecciona…", othermuni: "Otro municipio",
+      hyes: "Sí", hno: "Solo yo",
+      dyes: "Sí — reparto o gestiones", dno: "No",
+      eyes: "Sí, exporto", eno: "No, vendo aquí",
+      yyes: "Sí", yno: "No"
+    },
+    ui: {
+      reset: "Empezar de nuevo",
+      empty: "Contesta al menos tres preguntas y aquí se arma tu secuencia.",
+      glance: "De un vistazo", seq: "Tu secuencia · {n} pasos",
+      incentives: "Incentivos · lo real, no el folclor",
+      warnings: "Advertencias para tu caso",
+      gaps: "Lo que no pude verificar",
+      nWeeks: "Semanas hasta abrir", nWeeksSub: "la ruta crítica es el permiso",
+      nFees: "Cargos de gobierno", nFeesSub: "estimado — no hallé tarifario de OGPe",
+      nPat1: "Patente año 1", nPat1Sub: "si notificas dentro de 30 días",
+      nPat: "Patente estado estable", nPatSub: "selecciona un municipio"
+    },
+
+    s3h: "Por qué el municipio importa más de lo que la gente cree",
+    s3dek: "El Art. 7.202(c) de la Ley 107-2020 permite a los municipios fijar tasas por debajo del techo, escalonarlas por volumen, o eximirlas del todo para atraer inversión. Así que el mismo negocio paga contribuciones muy distintas dependiendo solo de a qué lado de una línea municipal cae — y radica por un portal completamente distinto.",
+    s3foot: "La columna de autoridad delegada carga una advertencia real: la lista autoritativa de municipios con jerarquía delegada de permisos es de <strong>agosto de 2016</strong>. Es el dato más importante de esta tabla en términos operativos y el que más probablemente esté desactualizado. Confírmalo antes de depender de él.",
+    t: { muni: "Municipio", rate: "No financiero", permits: "Permisos", portal: "Portal / nota" },
+    tPermD: "Delegado", tPermO: "OGPe",
+
+    s4h: "Cómo leer las marcas de sustento",
+    s4dek: "Aquí se habla de dinero y de licencias, así que cada cifra carga su procedencia. Un número dicho con confianza desde una fuente secundaria es más peligroso que un vacío admitido.",
+    vt: {
+      p: "Confirmado", pd: "Rastreado hasta la ley, la página de la agencia, o el propio formulario de la agencia. Se puede actuar sobre esto, sujeto a la fecha indicada.",
+      s: "Secundario", sd: "Viene de un bufete, una asociación profesional o un resumen de suplidor. Probablemente correcto en sustancia; verifícalo antes de que te cueste.",
+      u: "Sin verificar", ud: "No se halló fuente de ningún tipo, o las fuentes se contradicen. Trátalo como pregunta abierta, no como respuesta."
+    },
+
+    f1: "<strong>Fuentes.</strong> Construido a partir de los textos consolidados en <code>bvirtualogp.pr.gov</code> — Código Municipal (Ley 107-2020), Ley 60-2019, Código de Rentas Internas (Ley 1-2011), Ley 161-2009, Ley 164-2009 — más páginas de Hacienda, OGPe, DDEC, BDE, DTRH, CFSE e IRS. Fecha de investigación: <b>7 de agosto de 2026</b>.",
+    f2: "<strong>Una advertencia que vale repetir.</strong> Hasta las consolidaciones oficiales con seguimiento de enmiendas cargan secciones obsoletas: el Código de Rentas Internas consolidado todavía muestra un IVU estatal de 6% y no menciona 10.5% en ninguna de sus 1,104 páginas, pese a que el 10.5% está vigente desde 2015. Verifica las tasas contra la agencia que cobra, nunca contra la ley sola.",
+    f3: "<strong>Esto no es asesoría legal ni contributiva.</strong> La elección de clasificación de la LLC, la ruta del Permiso Único, y cualquier cosa que toque la Ley 60 son decisiones para tomar con un CPA o abogado en Puerto Rico."
+  };
+
+  /* ==================== ENGLISH ==================== */
+  D.en = {
+    brand: "Puerto Rico · Business formation guide",
+    eyebrow: "Operating guide · derived from primary sources",
+    h1: "Opening a business in Puerto Rico",
+    h1sub: "Every fork in the road, from entity to permit to incentive",
+    dek: "Answer what applies to you and this builds your actual sequence — with the agency, the deadline, the fee, and an honest mark on how well each figure is sourced.",
+    al1tag: "A deadline in motion",
+    al1body: "<strong>Act 60 investor decrees: <span class='countdown' id='cd'>—</span> left to apply.</strong> Ley 38-2026 split the regime by filing date. Apply on or before 31 December 2026 and interest, dividends and post-residency gains stay at 0% (for income recognized before 2036). File from 1 January 2027 and it becomes 4%.",
+    al2tag: "Most guidance online is out of date",
+    al2body: "<strong>Ley 113-1974 is repealed.</strong> Patente municipal has been governed by <strong>Ley 107-2020, Libro VII, Cap. III</strong> since 2020 — yet municipal portals still cite the dead statute. Separately, the corporate <em>annual report</em> was abolished for 2025 onward; only the fee survives.",
+
+    s1h: "The shape of the process",
+    s1dek: "Two chains run in parallel and converge on a single permit. The top one is paperwork — days, and nearly free. The bottom one is the critical path, and it is where the months go.",
+    s1cap: "The two chains are independent until they meet. What people get wrong is the arrow marked in amber: the merchant registration certificate is an <em>input</em> to the permit application, so anyone who leaves Hacienda for last discovers they cannot file. Municipal and employer obligations hang off the same point but gate nothing — the patente is notified <em>after</em> you start, not before.",
+
+    g: {
+      laneA: "LEGAL AND TAX IDENTITY",
+      laneAsub: "Serial, but fast — under a week end to end. Roughly $150–250 in government fees.",
+      a1: "Choose entity form", a1s: "LLC · Corp · DBA",
+      a2: "Register the entity", a2s: "Dept. of State · RCE",
+      a3: "Federal EIN", a3s: "IRS · free · minutes",
+      a4: "Merchant Registration", a4s: "Hacienda · SURI",
+      ruleTag: "THE ORDERING RULE PEOPLE GET WRONG",
+      rule1: "The Merchant Registration must exist before the Permiso Único application —",
+      rule2: "the filing requires the certificate as an attachment. Doing it the other way round strands you.",
+      laneB: "PREMISES AND PERMIT — THE CRITICAL PATH",
+      laneBsub: "Weeks to months. The only part being organized will not speed up.",
+      b1: "Find premises", b1s: "2–8 weeks",
+      b2: "Verify zoning", b2s: "by cadastral № · before signing",
+      b3: "Sign the lease", b3s: "or purchase",
+      b4: "Construction permit", b4s: "only if remodeling",
+      p1: "OGPe · or autonomous municipality", p2: "holding delegated hierarchy",
+      bundle: "CONSOLIDATED INTO ONE APPLICATION",
+      c1: "· Use permit", c2: "· Categorical exclusion", c3: "· Fire prevention",
+      c4: "· Environmental health", c5: "· Sanitary license (food)",
+      open: "OPEN FOR BUSINESS", opensub: "legally in operation",
+      noblock: "these do not gate opening",
+      laneC: "PARALLEL OBLIGATIONS",
+      d1: "Patente municipal", d1s: "notify ≤30 days", d1s2: "after starting",
+      d2: "DTRH", d2s: "unemployment + SINOT",
+      d3: "CFSE", d3s: "workers' comp",
+      d4: "Chauffeur's insurance", d4s: "if anyone drives",
+      onlyhire: "— — —  only if you hire employees  — — —",
+      ongoing: "RECURRING COMPLIANCE",
+      o1: "Monthly IVU · by the 20th", o2: "Quarterly estimated tax", o3: "Annual return · Hacienda",
+      o4: "Annual State fee · 15 Apr", o5: "Business volume decl. · 15 Apr",
+      w0: "WEEK 0", w2: "WEEK 2", w6: "WEEK 6", w14: "WEEK 14+",
+      t1: "entity + EIN + SURI", t2: "premises search and lease",
+      t3: "Permiso Único — inspections, the part that will not compress"
+    },
+
+    s2h: "Your path",
+    s2dek: "The sequence above is the same for everyone. What changes is which branches apply, what the patente actually costs you, and which incentives are real rather than internet folklore.",
+    q: {
+      type: "What are you opening?", entity: "Entity form", premises: "Where will you operate?",
+      buildout: "Will you remodel or build out?", muni: "Municipality",
+      munihint: "Changes both your patente rate and whether you file permits with OGPe or the municipality.",
+      vol: "Expected first-year gross volume",
+      volhint: "Business volume, not profit. Drives the patente, the CRIM exemption, and audit thresholds.",
+      hiring: "Hiring employees?", driving: "Will anyone drive as part of the job?",
+      export: "Do you sell to clients outside PR with no local nexus?",
+      young: "Are you 16–35 with a high school diploma?"
+    },
+    o: {
+      retail: "Store / retail", food: "Restaurant / café", prof: "Professional services", mfg: "Manufacturing / distribution",
+      llc: "LLC", corp: "Corporation", sole: "Sole proprietor / DBA", unsure: "Not sure yet",
+      commercial: "Commercial premises", home: "My home, no client traffic", mobile: "Mobile / pop-up",
+      byes: "Yes", bno: "No, move in and operate",
+      pick: "Select…", othermuni: "Another municipality",
+      hyes: "Yes", hno: "Just me",
+      dyes: "Yes — delivery or errands", dno: "No",
+      eyes: "Yes, I export", eno: "No, I sell here",
+      yyes: "Yes", yno: "No"
+    },
+    ui: {
+      reset: "Start over",
+      empty: "Answer at least three questions and your sequence assembles here.",
+      glance: "At a glance", seq: "Your sequence · {n} steps",
+      incentives: "Incentives · the real ones, not the folklore",
+      warnings: "Warnings for your case",
+      gaps: "What I could not verify",
+      nWeeks: "Weeks to open", nWeeksSub: "critical path is the permit",
+      nFees: "Government fees", nFeesSub: "estimate — no OGPe schedule found",
+      nPat1: "Patente, year 1", nPat1Sub: "if you notify within 30 days",
+      nPat: "Patente, steady state", nPatSub: "select a municipality"
+    },
+
+    s3h: "Why the municipality matters more than people expect",
+    s3dek: "Ley 107-2020 Art. 7.202(c) lets municipalities set rates below the ceiling, tier them by volume, or waive them outright to attract investment. So the same business pays materially different tax depending only on which side of a municipal line it sits — and files through an entirely different portal.",
+    s3foot: "The delegated-authority column carries a real caveat: the authoritative list of municipalities holding delegated permit hierarchy dates from <strong>August 2016</strong>. It is the most operationally important fact in this table and the one most likely to be stale. Confirm it before relying on it.",
+    t: { muni: "Municipality", rate: "Non-financial", permits: "Permits", portal: "Portal / note" },
+    tPermD: "Delegated", tPermO: "OGPe",
+
+    s4h: "How to read the sourcing marks",
+    s4dek: "This is money and licensing, so every figure carries its provenance. A confident number from a secondary source is more dangerous than an admitted gap.",
+    vt: {
+      p: "Confirmed", pd: "Traced to the statute, the agency page, or the agency's own form. Safe to act on, subject to the date shown.",
+      s: "Secondary", sd: "Comes from a law firm, professional association, or vendor summary. Substantively probably right; verify before it costs you.",
+      u: "Unverified", ud: "No source of either kind was found, or the sources disagree. Treat as an open question, not an answer."
+    },
+
+    f1: "<strong>Sourcing.</strong> Built from consolidated statute texts at <code>bvirtualogp.pr.gov</code> — Código Municipal (Ley 107-2020), Ley 60-2019, Código de Rentas Internas (Ley 1-2011), Ley 161-2009, Ley 164-2009 — plus Hacienda, OGPe, DDEC, BDE, DTRH, CFSE and IRS pages. Research date <b>7 August 2026</b>.",
+    f2: "<strong>A caution worth repeating.</strong> Even dated, amendment-tracking government consolidations carry stale sections: the consolidated tax code still shows a 6% state IVU and never mentions 10.5% anywhere in its 1,104 pages, despite 10.5% having been operative since 2015. Cross-check rates against the collecting agency, never the statute alone.",
+    f3: "<strong>This is not legal or tax advice.</strong> The LLC classification election, the Permiso Único route, and anything touching Act 60 are decisions to take with a Puerto Rico CPA or attorney."
+  };
+
+  /* ==================== municipal data ==================== */
+  var MUNIS = {
+    sanjuan:  { name:"San Juan", delegated:true, kind:"tier_sj", verified:true,
+      rate_es:"≤$12,500 exento · $12,501–100k = $25 fijo · 100k–300k 0.20% · >300k 0.50%",
+      rate_en:"≤$12,500 exempt · $12,501–100k = flat $25 · 100k–300k 0.20% · >300k 0.50%",
+      portal_es:"tramite.sanjuan.pr — radicación electrónica obligatoria",
+      portal_en:"tramite.sanjuan.pr — electronic filing compulsory",
+      note_es:"Radicación electrónica obligatoria en tramite.sanjuan.pr. También corre un portal de incentivos en emprendimiento.sanjuan.pr.",
+      note_en:"Electronic filing is compulsory at tramite.sanjuan.pr. It also runs a business-incentive portal at emprendimiento.sanjuan.pr." },
+    bayamon:  { name:"Bayamón", delegated:true, kind:"flat", rate:0.005, verified:true,
+      rate_es:"0.50%", rate_en:"0.50%",
+      portal_es:"ivubayamon.org — 5% descuento por pago completo al radicar",
+      portal_en:"ivubayamon.org — 5% discount for paying in full at filing",
+      note_es:"5% de descuento si pagas el año completo al radicar. La página municipal todavía cita la derogada Ley 113.",
+      note_en:"5% discount if you pay the full year at filing. The municipal page still cites the repealed Ley 113." },
+    caguas:   { name:"Caguas", delegated:true, kind:"flat", rate:0.005, verified:true,
+      rate_es:"0.50%", rate_en:"0.50%", portal_es:"Recaudador Virtual", portal_en:"Recaudador Virtual",
+      note_es:"Radica por Recaudador Virtual.", note_en:"Files through Recaudador Virtual." },
+    carolina: { name:"Carolina", delegated:true, kind:"flat", rate:0.005, verified:true,
+      rate_es:"0.50%", rate_en:"0.50%", portal_es:"municipiocarolina.com", portal_en:"municipiocarolina.com",
+      note_es:"", note_en:"" },
+    guaynabo: { name:"Guaynabo", delegated:true, kind:"flat", rate:0.005, verified:true,
+      rate_es:"0.50%", rate_en:"0.50%", portal_es:"epay.guaynabocity.gov.pr", portal_en:"epay.guaynabocity.gov.pr",
+      note_es:"", note_en:"" },
+    ponce:    { name:"Ponce", delegated:true, kind:"tier_ponce", verified:false,
+      rate_es:"≤$499,999 0.30% · >$500k 0.50%", rate_en:"≤$499,999 0.30% · >$500k 0.50%",
+      portal_es:"ponce.recaudadorvirtual.com", portal_en:"ponce.recaudadorvirtual.com",
+      note_es:"Tasa leída de una tabla del Colegio de CPA con posible desalineación de columnas — confírmala contra la ordenanza municipal.",
+      note_en:"Rate read from a CPA association table with possible column drift — confirm against the municipal ordinance." },
+    mayaguez: { name:"Mayagüez", delegated:false, kind:"flat", rate:0.005, verified:false,
+      rate_es:"0.50%, posiblemente escalonado", rate_en:"0.50%, possibly tiered",
+      portal_es:"mayaguez.recaudadorvirtual.com", portal_en:"mayaguez.recaudadorvirtual.com",
+      note_es:"Tasa incierta y posiblemente escalonada. No aparece en la lista de 2016 de autoridad delegada, así que asume OGPe hasta confirmar.",
+      note_en:"Rate uncertain and possibly tiered. Not on the 2016 delegated-authority list, so assume OGPe until confirmed." },
+    penuelas: { name:"Peñuelas", delegated:false, kind:"flat", rate:0.004, verified:true,
+      rate_es:"0.40%", rate_en:"0.40%",
+      portal_es:"Ejemplo claro de tasa bajo el techo", portal_en:"A clear example of a below-ceiling rate",
+      note_es:"Por debajo del techo estatutario — un ahorro genuino, aunque modesto.",
+      note_en:"Below the statutory ceiling — a genuine, if modest, saving." },
+    camuy:    { name:"Camuy", delegated:false, kind:"tier_camuy", verified:true,
+      rate_es:"<$5k = $25 · $5k–200k 0.40% · >$200k 0.50%", rate_en:"<$5k = $25 · $5k–200k 0.40% · >$200k 0.50%",
+      portal_es:"Tabla 2024-25", portal_en:"2024-25 table",
+      note_es:"Escalonado. Cifras de la tabla 2024-25.", note_en:"Tiered. Figures from the 2024-25 table." },
+    other:    { name_es:"tu municipio", name_en:"your municipality", delegated:null, kind:"unknown", verified:false,
+      note_es:"", note_en:"" }
+  };
+  var MUNI_ORDER = ["sanjuan","bayamon","caguas","carolina","guaynabo","ponce","mayaguez","penuelas","camuy"];
+
+  /* ==================== state ==================== */
+  var L = "es";
+  var T = D.es;
+  var S = { type:null, entity:null, premises:null, buildout:null, muni:"", vol:null, hiring:null, driving:null, exportsvc:null, young:null };
+
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]; }); };
+  var money = function (n) { return "$" + Math.round(n).toLocaleString("en-US"); };
+  function dig(o, p) { return p.split(".").reduce(function (a, k) { return a == null ? a : a[k]; }, o); }
+  function muniName(m) { return m ? (m.name || (L === "es" ? m.name_es : m.name_en)) : ""; }
+  function muniNote(m) { return m ? (L === "es" ? m.note_es : m.note_en) : ""; }
+  function vt(kind) { return '<span class="vt vt-' + kind + '">' + T.vt[kind] + '</span>'; }
+
+  /* ==================== patente ==================== */
+  function patente(mk, v) {
+    if (v == null || isNaN(v)) return null;
+    var es = L === "es";
+    if (v <= 5000) return { amt:0, why: es ? "Volumen ≤ $5,000 — exento por el Art. 7.206." : "Volume ≤ $5,000 — exempt under Art. 7.206." };
+    var m = MUNIS[mk]; if (!m) return null;
+    if (m.kind === "flat") return { amt: Math.max(v * m.rate, 25),
+      why: (es ? "Tasa " : "Rate ") + (m.rate * 100).toFixed(2) + (es ? "% (mínimo $25)." : "% ($25 minimum).") };
+    if (m.kind === "tier_sj") {
+      if (v <= 12500) return { amt:0, why: es ? "San Juan exime el volumen de $12,500 o menos." : "San Juan exempts volume at or below $12,500." };
+      if (v <= 100000) return { amt:25, why: es ? "San Juan cobra $25 fijos entre $12,501 y $100,000." : "San Juan charges a flat $25 between $12,501 and $100,000." };
+      if (v <= 300000) return { amt: Math.max(v * 0.002, 25), why: es ? "Escalón de San Juan: 0.20% de $100,001 a $300,000." : "San Juan tier: 0.20% from $100,001 to $300,000." };
+      return { amt: Math.max(v * 0.005, 25), why: es ? "Escalón de San Juan: 0.50% sobre $300,001." : "San Juan tier: 0.50% above $300,001." };
+    }
+    if (m.kind === "tier_ponce") { var r = v <= 499999 ? 0.003 : 0.005;
+      return { amt: Math.max(v * r, 25), why: (es ? "Escalón de Ponce " : "Ponce tier ") + (r*100).toFixed(2) + (es ? "% — cifra sin confirmar." : "% — unconfirmed figure.") }; }
+    if (m.kind === "tier_camuy") {
+      if (v < 5000) return { amt:25, why: es ? "Camuy: $25 fijos bajo $5,000." : "Camuy: flat $25 below $5,000." };
+      var r2 = v <= 200000 ? 0.004 : 0.005;
+      return { amt: Math.max(v * r2, 25), why: (es ? "Escalón de Camuy " : "Camuy tier ") + (r2*100).toFixed(2) + "%." };
+    }
+    return { amt: Math.max(v * 0.005, 25), why: es ? "Asumiendo el techo estatutario de 0.50% — confirma la tasa real de tu municipio." : "Assuming the statutory 0.50% ceiling — confirm your municipality's actual rate." };
+  }
+
+  /* ==================== path builder ==================== */
+  function build() {
+    var es = L === "es", steps = [], inc = [], warn = [], gaps = [];
+    var m = MUNIS[S.muni] || null, v = S.vol, mn = muniName(m);
+
+    /* --- entity --- */
+    if (S.entity === "sole") {
+      steps.push({ n: es?"Operar como individuo (DBA)":"Operate as a sole proprietor (DBA)", ag:"—", when:"—", cost:"$0",
+        note: es
+          ? "No radicas nada en el Departamento de Estado. El intercambio es total: <b>tus bienes personales responden por el negocio</b>. La propia guía del Departamento lo dice sin rodeos — no tienes que incorporarte; la gente se incorpora para proteger sus bienes personales."
+          : "Nothing is filed with the Departamento de Estado. The trade-off is total: <b>your personal assets answer for the business</b>. The Departamento's own guidance is blunt that you need not incorporate — people incorporate to protect personal assets." });
+    } else if (S.entity === "llc" || S.entity === "corp") {
+      steps.push({ n: S.entity==="llc" ? (es?"Organizar la LLC":"Organize the LLC") : (es?"Incorporar":"Incorporate"),
+        ag: es?"Depto. de Estado · RCE":"Dept. of State · RCE",
+        when: es?"1–5 días laborables":"1–5 business days",
+        cost: S.entity==="llc" ? "~$250" : "~$150",
+        note: (es
+          ? "Se radica en <a href='https://rcp.estado.pr.gov/'>rcp.estado.pr.gov</a>. Exige un <b>agente residente con dirección física en Puerto Rico</b> — un apartado postal no cumple con el Art. 3.02. Existen niveles expeditos de $100 (24h) / $200 (mismo día) / $500 (2h).<br>" + vt("u") + " La ley fija pisos de $50 (LLC) y $100 (corp), pero el Secretario puede cambiar los cargos por carta circular. Las cifras de formación de arriba vienen solo de fuentes secundarias — no las pude confirmar en ninguna página de gobierno."
+          : "Filed at <a href='https://rcp.estado.pr.gov/'>rcp.estado.pr.gov</a>. Requires a <b>registered agent with a physical Puerto Rico address</b> — a P.O. box does not satisfy Art. 3.02. Expedited tiers exist at $100 (24h) / $200 (same day) / $500 (2h).<br>" + vt("u") + " The statute sets floors of $50 (LLC) and $100 (corp), but the Secretary may reset fees by circular letter. The formation figures above come only from secondary sources — I could not confirm them on any government page.") });
+      if (S.entity === "llc") {
+        steps.push({ n: es?"Decidir la clasificación contributiva de la LLC":"Decide the LLC's PR tax classification",
+          ag:"Hacienda", when: es?"Al organizarse":"At formation", cost:"—", flag:"warn",
+          note: es
+            ? "<b>Una LLC de Puerto Rico tributa como corporación por defecto</b> — lo contrario al defecto federal, y la trampa más común para quien trae instintos de allá afuera. Puedes elegir tratamiento de sociedad, y <b>la elección de PR es aparte de la federal</b>. Equivocarte significa radicar la planilla incorrecta y posiblemente apilar dos capas de contribución. Esta va con un CPA en PR."
+            : "<b>A Puerto Rico LLC is taxed as a corporation by default</b> — the opposite of the US federal default, and the single most common trap for anyone bringing mainland instincts. You may elect partnership treatment, and <b>the PR election is separate from the federal one</b>. Getting it wrong means filing the wrong return and possibly stacking two layers of tax. Take this one to a PR CPA." });
+      }
+    } else if (S.entity === "unsure") {
+      steps.push({ n: es?"Decidir la forma legal antes de seguir":"Decide the entity form before anything else",
+        ag:"—", when: es?"Primero":"First", cost:"—", flag:"warn",
+        note: es
+          ? "Esto condiciona todo lo que sigue. La versión corta: un DBA no radica nada y no protege nada; una LLC o corporación cuesta unos cientos de dólares y levanta una pared entre el negocio y tu casa. Si cargas inventario, firmas un arrendamiento o contratas a alguien, la pared normalmente vale la pena."
+          : "This gates everything downstream. The short version: a DBA files nothing and shields nothing; an LLC or corporation costs a few hundred dollars and puts a wall between the business and your house. If you carry inventory, sign a lease, or hire anyone, the wall is usually worth it." });
+    }
+
+    /* --- EIN --- */
+    steps.push({ n: es?"Obtener el EIN federal":"Get the federal EIN", ag:"IRS",
+      when: es?"Minutos, en línea":"Minutes, online", cost:"$0",
+      note: es
+        ? "En <a href='https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online'>irs.gov</a>. El IRS lo dice claro: <b>nunca tienes que pagar por un EIN</b> — los sitios que cobran están revendiendo un formulario gratis. Un EIN por persona responsable por día."
+        : "At <a href='https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online'>irs.gov</a>. The IRS says it plainly: <b>you never have to pay for an EIN</b> — sites that charge are reselling a free form. One EIN per responsible party per day." });
+
+    /* --- merchant registration --- */
+    steps.push({ n: es?"Registro de Comerciantes":"Merchant Registration Certificate", ag:"Hacienda · SURI",
+      when: es?"ANTES de comenzar a operar":"BEFORE you begin operating",
+      cost: es?"$0 (asumido)":"$0 (assumed)", flag:"key",
+      note: es
+        ? "En <a href='https://suri.hacienda.pr.gov/'>suri.hacienda.pr.gov</a>. La ley es inequívoca — radica <b>antes</b> de comenzar a operar (Ley 1-2011 §4060.01(b)). Las guías que dicen «dentro de 30 días» están confundiendo esto con otro deber: notificar <em>cambios</em> dentro de 30 días.<br>Un registro <b>por cada local físico</b>; SURI no acepta dos en la misma dirección. El certificado se exhibe, y <b>vence a los dos años</b> sin período de gracia establecido. Al aprobarlo, Hacienda te clasifica como agente retenedor o no retenedor para el IVU — que quede bien desde el registro.<br>" + vt("s") + " No aparece ningún cargo en la ley ni en la carta circular; las fuentes secundarias dicen que es gratis, pero ninguna página de gobierno afirma $0."
+        : "At <a href='https://suri.hacienda.pr.gov/'>suri.hacienda.pr.gov</a>. The statute is unambiguous — file <b>before</b> you begin operating (Ley 1-2011 §4060.01(b)). Guides that say \"within 30 days\" are confusing this with a different duty: notifying <em>changes</em> within 30 days.<br>One registration <b>per physical location</b>; SURI will not accept two at the same address. The certificate must be displayed, and it <b>expires after two years</b> with no stated grace period. At approval Hacienda classifies you as withholding or non-withholding agent for IVU — get that right at registration.<br>" + vt("s") + " No fee appears anywhere in the statute or the circular; secondary sources say free, but no government page affirmatively states $0." });
+
+    /* --- premises --- */
+    if (S.premises === "commercial") {
+      steps.push({ n: es?"Verificar la zonificación por número de catastro":"Verify zoning by cadastral number",
+        ag: es?"Junta de Planificación":"Planning Board",
+        when: es?"Mismo día — antes de firmar nada":"Same day — before signing anything", cost:"$0", flag:"key",
+        note: es
+          ? "Consulta el número de catastro en <a href='https://gis.jp.pr.gov/mipr/'>gis.jp.pr.gov/mipr</a> <b>antes de firmar un arrendamiento</b>. Arrendar una propiedad cuya zonificación no aguanta tu uso es el error evitable más caro de todo el proceso — y el único que no se arregla con papeleo."
+          : "Check the cadastral number at <a href='https://gis.jp.pr.gov/mipr/'>gis.jp.pr.gov/mipr</a> <b>before you sign a lease</b>. A lease on a property whose zoning will not carry your use is the most expensive avoidable mistake in this whole process — and the one that cannot be undone by paperwork." });
+
+      if (S.buildout === "yes") {
+        steps.push({ n: es?"Permiso de construcción":"Construction permit", ag: es?"OGPe o municipio":"OGPe or municipality",
+          when: es?"Semanas a meses":"Weeks to months", cost: es?"Varía":"Varies", flag:"warn",
+          note: es
+            ? "Precede al permiso de uso y al Permiso Único. Planos certificados por un profesional autorizado pueden sustituir la revisión convencional en casos definidos. Normalmente lo lleva tu arquitecto o ingeniero de récord.<br>" + vt("u") + " No investigué esta vía a fondo — presupuesta con holgura y consigue un estimado profesional temprano."
+            : "Precedes the use permit and the Permiso Único. Certified plans by an authorized professional can substitute for conventional review in defined cases. Usually driven by your architect or engineer of record.<br>" + vt("u") + " This track was not researched in depth — budget generously and get a professional estimate early." });
+      }
+
+      var route = m
+        ? (m.delegated === true ? (es ? "tu municipio (tiene autoridad delegada de permisos)" : "your municipality (it holds delegated permit authority)")
+          : m.delegated === false ? (es ? "OGPe (tu municipio no está en la lista de delegados)" : "OGPe (your municipality is not on the delegated list)")
+          : (es ? "OGPe — a menos que tu municipio tenga autoridad delegada" : "OGPe — unless your municipality holds delegated authority"))
+        : (es ? "OGPe o tu municipio" : "OGPe or your municipality");
+
+      steps.push({ n:"Permiso Único", ag: m && m.delegated ? (es?"Municipio autónomo":"Autonomous municipality") : "OGPe",
+        when: es?"Semanas — la ruta crítica":"Weeks — the critical path",
+        cost: es?"10% al radicar, balance tras evaluación":"10% at filing, balance after evaluation", flag:"key",
+        note: (es
+          ? "Se radica por el Single Business Portal en <a href='https://sbp.ogpe.pr.gov/'>sbp.ogpe.pr.gov</a>. Radicas con <b>" + route + "</b>.<br>Una sola solicitud consolida el permiso de uso, la exclusión categórica, la certificación de prevención de incendios, la certificación de salud ambiental y las licencias sanitarias. <b>No se puede pedir sin la autorización de uso del negocio.</b><br>Contratar un Profesional Autorizado (PA) es práctica estándar para cualquier cosa más allá de un cambio de nombre, y normalmente se paga solo en tiempo.<br>" + vt("u") + " No hallé el tarifario vigente de OGPe en ninguna fuente primaria, y el <b>intervalo de renovación es genuinamente desconocido</b> — ver las advertencias abajo."
+          : "Filed through the Single Business Portal at <a href='https://sbp.ogpe.pr.gov/'>sbp.ogpe.pr.gov</a>. You file with <b>" + route + "</b>.<br>One application consolidates the use permit, categorical exclusion, fire prevention certification, environmental health certification and sanitary licenses. <b>It cannot be requested without the use authorization for the business.</b><br>Hiring an Authorized Professional (PA) is standard practice for anything beyond a name change and usually pays for itself in elapsed time.<br>" + vt("u") + " I could not locate OGPe's current fee schedule on any primary source, and the <b>renewal interval is genuinely unknown</b> — see the warnings below.") });
+
+      steps.push({ n: es?"Inspección de Bomberos":"Fire department inspection",
+        ag: es?"Negociado de Bomberos":"Fire Bureau",
+        when: es?"Dentro del Permiso Único":"Inside the Permiso Único",
+        cost: es?"$60–$100+ por partida":"$60–$100+ per item",
+        note: es
+          ? "Va incluida en el Permiso Único, pero es el componente que más falla. Base para locales bajo 1,000 pies²: extintores ABC de 5 lb, uno por cada 75 pies; luces de emergencia en las rutas de evacuación; sistema eléctrico conforme a AEE; y <b>puertas que abran hacia afuera</b>. Las puertas que abren hacia adentro son un error clásico de buildout que obliga a obra física."
+          : "Bundled into the Permiso Único, but it is the component most likely to fail. Baseline for premises under 1,000 sq ft: 5 lb ABC extinguishers one per 75 feet, emergency lighting on evacuation routes, AEE-compliant electrical, and <b>doors that open outward</b>. Inward-opening doors are a classic retail buildout failure that requires physical rework." });
+
+      if (S.type === "food") {
+        steps.push({ n: es?"Licencia sanitaria":"Sanitary license", ag: es?"Depto. de Salud":"Dept. of Health",
+          when: es?"+3 a 8 semanas sobre la base":"+3 to 8 weeks over the baseline",
+          cost: es?"Desde $35 · inspección $100":"From $35 · $100 inspection", flag:"warn",
+          note: es
+            ? "También va dentro del Permiso Único, pero carga sus propios prerrequisitos: local ya arrendado, certificación de Bomberos en mano, patentes municipales, un <b>sistema de agua potable certificado por el Depto. de Salud</b>, planos y especificaciones, y una inspección sanitaria preoperacional.<br>La guía de practicantes es franca — espera <b>semanas, no días</b>, antes de que te inspeccionen.<br>" + vt("s") + " La lista de prerrequisitos viene de fuentes de practicantes, no de una página de gobierno."
+            : "Also bundled into the Permiso Único, but it carries its own prerequisites: premises already leased, Bomberos certification in hand, patentes municipales, a <b>potable water system certified by the Departamento de Salud</b>, plans and specifications, and a pre-operational sanitary inspection.<br>Practitioner guidance is candid — expect <b>weeks, not days</b>, before they inspect.<br>" + vt("s") + " The prerequisite list comes from practitioner sources, not a government page." });
+        steps.push({ n: es?"Certificación de manejo seguro de alimentos":"Food safety manager certification",
+          ag:"NRFSP / ServSafe", when: es?"Antes de abrir":"Before opening",
+          cost: es?"Precio de mercado":"Market rate",
+          note: es
+            ? "Vigente por tres años. Aparte de los <em>certificados de salud</em> individuales que emite el Depto. de Salud para cada manipulador."
+            : "Valid for three years. Separate from the individual <em>certificados de salud</em> issued by the Departamento de Salud for each handler." });
+      }
+    } else if (S.premises === "home") {
+      steps.push({ n: es?"¿Necesitas Permiso Único? — pregunta abierta":"Do you need a Permiso Único? — open question",
+        ag:"OGPe", when: es?"Aclarar temprano":"Clarify early", cost: es?"Desconocido":"Unknown", flag:"warn",
+        note: es
+          ? "<b>Esto está genuinamente sin resolver.</b> El Art. 8.4A de la Ley 161-2009 alcanza a <em>«todo negocio nuevo o existente»</em> — todo negocio, punto. Pero el propio encuadre de OGPe habla de <em>usos</em> no residenciales. Un consultor trabajando desde un cuarto, sin tráfico de clientes ni rótulo, cae justo en esa grieta.<br>Es la pregunta más frecuente de este arquetipo y no la pude resolver desde ninguna fuente primaria. Llama a OGPe y consigue la respuesta para tu caso específico antes de asumir en cualquier dirección."
+          : "<b>This is genuinely unresolved.</b> Ley 161-2009 Art. 8.4A reaches <em>\"todo negocio nuevo o existente\"</em> — every business, full stop. But OGPe's own framing is about non-residential <em>uses</em>. A consultant working from a spare room with no client traffic and no signage sits precisely in that gap.<br>It is the highest-frequency question for this archetype and I could not resolve it from any primary source. Call OGPe and get the answer for your specific case before assuming either way." });
+    } else if (S.premises === "mobile") {
+      steps.push({ n: es?"Patente provisional para ventas ocasionales":"Provisional patente for occasional sales",
+        ag: es?"Municipio":"Municipality", when: es?"Antes de cada actividad":"Before each activity",
+        cost: es?"Varía":"Varies",
+        note: es
+          ? "Un negocio que haga ventas ocasionales debe adquirir una <b>patente provisional</b> en ese municipio y reportar el volumen <b>dentro de 24 horas</b> de terminar la actividad. Si el volumen de ventas ocasionales se queda bajo $7,000, el pago de la patente provisional satisface la obligación. Los negocios móviles también cargan un cargo de $60 de Bomberos."
+          : "A business making occasional sales must acquire a <b>provisional patente</b> in that municipality and report volume <b>within 24 hours</b> of the activity ending. If occasional-sales volume stays under $7,000, the provisional patente payment satisfies the obligation. Mobile businesses also carry a $60 Bomberos fee." });
+    }
+
+    /* --- patente --- */
+    var p = (S.muni && v != null) ? patente(S.muni, v) : null;
+    steps.push({ n:"Patente municipal",
+      ag: m ? (es ? "Municipio de " + mn : "Municipality of " + mn) : (es?"Tu municipio":"Your municipality"),
+      when: es?"Notificar ≤30 días de comenzar":"Notify within 30 days of starting",
+      cost: p ? (p.amt === 0 ? "$0" : money(p.amt) + (es?"/año en estado estable":"/yr steady state")) : (es?"Según volumen":"By volume"),
+      flag:"key",
+      note: (es
+        ? "Notifica al Director de Finanzas <b>dentro de 30 días de comenzar la actividad</b> y recibes una <b>patente provisional exenta de pago por todo ese semestre</b> (Art. 7.210). No cuesta nada y la mayoría de los dueños la pierden simplemente por no notificar a tiempo — es el dinero más fácil de todo el proceso."
+        : "Notify the Director de Finanzas <b>within 30 days of starting the activity</b> and you receive a <b>provisional patente exempt from payment for that entire semester</b> (Art. 7.210). It costs nothing and most owners forfeit it simply by not notifying in time — this is the easiest money in the process.")
+        + (p ? "<br><b>" + (es?"Tu estimado: ":"Your estimate: ") + (p.amt === 0 ? "$0" : money(p.amt) + (es?" al año":" per year")) + ".</b> " + esc(p.why) : "")
+        + (es
+          ? "<br>La declaración de volumen de negocios vence <b>dentro de los 5 días laborables siguientes al 15 de abril</b> — no el 15. Tiene que llevar una certificación de que los anejos de Hacienda adjuntos son copias fieles; <b>radicada sin esa certificación, cuenta como no radicada</b>. El pago es semestral, por adelantado, el 1 de julio y el 2 de enero, con <b>5% de descuento</b> por pagar completo al radicar."
+          : "<br>The declaración de volumen de negocios is due <b>within 5 business days following 15 April</b> — not on the 15th. It must carry a certification that the attached Hacienda schedules are true copies; <b>filed without that certification, it counts as not filed</b>. Payment is semiannual, in advance, on 1 July and 2 January, with a <b>5% discount</b> for paying in full at filing.")
+        + (m && muniNote(m) ? "<br><em>" + esc(muniNote(m)) + "</em>" : "") });
+
+    /* --- CRIM --- */
+    if (S.type === "retail" || S.type === "food" || S.type === "mfg") {
+      var crimOK = (v != null && v <= 150000);
+      steps.push({ n: es?"Planilla de bienes muebles · CRIM":"Personal property return · CRIM", ag:"CRIM",
+        when: es?"15 de mayo, anual":"15 May, annually", cost: es?"Según tasación":"By assessed value",
+        note: (es
+          ? "Cubre inventario, maquinaria, equipo, muebles y enseres — por eso muerde mucho más al retail y a los restaurantes que a un consultor con una laptop."
+          : "Covers inventory, machinery, equipment, furniture and fixtures — which is why this bites retail and food service far harder than a consultant with a laptop.")
+          + (crimOK
+            ? (es ? "<br><b>Probablemente cualificas para la exención de $50,000 de tasación</b> (venta al detal de bienes y servicios no profesionales, volumen neto ≤$150,000, sin deuda de años anteriores, radicado a tiempo). <b>No es automática — hay que solicitarla.</b> " + vt("s")
+                  : "<br><b>You likely qualify for the $50,000 valuation exemption</b> (retail sales of goods and non-professional services, net volume ≤$150,000, no prior-year debt, filed on time). <b>It is not automatic — you must request it.</b> " + vt("s"))
+            : (v != null ? (es ? "<br>Con " + money(v) + " de volumen estás sobre el techo de $150,000 para la exención de $50,000." : "<br>At " + money(v) + " of volume you are above the $150,000 ceiling for the $50,000 exemption.") : ""))
+          + (es ? "<br>Las penalidades por radicar tarde corren a 5% por cada período de 30 días, con tope de 25%." : "<br>Late filing penalties run 5% per 30-day period, capped at 25%.") });
+    }
+
+    /* --- employer --- */
+    if (S.hiring === "yes") {
+      steps.push({ n: es?"Registro de patrono · DTRH":"Employer registration · DTRH",
+        ag: es?"Depto. del Trabajo":"Dept. of Labor", when: es?"Días, en línea":"Days, online",
+        cost: es?"Según experiencia":"Experience-rated",
+        note: es
+          ? "Un solo registro en <a href='https://www.trabajo.pr.gov/'>trabajo.pr.gov</a> cubre tanto el seguro por desempleo como el SINOT (incapacidad temporal no ocupacional). Bases salariales tributables: <b>$7,000</b> para desempleo, <b>$9,000</b> para SINOT, más una contribución especial de 1% de los salarios tributables.<br>" + vt("u") + " Las tasas reales son según experiencia y no están publicadas — no pude obtener una tasa de patrono nuevo para 2026."
+          : "One registration at <a href='https://www.trabajo.pr.gov/'>trabajo.pr.gov</a> covers both unemployment insurance and SINOT (temporary non-occupational disability). Taxable wage bases: <b>$7,000</b> for unemployment, <b>$9,000</b> for SINOT, plus a special contribution of 1% of taxable wages.<br>" + vt("u") + " Actual contribution rates are experience-rated and not published — I could not obtain a 2026 new-employer rate." });
+      steps.push({ n: es?"Póliza del CFSE":"CFSE workers' comp policy",
+        ag: es?"Fondo del Seguro del Estado":"State Insurance Fund",
+        when: es?"Antes del primer empleado":"Before your first employee",
+        cost: es?"No publicado":"Not published", flag:"stop",
+        note: es
+          ? "<b>Toda persona que emplee a una o más personas tiene que tener póliza del CFSE.</b> Es un asegurador público monopólico — no hay mercado privado que cotizar.<br>Esto no es una formalidad de papeleo: <b>operar sin póliza te despoja de la protección de remedio exclusivo</b> y te expone personalmente a responsabilidad civil por un accidente laboral. Ojo con la dependencia — el CFSE te pide el Registro de Comerciantes."
+          : "<b>Every person employing one or more people must hold a CFSE policy.</b> It is a monopoly public insurer — there is no private market to shop.<br>This is not a paperwork formality: <b>operating without a policy strips you of the exclusive-remedy protection</b> and exposes you personally to tort liability for a workplace injury. Note the dependency — CFSE asks for your Merchant Registration Certificate." });
+      if (S.driving === "yes") {
+        steps.push({ n: es?"Seguro Social Choferil":"Chauffeur's Social Security", ag:"DTRH",
+          when: es?"Con el primer conductor":"With the first driver",
+          cost: es?"$0.30/sem patrono + $0.50/sem empleado":"$0.30/wk employer + $0.50/wk employee",
+          note: es
+            ? "Cubre a cualquier empleado a quien el patrono exija o permita conducir <b>usual y regularmente</b> como parte integral del trabajo — sin importar cuántas horas. Una tienda con un repartidor, o un dependiente que hace gestiones en un vehículo del negocio, está dentro. Baratísimo y se pasa por alto todo el tiempo."
+            : "Covers any employee the employer requires or permits to drive <b>usually and regularly</b> as an integral part of the work — for any number of hours. A store with a delivery driver, or a clerk who runs supply errands in a company vehicle, is in scope. Trivially cheap and very commonly missed." });
+      }
+      steps.push({ n: es?"Reporte de nuevos empleados · ASUME":"New hire reporting · ASUME", ag:"ASUME",
+        when: es?"20 días del primer día":"20 days from first day", cost:"$0",
+        note: es
+          ? "Hay que reportarlo <b>aunque el empleado renuncie o sea despedido antes de que pasen los 20 días</b>.<br>" + vt("s") + " La regla de 20 días viene de guías de suplidores de nómina; no encontré una página primaria de ASUME o DTRH que la establezca."
+          : "Must be reported <b>even if the employee quits or is fired before the 20 days elapse</b>.<br>" + vt("s") + " The 20-day rule comes from payroll-vendor guides; I could not find a primary ASUME or DTRH page stating it." });
+
+      warn.push({ k:"warn",
+        h: es?"El bono de Navidad y el precipicio de los 21 empleados":"The Christmas bonus and the 21-employee cliff",
+        b: es
+          ? "Se paga <b>a más tardar el 15 de diciembre</b>. Para empleados contratados en o después del 26 de enero de 2017 que trabajen ≥700 horas en el período del 1 de octubre al 30 de septiembre: <b>2% del salario, con tope de $300</b> si tienes 20 empleados o menos, <b>tope de $600</b> con 21 o más. Pasar de 20 a 21 duplica el tope por empleado — una consideración real de planificación al crecer. " + vt("s") + " — estas cifras vienen de resúmenes profesionales, no del texto de la ley."
+          : "Payable by <b>15 December</b>. For employees hired on or after 26 January 2017 and working ≥700 hours in the 1 Oct–30 Sep period: <b>2% of salary, capped at $300</b> if you have 20 or fewer employees, <b>capped at $600</b> at 21 or more. Crossing from 20 to 21 doubles the per-employee cap — a real planning consideration as you grow. " + vt("s") + " — these figures come from professional summaries, not the statute text." });
+      warn.push({ k:"warn",
+        h: es?"Vacaciones y enfermedad acumulan desde el principio":"Vacation and sick leave accrue from day one",
+        b: es
+          ? "La licencia por enfermedad acumula a <b>1 día por mes para todos los empleados, desde el inicio del período probatorio</b>. Las vacaciones acumulan a ½ día por mes en el primer año, subiendo con la antigüedad. El umbral para acumular es 130 horas trabajadas al mes. " + vt("s")
+          : "Sick leave accrues at <b>1 day per month for all employees, from the start of the probationary period</b>. Vacation accrues at ½ day/month in year one, rising with tenure. The threshold to accrue at all is 130 hours worked per month. " + vt("s") });
+    } else if (S.hiring === "no") {
+      steps.push({ n: es?"CFSE — vía de dueño individual":"CFSE — individual owner track",
+        ag: es?"Fondo del Seguro del Estado":"State Insurance Fund",
+        when: es?"Opcional sin empleados":"Optional with no employees", cost: es?"Varía":"Varies",
+        note: es
+          ? "Sin empleados, las obligaciones patronales no aplican. El CFSE sí tiene una vía <b>individual</b> para dueños de negocio y contratistas independientes — ojo, las entidades corporativas y las LLC <b>no se aceptan</b> en esa vía, y te piden el Certificado de Registro de Comerciante."
+          : "With no employees the employer obligations do not attach. CFSE does run an <b>individual</b> track for business owners and independent contractors — note that corporate entities and LLCs are <b>not accepted</b> on that track, and it asks for your Merchant Registration Certificate." });
+    }
+
+    /* --- IVU --- */
+    var isB2B = (S.type === "prof");
+    steps.push({ n: es?"IVU — cobro y remesa mensual":"IVU — collection and monthly remittance", ag:"Hacienda · SURI",
+      when: es?"Día 20 de cada mes":"By the 20th of each month", cost:"—",
+      note: (isB2B
+        ? (es
+          ? "<b>Tu tasa probablemente es 4%, no 11.5%.</b> Los servicios prestados a otros comerciantes (B2B) y los servicios profesionales designados cargan un IVU estatal especial de 4% — y <b>nada de eso va al municipio</b>. Los servicios profesionales designados incluyen legales, CPA, ingeniería y agrimensura, arquitectura, agronomía, geología, corretaje y tasación de bienes raíces.<br>Es el dato contributivo más importante para servicios profesionales, y cobrar 11.5% por error es a la vez un sobrecargo al cliente y un error de radicación. " + vt("s") + " No encontré derogación, pero tampoco una confirmación de Hacienda fechada en 2025 o 2026 de que el régimen de 4% siga en pie — confírmalo."
+          : "<b>Your rate is probably 4%, not 11.5%.</b> Services rendered to other merchants (B2B) and designated professional services carry a special 4% state IVU — and <b>none of it goes to the municipality</b>. Designated professional services include legal, CPA, engineering and surveying, architecture, agronomy, geology, real estate brokerage and appraisal.<br>This is the single most important tax fact for professional services, and charging 11.5% by mistake is both an overcharge to your client and a filing error. " + vt("s") + " I found no repeal, but also no 2025- or 2026-dated Hacienda confirmation that the 4% regime still stands — confirm it.")
+        : (es
+          ? "<b>Tasa combinada de 11.5%</b> — 10.5% estatal más 1% municipal. Radica el Modelo SC 2915 electrónicamente <b>para el día 20 del mes siguiente</b>.<br><b>Radica aunque no hayas tenido ventas tributables.</b> Una planilla en cero sigue siendo una planilla. El 1% municipal sigue al municipio donde ocurrió la venta, lo que importa si abres un segundo local."
+          : "<b>Combined rate 11.5%</b> — 10.5% state plus 1% municipal. File Modelo SC 2915 electronically by the <b>20th of the following month</b>.<br><b>File even in months with no taxable sales.</b> A zero return is still a return. The municipal 1% follows the municipality where the sale occurred, which matters if you open a second location."))
+        + (es
+          ? "<br>" + vt("u") + " El Código de Rentas Internas consolidado todavía lee 6% y nunca menciona 10.5% en 1,104 páginas. La tasa vigente es 11.5% — pero nunca cites el §4020.01 para sustentarla."
+          : "<br>" + vt("u") + " The consolidated tax code still reads 6% and never mentions 10.5% in 1,104 pages. The operative rate is 11.5% — but never cite §4020.01 for it.") });
+
+    /* --- incentives --- */
+    inc.push({ k:"good",
+      h: es?"Patente provisional del primer semestre — Art. 7.210":"First-semester provisional patente — Art. 7.210",
+      b: es
+        ? "Automática, no cuesta nada, y la mayoría de los dueños la pierden por no notificar al municipio dentro de 30 días de comenzar. Notifica a tiempo y <b>todo el semestre de apertura queda exento de pago</b>. Es el incentivo más confiablemente obtenible de todo el sistema y nadie te lo vende."
+        : "Automatic, costs nothing, and most owners lose it by not notifying the municipality within 30 days of starting. Notify on time and the <b>entire opening semester is exempt from payment</b>. This is the most reliably obtainable incentive in the whole system and nobody markets it to you." });
+
+    if (S.type === "prof" && (S.entity === "corp" || S.entity === "llc")) {
+      inc.push({ k:"good", h: es?"Contribución opcional §1022.07 — 6% del bruto":"Optional tax §1022.07 — 6% of gross",
+        b: es
+          ? "Una corporación de servicios puede elegir una contribución opcional de <b>6% del ingreso bruto hasta $100,000</b> en lugar del régimen normal de 18.5% más sobretasa. Pierdes todas las deducciones, pero para una consultoría liviana suele salir dramáticamente más simple y barato. Corre ambos números con un CPA antes de elegir. " + vt("p")
+          : "A service corporation may elect an optional tax of <b>6% of gross income up to $100,000</b> in lieu of the normal 18.5% plus surtax regime. You forfeit all deductions, but for a lean consultancy it is often dramatically simpler and cheaper. Run both numbers with a CPA before electing. " + vt("p") });
+    }
+
+    if (S.young === "yes") {
+      inc.push({ k:"good", h: es?"Joven empresario — exención sobre los primeros $500,000":"Young entrepreneur — exemption on the first $500,000",
+        b: es
+          ? "Los dueños de <b>16 a 35 años</b> con cuarto año (o matriculados) pueden obtener una exención sobre los <b>primeros $500,000 de ingreso bruto por tres años</b>, mediante un Acuerdo con la Compañía de Comercio y Exportación bajo la Ley 135-2014 / Ley 60 §2100.01. Para un negocio de tu escala este es probablemente el incentivo individual más grande disponible — persíguelo temprano. " + vt("p")
+          : "Owners aged <b>16–35</b> with a high school diploma (or currently enrolled) can obtain an exemption on the <b>first $500,000 of gross income for three years</b>, via an Agreement with the Compañía de Comercio y Exportación under Ley 135-2014 / Ley 60 §2100.01. For a business at your scale this is likely the single largest incentive available — pursue it early. " + vt("p") });
+    }
+
+    inc.push({ k:"good", h: es?"Ley 120-2014 — tasas PYME de 5% / 10% / 15%":"Ley 120-2014 — PYME rates of 5% / 10% / 15%",
+      b: es
+        ? "Una <em>PYME Elegible Nueva</em> cualificada con acuerdo de empleo paga una contribución normal reducida de 5%, 10% y 15% en los años uno al tres. Vale preguntarle al DDEC por esto al mismo tiempo que por cualquier otra cosa. " + vt("p")
+        : "A qualifying <em>PYME Elegible Nueva</em> with an employment agreement pays a reduced normal tax of 5%, 10% and 15% across years one through three. Worth asking DDEC about at the same time as anything else. " + vt("p") });
+
+    if (S.exportsvc === "yes") {
+      inc.push({ k:"good", h: es?"Ley 60 Cap. 3 — exportación de servicios, 4% fijo":"Act 60 Ch. 3 — export services, 4% fixed",
+        b: es
+          ? "Puede que sí cualifiques. La prueba es estricta: los servicios tienen que beneficiar a una persona extranjera <b>sin nexo con Puerto Rico</b>. Los beneficios corren 15 años — <b>4% fijo de contribución sobre ingresos</b>, <b>75% de exención</b> en contribución sobre la propiedad, <b>50% de exención</b> en patentes, y 100% de exención en distribuciones a los dueños.<br>El requisito de empleo es mucho más estrecho de lo que se dice: aplica <b>solo sobre $3,000,000</b> de volumen anual, y ahí es apenas <b>un</b> empleado a tiempo completo para decretos de exportación.<br>Solicitud: $5 de cargo por transacción + $1,000 de cargo por servicio en <a href='https://incentives.ddec.pr.gov/'>incentives.ddec.pr.gov</a>. " + vt("s") + " El tarifario es de 2022 — verifícalo."
+          : "You may actually qualify. The test is strict: services must benefit a foreign person <b>with no nexus to Puerto Rico</b>. Benefits run 15 years — <b>4% fixed income tax</b>, <b>75% exemption</b> on property taxes, <b>50% exemption</b> on patentes, and 100% exemption on distributions to owners.<br>The employment requirement is far narrower than commonly stated: it applies <b>only above $3,000,000</b> of annual volume, and is then just <b>one</b> full-time employee for export decrees.<br>Application: $5 transaction fee + $1,000 service fee via <a href='https://incentives.ddec.pr.gov/'>incentives.ddec.pr.gov</a>. " + vt("s") + " The fee schedule dates from 2022 — verify it." });
+    } else if (S.exportsvc === "no") {
+      inc.push({ k:"stop", h: es?"La Ley 60 no aplica — y conviene saberlo ya":"Act 60 does not apply — and it is better to know now",
+        b: es
+          ? "El Capítulo 3 se sostiene enteramente sobre servir a personas extranjeras <b>sin nexo con Puerto Rico</b>. Una tienda o un restaurante que le vende a gente que vive aquí tiene, por definición, nexo con Puerto Rico. El capítulo de inversionista individual del que habla la gente es un régimen contributivo <em>personal</em> para inversionistas que se mudan — no tiene nada que ver con abrir un negocio.<br>Quien te rellene el plan con la Ley 60 te está vendiendo algo. Tus incentivos reales son municipales y de nivel PYME."
+          : "Chapter 3 is premised entirely on serving foreign persons with <b>no nexus to Puerto Rico</b>. A store or restaurant selling to people who live here has, by definition, a Puerto Rico nexus. The individual-investor chapter people talk about is a <em>personal</em> tax regime for relocating investors — it has nothing to do with opening a business.<br>Anyone padding your plan with Act 60 is selling you something. Your real incentives are municipal and PYME-level." });
+    }
+
+    if (S.type === "mfg") {
+      inc.push({ k:"good", h: es?"PRIDCO — espacio industrial ya zonificado":"PRIDCO — industrial space already zoned",
+        b: es
+          ? "PRIDCO tiene más de 1,500 propiedades en 77 de 78 municipios, a rentas competitivas. Para un manufacturero o distribuidor esto es un atajo genuino por el problema de permisos: <b>el espacio ya carga zonificación industrial</b>. El Capítulo 6 de la Ley 60 (manufactura) también otorga término de 15 años y exención municipal total de patente para el semestre de apertura más los dos semestres del año fiscal siguiente."
+          : "PRIDCO holds 1,500+ properties across 77 of 78 municipalities, at competitive rents. For a manufacturer or distributor this is a genuine shortcut through the permitting problem: <b>the space already carries industrial zoning</b>. Act 60 Chapter 6 (manufacturing) also grants a 15-year term and total municipal patente exemption for the opening semester plus the two semesters of the following fiscal year." });
+    }
+
+    inc.push({ k:"good", h: es?"BDE — y la asistencia técnica gratuita que casi nadie usa":"BDE — and the free technical assistance almost nobody uses",
+      b: es
+        ? "El Banco de Desarrollo Económico corre préstamos a término, líneas de crédito, préstamos de preparación para emergencias de hasta $50,000, e «Impulso a Tu Negocio». Más útil ahora mismo: el <b>Programa de Asistencia Técnica SSBCI</b> — $3.9 millones de fondos federales del Tesoro que proveen <b>servicios legales, contables y de asesoría financiera gratis</b>. Subutilizado y directamente pertinente.<br>La <b>Oficina de Distrito de la SBA en PR</b> y el <b>SBDC de PR</b> añaden consejería individual gratuita y ayuda con proyecciones financieras. Puerto Rico está plenamente dentro del sistema SBA — aplican 7(a), 504 y microcréditos."
+        : "The Banco de Desarrollo Económico runs term loans, credit lines, emergency-preparedness loans up to $50,000, and \"Impulso a Tu Negocio.\" More useful right now: the <b>SSBCI Technical Assistance Program</b> — $3.9M in federal Treasury funding providing <b>free legal, accounting and financial advisory services</b>. Underused and directly relevant.<br>The <b>SBA PR District Office</b> and the <b>PR SBDC</b> add free one-on-one counseling and help with financial projections. Puerto Rico sits fully inside the SBA system — 7(a), 504 and microloans all apply." });
+
+    /* --- warnings --- */
+    if (S.premises === "commercial") {
+      warn.unshift({ k:"stop",
+        h: es?"El Reglamento Conjunto está en terreno legalmente inestable":"The Reglamento Conjunto is on legally unstable ground",
+        b: es
+          ? "El Tribunal Supremo declaró <b>nulo el Reglamento Conjunto 2020 el 15 de marzo de 2023</b> por carecer del análisis de costo-beneficio que exige la LPAU, y el litigio seguía vivo hasta octubre de 2025. Como el <b>período de vigencia, los cargos y los estándares de inspección del Permiso Único viven todos en ese reglamento</b>, no puedo establecer tu intervalo de renovación desde ninguna fuente primaria. Las fuentes secundarias dicen anual.<br><b>Lee la fecha de vencimiento en tu propio documento de permiso</b> y no confíes en un número de memoria."
+          : "The Tribunal Supremo declared the <b>Reglamento Conjunto 2020 null on 15 March 2023</b> for lacking the cost-benefit analysis the LPAU requires, and litigation was still live as of October 2025. Because the Permiso Único's <b>validity period, fees and inspection standards all live in that regulation</b>, I cannot state your renewal interval from any primary source. Secondary sources say annual.<br><b>Read the expiration date off your own permit document</b> and do not trust a remembered number." });
+    }
+    if (m && m.delegated === null) {
+      warn.push({ k:"warn",
+        h: es?"Confirma si tu municipio tiene jerarquía delegada":"Confirm whether your municipality holds delegated hierarchy",
+        b: es
+          ? "Esto determina si radicas en OGPe o en tu municipio — proceso distinto, tiempos distintos, oficina distinta. La lista autoritativa que encontré es de <b>agosto de 2016</b>: Aguadilla, Barranquitas, Bayamón, Cabo Rojo, Caguas, Carolina, Cidra, Guaynabo, Humacao, Ponce y San Juan. Casi seguro está incompleta a estas alturas. Llama y confirma."
+          : "This determines whether you file with OGPe or with your municipality — different process, different timeline, different office. The authoritative list I could find dates from <b>August 2016</b>: Aguadilla, Barranquitas, Bayamón, Cabo Rojo, Caguas, Carolina, Cidra, Guaynabo, Humacao, Ponce and San Juan. Almost certainly incomplete by now. Call and confirm." });
+    }
+    if (m && m.verified === false && S.muni !== "other") {
+      warn.push({ k:"warn",
+        h: es ? "La tasa de patente de " + mn + " no está confirmada" : "The patente rate for " + mn + " is unconfirmed",
+        b: es
+          ? "La cifra usada en tu estimado viene de una tabla del Colegio de CPA extraída de un PDF multicolumna, y no se pudo garantizar la alineación de columnas en esa fila. Trata el número como indicativo y busca la ordenanza vigente de tu municipio antes de presupuestar con él."
+          : "The figure used in your estimate comes from a CPA association table extracted from a multi-column PDF, and column alignment could not be guaranteed on that row. Treat the number as indicative only and pull your municipality's current ordinance before budgeting on it." });
+    }
+    if (v != null && v > 3000000) {
+      warn.push({ k:"warn", h: es?"Sobre $3M cambian tus obligaciones":"Above $3M your obligations change",
+        b: es
+          ? "Sobre $3,000,000 de volumen cruzas el umbral de estados financieros auditados bajo el §1061.15 de la Ley 1-2011 — que entonces también hay que anejar a la declaración municipal de volumen, y <b>una declaración radicada sin ellos cuenta como no radicada</b>. Es además el umbral en que cualquier decreto de Ley 60 adquiere requisito de empleo."
+          : "Above $3,000,000 of volume you cross the threshold for audited financial statements under Ley 1-2011 §1061.15 — which then must also be attached to your municipal volume declaration, and <b>a declaration filed without them counts as not filed</b>. It is also the threshold at which any Act 60 decree acquires an employment requirement." });
+    }
+    warn.push({ k:"warn",
+      h: es?"El cargo anual del Depto. de Estado sigue vivo aunque el informe murió":"The State fee survives even though the report died",
+      b: es
+        ? "Desde 2025 las corporaciones ya no radican informe anual — pero <b>el cargo anual sigue venciendo</b>, observado en <b>$150 para el 15 de abril</b>. Una LLC que lo pase por alto tres años consecutivos ve su certificado de organización <b>cancelado</b>; una corporación arriesga revocación a los dos. El modo de falla más común es asumir que si no hay informe, no se debe nada."
+        : "For 2025 onward corporations no longer file an annual report — but <b>the annual fee is still due</b>, observed at <b>$150 by 15 April</b>. An LLC that misses it for three consecutive years has its certificate of organization <b>cancelled</b>; a corporation risks revocation after two. The most common failure mode is assuming that no report means nothing is owed." });
+
+    /* --- gaps --- */
+    if (es) {
+      gaps.push("OGPe no publica un tarifario que yo pudiera hallar — solo el mecanismo de pagar 10% al radicar y el balance tras la evaluación. Cualquier cifra de costo del Permiso Único aquí es un estimado, no un número sustentado.");
+      gaps.push("El intervalo de renovación del Permiso Único no se pudo establecer desde ninguna fuente primaria, porque el reglamento que lo gobierna lleva en litigio desde 2023.");
+      gaps.push("La lista de municipios con autoridad delegada de permisos es de agosto de 2016 y casi seguro está desactualizada.");
+      gaps.push("Las primas del CFSE y las tasas de desempleo/SINOT del DTRH para 2026 no están publicadas — solo se establecen las bases salariales.");
+      if (S.premises === "home") gaps.push("Si un negocio en casa sin tráfico de clientes necesita Permiso Único es genuinamente ambiguo en la ley — y es justo la pregunta que más te importa.");
+      if (S.entity === "llc") gaps.push("Las reglas de clasificación de la LLC descansan en las Determinaciones Administrativas 22-10 y 23-01 de Hacienda, ninguna de las cuales pude recuperar en texto completo.");
+    } else {
+      gaps.push("OGPe publishes no fee schedule I could find — only the mechanic that you pay 10% at filing and the balance after evaluation. Any Permiso Único cost figure here is an estimate, not a sourced number.");
+      gaps.push("The Permiso Único renewal interval could not be established from any primary source, because the governing regulation has been in litigation since 2023.");
+      gaps.push("The delegated-permit-authority municipality list dates from August 2016 and is almost certainly stale.");
+      gaps.push("CFSE premium rates and 2026 DTRH unemployment/SINOT rates are unpublished — only the wage bases are stated.");
+      if (S.premises === "home") gaps.push("Whether a home-based business with no client traffic needs a Permiso Único at all is genuinely ambiguous in the statute — and it is the question that matters most to you.");
+      if (S.entity === "llc") gaps.push("The LLC classification rules rest on Hacienda Determinaciones Administrativas 22-10 and 23-01, neither of which I could retrieve in full text.");
+    }
+
+    return { steps:steps, inc:inc, warn:warn, gaps:gaps, pat:p, muni:m };
+  }
+
+  /* ==================== render ==================== */
+  function answered() { return Object.keys(S).filter(function (k) { return S[k] !== null && S[k] !== ""; }).length; }
+
+  function render() {
+    var out = document.getElementById("out");
+    if (answered() < 3) { out.innerHTML = '<div class="empty">' + T.ui.empty + "</div>"; return; }
+    var r = build(), es = L === "es", h = "";
+
+    var weeks = "—", fees = "—";
+    if (S.premises === "commercial") weeks = S.type === "food" ? "10–20+" : "6–14";
+    else if (S.premises === "home") weeks = "1–2";
+    else if (S.premises === "mobile") weeks = "2–4";
+    if (S.type === "food") fees = "$800–1,700";
+    else if (S.premises === "home") fees = "$150–400";
+    else if (S.premises) fees = "$550–1,100";
+
+    h += '<div class="rgroup"><h3>' + T.ui.glance + '</h3><div class="numbers">';
+    h += '<div class="num"><span class="lab">' + T.ui.nWeeks + '</span><span class="val">' + weeks + '</span><span class="sub">' + T.ui.nWeeksSub + '</span></div>';
+    h += '<div class="num"><span class="lab">' + T.ui.nFees + '</span><span class="val">' + fees + '</span><span class="sub">' + T.ui.nFeesSub + '</span></div>';
+    h += '<div class="num"><span class="lab">' + T.ui.nPat1 + '</span><span class="val">$0</span><span class="sub">' + T.ui.nPat1Sub + '</span></div>';
+    h += '<div class="num"><span class="lab">' + T.ui.nPat + '</span><span class="val">' + (r.pat ? (r.pat.amt === 0 ? "$0" : money(r.pat.amt)) : "—") + '</span><span class="sub">' + (r.muni ? esc(muniName(r.muni)) : T.ui.nPatSub) + '</span></div>';
+    h += "</div></div>";
+
+    h += '<div class="rgroup"><h3>' + T.ui.seq.replace("{n}", r.steps.length) + '</h3><ol class="steps">';
+    r.steps.forEach(function (s) {
+      h += '<li class="' + (s.flag ? "flag-" + s.flag : "") + '"><span class="st-name">' + esc(s.n) + "</span>";
+      h += '<div class="st-meta"><span><b>' + esc(s.ag) + "</b></span><span>" + esc(s.when) + "</span><span>" + esc(s.cost) + "</span></div>";
+      h += '<p class="st-note">' + s.note + "</p></li>";
+    });
+    h += "</ol></div>";
+
+    if (r.inc.length) {
+      h += '<div class="rgroup"><h3>' + T.ui.incentives + "</h3>";
+      r.inc.forEach(function (c) { h += '<div class="card ' + c.k + '"><h4>' + esc(c.h) + "</h4><p>" + c.b + "</p></div>"; });
+      h += "</div>";
+    }
+    if (r.warn.length) {
+      h += '<div class="rgroup"><h3>' + T.ui.warnings + "</h3>";
+      r.warn.forEach(function (c) { h += '<div class="card ' + c.k + '"><h4>' + esc(c.h) + "</h4><p>" + c.b + "</p></div>"; });
+      h += "</div>";
+    }
+    h += '<div class="rgroup"><h3>' + T.ui.gaps + '</h3><div class="card warn"><p>' +
+         r.gaps.map(function (g) { return "· " + esc(g); }).join("<br><br>") + "</p></div></div>";
+
+    out.innerHTML = h;
+  }
+
+  function renderMuniTable() {
+    var tb = document.getElementById("munibody"), h = "";
+    MUNI_ORDER.forEach(function (k) {
+      var m = MUNIS[k];
+      var badge = m.verified ? '<span class="vt vt-p">' + T.vt.p + "</span>" : '<span class="vt vt-s">' + T.vt.s + "</span>";
+      h += "<tr><td><b>" + esc(m.name) + "</b> " + badge + "</td>";
+      h += '<td class="n">' + esc(L === "es" ? m.rate_es : m.rate_en) + "</td>";
+      h += "<td>" + (m.delegated ? T.tPermD : T.tPermO) + "</td>";
+      h += "<td>" + esc(L === "es" ? m.portal_es : m.portal_en) + "</td></tr>";
+    });
+    tb.innerHTML = h;
+  }
+
+  function applyStatic() {
+    document.querySelectorAll("[data-i]").forEach(function (el) {
+      var val = dig(T, el.getAttribute("data-i"));
+      if (val != null) el.textContent = val;
+    });
+    document.querySelectorAll("[data-h]").forEach(function (el) {
+      var val = dig(T, el.getAttribute("data-h"));
+      if (val != null) el.innerHTML = val;
+    });
+    var vol = document.getElementById("vol");
+    vol.setAttribute("aria-label", T.q.vol);
+    document.getElementById("muni").setAttribute("aria-label", T.q.muni);
+    document.getElementById("diagram").setAttribute("aria-label",
+      L === "es"
+        ? "Diagrama de flujo: una cadena de identidad legal y contributiva y una cadena de local corren en paralelo y desembocan en el Permiso Único, que consolida cinco certificaciones y condiciona la apertura. Las obligaciones municipales y patronales se ramifican en paralelo y no bloquean la apertura."
+        : "Flow diagram: a legal-and-tax-identity chain and a premises chain run in parallel and converge on the Permiso Único, which bundles five clearances and gates opening for business. Municipal and employer obligations branch off in parallel and do not block opening.");
+    // countdown lives inside a translated string, so re-bind after each swap
+    var cd = document.getElementById("cd");
+    if (cd) {
+      var d = Math.ceil((new Date(2026, 11, 31) - new Date()) / 86400000);
+      cd.textContent = d > 0 ? (L === "es" ? d + " días" : d + " days") : (L === "es" ? "el plazo cerró" : "the window has closed");
+    }
+  }
+
+  function setLang(next) {
+    L = next; T = D[next];
+    document.documentElement.lang = next;
+    document.getElementById("lang-es").setAttribute("aria-pressed", String(next === "es"));
+    document.getElementById("lang-en").setAttribute("aria-pressed", String(next === "en"));
+    applyStatic(); renderMuniTable(); render();
+  }
+
+  /* ==================== wiring ==================== */
+  document.querySelectorAll(".opts").forEach(function (grp) {
+    var key = grp.getAttribute("data-key");
+    grp.querySelectorAll(".opt").forEach(function (b) {
+      b.setAttribute("aria-pressed", "false");
+      b.addEventListener("click", function () {
+        var v = b.getAttribute("data-v"), already = S[key] === v;
+        S[key] = already ? null : v;
+        grp.querySelectorAll(".opt").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+        if (!already) b.setAttribute("aria-pressed", "true");
+        if (key === "hiring") {
+          var fd = document.getElementById("fs-driving");
+          fd.hidden = S.hiring !== "yes";
+          if (S.hiring !== "yes") { S.driving = null; fd.querySelectorAll(".opt").forEach(function (x) { x.setAttribute("aria-pressed", "false"); }); }
+        }
+        render();
+      });
+    });
+  });
+
+  document.getElementById("muni").addEventListener("change", function (e) { S.muni = e.target.value; render(); });
+  document.getElementById("vol").addEventListener("input", function (e) {
+    var n = parseFloat(e.target.value); S.vol = isNaN(n) ? null : n; render();
+  });
+  document.getElementById("reset").addEventListener("click", function () {
+    Object.keys(S).forEach(function (k) { S[k] = (k === "muni") ? "" : null; });
+    document.querySelectorAll(".opt").forEach(function (x) { x.setAttribute("aria-pressed", "false"); });
+    document.getElementById("muni").value = "";
+    document.getElementById("vol").value = "";
+    document.getElementById("fs-driving").hidden = true;
+    render();
+  });
+  document.getElementById("lang-es").addEventListener("click", function () { setLang("es"); });
+  document.getElementById("lang-en").addEventListener("click", function () { setLang("en"); });
+
+  setLang("es");
+})();
+</script>
