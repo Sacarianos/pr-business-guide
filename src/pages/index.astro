@@ -134,6 +134,22 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
           folklore.
         </span>
       </p>
+      <p class="assumption-note">
+        <span lang="es">
+          <strong>Esta herramienta asume un solo local comercial en un municipio.</strong> La ley
+          no funciona así: el volumen se atribuye por municipio, el Registro de Comerciantes es
+          por local, y el 1% municipal del IVU sigue el municipio donde ocurre la venta. Si operas
+          en más de un local o municipio, esta secuencia es un punto de partida, no el cálculo
+          completo.
+        </span>
+        <span lang="en">
+          <strong>This tool assumes a single commercial location in one municipality.</strong> The
+          law doesn't work that way: volume is attributed per municipality, the Registro de
+          Comerciantes is per location, and the municipal 1% IVU follows the municipality where
+          the sale happens. If you operate more than one location or municipality, this sequence
+          is a starting point, not the full calculation.
+        </span>
+      </p>
       <div class="tool-grid">
         {
           /* G-19: the question panel and results are re-rendered by
@@ -918,6 +934,24 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     color: var(--ink-2);
     margin: 0 0 30px 27px;
     max-width: 66ch;
+  }
+
+  /* G-20: the single-location assumption, stated aloud rather than left
+     for a reader to discover the hard way (0001: "the UI states the limit
+     rather than being quietly wrong"). Dashed border distinguishes it from
+     `.section-dek`'s plain prose — a caveat about the tool itself, not
+     content about the process. */
+  .assumption-note {
+    margin: -6px 0 32px 27px;
+    max-width: 66ch;
+    padding: 10px 14px;
+    border: 1px dashed var(--rule);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-3);
+  }
+  .assumption-note strong {
+    color: var(--ink-2);
   }
   .diagram-figure {
     margin: 0;
