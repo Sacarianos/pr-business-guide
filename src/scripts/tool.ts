@@ -5,6 +5,13 @@
 // form. All the actual logic (branching, patente arithmetic) comes from
 // decision-tree.ts (G-06) unchanged — this file only wires DOM events to
 // it and renders the result.
+//
+// G-19: this island owns its own language switching rather than the
+// `[lang]`/CSS-toggle technique src/pages/index.astro's static sections
+// use. Two reasons: a `<select><option>`'s text and an `aria-label`
+// attribute can't hold a hidden alternate-language span, and this module
+// already regenerates its results HTML on every answer change — so
+// re-rendering in a different language on `langchange` costs nothing extra.
 import {
   buildSequence,
   emptyAnswers,
@@ -22,6 +29,7 @@ import {
   professionalLabel,
   sourcingLabel,
 } from '../lib/sourcing-label.ts';
+import { currentLang, type Lang } from './lang-toggle.ts';
 
 const dataEl = document.getElementById('tool-content');
 if (!dataEl?.textContent) throw new Error('tool.ts: #tool-content is missing');
@@ -49,6 +57,31 @@ if (
 }
 
 let answers: Answers = emptyAnswers();
+let lang: Lang = currentLang();
+
+// The static strings this island renders that don't come from `content`
+// (which is already bilingual — see decision-tree.ts). Keyed the same way
+// as the `data-i18n` attributes src/pages/index.astro marks their elements
+// with, so applyStaticText() below can drive both from one lookup.
+const UI_TEXT: Record<string, Record<Lang, string>> = {
+  startOver: { es: 'Empezar de nuevo', en: 'Start over' },
+  emptyState: {
+    es: 'Contesta al menos tres preguntas para ver tu secuencia.',
+    en: 'Answer at least three questions to see your sequence.',
+  },
+  sequenceTitle: { es: 'Tu secuencia', en: 'Your sequence' },
+  recurringTitle: { es: 'Obligaciones recurrentes', en: 'Recurring obligations' },
+  recurringDek: {
+    es: 'Estas no son pasos de una sola vez — siguen viniendo mientras el negocio esté abierto, cada una con su propia frecuencia.',
+    en: 'These aren\'t one-time steps — they keep coming as long as the business is open, each on its own schedule.',
+  },
+  incentivesTitle: { es: 'Incentivos aplicables', en: 'Applicable incentives' },
+  glanceSteps: { es: 'Pasos en tu secuencia', en: 'Steps in your sequence' },
+  glanceIncentives: { es: 'Incentivos aplicables', en: 'Applicable incentives' },
+  glancePatente: { es: 'Patente estimada', en: 'Estimated patente' },
+  blocks: { es: 'Bloquea', en: 'Blocks' },
+  consult: { es: 'Consulta con', en: 'Talk to' },
+};
 
 function escapeHtml(value: string): string {
   const div = document.createElement('div');
@@ -104,13 +137,52 @@ startOverBtn?.addEventListener('click', () => {
   render();
 });
 
+// G-19: re-labels the question panel's static text from `content` (already
+// bilingual) plus UI_TEXT's `data-i18n` strings. Kept separate from
+// render(), which only ever touches the results panel — this runs once on
+// every langchange, render() runs on every answer change too.
+function applyStaticText(): void {
+  for (const block of questionsEl!.querySelectorAll<HTMLElement>('[data-question]')) {
+    const q = content.questions.find((question) => question.id === block.dataset.question);
+    if (!q) continue;
+
+    const labelEl = block.querySelector<HTMLElement>('.question-label');
+    if (labelEl) labelEl.textContent = q.label[lang];
+    const hintEl = block.querySelector<HTMLElement>('.question-hint');
+    if (hintEl && q.hint) hintEl.textContent = q.hint[lang];
+
+    const group = block.querySelector<HTMLElement>('[role="group"]');
+    if (group) group.setAttribute('aria-label', q.label[lang]);
+    const select = block.querySelector<HTMLSelectElement>('select');
+    if (select) select.setAttribute('aria-label', q.label[lang]);
+    const number = block.querySelector<HTMLInputElement>('input[type="number"]');
+    if (number) number.setAttribute('aria-label', q.label[lang]);
+
+    for (const optionEl of block.querySelectorAll<HTMLButtonElement>('[data-option]')) {
+      const o = q.options?.find((opt) => opt.value === optionEl.dataset.option);
+      if (o) optionEl.textContent = o.label[lang];
+    }
+    for (const optionEl of block.querySelectorAll<HTMLOptionElement>('select option[value]')) {
+      if (optionEl.value === '') continue;
+      const o = q.options?.find((opt) => opt.value === optionEl.value);
+      if (o) optionEl.textContent = o.label[lang];
+    }
+  }
+
+  for (const el of document.querySelectorAll<HTMLElement>('[data-i18n]')) {
+    const key = el.dataset.i18n!;
+    const copy = UI_TEXT[key];
+    if (copy) el.textContent = copy[lang];
+  }
+}
+
 // A claim's sourcing mark (G-15/G-09): `primary` is the confirmed default
 // and gets no mark at all. Shared by step cards, incentive cards, and
 // src/pages/index.astro's entity table, via sourcing-label.ts.
 function sourcingMark(sourcing: 'primary' | 'secondary' | 'unverified'): string {
   return sourcing === 'primary'
     ? ''
-    : `<span class="mark mark-${sourcing}">${sourcingLabel(sourcing)}</span>`;
+    : `<span class="mark mark-${sourcing}">${sourcingLabel(sourcing, lang)}</span>`;
 }
 
 // `practice.contradicted` is the loudest state on the page (G-15) — a
@@ -119,7 +191,7 @@ function sourcingMark(sourcing: 'primary' | 'secondary' | 'unverified'): string 
 // `practice.unknown` has nothing worth saying and renders nothing.
 function practiceBanner(practice: StepResult['practice']): string {
   if (!practice) return '';
-  const headline = practiceHeadline(practice.status);
+  const headline = practiceHeadline(practice.status, lang);
   if (!headline) return '';
   return `
     <p class="practice-banner practice-${practice.status}">
@@ -131,7 +203,7 @@ function practiceBanner(practice: StepResult['practice']): string {
 // G-18: this decision needs a CPA or attorney, not just this guide.
 function professionalNote(professional: StepResult['professional']): string {
   if (!professional) return '';
-  return `<p class="step-professional">→ Consulta con ${escapeHtml(professionalLabel(professional))}</p>`;
+  return `<p class="step-professional">→ ${UI_TEXT.consult![lang]} ${escapeHtml(professionalLabel(professional, lang))}</p>`;
 }
 
 // Shared by the one-time sequence and the recurring-obligations list
@@ -143,11 +215,11 @@ function stepCard(s: StepResult, mark: string): string {
     <li class="step" data-severity="${s.severity ?? ''}">
       <span class="step-num">${mark}</span>
       <div class="step-body">
-        <h4 class="step-title">${escapeHtml(s.title.es)} ${sourcingMark(s.sourcing)}</h4>
-        <p class="step-meta">${escapeHtml(s.agency.es)} · ${escapeHtml(s.timing.es)} · ${escapeHtml(s.cost.es)}</p>
-        ${s.blocks ? `<p class="step-blocks">→ Bloquea: <b>${escapeHtml(s.blocks.es)}</b></p>` : ''}
+        <h4 class="step-title">${escapeHtml(s.title[lang])} ${sourcingMark(s.sourcing)}</h4>
+        <p class="step-meta">${escapeHtml(s.agency[lang])} · ${escapeHtml(s.timing[lang])} · ${escapeHtml(s.cost[lang])}</p>
+        ${s.blocks ? `<p class="step-blocks">→ ${UI_TEXT.blocks![lang]}: <b>${escapeHtml(s.blocks[lang])}</b></p>` : ''}
         ${professionalNote(s.professional)}
-        <p class="step-note">${s.note.es}</p>
+        <p class="step-note">${s.note[lang]}</p>
         ${practiceBanner(s.practice)}
       </div>
     </li>`;
@@ -189,20 +261,20 @@ function render(): void {
 
   glanceEl!.innerHTML = `
     <div class="glance-cell">
-      <span class="glance-label">Pasos en tu secuencia</span>
+      <span class="glance-label">${UI_TEXT.glanceSteps![lang]}</span>
       <span class="glance-value">${oneTime.length}</span>
     </div>
     <div class="glance-cell">
-      <span class="glance-label">Incentivos aplicables</span>
+      <span class="glance-label">${UI_TEXT.glanceIncentives![lang]}</span>
       <span class="glance-value">${result.incentives.length}</span>
     </div>
     <div class="glance-cell">
-      <span class="glance-label">Patente estimada</span>
+      <span class="glance-label">${UI_TEXT.glancePatente![lang]}</span>
       <span class="glance-value">${patenteValue} ${patenteMark}</span>
-      ${patente ? `<span class="glance-sub">${escapeHtml(patente.why.es)}</span>` : ''}
+      ${patente ? `<span class="glance-sub">${escapeHtml(patente.why[lang])}</span>` : ''}
       ${
         municipio?.note
-          ? `<span class="glance-sub glance-muni-note">${municipio.note.es}</span>`
+          ? `<span class="glance-sub glance-muni-note">${municipio.note[lang]}</span>`
           : ''
       }
     </div>
@@ -215,13 +287,20 @@ function render(): void {
     .map(
       (inc) => `
     <div class="incentive-card">
-      <h4>${escapeHtml(inc.title.es)} ${sourcingMark(inc.sourcing)}</h4>
+      <h4>${escapeHtml(inc.title[lang])} ${sourcingMark(inc.sourcing)}</h4>
       ${professionalNote(inc.professional)}
-      <p>${inc.note.es}</p>
+      <p>${inc.note[lang]}</p>
       ${practiceBanner(inc.practice)}
     </div>`,
     )
     .join('');
 }
 
+document.addEventListener('langchange', (event) => {
+  lang = (event as CustomEvent<Lang>).detail;
+  applyStaticText();
+  render();
+});
+
+applyStaticText();
 render();

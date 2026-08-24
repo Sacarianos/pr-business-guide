@@ -21,7 +21,25 @@ const MONTHS_ES = [
   'diciembre',
 ];
 
-export function researchDateLabel(): string {
+const MONTHS_EN = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+// G-19: defaults to Spanish, same reason sourcing-label.ts's functions do.
+export function researchDateLabel(lang: 'es' | 'en' = 'es'): string {
   const [year, month, day] = RESEARCH_DATE.split('-').map(Number) as [number, number, number];
-  return `${day} de ${MONTHS_ES[month - 1]} de ${year}`;
+  return lang === 'en'
+    ? `${MONTHS_EN[month - 1]} ${day}, ${year}`
+    : `${day} de ${MONTHS_ES[month - 1]} de ${year}`;
 }

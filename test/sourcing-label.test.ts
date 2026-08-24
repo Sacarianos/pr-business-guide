@@ -3,6 +3,10 @@
 // src/pages/index.astro both render from — kept here, framework-free, same
 // reason src/lib/sourcing-label.ts's existing `sourcingLabel` is tested this
 // way rather than through a rendered page.
+//
+// G-19 added a `lang` parameter to every function that has one — these
+// tests cover both the omitted-default (still Spanish, so pre-G-19 call
+// sites are unaffected) and explicit 'en'.
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
 import {
@@ -12,18 +16,29 @@ import {
   sourcingLabel,
 } from '../src/lib/sourcing-label.ts';
 
-test('sourcingLabel: secondary reads "sin confirmar", unverified reads "sin verificar"', () => {
+test('sourcingLabel: defaults to Spanish, secondary reads "sin confirmar", unverified reads "sin verificar"', () => {
   assert.equal(sourcingLabel('secondary'), 'sin confirmar');
   assert.equal(sourcingLabel('unverified'), 'sin verificar');
 });
 
-test('practiceHeadline: contradicted and confirmed each get a headline, unknown gets none', () => {
+test('sourcingLabel: English reads "unconfirmed" / "unverified"', () => {
+  assert.equal(sourcingLabel('secondary', 'en'), 'unconfirmed');
+  assert.equal(sourcingLabel('unverified', 'en'), 'unverified');
+});
+
+test('practiceHeadline: Spanish default — contradicted and confirmed each get a headline, unknown gets none', () => {
   assert.equal(practiceHeadline('contradicted'), 'La práctica contradice esto');
   assert.equal(practiceHeadline('confirmed'), 'Confirmado en la práctica');
   assert.equal(practiceHeadline('unknown'), null);
 });
 
-test('practiceAttribution: formats "by — YYYY-MM-DD" from a Date instance', () => {
+test('practiceHeadline: English — same three states', () => {
+  assert.equal(practiceHeadline('contradicted', 'en'), 'Practice contradicts this');
+  assert.equal(practiceHeadline('confirmed', 'en'), 'Confirmed in practice');
+  assert.equal(practiceHeadline('unknown', 'en'), null);
+});
+
+test('practiceAttribution: formats "by — YYYY-MM-DD" from a Date instance, language-independent', () => {
   const attribution = practiceAttribution({
     status: 'contradicted',
     by: 'Alan Taveras / CUD',
@@ -32,9 +47,14 @@ test('practiceAttribution: formats "by — YYYY-MM-DD" from a Date instance', ()
   assert.equal(attribution, 'Alan Taveras / CUD — 2026-08-24');
 });
 
-test('professionalLabel: cpa reads "un CPA de Puerto Rico", attorney reads "un abogado"', () => {
+test('professionalLabel: Spanish default reads "un CPA de Puerto Rico" / "un abogado"', () => {
   assert.equal(professionalLabel('cpa'), 'un CPA de Puerto Rico');
   assert.equal(professionalLabel('attorney'), 'un abogado');
+});
+
+test('professionalLabel: English reads "a Puerto Rico CPA" / "an attorney"', () => {
+  assert.equal(professionalLabel('cpa', 'en'), 'a Puerto Rico CPA');
+  assert.equal(professionalLabel('attorney', 'en'), 'an attorney');
 });
 
 test('practiceAttribution: formats the same way when `at` arrives as a JSON-round-tripped string', () => {

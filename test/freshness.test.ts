@@ -2,6 +2,9 @@
 // know when the research was done, so that I can judge whether it has gone
 // stale"). Pure formatting, tested the same way as sourcing-label.ts's
 // microcopy: no DOM, no astro:content.
+//
+// G-19 added a `lang` parameter, defaulting to Spanish so pre-G-19 call
+// sites are unaffected.
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
 import { RESEARCH_DATE, researchDateLabel } from '../src/lib/freshness.ts';
@@ -14,6 +17,10 @@ test('RESEARCH_DATE matches the compile date recorded in the research document i
   assert.equal(RESEARCH_DATE, '2026-08-06');
 });
 
-test('researchDateLabel() renders the ISO date as long-form Spanish', () => {
+test('researchDateLabel(): Spanish default renders the ISO date as long-form Spanish', () => {
   assert.equal(researchDateLabel(), '6 de agosto de 2026');
+});
+
+test('researchDateLabel("en"): renders the ISO date as long-form English', () => {
+  assert.equal(researchDateLabel('en'), 'August 6, 2026');
 });

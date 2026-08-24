@@ -46,39 +46,104 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Franklin:wght@400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
+    {
+      /* G-19: apply a saved language preference before first paint, the same
+      technique a dark-mode toggle uses to avoid a flash of the wrong theme —
+      here, a flash of the wrong language. Inline and blocking, not a module,
+      so it runs before the browser paints anything below. */
+    }
+    <script is:inline>
+      (function () {
+        var lang = 'es';
+        try {
+          if (localStorage.getItem('pr-guia-lang') === 'en') lang = 'en';
+        } catch (e) {}
+        document.documentElement.dataset.lang = lang;
+      })();
+    </script>
   </head>
   <body>
+    <div class="lang-bar">
+      <div class="lang-toggle" role="group" aria-label="Idioma / Language">
+        <button type="button" class="lang-btn" data-lang-option="es" aria-pressed="true">ES</button>
+        <button type="button" class="lang-btn" data-lang-option="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+
     <header class="masthead">
-      <p class="eyebrow">Guía práctica, no asesoría legal</p>
-      <h1>Guía de Apertura de Negocios en Puerto Rico</h1>
+      <p class="eyebrow">
+        <span lang="es">Guía práctica, no asesoría legal</span>
+        <span lang="en">A practical guide, not legal advice</span>
+      </p>
+      <h1>
+        <span lang="es">Guía de Apertura de Negocios en Puerto Rico</span>
+        <span lang="en">Guide to Starting a Business in Puerto Rico</span>
+      </h1>
       <p class="dek">
-        Contesta hasta diez preguntas y arma tu propia secuencia — agencia, plazo y costo por
-        cada paso — con los incentivos y la patente municipal que te tocan.
+        <span lang="es">
+          Contesta hasta diez preguntas y arma tu propia secuencia — agencia, plazo y costo por
+          cada paso — con los incentivos y la patente municipal que te tocan.
+        </span>
+        <span lang="en">
+          Answer up to ten questions and build your own sequence — agency, deadline, and cost per
+          step — plus the incentives and municipal patente that apply to you.
+        </span>
       </p>
     </header>
 
     <div class="alert-strip">
-      <span class="alert-label">Vigencia</span>
+      <span class="alert-label">
+        <span lang="es">Vigencia</span>
+        <span lang="en">Currency</span>
+      </span>
       <p class="alert-body">
-        Investigación compilada el {researchDateLabel()}. Mucho de lo que circula en línea cita la
-        Ley 113-1974 (derogada en 2020) para la patente municipal, exige el informe anual que las
-        corporaciones ya no radican desde 2025, o describe términos de la Ley 60 anteriores a la
-        enmienda de 2026. Si algo en esta guía entra en conflicto con lo que leíste en otro sitio,
-        confía en la fecha, no en el número de resultados de Google.
+        <span lang="es">
+          Investigación compilada el {researchDateLabel('es')}. Mucho de lo que circula en línea
+          cita la Ley 113-1974 (derogada en 2020) para la patente municipal, exige el informe
+          anual que las corporaciones ya no radican desde 2025, o describe términos de la Ley 60
+          anteriores a la enmienda de 2026. Si algo en esta guía entra en conflicto con lo que
+          leíste en otro sitio, confía en la fecha, no en el número de resultados de Google.
+        </span>
+        <span lang="en">
+          Research compiled {researchDateLabel('en')}. Much of what circulates online cites Ley
+          113-1974 (repealed in 2020) for the municipal patente, requires the annual report
+          corporations no longer file since 2025, or describes Act 60 terms predating the 2026
+          amendment. If anything in this guide conflicts with what you read elsewhere, trust the
+          date, not the search-result count.
+        </span>
       </p>
     </div>
 
     <main class="tool">
       <div class="section-head">
         <span class="section-num">1</span>
-        <h2>Tu ruta</h2>
+        <h2>
+          <span lang="es">Tu ruta</span>
+          <span lang="en">Your path</span>
+        </h2>
       </div>
       <p class="section-dek">
-        La secuencia de abajo es igual para todo el mundo. Lo que cambia es qué ramas te aplican,
-        cuánto te cuesta la patente de verdad, y cuáles incentivos existen y cuáles son cuento de
-        internet.
+        <span lang="es">
+          La secuencia de abajo es igual para todo el mundo. Lo que cambia es qué ramas te
+          aplican, cuánto te cuesta la patente de verdad, y cuáles incentivos existen y cuáles son
+          cuento de internet.
+        </span>
+        <span lang="en">
+          The sequence below is the same for everyone. What changes is which branches apply to
+          you, what your patente actually costs, and which incentives are real versus internet
+          folklore.
+        </span>
       </p>
       <div class="tool-grid">
+        {
+          /* G-19: the question panel and results are re-rendered by
+          src/scripts/tool.ts on every answer change already, so tool.ts also
+          owns re-labeling this subtree's text on a language change — rather
+          than the dual-span/CSS technique the rest of the page uses — since
+          `<select><option>` text and `aria-label` attributes can't hold a
+          hidden alternate-language span. `data-i18n` marks the plain static
+          strings tool.ts swaps by key (src/scripts/tool.ts's UI_TEXT). */
+        }
         <div class="questions" data-questions>
           {
             content.questions.map((q) => (
@@ -109,31 +174,31 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
               </div>
             ))
           }
-          <button type="button" class="start-over" data-start-over>
+          <button type="button" class="start-over" data-start-over data-i18n="startOver">
             Empezar de nuevo
           </button>
         </div>
 
         <div class="results">
-          <div class="empty-state" data-empty-state>
+          <div class="empty-state" data-empty-state data-i18n="emptyState">
             Contesta al menos tres preguntas para ver tu secuencia.
           </div>
           <div class="results-content" data-results hidden>
             <div class="at-a-glance" data-glance></div>
             <section>
-              <h2>Tu secuencia</h2>
+              <h2 data-i18n="sequenceTitle">Tu secuencia</h2>
               <ol class="sequence" data-sequence></ol>
             </section>
             <section>
-              <h2>Obligaciones recurrentes</h2>
-              <p class="recurring-dek">
+              <h2 data-i18n="recurringTitle">Obligaciones recurrentes</h2>
+              <p class="recurring-dek" data-i18n="recurringDek">
                 Estas no son pasos de una sola vez — siguen viniendo mientras el negocio esté
                 abierto, cada una con su propia frecuencia.
               </p>
               <ol class="sequence" data-recurring></ol>
             </section>
             <section>
-              <h2>Incentivos aplicables</h2>
+              <h2 data-i18n="incentivesTitle">Incentivos aplicables</h2>
               <div class="incentives" data-incentives></div>
             </section>
           </div>
@@ -144,23 +209,41 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     <section class="diagram-section">
       <div class="section-head">
         <span class="section-num">2</span>
-        <h2>La forma del proceso</h2>
+        <h2>
+          <span lang="es">La forma del proceso</span>
+          <span lang="en">The shape of the process</span>
+        </h2>
       </div>
       <p class="section-dek">
-        Dos cadenas corren en paralelo y terminan en un solo permiso. La de arriba es papeleo:
-        días, y casi gratis. La de abajo es la que se lleva los meses.
+        <span lang="es">
+          Dos cadenas corren en paralelo y terminan en un solo permiso. La de arriba es papeleo:
+          días, y casi gratis. La de abajo es la que se lleva los meses.
+        </span>
+        <span lang="en">
+          Two chains run in parallel and end in a single permit. The one on top is paperwork:
+          days, and nearly free. The one on the bottom is the one that eats the months.
+        </span>
       </p>
       <figure class="diagram-figure">
         <div class="diagram-frame">
           <ProcessDiagram />
         </div>
         <figcaption>
-          Las dos cadenas son independientes hasta que se encuentran. Lo que la gente hace mal es
-          la flecha marcada en ámbar: el Certificado de Registro de Comerciante es un
-          <em>insumo</em> de la solicitud de permiso, así que quien deja Hacienda para el final
-          descubre que no puede radicar. Las obligaciones municipales y patronales cuelgan del
-          mismo punto pero no bloquean nada — la patente se notifica <em>después</em> de empezar,
-          no antes.
+          <span lang="es">
+            Las dos cadenas son independientes hasta que se encuentran. Lo que la gente hace mal
+            es la flecha marcada en ámbar: el Certificado de Registro de Comerciante es un
+            <em>insumo</em> de la solicitud de permiso, así que quien deja Hacienda para el final
+            descubre que no puede radicar. Las obligaciones municipales y patronales cuelgan del
+            mismo punto pero no bloquean nada — la patente se notifica <em>después</em> de
+            empezar, no antes.
+          </span>
+          <span lang="en">
+            The two chains are independent until they meet. What people get wrong is the arrow
+            marked in amber: the Certificado de Registro de Comerciante is an <em>input</em> to
+            the permit application, so anyone who leaves Hacienda for last finds they can't file.
+            The municipal and employer obligations hang off the same point but block nothing — the
+            patente is notified <em>after</em> starting, not before.
+          </span>
         </figcaption>
       </figure>
     </section>
@@ -168,22 +251,39 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     <section class="entities-section">
       <div class="section-head">
         <span class="section-num">3</span>
-        <h2>DBA, LLC o corporación</h2>
+        <h2>
+          <span lang="es">DBA, LLC o corporación</span>
+          <span lang="en">DBA, LLC, or corporation</span>
+        </h2>
       </div>
       <p class="section-dek">
-        La forma legal de la pregunta 2 define casi todo lo que sigue. Esta es la comparación
-        completa, no solo la rama que te tocó.
+        <span lang="es">
+          La forma legal de la pregunta 2 define casi todo lo que sigue. Esta es la comparación
+          completa, no solo la rama que te tocó.
+        </span>
+        <span lang="en">
+          The legal form from question 2 defines almost everything that follows. This is the full
+          comparison, not just the branch you landed on.
+        </span>
       </p>
       <div class="entities-table-wrap">
         <table class="entities-table">
           <thead>
             <tr>
-              <th scope="col">Forma</th>
-              <th scope="col">Protección de bienes</th>
-              <th scope="col">Radicación</th>
-              <th scope="col">Contribución por defecto</th>
-              <th scope="col">Costo de formación</th>
-              <th scope="col">Obligación anual</th>
+              <th scope="col"><span lang="es">Forma</span><span lang="en">Form</span></th>
+              <th scope="col">
+                <span lang="es">Protección de bienes</span><span lang="en">Asset protection</span>
+              </th>
+              <th scope="col"><span lang="es">Radicación</span><span lang="en">Filing</span></th>
+              <th scope="col">
+                <span lang="es">Contribución por defecto</span><span lang="en">Default tax</span>
+              </th>
+              <th scope="col">
+                <span lang="es">Costo de formación</span><span lang="en">Formation cost</span>
+              </th>
+              <th scope="col">
+                <span lang="es">Obligación anual</span><span lang="en">Annual obligation</span>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -192,29 +292,50 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
                 <Fragment>
                   <tr>
                     <th scope="row">
-                      {e.name.es}
+                      <span lang="es">{e.name.es}</span>
+                      <span lang="en">{e.name.en}</span>
                       {e.sourcing !== 'primary' && (
                         <span class={`mark mark-${e.sourcing}`}>
-                          {sourcingLabel(e.sourcing as 'secondary' | 'unverified')}
+                          <span lang="es">
+                            {sourcingLabel(e.sourcing as 'secondary' | 'unverified', 'es')}
+                          </span>
+                          <span lang="en">
+                            {sourcingLabel(e.sourcing as 'secondary' | 'unverified', 'en')}
+                          </span>
                         </span>
                       )}
                       {e.professional && (
                         <span class="entities-professional">
-                          → Consulta con {professionalLabel(e.professional)}
+                          <span lang="es">→ Consulta con {professionalLabel(e.professional, 'es')}</span>
+                          <span lang="en">→ Talk to {professionalLabel(e.professional, 'en')}</span>
                         </span>
                       )}
                     </th>
-                    <td>{e.liability.es}</td>
-                    <td>{e.filing.es}</td>
-                    <td set:html={e.defaultTax.es} />
-                    <td>{e.formationCost.es}</td>
-                    <td set:html={e.annualObligation.es} />
+                    <td><span lang="es">{e.liability.es}</span><span lang="en">{e.liability.en}</span></td>
+                    <td><span lang="es">{e.filing.es}</span><span lang="en">{e.filing.en}</span></td>
+                    <td>
+                      <span lang="es" set:html={e.defaultTax.es} />
+                      <span lang="en" set:html={e.defaultTax.en} />
+                    </td>
+                    <td>
+                      <span lang="es">{e.formationCost.es}</span>
+                      <span lang="en">{e.formationCost.en}</span>
+                    </td>
+                    <td>
+                      <span lang="es" set:html={e.annualObligation.es} />
+                      <span lang="en" set:html={e.annualObligation.en} />
+                    </td>
                   </tr>
-                  {e.practice && practiceHeadline(e.practice.status) && (
+                  {e.practice && (practiceHeadline(e.practice.status, 'es') || practiceHeadline(e.practice.status, 'en')) && (
                     <tr class="entities-practice-row">
                       <td colspan="6">
                         <p class={`practice-banner practice-${e.practice.status}`}>
-                          <strong>{practiceHeadline(e.practice.status)}</strong>{' '}
+                          <span lang="es">
+                            <strong>{practiceHeadline(e.practice.status, 'es')}</strong>{' '}
+                          </span>
+                          <span lang="en">
+                            <strong>{practiceHeadline(e.practice.status, 'en')}</strong>{' '}
+                          </span>
                           <span class="practice-attribution">
                             {practiceAttribution(e.practice)}
                           </span>
@@ -233,7 +354,10 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
           entities
             .filter((e) => e.note)
             .map((e) => (
-              <p class="entities-note" set:html={`<strong>${e.name.es}:</strong> ${e.note!.es}`} />
+              <p class="entities-note">
+                <span lang="es" set:html={`<strong>${e.name.es}:</strong> ${e.note!.es}`} />
+                <span lang="en" set:html={`<strong>${e.name.en}:</strong> ${e.note!.en}`} />
+              </p>
             ))
         }
       </div>
@@ -242,20 +366,33 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     <section class="gaps-section">
       <div class="section-head">
         <span class="section-num">4</span>
-        <h2>Lo que no pude verificar</h2>
+        <h2>
+          <span lang="es">Lo que no pude verificar</span>
+          <span lang="en">What I could not verify</span>
+        </h2>
       </div>
       <p class="section-dek">
-        Esta lista es permanente, no una advertencia de paso — son las preguntas concretas que
-        quedaron abiertas después de revisar la ley y no una admisión genérica de que "puede haber
-        errores."
+        <span lang="es">
+          Esta lista es permanente, no una advertencia de paso — son las preguntas concretas que
+          quedaron abiertas después de revisar la ley y no una admisión genérica de que "puede
+          haber errores."
+        </span>
+        <span lang="en">
+          This list is permanent, not a step-level warning — it names the concrete open questions
+          left after reviewing the law, not a generic "there could be errors" disclaimer.
+        </span>
       </p>
       <div class="gaps-list">
         {
           content.gaps.map((g) => (
             <p class="gap-item">
-              {g.text.es}
+              <span lang="es">{g.text.es}</span>
+              <span lang="en">{g.text.en}</span>
               {g.relatesTo && content.steps[g.relatesTo] && (
-                <span class="gap-relates">Relacionado: {content.steps[g.relatesTo]!.title.es}</span>
+                <span class="gap-relates">
+                  <span lang="es">Relacionado: {content.steps[g.relatesTo]!.title.es}</span>
+                  <span lang="en">Relates to: {content.steps[g.relatesTo]!.title.en}</span>
+                </span>
               )}
             </p>
           ))
@@ -264,6 +401,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     </section>
 
     <script type="application/json" id="tool-content" set:html={contentJson} is:inline />
+    <script src="../scripts/lang-toggle.ts"></script>
     <script src="../scripts/tool.ts"></script>
   </body>
 </html>
@@ -308,6 +446,55 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     font-family: 'Newsreader', serif;
     font-size: 17px;
     line-height: 1.62;
+  }
+
+  /* G-19: the bilingual toggle. Every string on the page that isn't
+     client-rendered by src/scripts/tool.ts (which picks its language
+     directly, needing no CSS) is emitted twice, once per `lang`, and this
+     pair of rules shows only the one matching `<html data-lang>` — set by
+     index.astro's inline flash-prevention script and kept in sync by
+     src/scripts/lang-toggle.ts. `:global()` so it reaches content rendered
+     by child components (ProcessDiagram/DiagramLane), not just this file's
+     own scoped tree. */
+  :global(html[data-lang='es'] [lang='en']) {
+    display: none !important;
+  }
+  :global(html[data-lang='en'] [lang='es']) {
+    display: none !important;
+  }
+
+  .lang-bar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 24px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule);
+  }
+  .lang-toggle {
+    display: inline-flex;
+    border: 1px solid var(--rule);
+  }
+  .lang-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 5px 12px;
+    border: none;
+    background: var(--surface);
+    color: var(--ink-2);
+    cursor: pointer;
+  }
+  .lang-btn:not(:last-child) {
+    border-right: 1px solid var(--rule);
+  }
+  .lang-btn[aria-pressed='true'] {
+    background: var(--sello);
+    color: var(--surface);
+  }
+  .lang-btn:focus-visible {
+    outline: 2px solid var(--sello);
+    outline-offset: -2px;
   }
 
   .masthead {

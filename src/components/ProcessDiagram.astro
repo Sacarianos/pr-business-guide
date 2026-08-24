@@ -9,22 +9,25 @@
 // design/handoff/README.md) and the BACKLOG's G-08/G-10 note ("fully
 // specified in the handoff ... porting is mechanical"). The handoff builds
 // this with React.createElement; here it's plain static SVG (DiagramLane
-// for the repeated box/label/arrow row shape), since G-10 depends only on
-// G-04, not on the bilingual toggle (G-19) — the page it lives on is still
-// Spanish-only, so this component is too. Re-parameterize on `lang` when
-// G-19 lands.
+// for the repeated box/label/arrow row shape).
 //
-// Colors resolve through the CSS custom properties already defined on
-// index.astro's :root (--sello, --ambar, --rule, --surface, --verificado,
-// etc.), so this component carries no styling of its own beyond the
-// coordinates and font stacks the handoff specifies.
-import DiagramLane, { type Node } from './DiagramLane.astro';
+// G-19: every label is bilingual. Each standalone `<text>` (the ones
+// DiagramLane doesn't already own) renders as an es/en pair at identical
+// coordinates, marked with `lang` so index.astro's global `[lang]` CSS
+// toggle shows only the current one — the same technique DiagramLane
+// applies to its own per-node text. `svgAriaLabel` is the one exception:
+// an SVG's own `aria-label` attribute can't hold two values, so it's kept
+// in `data-aria-es`/`data-aria-en` and swapped by src/scripts/lang-toggle.ts,
+// the same generic mechanism used for the question panel's aria-labels.
+import DiagramLane, { type Bilingual, type Node } from './DiagramLane.astro';
 
 const MONO = "'IBM Plex Mono', monospace";
 const SERIF = "'Newsreader', serif";
 
-const diagramAria =
+const ariaEs =
   'Diagrama de flujo: una cadena de identidad legal y contributiva y una cadena de local corren en paralelo y desembocan en el Permiso Único, que consolida cinco certificaciones y condiciona la apertura. Las obligaciones municipales y patronales se ramifican en paralelo y no bloquean la apertura.';
+const ariaEn =
+  'Flow diagram: a legal-and-tax-identity chain and a premises chain run in parallel and converge on the Permiso Único, which consolidates five certifications and gates opening. Municipal and employer obligations branch off in parallel and do not block opening.';
 
 // The vertical connectors from lane B's chain down into lane C sit under
 // each lane's box centers — 84px in from each box's left edge (half its
@@ -32,25 +35,33 @@ const diagramAria =
 const NODE_X = [36, 248, 460, 672].map((x) => x + 84);
 
 const laneANodes: Node[] = [
-  { x: 120, title: 'Elegir forma legal', sub: 'LLC · Corp · DBA' },
-  { x: 332, title: 'Registrar entidad', sub: 'Depto. de Estado · RCE' },
-  { x: 544, title: 'EIN federal', sub: 'IRS · gratis · minutos' },
-  { x: 756, title: 'Registro de Comerciantes', sub: 'Hacienda · SURI' },
+  { x: 120, title: { es: 'Elegir forma legal', en: 'Choose legal form' }, sub: { es: 'LLC · Corp · DBA', en: 'LLC · Corp · DBA' } },
+  { x: 332, title: { es: 'Registrar entidad', en: 'Register entity' }, sub: { es: 'Depto. de Estado · RCE', en: 'Dept. of State · RCE' } },
+  { x: 544, title: { es: 'EIN federal', en: 'Federal EIN' }, sub: { es: 'IRS · gratis · minutos', en: 'IRS · free · minutes' } },
+  { x: 756, title: { es: 'Registro de Comerciantes', en: 'Merchant Registration' }, sub: { es: 'Hacienda · SURI', en: 'Hacienda · SURI' } },
 ];
 
 const laneBNodes: Node[] = [
-  { x: 120, title: 'Buscar local', sub: '2–8 semanas' },
-  { x: 332, title: 'Verificar zonificación', sub: 'por № catastro · antes de firmar' },
-  { x: 544, title: 'Firmar el lease', sub: 'o comprar' },
-  { x: 756, title: 'Permiso de construcción', sub: 'solo si remodelas' },
+  { x: 120, title: { es: 'Buscar local', en: 'Find premises' }, sub: { es: '2–8 semanas', en: '2–8 weeks' } },
+  {
+    x: 332,
+    title: { es: 'Verificar zonificación', en: 'Verify zoning' },
+    sub: { es: 'por № catastro · antes de firmar', en: 'by cadastral no. · before signing' },
+  },
+  { x: 544, title: { es: 'Firmar el lease', en: 'Sign the lease' }, sub: { es: 'o comprar', en: 'or buy' } },
+  {
+    x: 756,
+    title: { es: 'Permiso de construcción', en: 'Construction permit' },
+    sub: { es: 'solo si remodelas', en: 'only if remodeling' },
+  },
 ];
 
-const bundleItems = [
-  '· Permiso de uso',
-  '· Exclusión categórica',
-  '· Prevención de incendios',
-  '· Salud ambiental',
-  '· Licencia sanitaria (alimentos)',
+const bundleItems: Bilingual[] = [
+  { es: '· Permiso de uso', en: '· Use permit' },
+  { es: '· Exclusión categórica', en: '· Categorical exclusion' },
+  { es: '· Prevención de incendios', en: '· Fire prevention' },
+  { es: '· Salud ambiental', en: '· Environmental health' },
+  { es: '· Licencia sanitaria (alimentos)', en: '· Sanitary license (food)' },
 ];
 
 // d1 (patente municipal) always applies, so its box is solid and it's the
@@ -59,38 +70,55 @@ const bundleItems = [
 // reader is hiring, so their boxes render dashed (`dashFrom={1}` below,
 // matching `boxes(468, 56, 1)` in the source).
 const laneCNodes: Node[] = [
-  { x: 120, y: 488, title: 'Patente municipal', sub: 'notificar ≤30 días', sub2: 'de haber comenzado' },
-  { x: 332, y: 490, title: 'DTRH', sub: 'desempleo + SINOT' },
-  { x: 544, y: 490, title: 'CFSE', sub: 'seguro obrero' },
-  { x: 756, y: 490, title: 'Seguro choferil', sub: 'si alguien conduce' },
+  {
+    x: 120,
+    y: 488,
+    title: { es: 'Patente municipal', en: 'Municipal patente' },
+    sub: { es: 'notificar ≤30 días', en: 'notify ≤30 days' },
+    sub2: { es: 'de haber comenzado', en: 'after starting' },
+  },
+  { x: 332, y: 490, title: { es: 'DTRH', en: 'DTRH' }, sub: { es: 'desempleo + SINOT', en: 'unemployment + SINOT' } },
+  { x: 544, y: 490, title: { es: 'CFSE', en: 'CFSE' }, sub: { es: 'seguro obrero', en: "workers' comp" } },
+  {
+    x: 756,
+    y: 490,
+    title: { es: 'Seguro choferil', en: "Chauffeur's insurance" },
+    sub: { es: 'si alguien conduce', en: 'if anyone drives' },
+  },
 ];
 
-const ongoingItems = [
-  'IVU mensual · día 20',
-  'Estimada trimestral',
-  'Planilla anual · Hacienda',
-  'Cargo anual Estado · 15 abr',
-  'Volumen de negocios · 15 abr',
+const ongoingItems: Bilingual[] = [
+  { es: 'IVU mensual · día 20', en: 'Monthly IVU · day 20' },
+  { es: 'Estimada trimestral', en: 'Quarterly estimate' },
+  { es: 'Planilla anual · Hacienda', en: 'Annual return · Hacienda' },
+  { es: 'Cargo anual Estado · 15 abr', en: 'Annual State fee · 15 Apr' },
+  { es: 'Volumen de negocios · 15 abr', en: 'Business volume return · 15 Apr' },
 ];
 
-const timelineLabels = [
-  { x: 36, label: 'SEMANA 0' },
-  { x: 300, label: 'SEMANA 2' },
-  { x: 560, label: 'SEMANA 6' },
-  { x: 770, label: 'SEMANA 14+' },
+const timelineLabels: (Bilingual & { x: number })[] = [
+  { x: 36, es: 'SEMANA 0', en: 'WEEK 0' },
+  { x: 300, es: 'SEMANA 2', en: 'WEEK 2' },
+  { x: 560, es: 'SEMANA 6', en: 'WEEK 6' },
+  { x: 770, es: 'SEMANA 14+', en: 'WEEK 14+' },
 ];
 
-const timelineCaptions = [
-  { x: 36, text: 'entidad + EIN + SURI' },
-  { x: 200, text: 'búsqueda de local y arrendamiento' },
-  { x: 430, text: 'Permiso Único — inspecciones, la parte que no se acelera' },
+const timelineCaptions: (Bilingual & { x: number })[] = [
+  { x: 36, es: 'entidad + EIN + SURI', en: 'entity + EIN + SURI' },
+  { x: 200, es: 'búsqueda de local y arrendamiento', en: 'premises search and lease' },
+  {
+    x: 430,
+    es: 'Permiso Único — inspecciones, la parte que no se acelera',
+    en: "Permiso Único — inspections, the part that can't be sped up",
+  },
 ];
 ---
 
 <svg
   viewBox="0 0 1180 700"
   role="img"
-  aria-label={diagramAria}
+  aria-label={ariaEs}
+  data-aria-es={ariaEs}
+  data-aria-en={ariaEn}
   style={`display:block;min-width:960px;width:100%;height:auto;color:var(--ink);font-family:'Libre Franklin', sans-serif;`}
 >
   <defs>
@@ -103,27 +131,36 @@ const timelineCaptions = [
   </defs>
 
   {/* Lane A — legal and tax identity */}
-  <text x="36" y="44" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">IDENTIDAD LEGAL Y CONTRIBUTIVA</text>
-  <text x="36" y="61" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">En serie, pero rápido — menos de una semana en total. Unos $150–250 en cargos de gobierno.</text>
+  <text lang="es" x="36" y="44" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">IDENTIDAD LEGAL Y CONTRIBUTIVA</text>
+  <text lang="en" x="36" y="44" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">LEGAL AND TAX IDENTITY</text>
+  <text lang="es" x="36" y="61" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">En serie, pero rápido — menos de una semana en total. Unos $150–250 en cargos de gobierno.</text>
+  <text lang="en" x="36" y="61" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">Sequential, but fast — under a week total. About $150–250 in government fees.</text>
   <DiagramLane boxY={76} boxHeight={52} nodeY={98} arrowY={102} nodes={laneANodes} />
 
   {/* The ordering rule people get wrong */}
   <rect x="36" y="152" width="700" height="62" fill="none" stroke="var(--ambar)" stroke-opacity="0.55" />
-  <text x="52" y="174" font-size="10" font-family={MONO} letter-spacing="1.2" fill="var(--ambar)">REGLA DE ORDEN QUE SE EQUIVOCA CON FRECUENCIA</text>
-  <text x="52" y="193" font-size="12.5" font-family={SERIF} fill="currentColor">El Registro de Comerciantes tiene que existir antes de la solicitud del Permiso Único —</text>
-  <text x="52" y="208" font-size="12.5" font-family={SERIF} fill="currentColor">la radicación exige el certificado como anejo. Hacerlo al revés te deja varado.</text>
+  <text lang="es" x="52" y="174" font-size="10" font-family={MONO} letter-spacing="1.2" fill="var(--ambar)">REGLA DE ORDEN QUE SE EQUIVOCA CON FRECUENCIA</text>
+  <text lang="en" x="52" y="174" font-size="10" font-family={MONO} letter-spacing="1.2" fill="var(--ambar)">ORDERING RULE PEOPLE GET WRONG</text>
+  <text lang="es" x="52" y="193" font-size="12.5" font-family={SERIF} fill="currentColor">El Registro de Comerciantes tiene que existir antes de la solicitud del Permiso Único —</text>
+  <text lang="en" x="52" y="193" font-size="12.5" font-family={SERIF} fill="currentColor">The Registro de Comerciantes must exist before the Permiso Único application —</text>
+  <text lang="es" x="52" y="208" font-size="12.5" font-family={SERIF} fill="currentColor">la radicación exige el certificado como anejo. Hacerlo al revés te deja varado.</text>
+  <text lang="en" x="52" y="208" font-size="12.5" font-family={SERIF} fill="currentColor">filing requires the certificate as an attachment. Doing it backwards leaves you stuck.</text>
   <path d="M 736 183 L 800 183 L 800 140" fill="none" stroke="var(--ambar)" stroke-opacity="0.7" stroke-dasharray="3 3" marker-end="url(#ar)" />
 
   {/* Lane B — premises and permit, the critical path */}
-  <text x="36" y="252" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">LOCAL Y PERMISO — LA RUTA CRÍTICA</text>
-  <text x="36" y="269" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">Semanas o meses. Es la única parte que no se acelera por más organizado que seas.</text>
+  <text lang="es" x="36" y="252" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">LOCAL Y PERMISO — LA RUTA CRÍTICA</text>
+  <text lang="en" x="36" y="252" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">PREMISES AND PERMIT — THE CRITICAL PATH</text>
+  <text lang="es" x="36" y="269" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">Semanas o meses. Es la única parte que no se acelera por más organizado que seas.</text>
+  <text lang="en" x="36" y="269" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">Weeks or months. It's the one part that can't be sped up no matter how organized you are.</text>
   <DiagramLane boxY={284} boxHeight={52} dashFrom={3} nodeY={306} arrowY={310} nodes={laneBNodes} />
 
   {/* Both chains converge on the Permiso Único */}
   <rect x="904" y="150" width="240" height="96" fill="var(--sello)" />
   <text x="1024" y="182" font-size="15" font-weight="800" letter-spacing="-0.3" fill="var(--surface)" text-anchor="middle">PERMISO ÚNICO</text>
-  <text x="1024" y="202" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">OGPe · o municipio autónomo</text>
-  <text x="1024" y="219" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">con jerarquía delegada</text>
+  <text lang="es" x="1024" y="202" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">OGPe · o municipio autónomo</text>
+  <text lang="en" x="1024" y="202" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">OGPe · or autonomous municipality</text>
+  <text lang="es" x="1024" y="219" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">con jerarquía delegada</text>
+  <text lang="en" x="1024" y="219" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">with delegated hierarchy</text>
   <text x="1024" y="236" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">sbp.ogpe.pr.gov</text>
 
   <path d="M 840 102 L 872 102 L 872 176 L 898 176" fill="none" stroke="var(--sello)" stroke-width="1.6" marker-end="url(#ar-a)" />
@@ -132,23 +169,31 @@ const timelineCaptions = [
   {/* What the permit bundles */}
   <line x1="1024" y1="246" x2="1024" y2="272" stroke="currentColor" stroke-opacity="0.45" />
   <rect x="904" y="272" width="240" height="132" fill="none" stroke="var(--sello)" stroke-opacity="0.5" />
-  <text x="918" y="291" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--sello)">CONSOLIDA EN UNA SOLA SOLICITUD</text>
+  <text lang="es" x="918" y="291" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--sello)">CONSOLIDA EN UNA SOLA SOLICITUD</text>
+  <text lang="en" x="918" y="291" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--sello)">CONSOLIDATES INTO ONE APPLICATION</text>
   <g font-size="11.5" font-family={SERIF} fill="currentColor">
     {bundleItems.map((c, i) => (
-      <text x="918" y={311 + i * 18}>{c}</text>
+      <>
+        <text lang="es" x="918" y={311 + i * 18}>{c.es}</text>
+        <text lang="en" x="918" y={311 + i * 18}>{c.en}</text>
+      </>
     ))}
   </g>
 
   {/* Open for business */}
   <line x1="1024" y1="404" x2="1024" y2="432" stroke="currentColor" stroke-opacity="0.45" marker-end="url(#ar)" />
   <rect x="904" y="436" width="240" height="52" fill="none" stroke="currentColor" stroke-width="2" />
-  <text x="1024" y="461" font-size="14" font-weight="800" letter-spacing="-0.3" fill="currentColor" text-anchor="middle">ABIERTO AL PÚBLICO</text>
-  <text x="1024" y="477" font-size="10" font-family={MONO} fill="currentColor" opacity="0.6" text-anchor="middle">legalmente en operación</text>
+  <text lang="es" x="1024" y="461" font-size="14" font-weight="800" letter-spacing="-0.3" fill="currentColor" text-anchor="middle">ABIERTO AL PÚBLICO</text>
+  <text lang="en" x="1024" y="461" font-size="14" font-weight="800" letter-spacing="-0.3" fill="currentColor" text-anchor="middle">OPEN TO THE PUBLIC</text>
+  <text lang="es" x="1024" y="477" font-size="10" font-family={MONO} fill="currentColor" opacity="0.6" text-anchor="middle">legalmente en operación</text>
+  <text lang="en" x="1024" y="477" font-size="10" font-family={MONO} fill="currentColor" opacity="0.6" text-anchor="middle">legally in operation</text>
 
   {/* Lane C — parallel obligations that don't gate opening */}
   <path d="M 756 128 L 756 140 L 868 140 L 868 424 L 120 424" fill="none" stroke="currentColor" stroke-opacity="0.38" stroke-dasharray="5 4" />
-  <text x="884" y="420" font-size="9.5" font-family={MONO} letter-spacing="1" fill="currentColor" opacity="0.55">no bloquean la apertura</text>
-  <text x="36" y="452" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">OBLIGACIONES EN PARALELO</text>
+  <text lang="es" x="884" y="420" font-size="9.5" font-family={MONO} letter-spacing="1" fill="currentColor" opacity="0.55">no bloquean la apertura</text>
+  <text lang="en" x="884" y="420" font-size="9.5" font-family={MONO} letter-spacing="1" fill="currentColor" opacity="0.55">don't block opening</text>
+  <text lang="es" x="36" y="452" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">OBLIGACIONES EN PARALELO</text>
+  <text lang="en" x="36" y="452" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">PARALLEL OBLIGATIONS</text>
 
   <g stroke="currentColor" stroke-opacity="0.38" marker-end="url(#ar)">
     {NODE_X.map((x) => (
@@ -156,15 +201,20 @@ const timelineCaptions = [
     ))}
   </g>
   <DiagramLane boxY={468} boxHeight={56} dashFrom={1} nodeY={490} nodes={laneCNodes} />
-  <text x="248" y="542" font-size="10" font-family={MONO} fill="currentColor" opacity="0.55">— — —  solo si contratas empleados  — — —</text>
+  <text lang="es" x="248" y="542" font-size="10" font-family={MONO} fill="currentColor" opacity="0.55">— — —  solo si contratas empleados  — — —</text>
+  <text lang="en" x="248" y="542" font-size="10" font-family={MONO} fill="currentColor" opacity="0.55">— — —  only if you hire employees  — — —</text>
 
   {/* Recurring compliance */}
   <line x1="1024" y1="488" x2="1024" y2="512" stroke="currentColor" stroke-opacity="0.45" marker-end="url(#ar)" />
   <rect x="904" y="516" width="240" height="126" fill="none" stroke="var(--rule)" />
-  <text x="918" y="535" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--sello)">CUMPLIMIENTO RECURRENTE</text>
+  <text lang="es" x="918" y="535" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--sello)">CUMPLIMIENTO RECURRENTE</text>
+  <text lang="en" x="918" y="535" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--sello)">RECURRING COMPLIANCE</text>
   <g font-size="11.5" font-family={SERIF} fill="currentColor">
     {ongoingItems.map((o, i) => (
-      <text x="918" y={555 + i * 18}>{o}</text>
+      <>
+        <text lang="es" x="918" y={555 + i * 18}>{o.es}</text>
+        <text lang="en" x="918" y={555 + i * 18}>{o.en}</text>
+      </>
     ))}
   </g>
 
@@ -172,7 +222,10 @@ const timelineCaptions = [
   <line x1="36" y1="586" x2="840" y2="586" stroke="currentColor" stroke-opacity="0.25" />
   <g font-size="10" font-family={MONO} fill="currentColor" opacity="0.55">
     {timelineLabels.map((t) => (
-      <text x={t.x} y="606">{t.label}</text>
+      <>
+        <text lang="es" x={t.x} y="606">{t.es}</text>
+        <text lang="en" x={t.x} y="606">{t.en}</text>
+      </>
     ))}
   </g>
   <rect x="36" y="620" width="120" height="8" fill="var(--verificado)" opacity="0.55" />
@@ -180,7 +233,10 @@ const timelineCaptions = [
   <rect x="364" y="620" width="476" height="8" fill="var(--sello)" opacity="0.55" />
   <g font-size="10.5" font-family={SERIF} fill="currentColor" opacity="0.62">
     {timelineCaptions.map((c) => (
-      <text x={c.x} y="648">{c.text}</text>
+      <>
+        <text lang="es" x={c.x} y="648">{c.es}</text>
+        <text lang="en" x={c.x} y="648">{c.en}</text>
+      </>
     ))}
   </g>
 </svg>
