@@ -217,6 +217,30 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
       </div>
     </section>
 
+    <section class="gaps-section">
+      <div class="section-head">
+        <span class="section-num">4</span>
+        <h2>Lo que no pude verificar</h2>
+      </div>
+      <p class="section-dek">
+        Esta lista es permanente, no una advertencia de paso — son las preguntas concretas que
+        quedaron abiertas después de revisar la ley y no una admisión genérica de que "puede haber
+        errores."
+      </p>
+      <div class="gaps-list">
+        {
+          content.gaps.map((g) => (
+            <p class="gap-item">
+              {g.text.es}
+              {g.relatesTo && content.steps[g.relatesTo] && (
+                <span class="gap-relates">Relacionado: {content.steps[g.relatesTo]!.title.es}</span>
+              )}
+            </p>
+          ))
+        }
+      </div>
+    </section>
+
     <script type="application/json" id="tool-content" set:html={contentJson} is:inline />
     <script src="../scripts/tool.ts"></script>
   </body>
@@ -717,5 +741,38 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
   .entities-note strong {
     color: var(--ink);
+  }
+
+  /* G-16: permanent, not a temporary banner — same section-head/section-dek
+     chrome as sections 1–3, so it reads as a fixture of the page rather than
+     a dismissible aside. */
+  .gaps-section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 54px 24px 72px;
+    border-top: 1px solid var(--rule);
+  }
+  .gaps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .gap-item {
+    margin: 0;
+    padding: 2px 0 2px 16px;
+    border-left: 2px solid var(--ambar);
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 80ch;
+  }
+  .gap-relates {
+    display: block;
+    margin-top: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--ink-3);
   }
 </style>
