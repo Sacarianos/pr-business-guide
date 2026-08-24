@@ -10,9 +10,11 @@ import {
   emptyAnswers,
   formatMoney,
   hasEnoughAnswers,
+  partitionRecurring,
   visibleQuestions,
   type Answers,
   type Content,
+  type StepResult,
 } from '../lib/decision-tree.ts';
 import { sourcingLabel } from '../lib/sourcing-label.ts';
 
@@ -25,10 +27,19 @@ const emptyStateEl = document.querySelector<HTMLElement>('[data-empty-state]');
 const resultsEl = document.querySelector<HTMLElement>('[data-results]');
 const glanceEl = document.querySelector<HTMLElement>('[data-glance]');
 const sequenceEl = document.querySelector<HTMLElement>('[data-sequence]');
+const recurringEl = document.querySelector<HTMLElement>('[data-recurring]');
 const incentivesEl = document.querySelector<HTMLElement>('[data-incentives]');
 const startOverBtn = document.querySelector<HTMLButtonElement>('[data-start-over]');
 
-if (!questionsEl || !emptyStateEl || !resultsEl || !glanceEl || !sequenceEl || !incentivesEl) {
+if (
+  !questionsEl ||
+  !emptyStateEl ||
+  !resultsEl ||
+  !glanceEl ||
+  !sequenceEl ||
+  !recurringEl ||
+  !incentivesEl
+) {
   throw new Error('tool.ts: expected page markup is missing');
 }
 
@@ -88,6 +99,23 @@ startOverBtn?.addEventListener('click', () => {
   render();
 });
 
+// Shared by the one-time sequence and the recurring-obligations list
+// (G-13): same card shape either way, differing only in what marks a step's
+// position — a sequence number for the one-time list, the recurring badge
+// (↻) for the other, since recurring duties have no "step N" to be.
+function stepCard(s: StepResult, mark: string): string {
+  return `
+    <li class="step" data-severity="${s.severity ?? ''}">
+      <span class="step-num">${mark}</span>
+      <div class="step-body">
+        <h4 class="step-title">${escapeHtml(s.title.es)}</h4>
+        <p class="step-meta">${escapeHtml(s.agency.es)} · ${escapeHtml(s.timing.es)} · ${escapeHtml(s.cost.es)}</p>
+        ${s.blocks ? `<p class="step-blocks">→ Bloquea: <b>${escapeHtml(s.blocks.es)}</b></p>` : ''}
+        <p class="step-note">${s.note.es}</p>
+      </div>
+    </li>`;
+}
+
 function render(): void {
   const visible = new Set(visibleQuestions(content.questions, answers).map((q) => q.id));
   for (const block of questionsEl!.querySelectorAll<HTMLElement>('[data-question]')) {
@@ -108,6 +136,13 @@ function render(): void {
   const result = buildSequence(answers, content);
   const { patente, municipio } = result;
 
+  // Recurring obligations are ongoing duties, not steps in a one-time
+  // sequence (G-13's split — see partitionRecurring in decision-tree.ts for
+  // why). `oneTime.length`, not `result.steps.length`, is what "steps in
+  // your sequence" now means, since the recurring ones moved to their own
+  // section below.
+  const { oneTime, recurring } = partitionRecurring(result.steps);
+
   // G-09: a rate that could not be confirmed "must surface as uncertain
   // rather than being rendered as plain numbers" — so the mark sits on the
   // figure itself, which is what a reader takes at face value, not only in
@@ -121,7 +156,7 @@ function render(): void {
   glanceEl!.innerHTML = `
     <div class="glance-cell">
       <span class="glance-label">Pasos en tu secuencia</span>
-      <span class="glance-value">${result.steps.length}</span>
+      <span class="glance-value">${oneTime.length}</span>
     </div>
     <div class="glance-cell">
       <span class="glance-label">Incentivos aplicables</span>
@@ -139,20 +174,8 @@ function render(): void {
     </div>
   `;
 
-  sequenceEl!.innerHTML = result.steps
-    .map(
-      (s, i) => `
-    <li class="step" data-severity="${s.severity ?? ''}">
-      <span class="step-num">${i + 1}</span>
-      <div class="step-body">
-        <h4 class="step-title">${escapeHtml(s.title.es)}</h4>
-        <p class="step-meta">${escapeHtml(s.agency.es)} · ${escapeHtml(s.timing.es)} · ${escapeHtml(s.cost.es)}</p>
-        ${s.blocks ? `<p class="step-blocks">→ Bloquea: <b>${escapeHtml(s.blocks.es)}</b></p>` : ''}
-        <p class="step-note">${s.note.es}</p>
-      </div>
-    </li>`,
-    )
-    .join('');
+  sequenceEl!.innerHTML = oneTime.map((s, i) => stepCard(s, String(i + 1))).join('');
+  recurringEl!.innerHTML = recurring.map((s) => stepCard(s, '↻')).join('');
 
   incentivesEl!.innerHTML = result.incentives
     .map(

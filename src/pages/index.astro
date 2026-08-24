@@ -108,6 +108,14 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
               <ol class="sequence" data-sequence></ol>
             </section>
             <section>
+              <h2>Obligaciones recurrentes</h2>
+              <p class="recurring-dek">
+                Estas no son pasos de una sola vez — siguen viniendo mientras el negocio esté
+                abierto, cada una con su propia frecuencia.
+              </p>
+              <ol class="sequence" data-recurring></ol>
+            </section>
+            <section>
               <h2>Incentivos aplicables</h2>
               <div class="incentives" data-incentives></div>
             </section>
@@ -470,6 +478,15 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     list-style: none;
     margin: 0 0 40px;
     padding: 0;
+  }
+  /* Not `.section-dek`: that class's left margin is sized to sit next to a
+     numbered `.section-num` badge (see `.section-head`), which this
+     sub-section inside the results panel doesn't have. */
+  .recurring-dek {
+    font-size: 14px;
+    color: var(--ink-3);
+    margin: 0 0 16px;
+    max-width: 60ch;
   }
   :global(.step) {
     display: flex;

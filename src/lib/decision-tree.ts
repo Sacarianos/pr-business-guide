@@ -367,6 +367,24 @@ function withPatenteEstimate(
   };
 }
 
+// Recurring obligations (monthly IVU, annual CRIM, the semiannual patente,
+// the state's annual fee) read as ongoing duties, not steps in a sequence a
+// reader completes once and moves past — interleaving them with the
+// one-time steps buries that distinction (G-13). This splits an already-
+// built sequence rather than changing what stepIds() produces, so the
+// order within each group still matches the sequence's own ordering; the
+// caller decides how to present the two groups (numbered vs. not, separate
+// sections, etc.).
+export function partitionRecurring(steps: StepResult[]): {
+  oneTime: StepResult[];
+  recurring: StepResult[];
+} {
+  const oneTime: StepResult[] = [];
+  const recurring: StepResult[] = [];
+  for (const s of steps) (s.recurring ? recurring : oneTime).push(s);
+  return { oneTime, recurring };
+}
+
 export function buildSequence(answers: Answers, content: Content): Result {
   const municipio = answers.muni ? (content.municipios[answers.muni] ?? null) : null;
   const estimate = patente(answers.muni, answers.vol, content.municipios);
