@@ -19,6 +19,7 @@ import {
   emptyAnswers,
   hasEnoughAnswers,
   partitionRecurring,
+  stageBreakdown,
   patente,
   visibleQuestions,
   type Answers,
@@ -319,6 +320,52 @@ describe('question gating and the results threshold', () => {
   test('an answered `driving` does not count while `hiring` is not yes', () => {
     const a = answers({ type: 'retail', entity: 'sole', driving: 'yes' });
     assert.equal(answeredCount(content.questions, a), 2, 'driving is hidden, so it does not count');
+  });
+});
+
+describe('stageBreakdown — the staged question flow (G-28)', () => {
+  test('groups every visible question into an ascending, gapless set of stages', () => {
+    const stages = stageBreakdown(content.questions, emptyAnswers());
+    assert.deepEqual(
+      stages.map((s) => s.stage),
+      [1, 2, 3],
+    );
+    // Nothing is dropped or duplicated by the grouping.
+    const grouped = stages.flatMap((s) => s.questions.map((q) => q.id)).sort();
+    const visible = visibleQuestions(content.questions, emptyAnswers())
+      .map((q) => q.id)
+      .sort();
+    assert.deepEqual(grouped, visible);
+  });
+
+  test('counts answered per stage, and marks a stage complete only when all of its questions are answered', () => {
+    const partial = answers({ type: 'retail', entity: 'llc' });
+    const [one] = stageBreakdown(content.questions, partial);
+    assert.equal(one!.total, 4, 'stage 1 holds type, entity, premises, buildout');
+    assert.equal(one!.answered, 2);
+    assert.equal(one!.complete, false);
+
+    const full = answers({ type: 'retail', entity: 'llc', premises: 'home', buildout: 'no' });
+    const [oneFull] = stageBreakdown(content.questions, full);
+    assert.equal(oneFull!.answered, 4);
+    assert.equal(oneFull!.complete, true);
+  });
+
+  test('`driving` leaves stage 3 entirely while hiring is not yes, so the stage can complete without it', () => {
+    const notHiring = answers({ hiring: 'no', exportsvc: 'no', young: 'no' });
+    const three = stageBreakdown(content.questions, notHiring).find((s) => s.stage === 3)!;
+    assert.ok(
+      !three.questions.some((q) => q.id === 'driving'),
+      'driving is not merely hidden — it is absent from the stage',
+    );
+    assert.equal(three.total, 3, 'hiring, exportsvc, young');
+    assert.equal(three.complete, true, 'stage completes without an answer never shown');
+
+    // Answering hiring=yes pulls driving back into the stage and re-opens it.
+    const hiring = answers({ hiring: 'yes', exportsvc: 'no', young: 'no' });
+    const threeHiring = stageBreakdown(content.questions, hiring).find((s) => s.stage === 3)!;
+    assert.equal(threeHiring.total, 4);
+    assert.equal(threeHiring.complete, false);
   });
 });
 

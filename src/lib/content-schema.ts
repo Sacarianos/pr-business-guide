@@ -79,6 +79,14 @@ export type StepData = z.infer<typeof stepSchema>;
 
 export const questionSchema = z.object({
   order: z.number().int(),
+  // Which group of the staged flow this question belongs to (G-28). Ten
+  // questions shown at once was a wall; three named stages give a reader
+  // somewhere to be. Defaults rather than being required, following
+  // `recurring`'s precedent: a question added without one lands in the
+  // first stage, which is visible immediately and so fails loudly on
+  // sight rather than silently disappearing. The stage *count* is derived
+  // from the data, not fixed here, so adding a fourth needs no code change.
+  stage: z.number().int().positive().default(1),
   label: bilingual,
   hint: bilingual.optional(),
   input: z.enum(['options', 'select', 'number']),

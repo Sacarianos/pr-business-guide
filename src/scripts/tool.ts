@@ -18,7 +18,7 @@ import {
   formatMoney,
   hasEnoughAnswers,
   partitionRecurring,
-  visibleQuestions,
+  stageBreakdown,
   type Answers,
   type Content,
   type StepResult,
@@ -43,6 +43,9 @@ const sequenceEl = document.querySelector<HTMLElement>('[data-sequence]');
 const recurringEl = document.querySelector<HTMLElement>('[data-recurring]');
 const incentivesEl = document.querySelector<HTMLElement>('[data-incentives]');
 const startOverBtn = document.querySelector<HTMLButtonElement>('[data-start-over]');
+const railEl = document.querySelector<HTMLElement>('[data-stage-rail]');
+const prevBtn = document.querySelector<HTMLButtonElement>('[data-stage-prev]');
+const nextBtn = document.querySelector<HTMLButtonElement>('[data-stage-next]');
 
 if (
   !questionsEl ||
@@ -58,6 +61,10 @@ if (
 
 let answers: Answers = emptyAnswers();
 let lang: Lang = currentLang();
+// Which stage the reader is on (G-28). Clamped in showStage() rather than
+// tracked as an index into a fixed list, since `driving` entering or
+// leaving stage 3 changes what stageBreakdown() returns between renders.
+let stage = 1;
 
 // The static strings this island renders that don't come from `content`
 // (which is already bilingual — see decision-tree.ts). Keyed the same way
@@ -81,6 +88,18 @@ const UI_TEXT: Record<string, Record<Lang, string>> = {
   glancePatente: { es: 'Patente estimada', en: 'Estimated patente' },
   blocks: { es: 'Bloquea', en: 'Blocks' },
   consult: { es: 'Consulta con', en: 'Talk to' },
+  stagePrev: { es: 'Atrás', en: 'Back' },
+  stageNext: { es: 'Siguiente', en: 'Next' },
+};
+
+// Stage names are UI chrome, not content — they describe how the form is
+// grouped, not anything about Puerto Rico's law — so they live here rather
+// than in content/*.yaml and stay out of the agent's corpus. Keyed by
+// stage number; a stage with no entry falls back to a bare number.
+const STAGE_NAMES: Record<number, Record<Lang, string>> = {
+  1: { es: 'Tu negocio', en: 'Your business' },
+  2: { es: 'Dónde y cuánto', en: 'Where and how much' },
+  3: { es: 'Gente e incentivos', en: 'People and incentives' },
 };
 
 function escapeHtml(value: string): string {
@@ -130,12 +149,77 @@ for (const block of questionsEl.querySelectorAll<HTMLElement>('[data-question]')
 
 startOverBtn?.addEventListener('click', () => {
   answers = emptyAnswers();
+  stage = 1;
   for (const btn of questionsEl.querySelectorAll('[data-option]')) btn.classList.remove('is-selected');
   for (const select of questionsEl.querySelectorAll('select')) select.value = '';
   for (const input of questionsEl.querySelectorAll<HTMLInputElement>('input[type="number"]'))
     input.value = '';
   render();
 });
+
+function goToStage(next: number): void {
+  const stages = stageBreakdown(content.questions, answers);
+  const first = stages[0]?.stage ?? 1;
+  const last = stages[stages.length - 1]?.stage ?? 1;
+  stage = Math.min(Math.max(next, first), last);
+  render();
+  // Bring the panel back into view: on a phone the question column sits
+  // above a results panel that is often taller than the screen, so
+  // advancing a stage without this can leave the reader looking at
+  // unchanged results with the new questions somewhere off-screen.
+  questionsEl!.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
+prevBtn?.addEventListener('click', () => goToStage(stage - 1));
+nextBtn?.addEventListener('click', () => goToStage(stage + 1));
+
+railEl?.addEventListener('click', (event) => {
+  const target = (event.target as HTMLElement).closest<HTMLElement>('[data-stage-go]');
+  if (target) goToStage(Number(target.dataset.stageGo));
+});
+
+// Draws the progress rail and the back/next controls for the current
+// stage. Every stage stays reachable at any time — the rail's buttons are
+// never disabled — because this is an exploratory tool, not a linear
+// form: a reader who wants to skip ahead to the patente estimate and
+// leave the rest blank is doing something reasonable.
+function renderStages(): void {
+  const stages = stageBreakdown(content.questions, answers);
+  const visibleIds = new Set(
+    stages.find((s) => s.stage === stage)?.questions.map((q) => q.id) ?? [],
+  );
+
+  for (const block of questionsEl!.querySelectorAll<HTMLElement>('[data-question]')) {
+    block.hidden = !visibleIds.has(block.dataset.question!);
+  }
+
+  if (railEl) {
+    railEl.innerHTML = stages
+      .map((s) => {
+        const name = STAGE_NAMES[s.stage]?.[lang] ?? String(s.stage);
+        const state = s.stage === stage ? 'is-current' : s.complete ? 'is-done' : '';
+        return `
+          <button type="button" class="stage-step ${state}" data-stage-go="${s.stage}"
+                  aria-current="${s.stage === stage ? 'step' : 'false'}">
+            <span class="stage-num">${s.complete && s.stage !== stage ? '✓' : s.stage}</span>
+            <span class="stage-name">${escapeHtml(name)}</span>
+            <span class="stage-count">${s.answered}/${s.total}</span>
+          </button>`;
+      })
+      .join('');
+  }
+
+  const first = stages[0]?.stage ?? 1;
+  const last = stages[stages.length - 1]?.stage ?? 1;
+  if (prevBtn) {
+    prevBtn.hidden = stage <= first;
+    prevBtn.textContent = UI_TEXT.stagePrev![lang];
+  }
+  if (nextBtn) {
+    nextBtn.hidden = stage >= last;
+    nextBtn.textContent = UI_TEXT.stageNext![lang];
+  }
+}
 
 // G-19: re-labels the question panel's static text from `content` (already
 // bilingual) plus UI_TEXT's `data-i18n` strings. Kept separate from
@@ -241,9 +325,12 @@ function stepCard(s: StepResult, mark: string): string {
 }
 
 function render(): void {
-  const visible = new Set(visibleQuestions(content.questions, answers).map((q) => q.id));
+  // renderStages() owns which question blocks are shown (G-28) — it hides
+  // everything outside the current stage, which subsumes the per-question
+  // `driving` filter this loop used to apply, since stageBreakdown() is
+  // itself built on visibleQuestions().
+  renderStages();
   for (const block of questionsEl!.querySelectorAll<HTMLElement>('[data-question]')) {
-    block.hidden = !visible.has(block.dataset.question!);
     for (const btn of block.querySelectorAll<HTMLButtonElement>('[data-option]')) {
       btn.classList.toggle('is-selected', readAnswer(block.dataset.question!) === btn.dataset.option);
     }

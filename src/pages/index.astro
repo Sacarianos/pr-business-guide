@@ -166,6 +166,12 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
           strings tool.ts swaps by key (src/scripts/tool.ts's UI_TEXT). */
         }
         <div class="questions" data-questions>
+          {/* G-28: the progress rail. Rendered client-side by
+              src/scripts/tool.ts, since which stage is current and how many
+              of its questions are answered are both runtime state. Server
+              output is an empty nav, so a reader with no JS still gets
+              every question below it (the blocks start unhidden). */}
+          <nav class="stage-rail" data-stage-rail aria-label="Progreso / Progress"></nav>
           {
             content.questions.map((q) => (
               <div class="question" data-question={q.id}>
@@ -206,6 +212,10 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
               </div>
             ))
           }
+          <div class="stage-nav">
+            <button type="button" class="stage-btn" data-stage-prev hidden>Atrás</button>
+            <button type="button" class="stage-btn is-primary" data-stage-next>Siguiente</button>
+          </div>
           <button type="button" class="start-over" data-start-over data-i18n="startOver">
             Empezar de nuevo
           </button>
@@ -696,6 +706,101 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     padding-right: 4px;
   }
   .question[hidden] {
+    display: none;
+  }
+
+  /* G-28: the progress rail. Vertical rather than the horizontal
+     breadcrumb the brief sketched — the question column is 330px, which
+     three named stages plus their counts will not fit across without
+     truncating the names into uselessness. */
+  .stage-rail {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--rule-soft);
+    border: 1px solid var(--rule);
+    margin-bottom: 4px;
+  }
+  .stage-step {
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border: none;
+    background: var(--surface);
+    color: var(--ink-3);
+    font-family: var(--font-body);
+    font-size: var(--fs-small);
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+  }
+  .stage-step:hover {
+    color: var(--ink);
+  }
+  .stage-step:focus-visible {
+    outline: 2px solid var(--sello);
+    outline-offset: -2px;
+  }
+  .stage-step.is-current {
+    background: var(--sello-tint);
+    color: var(--ink);
+  }
+  .stage-step.is-done {
+    color: var(--ink-2);
+  }
+  .stage-num {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    font-weight: 600;
+    text-align: center;
+    color: var(--ink-3);
+  }
+  .stage-step.is-current .stage-num,
+  .stage-step.is-done .stage-num {
+    color: var(--sello);
+  }
+  .stage-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+  .stage-count {
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-3);
+  }
+
+  .stage-nav {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .stage-btn {
+    font-family: var(--font-display);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    padding: 10px 18px;
+    border: 1.5px solid var(--rule);
+    background: var(--surface);
+    color: var(--ink-2);
+    cursor: pointer;
+  }
+  .stage-btn.is-primary {
+    background: var(--sello);
+    border-color: var(--sello);
+    color: var(--on-sello);
+    margin-left: auto;
+  }
+  .stage-btn:hover {
+    border-color: var(--sello);
+  }
+  .stage-btn:focus-visible {
+    outline: 2px solid var(--sello);
+    outline-offset: 2px;
+  }
+  .stage-btn[hidden] {
     display: none;
   }
   .question-head {

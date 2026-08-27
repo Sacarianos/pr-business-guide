@@ -8,6 +8,7 @@
 
 type:
   order: 1
+  stage: 1
   label:
     es: "¿Qué vas a abrir?"
     en: "What are you opening?"
@@ -24,6 +25,7 @@ type:
 
 entity:
   order: 2
+  stage: 1
   label:
     es: "Forma legal"
     en: "Entity form"
@@ -98,6 +100,7 @@ entity:
 
 premises:
   order: 3
+  stage: 1
   label:
     es: "¿Dónde vas a operar?"
     en: "Where will you operate?"
@@ -155,6 +158,7 @@ premises:
 
 buildout:
   order: 4
+  stage: 1
   label:
     es: "¿Vas a remodelar o hacer buildout?"
     en: "Will you remodel or build out?"
@@ -190,6 +194,7 @@ buildout:
 
 muni:
   order: 5
+  stage: 2
   label:
     es: "Municipio"
     en: "Municipality"
@@ -250,6 +255,7 @@ muni:
 
 vol:
   order: 6
+  stage: 2
   label:
     es: "Volumen bruto estimado del primer año"
     en: "Expected first-year gross volume"
@@ -289,6 +295,7 @@ vol:
 
 hiring:
   order: 7
+  stage: 3
   label:
     es: "¿Vas a contratar empleados?"
     en: "Hiring employees?"
@@ -301,6 +308,7 @@ hiring:
 
 driving:
   order: 8
+  stage: 3
   label:
     es: "¿Alguien va a conducir como parte del trabajo?"
     en: "Will anyone drive as part of the job?"
@@ -313,6 +321,7 @@ driving:
 
 exportsvc:
   order: 9
+  stage: 3
   label:
     es: "¿Le vendes a clientes fuera de PR sin nexo local?"
     en: "Do you sell to clients outside PR with no local nexus?"
@@ -353,6 +362,7 @@ exportsvc:
 
 young:
   order: 10
+  stage: 3
   label:
     es: "¿Tienes entre 16 y 35 años con cuarto año?"
     en: "Are you 16–35 with a high school diploma?"
