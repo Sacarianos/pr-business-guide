@@ -18,6 +18,8 @@ If the agent is not working by roughly day ten, M1 ships alone and the agent is 
 
 **Amendment, 2026-08-07 (later the same day) — design handoff arrived.** A full design reference landed outside this backlog's own blocked Claude Design attempt, saved at [`design/handoff/`](../design/handoff/). It's a working prototype, not just visuals: a bilingual dictionary, a `patente()` calculator, a `build()` decision-tree function, and an SVG process diagram, all built on real content from the research document. This turns several tickets below from "design from scratch" into "port an existing reference" — see the per-ticket notes. It does not cover everything: G-15's `practice.contradicted` treatment has no design yet, and the countdown originally specified in G-14 was deliberately cut in the handoff (confirmed by Jaime — see G-14's note).
 
+**Amendment, 2026-08-24, redesign.** Jaime flagged the page as looking generic and hard to use. Measuring it found eighteen distinct font sizes and two color tokens failing WCAG AA contrast in light mode. All ten questions also sat on screen at once. The fix went in as four commits on one branch. The first two are styling with no ticket of their own: a shared page width so the masthead lines up with the sections below it, then a new palette, a seven-step type scale, and a typeface set with the serif body face removed. The other two changed what a reader can do, so they're tracked as G-27 and G-28 below.
+
 ## Labels
 
 Carried from [README.md](README.md): `needs-verification`, `research`, `blocked-external`. Added for GitHub: `content`, `logic`, `ui`, `i18n`, `infra`, `test`, `guardrail`.
@@ -56,6 +58,8 @@ Carried from [README.md](README.md): `needs-verification`, `research`, `blocked-
 | G-24 | | Deploy to GitHub Pages | `infra` | G-04 |
 | G-25 | | Privacy footer stating what is and is not logged | `ui` | A-09 |
 | G-26 | | Design sync: push the page shell to a Claude Design project for visual iteration | `ui` `blocked-external` | G-01 |
+| G-27 | | Inline explainers for the terms readers guess wrong | `ui` `content` | G-08 |
+| G-28 | | Staged question flow with a progress rail | `ui` `logic` | G-08 |
 
 ### Notes on specific items
 
@@ -120,6 +124,10 @@ Carried from [README.md](README.md): `needs-verification`, `research`, `blocked-
 **G-23** — Blocked on the 24th by design. The format ships; the first correction arrives at the meeting.
 
 **G-26** — Blocked, 2026-08-07. The intended flow: push a self-contained preview of the page shell to a Claude Design project as a `design/` component library kept in the repo, edit visually, pull changes back and translate into `src/pages/index.astro` by hand. Blocked because this environment's Claude Design authorization is a separate identity from Jaime's `claude.ai` account — projects created on either side are invisible to the other, and `/design-login` (the fix) isn't available here. `design/page-shell/index.html` and the orphaned `pr-business-guide` project are stranded artifacts of the attempt; the directory stays as a placeholder in case a linkable session becomes available later. Visual work proceeds as plain CSS against the Astro dev server instead, unblocked and not tracked as a separate ticket.
+
+**G-27.** Added 2026-08-24 during the redesign, see the amendment at the top. Six questions get an explainer that starts closed: entity form, business volume, premises, buildout, municipality, and the Act 60 nexus test. The entity and premises options also carry one line on what picking them means. Modeled on the GOV.UK `details` component. Hover tooltips were ruled out because they don't work on touch screens and screen readers skip them. The copy comes from the research document, so it repeats claims already sourced elsewhere and carries no sourcing mark of its own. Schema is `help` and per-option `detail` on `questionSchema` in `src/lib/content-schema.ts`.
+
+**G-28.** Added 2026-08-24 during the redesign. The ten questions group into three named stages, shown one at a time, with a rail that counts answers per stage. GOV.UK research recommends one question per page. That research covers linear forms where nothing happens until submit. This tool builds the reader's sequence live as they answer, and splitting it across pages would lose that. Three stages keep the live results and still break up the wall of questions. Every stage stays reachable from the rail at any time, since a reader who skips ahead to the patente estimate is doing something reasonable. The grouping is `stageBreakdown()` in `src/lib/decision-tree.ts`, tested on the same seam as the rest of G-06. It builds on `visibleQuestions()`, so `driving` drops out of stage 3's count while `hiring` is anything but yes.
 
 ---
 
