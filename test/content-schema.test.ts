@@ -13,6 +13,7 @@ import {
   bilingual,
   claimFields,
   stepSchema,
+  questionSchema,
   municipioSchema,
   incentiveSchema,
   gapSchema,
@@ -110,6 +111,33 @@ test('`professional` is optional and, when present, is either cpa or attorney (G
   assert.doesNotThrow(() => incentiveSchema.parse({ ...validIncentive, professional: 'attorney' }));
   assert.doesNotThrow(() => entityFormSchema.parse({ ...validEntity, professional: 'cpa' }));
   assert.throws(() => stepSchema.parse({ ...validStep, professional: 'notary' }));
+});
+
+test('a question carries optional `help` and per-option `detail`, both bilingual (G-27)', () => {
+  const bare = {
+    order: 1,
+    label: es_en,
+    input: 'options',
+    options: [{ value: 'llc', label: es_en }],
+  };
+  // Both are additive: every question written before G-27 still parses.
+  assert.doesNotThrow(() => questionSchema.parse(bare));
+  assert.equal(questionSchema.parse(bare).help, undefined);
+
+  assert.doesNotThrow(() =>
+    questionSchema.parse({
+      ...bare,
+      help: { summary: es_en, body: es_en },
+      options: [{ value: 'llc', label: es_en, detail: es_en }],
+    }),
+  );
+
+  // A half-written explainer fails loudly rather than rendering a blank
+  // expander — same reason `bilingual` requires both keys everywhere else.
+  assert.throws(() => questionSchema.parse({ ...bare, help: { summary: es_en } }));
+  assert.throws(() =>
+    questionSchema.parse({ ...bare, help: { summary: { es: 'solo' }, body: es_en } }),
+  );
 });
 
 test('bilingual fields require both es and en', () => {

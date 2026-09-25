@@ -85,6 +85,42 @@ export function answeredCount(questions: Content['questions'], answers: Answers)
   return visibleQuestions(questions, answers).filter((q) => isAnswered(answers, q.id)).length;
 }
 
+export type StageSummary = {
+  stage: number;
+  questions: Content['questions'];
+  answered: number;
+  total: number;
+  complete: boolean;
+};
+
+// The staged flow (G-28): ten questions at once was a wall with no sense
+// of progress or completion. Grouping is derived from the data rather than
+// a fixed list of three, so adding a stage in content/questions.yaml needs
+// no change here.
+//
+// Built on visibleQuestions() rather than the raw list, which is what makes
+// `driving` behave: while `hiring` is anything but yes, `driving` is not
+// merely hidden but absent from its stage's totals, so stage 3 can read
+// complete without an answer the reader was never shown.
+export function stageBreakdown(
+  questions: Content['questions'],
+  answers: Answers,
+): StageSummary[] {
+  const visible = visibleQuestions(questions, answers);
+  const byStage = new Map<number, Content['questions']>();
+  for (const q of visible) {
+    const list = byStage.get(q.stage) ?? [];
+    list.push(q);
+    byStage.set(q.stage, list);
+  }
+  return [...byStage.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([stage, qs]) => {
+      const answered = qs.filter((q) => isAnswered(answers, q.id)).length;
+      return { stage, questions: qs, answered, total: qs.length, complete: answered === qs.length };
+    });
+}
+
 // Results appear once ≥3 questions are answered — not on a fixed schedule,
 // and not gated behind all 10 (design/handoff README, "Results assembly").
 export function hasEnoughAnswers(questions: Content['questions'], answers: Answers): boolean {

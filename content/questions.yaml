@@ -8,6 +8,7 @@
 
 type:
   order: 1
+  stage: 1
   label:
     es: "¿Qué vas a abrir?"
     en: "What are you opening?"
@@ -24,39 +25,166 @@ type:
 
 entity:
   order: 2
+  stage: 1
   label:
     es: "Forma legal"
     en: "Entity form"
+  hint:
+    es: "Define si tus bienes personales responden por el negocio, qué presentas, y cuánto pagas cada año."
+    en: "Sets whether your personal assets answer for the business, what you file, and what you pay yearly."
+  help:
+    summary:
+      es: "¿Cuál me conviene?"
+      en: "Which one is right for me?"
+    body:
+      es: >-
+        <b>La pregunta real es si tus bienes personales responden por el
+        negocio.</b> Con un DBA, sí: si el negocio se endeuda o lo demandan,
+        tu casa y tus cuentas quedan expuestas. Con una LLC o corporación,
+        no — esa pared es por lo que la gente paga.<br><br>
+        El propio Departamento de Estado lo dice claro: <b>no hace falta
+        incorporarse</b> para operar en Puerto Rico. La gente se incorpora
+        para proteger lo suyo, no porque la ley lo exija. Si vas a cargar
+        inventario, firmar un lease, o emplear a alguien, esa pared casi
+        siempre vale los par de cientos de pesos que cuesta.<br><br>
+        <b>Entre LLC y corporación:</b> protegen igual. La LLC tiene menos
+        formalidad y es lo que casi todo negocio pequeño escoge. La
+        corporación existe para emitir acciones — si no vas a levantar
+        capital, es papeleo de más.<br><br>
+        <b>La trampa de la LLC en Puerto Rico:</b> tributa como corporación
+        por defecto, al revés de como funciona a nivel federal, y la
+        elección de PR va aparte de la federal. Equivocarse significa
+        presentar la planilla que no es. Esta decisión la debe llevar un CPA
+        de Puerto Rico.
+      en: >-
+        <b>The real question is whether your personal assets answer for the
+        business.</b> With a DBA they do: if the business takes on debt or
+        gets sued, your home and your accounts are exposed. With an LLC or
+        corporation they do not — that wall is what people are paying
+        for.<br><br>
+        The Departamento de Estado's own guidance is blunt: <b>incorporating
+        is not required</b> to operate in Puerto Rico. People incorporate to
+        protect what is theirs, not because the law demands it. If you will
+        carry inventory, sign a lease, or employ anyone, that wall is
+        usually worth the few hundred dollars it costs.<br><br>
+        <b>Between an LLC and a corporation:</b> both shield equally. An LLC
+        carries less formality and is what nearly every small business
+        picks. A corporation exists to issue shares — if you are not raising
+        capital, it is extra paperwork.<br><br>
+        <b>The Puerto Rico LLC trap:</b> it is taxed as a corporation by
+        default, the opposite of the US federal default, and the PR election
+        is separate from the federal one. Getting it wrong means filing the
+        wrong return. Take this decision to a Puerto Rico CPA.
   input: options
   options:
     - value: llc
       label: { es: "LLC", en: "LLC" }
+      detail:
+        es: "Una pared entre el negocio y tu casa. Es lo que casi todo negocio pequeño escoge."
+        en: "A wall between the business and your home. What nearly every small business picks."
     - value: corp
       label: { es: "Corporación", en: "Corporation" }
+      detail:
+        es: "La misma protección, con más formalidad. Existe para emitir acciones."
+        en: "Same protection, more formality. It exists to issue shares."
     - value: sole
       label: { es: "Individuo / DBA", en: "Sole proprietor / DBA" }
+      detail:
+        es: "No presentas nada en el Departamento de Estado, y <b>tus bienes personales responden</b>."
+        en: "Nothing is filed with the Departamento de Estado, and <b>your personal assets are exposed</b>."
     - value: unsure
       label: { es: "No estoy seguro", en: "Not sure yet" }
+      detail:
+        es: "Sigue contestando. La comparación completa está más abajo."
+        en: "Keep answering. A full side-by-side comparison sits further down."
 
 premises:
   order: 3
+  stage: 1
   label:
     es: "¿Dónde vas a operar?"
     en: "Where will you operate?"
+  help:
+    summary:
+      es: "¿Por qué importa tanto?"
+      en: "Why does this matter so much?"
+    body:
+      es: >-
+        <b>Esta respuesta cambia toda la ruta de permisos.</b> Un local
+        comercial te lleva por zonificación, Permiso Único e inspección de
+        Bomberos — la parte más larga del proceso, semanas o meses.<br><br>
+        <b>Desde casa, la ley está genuinamente sin resolver.</b> El
+        Art. 8.4A de la Ley 161-2009 alcanza a «todo negocio nuevo o
+        existente», pero el encuadre de OGPe habla de usos no residenciales.
+        Quien trabaja desde un cuarto, sin clientes entrando ni rótulo, cae
+        justo en el medio. No se pudo resolver desde ninguna fuente
+        primaria: llama a OGPe antes de asumir para un lado o para el
+        otro.<br><br>
+        <b>Móvil o pop-up</b> tiene su propia vía: patente provisional en
+        cada municipio donde vendas, y reporte de volumen a las 24 horas de
+        terminar la actividad.
+      en: >-
+        <b>This answer changes the whole permit path.</b> Commercial
+        premises take you through zoning, the Permiso Único and a fire
+        inspection — the longest part of the process, weeks or
+        months.<br><br>
+        <b>Working from home is genuinely unresolved in the statute.</b>
+        Ley 161-2009 Art. 8.4A reaches "todo negocio nuevo o existente" —
+        every business, full stop — but OGPe's own framing is about
+        non-residential uses. Someone working from a spare room with no
+        client traffic and no signage sits precisely in that gap. It could
+        not be resolved from any primary source: call OGPe before assuming
+        either way.<br><br>
+        <b>Mobile or pop-up</b> has its own track: a provisional patente in
+        every municipality where you sell, plus a volume report 24 hours
+        after the activity ends.
   input: options
   options:
     - value: commercial
       label: { es: "Local comercial", en: "Commercial premises" }
+      detail:
+        es: "La ruta más larga: zonificación, Permiso Único, Bomberos."
+        en: "The longest path: zoning, Permiso Único, fire inspection."
     - value: home
       label: { es: "Mi casa, sin clientes", en: "My home, no client traffic" }
+      detail:
+        es: "Si necesitas Permiso Único es una <b>pregunta abierta</b> en la ley."
+        en: "Whether you need a Permiso Único is an <b>open question</b> in the statute."
     - value: mobile
       label: { es: "Móvil / pop-up", en: "Mobile / pop-up" }
+      detail:
+        es: "Patente provisional por municipio, y reporte de volumen a las 24 horas."
+        en: "Provisional patente per municipality, plus a volume report after 24 hours."
 
 buildout:
   order: 4
+  stage: 1
   label:
     es: "¿Vas a remodelar o hacer buildout?"
     en: "Will you remodel or build out?"
+  help:
+    summary:
+      es: "¿Qué cuenta como buildout?"
+      en: "What counts as a buildout?"
+    body:
+      es: >-
+        Cualquier obra que altere el local: tumbar o levantar paredes, mover
+        plomería o electricidad, cambiar la fachada, o instalar una cocina.
+        Pintura y muebles no cuentan.<br><br>
+        <b>Importa porque activa un permiso de construcción</b>, que va
+        antes del permiso de uso y del Permiso Único, y suele ser la partida
+        más larga de todo el calendario — semanas o meses, con costo
+        variable. Normalmente lo lleva el arquitecto o ingeniero de récord,
+        no el dueño.
+      en: >-
+        Any work that alters the space: taking down or putting up walls,
+        moving plumbing or electrical, changing the storefront, or
+        installing a kitchen. Paint and furniture do not count.<br><br>
+        <b>It matters because it triggers a construction permit</b>, which
+        comes before the use permit and the Permiso Único, and is usually
+        the longest line item on the whole schedule — weeks to months, at a
+        variable cost. An architect or engineer of record normally drives
+        it, not the owner.
   input: options
   options:
     - value: "yes"
@@ -66,12 +194,42 @@ buildout:
 
 muni:
   order: 5
+  stage: 2
   label:
     es: "Municipio"
     en: "Municipality"
   hint:
     es: "Cambia tu tasa de patente y también si radicas los permisos en OGPe o en el municipio."
     en: "Changes both your patente rate and whether you file permits with OGPe or the municipality."
+  help:
+    summary:
+      es: "¿Qué cambia de un municipio a otro?"
+      en: "What changes from one municipality to another?"
+    body:
+      es: >-
+        Dos cosas, y las dos cuestan dinero o tiempo.<br><br>
+        <b>La tasa de la patente.</b> El techo estatutario es 0.50% del
+        volumen (Art. 7.202), pero cada municipio fija la suya por ordenanza
+        y varían bastante. San Juan exime los primeros $12,500 y luego cobra
+        $25 fijos hasta $100,000; Peñuelas se queda por debajo del techo.
+        Donde no se pudo confirmar la tasa contra una fuente primaria, el
+        estimado sale marcado.<br><br>
+        <b>Dónde presentas los permisos.</b> Los municipios con jerarquía
+        delegada procesan su propio Permiso Único; el resto va por OGPe.
+        Proceso distinto, oficina distinta, calendario distinto. La lista
+        disponible es de 2016 y casi seguro está incompleta.
+      en: >-
+        Two things, and both cost either money or time.<br><br>
+        <b>The patente rate.</b> The statutory ceiling is 0.50% of volume
+        (Art. 7.202), but each municipality sets its own by ordinance and
+        they vary quite a bit. San Juan exempts the first $12,500 then
+        charges a flat $25 up to $100,000; Peñuelas stays below the ceiling.
+        Where a rate could not be confirmed against a primary source, the
+        estimate carries a mark.<br><br>
+        <b>Where you file permits.</b> Municipalities holding delegated
+        hierarchy process their own Permiso Único; the rest go through OGPe.
+        Different process, different office, different schedule. The
+        available list dates from 2016 and is almost certainly incomplete.
   input: select
   options:
     - value: sanjuan
@@ -97,16 +255,47 @@ muni:
 
 vol:
   order: 6
+  stage: 2
   label:
     es: "Volumen bruto estimado del primer año"
     en: "Expected first-year gross volume"
   hint:
     es: "Volumen de negocios, no ganancia. Determina la patente, la exención del CRIM y los umbrales de auditoría."
     en: "Business volume, not profit. Drives the patente, the CRIM exemption, and audit thresholds."
+  help:
+    summary:
+      es: "¿Volumen o ganancia?"
+      en: "Volume or profit?"
+    body:
+      es: >-
+        <b>Volumen es todo lo que vende el negocio, no lo que te queda.</b>
+        Es la confusión más cara de esta página: si pones tu ganancia aquí,
+        el estimado de patente sale mal, y la prueba de la exención del CRIM
+        también.<br><br>
+        Esta cifra mueve tres cosas: la <b>patente municipal</b> (un por
+        ciento sobre el volumen, nunca sobre la ganancia), la <b>exención de
+        $50,000 del CRIM</b> (que pide volumen neto de $150,000 o menos), y
+        el umbral de <b>$3,000,000</b> sobre el cual hacen falta estados
+        financieros auditados.<br><br>
+        Si aún no has abierto, pon tu estimado del primer año. Un número
+        aproximado sirve — lo que importa es el orden de magnitud.
+      en: >-
+        <b>Volume is everything the business sells, not what you keep.</b>
+        This is the most expensive mix-up on the page: put your profit here
+        and the patente estimate comes out wrong, along with the CRIM
+        exemption test.<br><br>
+        This figure drives three things: the <b>patente municipal</b> (a
+        percentage on volume, never on profit), the <b>$50,000 CRIM
+        exemption</b> (which asks for net volume of $150,000 or less), and
+        the <b>$3,000,000</b> threshold above which audited financial
+        statements are required.<br><br>
+        If you have not opened yet, put your first-year estimate. A rough
+        number works — order of magnitude is what matters.
   input: number
 
 hiring:
   order: 7
+  stage: 3
   label:
     es: "¿Vas a contratar empleados?"
     en: "Hiring employees?"
@@ -119,6 +308,7 @@ hiring:
 
 driving:
   order: 8
+  stage: 3
   label:
     es: "¿Alguien va a conducir como parte del trabajo?"
     en: "Will anyone drive as part of the job?"
@@ -131,9 +321,38 @@ driving:
 
 exportsvc:
   order: 9
+  stage: 3
   label:
     es: "¿Le vendes a clientes fuera de PR sin nexo local?"
     en: "Do you sell to clients outside PR with no local nexus?"
+  help:
+    summary:
+      es: "¿Qué cuenta como «sin nexo local»?"
+      en: "What counts as no local nexus?"
+    body:
+      es: >-
+        <b>La prueba es mucho más estrecha de lo que la gente cree.</b> El
+        Capítulo 3 de la Ley 60 se sostiene enteramente sobre servir a
+        personas <b>fuera de Puerto Rico que no tengan nexo aquí</b>. Si tu
+        cliente vive aquí, tiene oficina aquí, o el servicio beneficia una
+        operación local, hay nexo y no cualifica.<br><br>
+        Una tienda o un restaurante que le vende a gente que vive aquí tiene
+        nexo por definición. Contesta que sí solo si le facturas a clientes
+        de afuera cuyo negocio no toca la isla.<br><br>
+        Al que te llene el plan de negocios con la Ley 60, algo te está
+        vendiendo. Los incentivos reales para un negocio de esta escala son
+        los municipales y los de PYME.
+      en: >-
+        <b>The test is far narrower than people assume.</b> Act 60
+        Chapter 3 rests entirely on serving people <b>outside Puerto Rico
+        who have no nexus here</b>. If your client lives here, keeps an
+        office here, or the service benefits a local operation, there is
+        nexus and it does not qualify.<br><br>
+        A store or a restaurant selling to people who live here has nexus by
+        definition. Answer yes only if you invoice clients abroad whose
+        business does not touch the island.<br><br>
+        Anyone padding your business plan with Act 60 is selling something.
+        The real incentives at this scale are the municipal and PYME ones.
   input: options
   options:
     - value: "yes"
@@ -143,6 +362,7 @@ exportsvc:
 
 young:
   order: 10
+  stage: 3
   label:
     es: "¿Tienes entre 16 y 35 años con cuarto año?"
     en: "Are you 16–35 with a high school diploma?"

@@ -21,8 +21,8 @@
 // the same generic mechanism used for the question panel's aria-labels.
 import DiagramLane, { type Bilingual, type Node } from './DiagramLane.astro';
 
-const MONO = "'IBM Plex Mono', monospace";
-const SERIF = "'Newsreader', serif";
+const MONO = 'var(--font-mono)';
+const SERIF = 'var(--font-body)';
 
 const ariaEs =
   'Diagrama de flujo: una cadena de identidad legal y contributiva y una cadena de local corren en paralelo y desembocan en el Permiso Único, que consolida cinco certificaciones y condiciona la apertura. Las obligaciones municipales y patronales se ramifican en paralelo y no bloquean la apertura.';
@@ -119,7 +119,7 @@ const timelineCaptions: (Bilingual & { x: number })[] = [
   aria-label={ariaEs}
   data-aria-es={ariaEs}
   data-aria-en={ariaEn}
-  style={`display:block;min-width:960px;width:100%;height:auto;color:var(--ink);font-family:'Libre Franklin', sans-serif;`}
+  style={`display:block;min-width:960px;width:100%;height:auto;color:var(--ink);font-family:var(--font-display);`}
 >
   <defs>
     <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
