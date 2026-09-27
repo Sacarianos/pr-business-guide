@@ -338,7 +338,16 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
               <h3 class="route-heading" data-route-heading>Tu negocio</h3>
               <p class="route-subline" data-route-subline></p>
             </div>
-            <div class="panel-actions" data-route-actions></div>
+            <div class="panel-actions" data-route-actions hidden>
+              <button type="button" class="action-btn" data-copy-link data-i18n="copyLink">Copiar enlace</button>
+              <button type="button" class="action-btn" data-print data-i18n="print">Imprimir</button>
+            </div>
+          </div>
+          {/* G-35: where "Copiar enlace" reports back. If the clipboard write
+              is refused, the link appears here, selected, to copy by hand. */}
+          <div class="copy-feedback">
+            <p class="copy-status" data-copy-status aria-live="polite"></p>
+            <input class="copy-fallback" type="text" readonly data-copy-fallback hidden aria-label="Enlace / Link" />
           </div>
           {/* Before three answers the panel still shows what's coming: the
               five phases the route will fill, muted. */}
@@ -2038,10 +2047,109 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     }
   }
 
+  .panel-actions[hidden] {
+    display: none;
+  }
+  .action-btn {
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink-2);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .action-btn:hover {
+    border-color: var(--ink-3);
+    color: var(--ink);
+  }
+  .action-btn:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+  .copy-feedback {
+    background: var(--surface);
+  }
+  .copy-status {
+    margin: 0;
+    padding: 0 28px;
+    font-size: 13px;
+    color: var(--ok);
+  }
+  .copy-status:not(:empty) {
+    padding-bottom: 12px;
+  }
+  .copy-fallback {
+    display: block;
+    width: calc(100% - 56px);
+    height: 40px;
+    margin: 0 28px 14px;
+    padding: 0 12px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .copy-fallback[hidden] {
+    display: none;
+  }
+
+  /* G-35: printing the route. Everything but the route panel and the
+     incentives drops out, and every stop prints expanded, since paper
+     has no toggles. */
+  @media print {
+    :global(.top),
+    :global([data-hero]),
+    :global(.tool-head),
+    :global([data-questions]),
+    :global([data-route-actions]),
+    :global(.copy-feedback),
+    :global(#proceso),
+    :global(#entidades),
+    :global(#limites),
+    :global(.footer),
+    :global(.stop-toggle) {
+      display: none !important;
+    }
+    :global([data-stop-detail]) {
+      display: block !important;
+    }
+    :global(.tool),
+    :global(.incentives-band) {
+      padding: 0 !important;
+      border: 0 !important;
+    }
+    :global(.tool-grid) {
+      display: block !important;
+    }
+    :global(.panel) {
+      border: 0 !important;
+    }
+    :global(.stop),
+    :global(.callout),
+    :global(.card) {
+      break-inside: avoid;
+    }
+  }
+
   @media (max-width: 720px) {
     .panel-head {
       flex-direction: column;
       padding: 18px 16px;
+    }
+    .action-btn {
+      height: 44px;
+    }
+    .copy-status {
+      padding: 0 16px;
+    }
+    .copy-fallback {
+      width: calc(100% - 32px);
+      margin: 0 16px 14px;
     }
     .route-empty {
       padding: 4px 16px 20px;

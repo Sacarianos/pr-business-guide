@@ -52,6 +52,11 @@ const patenteNoteEl = document.querySelector<HTMLElement>('[data-patente-note]')
 const zonesEl = document.querySelector<HTMLElement>('[data-zones]');
 const incentivesEl = document.querySelector<HTMLElement>('[data-incentives]');
 const incentivesBandEl = document.querySelector<HTMLElement>('[data-incentives-band]');
+const actionsEl = document.querySelector<HTMLElement>('[data-route-actions]');
+const copyBtn = document.querySelector<HTMLButtonElement>('[data-copy-link]');
+const printBtn = document.querySelector<HTMLButtonElement>('[data-print]');
+const copyStatusEl = document.querySelector<HTMLElement>('[data-copy-status]');
+const copyFallbackEl = document.querySelector<HTMLInputElement>('[data-copy-fallback]');
 const startOverBtn = document.querySelector<HTMLButtonElement>('[data-start-over]');
 const railEl = document.querySelector<HTMLElement>('[data-stage-rail]');
 const prevBtn = document.querySelector<HTMLButtonElement>('[data-stage-prev]');
@@ -105,6 +110,10 @@ const UI_TEXT: Record<string, Record<Lang, string>> = {
   readMore: { es: 'Leer más', en: 'Read more' },
   readLess: { es: 'Leer menos', en: 'Read less' },
   finishTitle: { es: 'Listo para abrir', en: 'Ready to open' },
+  copyLink: { es: 'Copiar enlace', en: 'Copy link' },
+  print: { es: 'Imprimir', en: 'Print' },
+  copied: { es: 'Enlace copiado', en: 'Link copied' },
+  copyByHand: { es: 'Copia el enlace', en: 'Copy the link' },
   finishText: {
     es: 'Revisa los incentivos antes de radicar.',
     en: 'Check the incentives before you file.',
@@ -482,11 +491,13 @@ function render(): void {
     emptyStateEl!.hidden = false;
     resultsEl!.hidden = true;
     if (incentivesBandEl) incentivesBandEl.hidden = true;
+    if (actionsEl) actionsEl.hidden = true;
     return;
   }
   emptyStateEl!.hidden = true;
   resultsEl!.hidden = false;
   if (incentivesBandEl) incentivesBandEl.hidden = false;
+  if (actionsEl) actionsEl.hidden = false;
 
   const result = buildSequence(answers, content);
   const summary = routeSummary(result);
@@ -534,6 +545,26 @@ function render(): void {
     )
     .join('');
 }
+
+// G-35: the URL already holds the route (G-31), so sharing it is copying
+// the address. When the clipboard refuses, which happens in some embedded
+// and older browsers, the link shows up selected for copying by hand.
+copyBtn?.addEventListener('click', async () => {
+  if (copyFallbackEl) copyFallbackEl.hidden = true;
+  try {
+    await navigator.clipboard.writeText(location.href);
+    if (copyStatusEl) copyStatusEl.textContent = UI_TEXT.copied![lang];
+  } catch {
+    if (copyStatusEl) copyStatusEl.textContent = UI_TEXT.copyByHand![lang];
+    if (copyFallbackEl) {
+      copyFallbackEl.value = location.href;
+      copyFallbackEl.hidden = false;
+      copyFallbackEl.select();
+    }
+  }
+});
+
+printBtn?.addEventListener('click', () => window.print());
 
 document.addEventListener('langchange', (event) => {
   lang = (event as CustomEvent<Lang>).detail;
