@@ -17,9 +17,9 @@ import {
   answersToQuery,
   buildSequence,
   emptyAnswers,
-  formatMoney,
   groupByPhase,
   hasEnoughAnswers,
+  patenteLabel,
   routeHeading,
   routeSummary,
   stageBreakdown,
@@ -97,8 +97,6 @@ const UI_TEXT: Record<string, Record<Lang, string>> = {
   summaryRecurring: { es: 'Recurrentes', en: 'Recurring' },
   summaryPatente: { es: 'Patente est.', en: 'Est. patente' },
   summaryVerified: { es: 'Verificado', en: 'Verified' },
-  patenteNone: { es: 'Sin estimar', en: 'Not estimated' },
-  perYear: { es: '/año', en: '/yr' },
   costUnknown: { es: 'n/d', en: 'n/a' },
   showDetail: { es: 'Ver detalles', en: 'Show details' },
   hideDetail: { es: 'Ocultar detalles', en: 'Hide details' },
@@ -498,11 +496,7 @@ function render(): void {
   // G-09: a rate that could not be confirmed "must surface as uncertain
   // rather than being rendered as plain numbers", so the mark sits on the
   // figure itself, which is what a reader takes at face value.
-  const patenteValue = !patente
-    ? UI_TEXT.patenteNone![lang]
-    : patente.amount === 0
-      ? '$0'
-      : `${formatMoney(patente.amount)}${UI_TEXT.perYear![lang]}`;
+  const patenteValue = patenteLabel(patente)[lang];
 
   // The mark goes beside the value rather than inside [data-summary], so
   // the value reads cleanly and the mark still sits on the figure itself.

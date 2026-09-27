@@ -192,6 +192,8 @@ answersFromQuery(search: string, questions): Answers;
 // vol parsed as a finite number >= 0 or dropped.
 ```
 
+G-32 added one more to the same module, `patenteLabel(estimate: PatenteEstimate | null): Bilingual`, holding the three cases the Behavior section names. The route's summary strip and the hero's sample card both print that figure, so the rule lives in the module rather than in each renderer. The sourcing pill stays with the renderer.
+
 The freshness module gains a short date label: "6 ago 2026" / "Aug 6, 2026".
 
 ### Behavior
@@ -228,6 +230,7 @@ The browser checks depend on these attributes. Keep existing hooks unless listed
 |---|---|
 | `data-hero`, `data-sample-route` | hero section, sample card |
 | `data-proof="steps\|municipios\|date"` | hero proof numbers |
+| `data-sample-more` | the sample card's footer strip, holding N |
 | `data-see-example` | the example button |
 | `data-questions`, `data-question`, `data-option` with `aria-pressed` | existing, kept; options switch from the `is-selected` class to `aria-pressed` |
 | `data-stage-rail`, `data-stage-go`, `data-state="done\|current\|todo"` | rail and its buttons |
