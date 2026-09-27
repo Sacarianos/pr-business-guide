@@ -263,6 +263,19 @@ export function formatMoney(amount: number): string {
   }).format(amount);
 }
 
+// The patente figure as a reader sees it, in one place because two callers
+// show it: the route's summary strip and the hero's build-time sample card
+// (0002, G-32). Three cases, and an exemption is one of them — "$0/año"
+// would read as a yearly charge of nothing rather than as "you don't pay
+// this". The sourcing mark is not part of the label; it belongs to the
+// renderer, same as everywhere else in this module.
+export function patenteLabel(estimate: PatenteEstimate | null): Bilingual {
+  if (!estimate) return { es: 'Sin estimar', en: 'Not estimated' };
+  if (estimate.amount === 0) return { es: '$0', en: '$0' };
+  const money = formatMoney(estimate.amount);
+  return { es: `${money}/año`, en: `${money}/yr` };
+}
+
 export type StepResult = StepData & { id: string };
 export type IncentiveResult = IncentiveData & { id: string };
 
