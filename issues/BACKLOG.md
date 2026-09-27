@@ -20,6 +20,8 @@ If the agent is not working by roughly day ten, M1 ships alone and the agent is 
 
 **Amendment, 2026-08-24, redesign.** Jaime flagged the page as looking generic and hard to use. Measuring it found eighteen distinct font sizes and two color tokens failing WCAG AA contrast in light mode. All ten questions also sat on screen at once. The fix went in as four commits on one branch. The first two are styling with no ticket of their own: a shared page width so the masthead lines up with the sections below it, then a new palette, a seven-step type scale, and a typeface set with the serif body face removed. The other two changed what a reader can do, so they're tracked as G-27 and G-28 below.
 
+**Amendment, 2026-09-27, route redesign.** Jaime still didn't like how the page looked after the August redesign. A mockup built on real content, modeled on StartPermit's structure, was approved the same day. It's specified in [0002](0002-route-redesign.md) and split into G-29 to G-37 below. Each of those items carries its own objective, tests and browser checks in 0002, so the notes here only point there.
+
 ## Labels
 
 Carried from [README.md](README.md): `needs-verification`, `research`, `blocked-external`. Added for GitHub: `content`, `logic`, `ui`, `i18n`, `infra`, `test`, `guardrail`.
@@ -60,6 +62,15 @@ Carried from [README.md](README.md): `needs-verification`, `research`, `blocked-
 | G-26 | | Design sync: push the page shell to a Claude Design project for visual iteration | `ui` `blocked-external` | G-01 |
 | G-27 | | Inline explainers for the terms readers guess wrong | `ui` `content` | G-08 |
 | G-28 | | Staged question flow with a progress rail | `ui` `logic` | G-08 |
+| G-29 | | Tokens, light-only palette, bands and page width | `ui` | — |
+| G-30 | | Phases and advisories in the content and in Seam A | `content` `logic` | — |
+| G-31 | | Answers in the URL | `logic` `ui` | G-33 |
+| G-32 | | Header and hero with a build-time sample route | `ui` | G-29, G-30, G-31 |
+| G-33 | | Question column: rail, option cards, explainers, sticky | `ui` | G-29 |
+| G-34 | | Route panel: phases, stops, callouts, summary | `ui` `logic` | G-30, G-33 |
+| G-35 | | Copy link and print | `ui` | G-31, G-34 |
+| G-36 | | Incentive cards and the remaining sections | `ui` `content` | G-29, G-30 |
+| G-37 | | Responsive and accessibility pass | `ui` `test` | G-29 to G-36 |
 
 ### Notes on specific items
 
@@ -128,6 +139,8 @@ Carried from [README.md](README.md): `needs-verification`, `research`, `blocked-
 **G-27.** Added 2026-08-24 during the redesign, see the amendment at the top. Six questions get an explainer that starts closed: entity form, business volume, premises, buildout, municipality, and the Act 60 nexus test. The entity and premises options also carry one line on what picking them means. Modeled on the GOV.UK `details` component. Hover tooltips were ruled out because they don't work on touch screens and screen readers skip them. The copy comes from the research document, so it repeats claims already sourced elsewhere and carries no sourcing mark of its own. Schema is `help` and per-option `detail` on `questionSchema` in `src/lib/content-schema.ts`.
 
 **G-28.** Added 2026-08-24 during the redesign. The ten questions group into three named stages, shown one at a time, with a rail that counts answers per stage. GOV.UK research recommends one question per page. That research covers linear forms where nothing happens until submit. This tool builds the reader's sequence live as they answer, and splitting it across pages would lose that. Three stages keep the live results and still break up the wall of questions. Every stage stays reachable from the rail at any time, since a reader who skips ahead to the patente estimate is doing something reasonable. The grouping is `stageBreakdown()` in `src/lib/decision-tree.ts`, tested on the same seam as the rest of G-06. It builds on `visibleQuestions()`, so `driving` drops out of stage 3's count while `hiring` is anything but yes.
+
+**G-29 to G-37.** Added 2026-09-27, specified in [0002](0002-route-redesign.md) under Work items. Recommended order: G-29 and G-30 in parallel, then G-33, G-31, G-34, G-32, G-36, G-35, and G-37 last. The visual reference is `design/route-redesign/`, served by the `design reference` launch configuration.
 
 ---
 

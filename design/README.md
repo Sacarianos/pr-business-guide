@@ -10,3 +10,4 @@ translated by hand into the real `.astro` component — this directory is the de
 | Component | Astro counterpart |
 |---|---|
 | `page-shell/` | [`src/pages/index.astro`](../src/pages/index.astro) |
+| `route-redesign/` | [`src/pages/index.astro`](../src/pages/index.astro). The approved visual reference for [0002](../issues/0002-route-redesign.md). Serve it with the `design reference` launch configuration. |

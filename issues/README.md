@@ -7,6 +7,7 @@ issues/
   README.md
   BACKLOG.md                          # 0001 decomposed into work items, per repo
   0001-guia-apertura-de-negocios.md
+  0002-route-redesign.md
 ```
 
 [BACKLOG.md](BACKLOG.md) is the migration source for GitHub. Epics stay here as the spec of record; the work items derived from them live as GitHub issues in `cud-guia` and `cud-agente`.
