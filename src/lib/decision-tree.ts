@@ -505,3 +505,36 @@ export function routeSummary(result: Result): RouteSummary {
   }
   return { steps, recurring, patente: result.patente };
 }
+
+// The URL is the route's state (0002, G-31): a link reopens the exact
+// answers, so a reader can come back later or send the route to a partner.
+// Keys follow question order so one set of answers always makes one URL.
+export function answersToQuery(answers: Answers, questions: Content['questions']): string {
+  const params = new URLSearchParams();
+  for (const q of [...questions].sort((a, b) => a.order - b.order)) {
+    const value = answers[q.id as keyof Answers];
+    if (value !== null && value !== undefined) params.set(q.id, String(value));
+  }
+  return params.toString();
+}
+
+// The inverse, and the only door into `answers` from outside the page, so
+// it trusts nothing: unknown keys are ignored, option values outside a
+// question's options are dropped, and `vol` must parse as a finite number
+// of at least zero.
+export function answersFromQuery(search: string, questions: Content['questions']): Answers {
+  const params = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search);
+  const answers = emptyAnswers() as unknown as Record<string, string | number | null>;
+  for (const q of questions) {
+    if (!(q.id in answers)) continue;
+    const raw = params.get(q.id);
+    if (raw === null) continue;
+    if (q.input === 'number') {
+      const n = raw.trim() === '' ? NaN : Number(raw);
+      answers[q.id] = Number.isFinite(n) && n >= 0 ? n : null;
+    } else if (q.options?.some((o) => o.value === raw)) {
+      answers[q.id] = raw;
+    }
+  }
+  return answers as unknown as Answers;
+}
