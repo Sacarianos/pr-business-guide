@@ -18,6 +18,7 @@ import {
   incentiveSchema,
   gapSchema,
   entityFormSchema,
+  phaseSchema,
 } from '../src/lib/content-schema.ts';
 
 const es_en = { es: 'es', en: 'en' };
@@ -28,6 +29,7 @@ const validStep = {
   timing: es_en,
   cost: es_en,
   note: es_en,
+  phase: 'formation',
   sourcing: 'primary',
 };
 
@@ -138,6 +140,27 @@ test('a question carries optional `help` and per-option `detail`, both bilingual
   assert.throws(() =>
     questionSchema.parse({ ...bare, help: { summary: { es: 'solo' }, body: es_en } }),
   );
+});
+
+test('a step must name one of the five phases (0002, G-30)', () => {
+  const { phase: _, ...noPhase } = validStep;
+  assert.throws(() => stepSchema.parse(noPhase));
+  assert.throws(() => stepSchema.parse({ ...validStep, phase: 'someday' }));
+  for (const phase of ['formation', 'premises', 'operate', 'people', 'recurring']) {
+    assert.doesNotThrow(() => stepSchema.parse({ ...validStep, phase }));
+  }
+});
+
+test('`kind` is action or advisory, and defaults to action (0002, G-30)', () => {
+  assert.equal(stepSchema.parse(validStep).kind, 'action');
+  assert.equal(stepSchema.parse({ ...validStep, kind: 'advisory' }).kind, 'advisory');
+  assert.throws(() => stepSchema.parse({ ...validStep, kind: 'decision' }));
+});
+
+test('a phase carries an integer order and a bilingual title (0002, G-30)', () => {
+  assert.doesNotThrow(() => phaseSchema.parse({ order: 1, title: es_en }));
+  assert.throws(() => phaseSchema.parse({ order: 1.5, title: es_en }));
+  assert.throws(() => phaseSchema.parse({ order: 1, title: { es: 'solo' } }));
 });
 
 test('bilingual fields require both es and en', () => {
