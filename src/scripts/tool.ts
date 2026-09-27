@@ -99,10 +99,9 @@ const UI_TEXT: Record<string, Record<Lang, string>> = {
   summaryVerified: { es: 'Verificado', en: 'Verified' },
   patenteNone: { es: 'Sin estimar', en: 'Not estimated' },
   perYear: { es: '/año', en: '/yr' },
+  costUnknown: { es: 'n/d', en: 'n/a' },
   showDetail: { es: 'Ver detalles', en: 'Show details' },
   hideDetail: { es: 'Ocultar detalles', en: 'Hide details' },
-  readMore: { es: 'Leer más', en: 'Read more' },
-  readLess: { es: 'Leer menos', en: 'Read less' },
   finishTitle: { es: 'Listo para abrir', en: 'Ready to open' },
   finishText: {
     es: 'Revisa los incentivos antes de radicar.',
@@ -378,12 +377,11 @@ const openStops = new Set<string>();
 // The toggle and its detail share an id so aria-controls points at the
 // region it opens (0002, G-34: the route reads as a list per phase, and
 // each detail announces whether it's expanded).
-function detailToggle(s: StepResult, kind: 'stop' | 'callout'): string {
+function detailToggle(s: StepResult): string {
   const open = openStops.has(s.id);
-  const [show, hide] = kind === 'stop' ? [UI_TEXT.showDetail!, UI_TEXT.hideDetail!] : [UI_TEXT.readMore!, UI_TEXT.readLess!];
   return `
     <button type="button" class="stop-toggle" data-stop-toggle="${s.id}"
-            aria-expanded="${open}" aria-controls="detail-${s.id}">${(open ? hide : show)[lang]}</button>
+            aria-expanded="${open}" aria-controls="detail-${s.id}">${(open ? UI_TEXT.hideDetail! : UI_TEXT.showDetail!)[lang]}</button>
     <div class="stop-detail" id="detail-${s.id}" data-stop-detail ${open ? '' : 'hidden'}>${s.note[lang]}</div>`;
 }
 
@@ -404,16 +402,19 @@ function stopItem(s: RouteStop): string {
   const meta = [hasAgency ? `<b>${escapeHtml(s.agency[lang])}</b>` : '', hasTiming ? escapeHtml(s.timing[lang]) : '']
     .filter(Boolean)
     .join(' · ');
+  const cost = s.cost[lang] === '—' ? UI_TEXT.costUnknown![lang] : s.cost[lang];
   return `
     <li class="stop" data-stop="${s.id}" data-kind="action" data-severity="${s.severity ?? ''}" data-sourcing="${s.sourcing}">
       <span class="pin${s.recurring ? ' pin-recurring' : ''}" data-stop-num>${marker}</span>
-      <div class="stop-body">
+      <div class="stop-head">
         <h5 class="stop-title">${escapeHtml(s.title[lang])} ${sourcingMark(s.sourcing)}</h5>
         ${meta ? `<p class="stop-meta">${meta}</p>` : ''}
-        ${alwaysVisible(s)}
-        ${detailToggle(s, 'stop')}
       </div>
-      <div class="stop-cost">${s.cost[lang] === '—' ? '' : escapeHtml(s.cost[lang])}</div>
+      <div class="stop-cost">${escapeHtml(cost)}</div>
+      <div class="stop-body">
+        ${alwaysVisible(s)}
+        ${detailToggle(s)}
+      </div>
     </li>`;
 }
 
@@ -421,12 +422,12 @@ const CALLOUT_ICON = `<svg width="20" height="20" viewBox="0 0 20 20" aria-hidde
 
 function calloutItem(s: RouteStop): string {
   return `
-    <div class="callout" data-stop="${s.id}" data-kind="advisory" data-severity="${s.severity ?? 'warn'}" data-sourcing="${s.sourcing}">
+    <div class="callout" data-stop="${s.id}" data-kind="advisory" data-severity="${s.severity ?? ''}" data-sourcing="${s.sourcing}">
       ${CALLOUT_ICON}
       <div>
         <p class="callout-title">${escapeHtml(s.title[lang])} ${sourcingMark(s.sourcing)}</p>
         ${alwaysVisible(s)}
-        ${detailToggle(s, 'callout')}
+        ${detailToggle(s)}
       </div>
     </div>`;
 }
@@ -452,10 +453,8 @@ zonesEl.addEventListener('click', (event) => {
   if (openStops.has(id)) openStops.delete(id);
   else openStops.add(id);
   const open = openStops.has(id);
-  const callout = toggle.closest('.callout') !== null;
-  const [show, hide] = callout ? [UI_TEXT.readMore!, UI_TEXT.readLess!] : [UI_TEXT.showDetail!, UI_TEXT.hideDetail!];
   toggle.setAttribute('aria-expanded', String(open));
-  toggle.textContent = (open ? hide : show)[lang];
+  toggle.textContent = (open ? UI_TEXT.hideDetail! : UI_TEXT.showDetail!)[lang];
   const detail = document.getElementById(`detail-${id}`);
   if (detail) detail.hidden = !open;
 });
@@ -498,19 +497,16 @@ function render(): void {
       ? '$0'
       : `${formatMoney(patente.amount)}${UI_TEXT.perYear![lang]}`;
 
-  const cell = (key: string, label: string, value: string) =>
-    `<div class="summary-cell"><dt>${label}</dt><dd data-summary="${key}">${value}</dd></div>`;
+  // The mark goes beside the value rather than inside [data-summary], so
+  // the value reads cleanly and the mark still sits on the figure itself.
+  const cell = (key: string, label: string, value: string, mark = '') =>
+    `<div class="summary-cell"><dt>${label}</dt><dd><span data-summary="${key}">${value}</span>${mark}</dd></div>`;
   summaryEl!.innerHTML = [
     cell('steps', UI_TEXT.summarySteps![lang], String(summary.steps)),
     cell('recurring', UI_TEXT.summaryRecurring![lang], String(summary.recurring)),
-    cell('patente', UI_TEXT.summaryPatente![lang], escapeHtml(patenteValue)),
+    cell('patente', UI_TEXT.summaryPatente![lang], escapeHtml(patenteValue), patente ? sourcingMark(patente.sourcing) : ''),
     cell('verified', UI_TEXT.summaryVerified![lang], researchDateShort(lang)),
   ].join('');
-  // The mark goes beside the value rather than inside [data-summary], so
-  // the value reads cleanly and the mark still sits on the figure's cell.
-  if (patente && patente.sourcing !== 'primary') {
-    summaryEl!.querySelector('[data-summary="patente"]')!.insertAdjacentHTML('afterend', sourcingMark(patente.sourcing));
-  }
   patenteNoteEl!.innerHTML = [
     patente ? `<p>${escapeHtml(patente.why[lang])}</p>` : '',
     municipio?.note ? `<p>${municipio.note[lang]}</p>` : '',
