@@ -23,6 +23,7 @@ import {
   hasEnoughAnswers,
   stageBreakdown,
   patente,
+  patenteLabel,
   routeHeading,
   routeSummary,
   SAMPLE_ANSWERS,
@@ -306,6 +307,21 @@ describe('patente() — tier and boundary behavior', () => {
   test('flat-rate municipalities apply their percentage against the statutory $25 floor', () => {
     assert.equal(patente('bayamon', 6000, content.municipios)!.amount, 30);
     assert.equal(patente('bayamon', 1000, content.municipios)!.amount, 0, 'still under $5,000');
+  });
+
+  // Both the route's summary strip and the hero's sample card read this
+  // label, so the three cases are pinned here once instead of in each
+  // renderer. An exemption is the case that matters: "$0/año" would read as
+  // a yearly charge rather than as "this one does not apply to you".
+  test('patenteLabel() says "$0" for an exemption, never "$0/año"', () => {
+    const exempt = patente('sanjuan', 5000, content.municipios);
+    assert.deepEqual(patenteLabel(exempt), { es: '$0', en: '$0' });
+  });
+
+  test('patenteLabel() carries the period on a real charge and names the missing estimate', () => {
+    const charged = patente('sanjuan', 120000, content.municipios);
+    assert.deepEqual(patenteLabel(charged), { es: '$240/año', en: '$240/yr' });
+    assert.deepEqual(patenteLabel(null), { es: 'Sin estimar', en: 'Not estimated' });
   });
 });
 

@@ -18,8 +18,8 @@ import { researchDateLabel, researchDateShort } from '../lib/freshness';
 import {
   answersToQuery,
   buildSequence,
-  formatMoney,
   groupByPhase,
+  patenteLabel,
   routeHeading,
   routeSummary,
   SAMPLE_ANSWERS,
@@ -38,7 +38,7 @@ const sampleStops = groupByPhase(sampleResult, content)
   .filter((stop) => stop.number !== null)
   .slice(0, 4);
 const sampleMore = sampleSummary.steps - sampleStops.length;
-const samplePatente = sampleSummary.patente ? formatMoney(sampleSummary.patente.amount) : null;
+const samplePatente = patenteLabel(sampleSummary.patente);
 const sampleHref = `?${answersToQuery(SAMPLE_ANSWERS, content.questions)}#ruta`;
 
 // Proof numbers under the headline: how much the guide documents, and when
@@ -192,20 +192,37 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
             <div>
               <dt><span lang="es">Patente est.</span><span lang="en">Est. patente</span></dt>
               <dd>
-                <span lang="es">{samplePatente ? `${samplePatente}/año` : 'Sin estimar'}</span>
-                <span lang="en">{samplePatente ? `${samplePatente}/yr` : 'Not estimated'}</span>
+                <span lang="es">{samplePatente.es}</span>
+                <span lang="en">{samplePatente.en}</span>
+                {sampleSummary.patente && sampleSummary.patente.sourcing !== 'primary' && (
+                  <span class={`mark mark-${sampleSummary.patente.sourcing}`}>
+                    <span lang="es">{sourcingLabel(sampleSummary.patente.sourcing, 'es')}</span>
+                    <span lang="en">{sourcingLabel(sampleSummary.patente.sourcing, 'en')}</span>
+                  </span>
+                )}
               </dd>
             </div>
           </dl>
           <ol class="sample-route">
             {
               sampleStops.map((stop) => (
-                <li class="sample-stop" data-stop={stop.id} data-severity={stop.severity ?? ''}>
+                <li
+                  class="sample-stop"
+                  data-stop={stop.id}
+                  data-severity={stop.severity ?? ''}
+                  data-sourcing={stop.sourcing}
+                >
                   <span class="pin">{stop.number}</span>
                   <div>
                     <h3 class="sample-stop-title">
                       <span lang="es">{stop.title.es}</span>
                       <span lang="en">{stop.title.en}</span>
+                      {stop.sourcing !== 'primary' && (
+                        <span class={`mark mark-${stop.sourcing}`}>
+                          <span lang="es">{sourcingLabel(stop.sourcing, 'es')}</span>
+                          <span lang="en">{sourcingLabel(stop.sourcing, 'en')}</span>
+                        </span>
+                      )}
                     </h3>
                     <p class="sample-stop-meta">
                       <span lang="es">{stop.agency.es}</span>
@@ -680,7 +697,6 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
        that accumulated across G-08..G-20. Nothing sits below 11.5px now:
        the smallest text on this page carries agency, deadline, cost and
        sourcing, which is not footnote material. */
-    --fs-display: clamp(34px, 4.4vw, 52px);
     --fs-h2: clamp(23px, 2.6vw, 30px);
     --fs-h3: 19px;
     --fs-body: 16.5px;
@@ -881,11 +897,6 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-  }
-  .btn-lg {
-    height: 50px;
-    padding: 0 22px;
-    font-size: 16px;
   }
   .proof {
     display: flex;
@@ -1140,11 +1151,6 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     line-height: 1.05;
     letter-spacing: -0.025em;
     margin: 10px 0 0;
-  }
-  .eyebrow {
-    color: var(--ink-3);
-    font-weight: 600;
-    letter-spacing: 0.08em;
   }
   /* G-20: the single-location assumption, stated where the reader starts
      answering rather than left to be discovered the hard way. */
@@ -1459,6 +1465,11 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
   .btn-ghost:hover {
     border-color: var(--ink-3);
+  }
+  .btn-lg {
+    height: 50px;
+    padding: 0 22px;
+    font-size: 16px;
   }
 
   .stage-nav {
