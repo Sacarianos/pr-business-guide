@@ -163,6 +163,12 @@ test('a phase carries an integer order and a bilingual title (0002, G-30)', () =
   assert.throws(() => phaseSchema.parse({ order: 1, title: { es: 'solo' } }));
 });
 
+test('an incentive may name the law that creates it, as plain text (0002, G-36)', () => {
+  assert.equal(incentiveSchema.parse(validIncentive).law, undefined);
+  assert.equal(incentiveSchema.parse({ ...validIncentive, law: 'Art. 7.210' }).law, 'Art. 7.210');
+  assert.throws(() => incentiveSchema.parse({ ...validIncentive, law: es_en }));
+});
+
 test('bilingual fields require both es and en', () => {
   assert.throws(() => bilingual.parse({ es: 'solo español' }));
   assert.doesNotThrow(() => bilingual.parse(es_en));

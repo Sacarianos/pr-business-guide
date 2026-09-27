@@ -51,6 +51,7 @@ const summaryEl = document.querySelector<HTMLElement>('[data-summary-strip]');
 const patenteNoteEl = document.querySelector<HTMLElement>('[data-patente-note]');
 const zonesEl = document.querySelector<HTMLElement>('[data-zones]');
 const incentivesEl = document.querySelector<HTMLElement>('[data-incentives]');
+const incentivesBandEl = document.querySelector<HTMLElement>('[data-incentives-band]');
 const startOverBtn = document.querySelector<HTMLButtonElement>('[data-start-over]');
 const railEl = document.querySelector<HTMLElement>('[data-stage-rail]');
 const prevBtn = document.querySelector<HTMLButtonElement>('[data-stage-prev]');
@@ -484,10 +485,12 @@ function render(): void {
   if (!hasEnoughAnswers(content.questions, answers)) {
     emptyStateEl!.hidden = false;
     resultsEl!.hidden = true;
+    if (incentivesBandEl) incentivesBandEl.hidden = true;
     return;
   }
   emptyStateEl!.hidden = true;
   resultsEl!.hidden = false;
+  if (incentivesBandEl) incentivesBandEl.hidden = false;
 
   const result = buildSequence(answers, content);
   const summary = routeSummary(result);
@@ -518,12 +521,13 @@ function render(): void {
   incentivesEl!.innerHTML = result.incentives
     .map(
       (inc) => `
-    <div class="incentive-card">
-      <h5>${escapeHtml(inc.title[lang])} ${sourcingMark(inc.sourcing)}</h5>
+    <article class="card" data-incentive="${inc.id}">
+      ${inc.law ? `<span class="card-law" data-law>${escapeHtml(inc.law)}</span>` : ''}
+      <h3>${escapeHtml(inc.title[lang])} ${sourcingMark(inc.sourcing)}</h3>
       ${professionalNote(inc.professional)}
       <p>${inc.note[lang]}</p>
       ${practiceBanner(inc.practice)}
-    </div>`,
+    </article>`,
     )
     .join('');
 }

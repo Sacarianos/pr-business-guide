@@ -7,9 +7,10 @@
 # design handoff's rendering convention.
 
 first-semester-provisional-patente:
+  law: "Art. 7.210"
   title:
-    es: "Patente provisional del primer semestre — Art. 7.210"
-    en: "First-semester provisional patente — Art. 7.210"
+    es: "Patente provisional del primer semestre"
+    en: "First-semester provisional patente"
   note:
     es: >-
       Automática, no cuesta nada, y la mayoría de los dueños la pierden por
@@ -25,9 +26,10 @@ first-semester-provisional-patente:
   sourcing: primary
 
 optional-tax-1022-07:
+  law: "§1022.07"
   title:
-    es: "Contribución opcional §1022.07 — 6% del bruto"
-    en: "Optional tax §1022.07 — 6% of gross"
+    es: "Contribución opcional, 6% del bruto"
+    en: "Optional tax, 6% of gross"
   note:
     es: >-
       Una corporación de servicios puede elegir una contribución opcional de
@@ -48,8 +50,8 @@ optional-tax-1022-07:
 
 young-entrepreneur-exemption:
   title:
-    es: "Joven empresario — exención sobre los primeros $500,000"
-    en: "Young entrepreneur — exemption on the first $500,000"
+    es: "Joven empresario, exención sobre los primeros $500,000"
+    en: "Young entrepreneur, exemption on the first $500,000"
   note:
     es: >-
       Los dueños de <b>16 a 35 años</b> con cuarto año (o matriculados)
@@ -68,9 +70,10 @@ young-entrepreneur-exemption:
   sourcing: primary
 
 pyme-120-2014-rates:
+  law: "Ley 120-2014"
   title:
-    es: "Ley 120-2014 — tasas PYME de 5% / 10% / 15%"
-    en: "Ley 120-2014 — PYME rates of 5% / 10% / 15%"
+    es: "Tasas PYME de 5%, 10% y 15%"
+    en: "PYME rates of 5%, 10% and 15%"
   note:
     es: >-
       Una <em>PYME Elegible Nueva</em> cualificada con acuerdo de empleo
@@ -85,9 +88,10 @@ pyme-120-2014-rates:
   sourcing: primary
 
 act60-export-services:
+  law: "Ley 60 Cap. 3"
   title:
-    es: "Ley 60 Cap. 3 — exportación de servicios, 4% fijo"
-    en: "Act 60 Ch. 3 — export services, 4% fixed"
+    es: "Exportación de servicios, 4% fijo"
+    en: "Export services, 4% fixed"
   note:
     es: >-
       Puede que sí cualifique. La prueba es estricta: los servicios tienen
@@ -117,8 +121,8 @@ act60-export-services:
 
 act60-not-applicable:
   title:
-    es: "La Ley 60 no aplica — y conviene saberlo ya"
-    en: "Act 60 does not apply — and it is better to know now"
+    es: "La Ley 60 no aplica, y conviene saberlo ya"
+    en: "Act 60 does not apply, and it is better to know now"
   note:
     es: >-
       El Capítulo 3 se sostiene enteramente sobre servir a personas
@@ -143,8 +147,8 @@ act60-not-applicable:
 
 pridco-industrial-space:
   title:
-    es: "PRIDCO — espacio industrial ya zonificado"
-    en: "PRIDCO — industrial space already zoned"
+    es: "PRIDCO, espacio industrial ya zonificado"
+    en: "PRIDCO, industrial space already zoned"
   note:
     es: >-
       PRIDCO tiene más de 1,500 propiedades en 77 de 78 municipios, a
@@ -166,8 +170,8 @@ pridco-industrial-space:
 
 bde-technical-assistance:
   title:
-    es: "BDE — y la asistencia técnica gratuita que casi nadie usa"
-    en: "BDE — and the free technical assistance almost nobody uses"
+    es: "BDE y la asistencia técnica gratuita que casi nadie usa"
+    en: "BDE and the free technical assistance almost nobody uses"
   note:
     es: >-
       El Banco de Desarrollo Económico corre préstamos a término, líneas
