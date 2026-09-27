@@ -171,3 +171,8 @@ test('G-37: the contrast check itself matches known WCAG values', () => {
   assert.equal(contrast('#000000', '#ffffff').toFixed(2), '21.00');
   assert.equal(contrast('#767676', '#ffffff').toFixed(2), '4.54');
 });
+
+test('G-37: every focusable element gets a visible focus ring from a page-wide rule', () => {
+  const rule = /(?:^|[}\s,]):focus-visible\s*\{([^}]*)\}/m.exec(css)?.[1] ?? '';
+  assert.match(rule, /outline:\s*2px solid/, 'no bare :focus-visible rule with an outline in the built CSS');
+});
