@@ -63,18 +63,18 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     </script>
   </head>
   <body>
-    <div class="lang-bar">
-      <div class="lang-bar-inner">
+    <header class="top">
+      <div class="wrap top-inner">
         <span class="brand-mark">GUÍA&nbsp;·&nbsp;PR</span>
         <div class="lang-toggle" role="group" aria-label="Idioma / Language">
           <button type="button" class="lang-btn" data-lang-option="es" aria-pressed="true">ES</button>
           <button type="button" class="lang-btn" data-lang-option="en" aria-pressed="false">EN</button>
         </div>
       </div>
-    </div>
+    </header>
 
-    <header class="masthead">
-      <div class="masthead-inner">
+    <section class="masthead">
+      <div class="wrap">
       <p class="eyebrow">
         <span lang="es">Guía práctica, no asesoría legal</span>
         <span lang="en">A practical guide, not legal advice</span>
@@ -94,9 +94,10 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
         </span>
       </p>
       </div>
-    </header>
+    </section>
 
     <div class="alert-strip">
+      <div class="wrap alert-inner">
       <span class="alert-label">
         <span lang="es">Vigencia</span>
         <span lang="en">Currency</span>
@@ -117,9 +118,11 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
           date, not the search-result count.
         </span>
       </p>
+      </div>
     </div>
 
     <main class="tool">
+      <div class="wrap">
       <div class="section-head">
         <span class="section-num">1</span>
         <h2>
@@ -246,9 +249,11 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
           </div>
         </div>
       </div>
+      </div>
     </main>
 
     <section class="diagram-section">
+      <div class="wrap">
       <div class="section-head">
         <span class="section-num">2</span>
         <h2>
@@ -288,9 +293,11 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
           </span>
         </figcaption>
       </figure>
+      </div>
     </section>
 
     <section class="entities-section">
+      <div class="wrap">
       <div class="section-head">
         <span class="section-num">3</span>
         <h2>
@@ -403,9 +410,11 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
             ))
         }
       </div>
+      </div>
     </section>
 
     <section class="gaps-section">
+      <div class="wrap">
       <div class="section-head">
         <span class="section-num">4</span>
         <h2>
@@ -440,6 +449,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
           ))
         }
       </div>
+      </div>
     </section>
 
     <script type="application/json" id="tool-content" set:html={contentJson} is:inline />
@@ -449,35 +459,38 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
 </html>
 
 <style>
-  /* Design tokens. Palette "Deep harbour": the teal that was already the
-     best colour on the page becomes the single primary, and the ground
-     moves from the old cream (#f4f2ed) to a cool near-white.
+  /* Design tokens. Palette "Verde ruta", approved with the route redesign
+     (issues/0002-route-redesign.md, reference in design/route-redesign/):
+     a warm paper ground, a road-sign green as the single primary, and an
+     amber `--mark` used only for the finish marker.
 
-     The constraint driving the whole palette: `sourcing` and `practice`
-     use red/amber/green to mean unverified/unconfirmed/verified (0001),
-     so those three carry real meaning and the primary has to stay clear
-     of them or the marks stop reading as signal.
+     `sourcing` and `practice` use amber and red pairs to mean
+     unconfirmed and unverified or contradicted (0001), so the primary stays
+     clear of both. Light only: the automatic dark palette is gone until a
+     dark theme can come back as an explicit toggle.
 
-     Every value below is >= 4.5:1 against its own ground (WCAG AA for
-     normal text) in both themes. The previous palette failed that on two
-     tokens — --ink-3 at 3.48:1 and --ambar at 3.66:1 — while both were
-     being used at 9.5-11.5px. Re-check with a contrast calculator before
-     changing any of these. */
+     Every text pair is checked for >= 4.5:1 by test/built-page.test.ts,
+     which reads these values out of the built CSS. */
   :root {
-    --paper: #f7f9fa;
+    --paper: #f5f3ee;
     --surface: #ffffff;
-    --surface-2: #eef2f5;
-    --ink: #0d1518;
-    --ink-2: #46545e;
-    --ink-3: #5f6e79;
-    --rule: #dbe3ea;
-    --rule-soft: #eaeff4;
-    --sello: #0a5f6b;
-    --sello-tint: #e6f0f1;
-    --on-sello: #ffffff;
-    --ambar: #8a5a06;
-    --derogado: #a8231b;
-    --verificado: #16663f;
+    --sunk: #efece5;
+    --ink: #15181b;
+    --ink-2: #474d54;
+    --ink-3: #62686f;
+    --rule: #e2ded4;
+    --rule-strong: #cfcabd;
+    --brand: #0b5a48;
+    --brand-hover: #084636;
+    --brand-tint: #e3eee9;
+    --on-brand: #ffffff;
+    --mark: #f2b233;
+    --warn-ink: #8a5a00;
+    --warn-bg: #fdf3dc;
+    --stop-ink: #a4251c;
+    --stop-bg: #fbe9e6;
+    --ok: #1f6b45;
+    --ok-bg: #e5f1ea;
 
     /* One type scale, seven steps. Replaces the eighteen ad-hoc sizes
        (9.5/10/10.5/11/11.5/12.5/13/13.5/14/14.5/15/15.5/16/17/18/26/28/56)
@@ -501,38 +514,12 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     --font-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
     --font-body: 'Public Sans', ui-sans-serif, system-ui, sans-serif;
     --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
-    /* One shared content measure for every section, masthead included —
-       previously the masthead had no max-width at all while every section
-       below it centered at 1180px, so the H1 sat flush against the left
-       edge while everything under it floated in the middle of the screen
-       with a wide, unexplained gutter on both sides. Widened past the old
-       1180px too: at a common 1920px desktop width that left ~370px of
-       flat, undifferentiated page background on each side. */
-    --page-w: 1600px;
+    /* Every section is a full-bleed band whose inner `.wrap` caps the
+       content at --page (gutter included), so wide screens get colored
+       bands edge to edge instead of bare margins beside a floating column. */
+    --page: 1280px;
+    --gutter: 40px;
   }
-  /* Only the colour tokens are redefined here — never a component rule,
-     so nothing can end up defined in one theme and missing in the other.
-     Contrast against #0c1114: ink 16.99, ink-2 9.33, ink-3 5.55,
-     sello 9.08, verificado 8.89, ambar 9.27, derogado 7.83. */
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --paper: #0c1114;
-      --surface: #131a1f;
-      --surface-2: #1a232a;
-      --ink: #eef3f6;
-      --ink-2: #a9b8c2;
-      --ink-3: #7d8d98;
-      --rule: #26333c;
-      --rule-soft: #1c262d;
-      --sello: #4fc3cf;
-      --sello-tint: #10333a;
-      --on-sello: #062024;
-      --ambar: #e0ad4e;
-      --derogado: #f08a82;
-      --verificado: #62c493;
-    }
-  }
-
   * {
     box-sizing: border-box;
   }
@@ -561,17 +548,28 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     display: none !important;
   }
 
-  .lang-bar {
+  /* Full-bleed bands (0002): each section paints its own background edge
+     to edge, and `.wrap` holds the content column inside it. */
+  .wrap {
+    max-width: var(--page);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  @media (max-width: 720px) {
+    :root {
+      --gutter: 16px;
+    }
+  }
+
+  .top {
     background: var(--surface);
     border-bottom: 1px solid var(--rule);
   }
-  .lang-bar-inner {
+  .top-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: var(--page-w);
-    margin: 0 auto;
-    padding: 8px 24px;
+    height: 64px;
   }
   .brand-mark {
     font-family: var(--font-mono);
@@ -599,30 +597,24 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     border-right: 1px solid var(--rule);
   }
   .lang-btn[aria-pressed='true'] {
-    background: var(--sello);
+    background: var(--brand);
     color: var(--surface);
   }
   .lang-btn:focus-visible {
-    outline: 2px solid var(--sello);
+    outline: 2px solid var(--brand);
     outline-offset: -2px;
   }
 
   .masthead {
-    background: var(--surface);
-    border-bottom: 2px solid var(--ink);
+    background: var(--paper);
     padding: 44px 0 32px;
-  }
-  .masthead-inner {
-    max-width: var(--page-w);
-    margin: 0 auto;
-    padding: 0 24px;
   }
   .eyebrow {
     font-family: var(--font-mono);
     font-size: var(--fs-label);
     letter-spacing: 1.2px;
     text-transform: uppercase;
-    color: var(--sello);
+    color: var(--brand);
     margin: 0 0 10px;
   }
   h1 {
@@ -644,13 +636,13 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
      minus the countdown alert cut on 2026-08-07 (0001 amendment); this is
      the one alert that survives. */
   .alert-strip {
+    padding: 16px 0;
+    border-top: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .alert-inner {
     display: flex;
     gap: 18px;
-    max-width: var(--page-w);
-    margin: 0 auto;
-    padding: 16px 24px;
-    border-top: 1px solid var(--rule);
-    background: var(--surface);
   }
   .alert-label {
     flex: 0 0 210px;
@@ -658,7 +650,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     font-size: var(--fs-label);
     text-transform: uppercase;
     letter-spacing: 0.8px;
-    color: var(--sello);
+    color: var(--brand);
     padding-top: 2px;
   }
   .alert-body {
@@ -669,7 +661,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     max-width: 76ch;
   }
   @media (max-width: 640px) {
-    .alert-strip {
+    .alert-inner {
       flex-direction: column;
       gap: 6px;
     }
@@ -679,9 +671,10 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
 
   .tool {
-    padding: 32px 24px 64px;
-    max-width: var(--page-w);
-    margin: 0 auto;
+    padding: 48px 0 64px;
+    background: var(--surface);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
   }
   .tool-grid {
     display: grid;
@@ -717,7 +710,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     display: flex;
     flex-direction: column;
     gap: 1px;
-    background: var(--rule-soft);
+    background: var(--rule);
     border: 1px solid var(--rule);
     margin-bottom: 4px;
   }
@@ -740,11 +733,11 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     color: var(--ink);
   }
   .stage-step:focus-visible {
-    outline: 2px solid var(--sello);
+    outline: 2px solid var(--brand);
     outline-offset: -2px;
   }
   .stage-step.is-current {
-    background: var(--sello-tint);
+    background: var(--brand-tint);
     color: var(--ink);
   }
   .stage-step.is-done {
@@ -759,7 +752,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
   .stage-step.is-current .stage-num,
   .stage-step.is-done .stage-num {
-    color: var(--sello);
+    color: var(--brand);
   }
   .stage-name {
     font-family: var(--font-display);
@@ -788,16 +781,16 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     cursor: pointer;
   }
   .stage-btn.is-primary {
-    background: var(--sello);
-    border-color: var(--sello);
-    color: var(--on-sello);
+    background: var(--brand);
+    border-color: var(--brand);
+    color: var(--on-brand);
     margin-left: auto;
   }
   .stage-btn:hover {
-    border-color: var(--sello);
+    border-color: var(--brand);
   }
   .stage-btn:focus-visible {
-    outline: 2px solid var(--sello);
+    outline: 2px solid var(--brand);
     outline-offset: 2px;
   }
   .stage-btn[hidden] {
@@ -811,7 +804,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   .question-num {
     font-family: var(--font-mono);
     font-weight: 600;
-    color: var(--sello);
+    color: var(--brand);
   }
   /* The question itself and its hint are the two things a reader has to
      read to answer, so both sit above the mechanical size the old values
@@ -867,21 +860,21 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     color: var(--ink-3);
   }
   .option:hover {
-    border-color: var(--sello);
+    border-color: var(--brand);
   }
   .option:focus-visible {
-    outline: 2px solid var(--sello);
+    outline: 2px solid var(--brand);
     outline-offset: 2px;
   }
   /* Selected reads as a tint plus a heavier rule rather than a solid fill:
      a filled swatch would put two lines of text, one of them secondary, on
      a saturated ground and cost the contrast the palette just bought. */
   .option.is-selected {
-    background: var(--sello-tint);
-    border-color: var(--sello);
+    background: var(--brand-tint);
+    border-color: var(--brand);
   }
   .option.is-selected .option-label {
-    color: var(--sello);
+    color: var(--brand);
   }
 
   /* G-27: the explainer, closed by default. `<details>` rather than a
@@ -892,7 +885,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
   .q-help summary {
     cursor: pointer;
-    color: var(--sello);
+    color: var(--brand);
     font-size: var(--fs-small);
     font-weight: 600;
     list-style: none;
@@ -919,7 +912,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     flex: none;
   }
   .q-help summary:focus-visible {
-    outline: 2px solid var(--sello);
+    outline: 2px solid var(--brand);
     outline-offset: 3px;
   }
   .q-help[open] summary {
@@ -960,8 +953,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     align-self: flex-start;
   }
   .start-over:hover {
-    border-color: var(--sello);
-    color: var(--sello);
+    border-color: var(--brand);
+    color: var(--brand);
   }
 
   .results {
@@ -999,7 +992,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     gap: 4px;
   }
   :global(.glance-cell:not(:first-child)) {
-    border-left: 1px solid var(--rule-soft);
+    border-left: 1px solid var(--rule);
   }
   :global(.glance-label) {
     font-family: var(--font-mono);
@@ -1037,10 +1030,10 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     border: 1px solid currentColor;
   }
   :global(.mark-secondary) {
-    color: var(--ambar);
+    color: var(--warn-ink);
   }
   :global(.mark-unverified) {
-    color: var(--derogado);
+    color: var(--stop-ink);
   }
 
   /* `practice.contradicted` (G-15) is the loudest state on the page —
@@ -1056,13 +1049,13 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
   .practice-contradicted,
   :global(.practice-contradicted) {
-    background: var(--derogado);
+    background: var(--stop-ink);
     color: var(--surface);
   }
   .practice-confirmed,
   :global(.practice-confirmed) {
-    border: 1px solid var(--verificado);
-    color: var(--verificado);
+    border: 1px solid var(--ok);
+    color: var(--ok);
   }
   .practice-attribution,
   :global(.practice-attribution) {
@@ -1075,7 +1068,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   .entities-practice-row td {
     padding-top: 0;
     padding-bottom: 14px;
-    border-bottom: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule);
   }
 
   h2 {
@@ -1104,24 +1097,24 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     display: flex;
     gap: 12px;
     padding: 16px 0;
-    border-bottom: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule);
     border-left: 2px solid transparent;
     padding-left: 10px;
   }
   :global(.step[data-severity='key']) {
-    border-left-color: var(--sello);
+    border-left-color: var(--brand);
   }
   :global(.step[data-severity='warn']) {
-    border-left-color: var(--ambar);
+    border-left-color: var(--warn-ink);
   }
   :global(.step[data-severity='stop']) {
-    border-left-color: var(--derogado);
+    border-left-color: var(--stop-ink);
   }
   :global(.step-num) {
     flex: 0 0 30px;
     font-family: var(--font-mono);
     font-weight: 700;
-    color: var(--sello);
+    color: var(--brand);
   }
   :global(.step-title) {
     font-family: var(--font-display);
@@ -1140,7 +1133,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   :global(.step-blocks) {
     font-family: var(--font-mono);
     font-size: var(--fs-label);
-    color: var(--sello);
+    color: var(--brand);
     margin: 0 0 6px;
   }
   :global(.step-blocks b) {
@@ -1152,7 +1145,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   :global(.step-professional) {
     font-family: var(--font-mono);
     font-size: var(--fs-label);
-    color: var(--ambar);
+    color: var(--warn-ink);
     margin: 0 0 6px;
   }
   :global(.step-note) {
@@ -1162,7 +1155,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     margin: 0;
   }
   :global(.step-note a) {
-    color: var(--sello);
+    color: var(--brand);
   }
 
   .incentives {
@@ -1171,7 +1164,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     margin-bottom: 24px;
   }
   :global(.incentive-card) {
-    border-left: 2px solid var(--verificado);
+    border-left: 2px solid var(--ok);
     padding: 4px 0 4px 12px;
   }
   :global(.incentive-card h4) {
@@ -1186,10 +1179,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
 
   .diagram-section {
-    max-width: var(--page-w);
-    margin: 0 auto;
-    padding: 54px 24px 60px;
-    border-top: 1px solid var(--rule);
+    padding: 54px 0 60px;
+    background: var(--paper);
   }
   .section-head {
     display: flex;
@@ -1201,7 +1192,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     font-family: var(--font-mono);
     font-size: var(--fs-h2);
     font-weight: 600;
-    color: var(--sello);
+    color: var(--brand);
     letter-spacing: -0.02em;
   }
   .section-head h2 {
@@ -1248,10 +1239,10 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   }
 
   .entities-section {
-    max-width: var(--page-w);
-    margin: 0 auto;
-    padding: 54px 24px 64px;
+    padding: 54px 0 64px;
+    background: var(--surface);
     border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
   }
   .entities-table-wrap {
     overflow-x: auto;
@@ -1269,7 +1260,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     text-align: left;
     padding: 12px 14px;
     vertical-align: top;
-    border-bottom: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule);
   }
   .entities-table thead th {
     font-family: var(--font-mono);
@@ -1302,7 +1293,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     font-size: var(--fs-label);
     font-weight: 400;
     text-transform: none;
-    color: var(--ambar);
+    color: var(--warn-ink);
   }
   .entities-notes {
     margin-top: 20px;
@@ -1325,10 +1316,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
      chrome as sections 1–3, so it reads as a fixture of the page rather than
      a dismissible aside. */
   .gaps-section {
-    max-width: var(--page-w);
-    margin: 0 auto;
-    padding: 54px 24px 72px;
-    border-top: 1px solid var(--rule);
+    padding: 54px 0 72px;
+    background: var(--paper);
   }
   .gaps-list {
     display: flex;
@@ -1338,7 +1327,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   .gap-item {
     margin: 0;
     padding: 2px 0 2px 16px;
-    border-left: 2px solid var(--ambar);
+    border-left: 2px solid var(--warn-ink);
     font-size: var(--fs-body);
     line-height: 1.55;
     color: var(--ink-2);
@@ -1352,22 +1341,5 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--ink-3);
-  }
-
-  /* On a genuinely wide desktop, the space outside --page-w is still bare
-     page background even after widening the content measure itself — a
-     hairline down each side turns that gutter into a deliberate margin
-     (the way a printed page has one) instead of looking like the layout
-     forgot to fill the screen. Scoped to wide viewports only: at laptop
-     and tablet widths --page-w already fills the viewport, so the rule
-     would just clip flush against the edges. */
-  @media (min-width: 1700px) {
-    .tool,
-    .diagram-section,
-    .entities-section,
-    .gaps-section {
-      border-left: 1px solid var(--rule-soft);
-      border-right: 1px solid var(--rule-soft);
-    }
   }
 </style>
