@@ -161,6 +161,11 @@ export const municipioSchema = z.object({
 export type MunicipioData = z.infer<typeof municipioSchema>;
 
 export const incentiveSchema = z.object({
+  // The statute or article that creates the incentive (0002, G-36), shown
+  // as the card's eyebrow so a reader can look it up or ask for it by
+  // name. Plain text, the same in both languages; absent when the
+  // incentive is a program rather than a provision of law.
+  law: z.string().optional(),
   title: bilingual,
   note: bilingual,
   // G-18: this decision needs a CPA or attorney, not just this guide.

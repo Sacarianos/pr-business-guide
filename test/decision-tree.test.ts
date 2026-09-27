@@ -561,6 +561,33 @@ describe('routeHeading (0002, G-34)', () => {
   });
 });
 
+describe('incentive law and titles (0002, G-36)', () => {
+  const EXPECTED: Record<string, [string | undefined, string]> = {
+    'first-semester-provisional-patente': ['Art. 7.210', 'Patente provisional del primer semestre'],
+    'optional-tax-1022-07': ['§1022.07', 'Contribución opcional, 6% del bruto'],
+    'young-entrepreneur-exemption': [undefined, 'Joven empresario, exención sobre los primeros $500,000'],
+    'pyme-120-2014-rates': ['Ley 120-2014', 'Tasas PYME de 5%, 10% y 15%'],
+    'act60-export-services': ['Ley 60 Cap. 3', 'Exportación de servicios, 4% fijo'],
+    'act60-not-applicable': [undefined, 'La Ley 60 no aplica, y conviene saberlo ya'],
+    'pridco-industrial-space': [undefined, 'PRIDCO, espacio industrial ya zonificado'],
+    'bde-technical-assistance': [undefined, 'BDE y la asistencia técnica gratuita que casi nadie usa'],
+  };
+
+  test('each incentive carries the law and Spanish title from the spec', () => {
+    assert.deepEqual(Object.keys(content.incentives).sort(), Object.keys(EXPECTED).sort());
+    for (const [id, [law, title]] of Object.entries(EXPECTED)) {
+      assert.equal(content.incentives[id]!.law, law, `${id} law`);
+      assert.equal(content.incentives[id]!.title.es, title, `${id} title`);
+    }
+  });
+
+  test('no incentive title in either language keeps the old dash', () => {
+    for (const [id, inc] of Object.entries(content.incentives)) {
+      assert.ok(!inc.title.es.includes('—') && !inc.title.en.includes('—'), id);
+    }
+  });
+});
+
 describe('answers in the URL (0002, G-31)', () => {
   const Q =
     'type=food&entity=llc&premises=commercial&buildout=no&muni=sanjuan&vol=120000&hiring=yes&driving=no&exportsvc=no&young=no';
