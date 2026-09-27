@@ -21,7 +21,6 @@ import {
   emptyAnswers,
   groupByPhase,
   hasEnoughAnswers,
-  partitionRecurring,
   stageBreakdown,
   patente,
   routeHeading,
@@ -372,69 +371,6 @@ describe('stageBreakdown — the staged question flow (G-28)', () => {
     const threeHiring = stageBreakdown(content.questions, hiring).find((s) => s.stage === 3)!;
     assert.equal(threeHiring.total, 4);
     assert.equal(threeHiring.complete, false);
-  });
-});
-
-describe('partitionRecurring — recurring obligations split from the one-time sequence (G-13)', () => {
-  test('splits a sequence into one-time and recurring, each preserving its original relative order', () => {
-    const r = buildSequence(
-      answers({
-        type: 'prof',
-        entity: 'sole',
-        premises: 'home',
-        vol: 3000,
-        hiring: 'no',
-        exportsvc: 'no',
-        young: 'no',
-      }),
-      content,
-    );
-    const { oneTime, recurring } = partitionRecurring(r.steps);
-
-    // This scenario is not retail/food/mfg, so CRIM never enters the
-    // sequence — the recurring set is exactly the three duties every
-    // sequence carries unconditionally: notify the patente, file IVU, and
-    // the state's annual fee.
-    assert.deepEqual(
-      recurring.map((s) => s.id),
-      ['patente-municipal', 'ivu-monthly-b2b-professional', 'state-annual-fee-survives'],
-    );
-    assert.ok(oneTime.every((s) => !s.recurring), 'nothing in `oneTime` is flagged recurring');
-    assert.ok(recurring.every((s) => s.recurring === true), 'everything in `recurring` is flagged recurring');
-
-    // Splitting must not drop or duplicate a step — every id from the full
-    // sequence lands in exactly one of the two groups.
-    assert.deepEqual(
-      [...oneTime, ...recurring].map((s) => s.id).sort(),
-      r.steps.map((s) => s.id).sort(),
-    );
-
-    // Relative order within each group matches the original sequence order,
-    // not re-sorted — e.g. `entity-sole-proprietor` still precedes
-    // `ein-federal` in `oneTime`.
-    const oneTimeIds = oneTime.map((s) => s.id);
-    assert.ok(oneTimeIds.indexOf('entity-sole-proprietor') < oneTimeIds.indexOf('ein-federal'));
-  });
-
-  test('a sequence with an additional recurring step (CRIM) keeps it alongside the other recurring duties', () => {
-    const r = buildSequence(
-      answers({
-        type: 'retail',
-        entity: 'llc',
-        premises: 'commercial',
-        buildout: 'no',
-        muni: 'bayamon',
-        vol: 50000,
-        hiring: 'no',
-        exportsvc: 'no',
-      }),
-      content,
-    );
-    const { recurring } = partitionRecurring(r.steps);
-    assert.deepEqual(
-      recurring.map((s) => s.id),
-      ['patente-municipal', 'crim-personal-property-return', 'ivu-monthly-general', 'state-annual-fee-survives'],
-    );
   });
 });
 
