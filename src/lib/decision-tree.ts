@@ -538,3 +538,31 @@ export function answersFromQuery(search: string, questions: Content['questions']
   }
   return answers as unknown as Answers;
 }
+
+// The route's heading (0002, G-34): the business type as the title, and
+// the municipio and legal form under it, so a printout or a shared link
+// says whose route it is. Unanswered parts drop out rather than showing
+// a placeholder.
+export function routeHeading(
+  answers: Answers,
+  content: Content,
+): { title: Bilingual; subline: Bilingual } {
+  const label = (questionId: string, value: string | null): Bilingual | null => {
+    if (value === null) return null;
+    const q = content.questions.find((question) => question.id === questionId);
+    return q?.options?.find((o) => o.value === value)?.label ?? null;
+  };
+  const title = label('type', answers.type) ?? { es: 'Tu negocio', en: 'Your business' };
+  const entity =
+    answers.entity === 'unsure'
+      ? { es: 'forma legal por decidir', en: 'legal form undecided' }
+      : label('entity', answers.entity);
+  const parts = [label('muni', answers.muni), entity].filter((p): p is Bilingual => p !== null);
+  return {
+    title,
+    subline: {
+      es: parts.map((p) => p.es).join(' · '),
+      en: parts.map((p) => p.en).join(' · '),
+    },
+  };
+}

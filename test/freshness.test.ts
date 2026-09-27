@@ -7,7 +7,7 @@
 // sites are unaffected.
 import { strict as assert } from 'node:assert';
 import { test } from 'node:test';
-import { RESEARCH_DATE, researchDateLabel } from '../src/lib/freshness.ts';
+import { RESEARCH_DATE, researchDateLabel, researchDateShort } from '../src/lib/freshness.ts';
 
 test('RESEARCH_DATE matches the compile date recorded in the research document itself', () => {
   // docs/research/starting-a-business-in-puerto-rico.md: "Research date:
@@ -23,4 +23,9 @@ test('researchDateLabel(): Spanish default renders the ISO date as long-form Spa
 
 test('researchDateLabel("en"): renders the ISO date as long-form English', () => {
   assert.equal(researchDateLabel('en'), 'August 6, 2026');
+});
+
+test('researchDateShort(): the summary strip form, "6 ago 2026" and "Aug 6, 2026" (0002, G-34)', () => {
+  assert.equal(researchDateShort(), '6 ago 2026');
+  assert.equal(researchDateShort('en'), 'Aug 6, 2026');
 });

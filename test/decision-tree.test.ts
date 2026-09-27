@@ -24,6 +24,7 @@ import {
   partitionRecurring,
   stageBreakdown,
   patente,
+  routeHeading,
   routeSummary,
   SAMPLE_ANSWERS,
   visibleQuestions,
@@ -538,6 +539,25 @@ describe('groupByPhase and routeSummary (0002, G-30)', () => {
     assert.equal(summary.steps, 12);
     assert.equal(summary.recurring, 4);
     assert.equal(summary.patente?.amount, 240);
+  });
+});
+
+describe('routeHeading (0002, G-34)', () => {
+  test('the sample route is headed by its business type, with municipio and legal form under it', () => {
+    const h = routeHeading(SAMPLE_ANSWERS, content);
+    assert.deepEqual(h.title, { es: 'Restaurante / cafetería', en: 'Restaurant / café' });
+    assert.deepEqual(h.subline, { es: 'San Juan · LLC', en: 'San Juan · LLC' });
+  });
+
+  test('an undecided legal form and no municipio read as "forma legal por decidir"', () => {
+    const h = routeHeading(answers({ type: 'retail', entity: 'unsure' }), content);
+    assert.deepEqual(h.subline, { es: 'forma legal por decidir', en: 'legal form undecided' });
+  });
+
+  test('with nothing answered the title is generic and the subline empty', () => {
+    const h = routeHeading(emptyAnswers(), content);
+    assert.deepEqual(h.title, { es: 'Tu negocio', en: 'Your business' });
+    assert.deepEqual(h.subline, { es: '', en: '' });
   });
 });
 

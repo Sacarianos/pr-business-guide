@@ -1,0 +1,5 @@
+# Checks the no-mistakes gate runs directly instead of asking an agent to
+# work out how this project tests itself. Same commands CI runs.
+commands:
+  test: npm test
+  lint: npm run typecheck
