@@ -118,3 +118,16 @@ test('G-32: the proof numbers come from the content and the research date', () =
   assert.equal(proof('municipios'), String(Object.keys(contentJson.municipios).filter((id) => id !== 'other').length));
   assert.equal(proof('date'), '6 ago 2026');
 });
+
+// G-35. The print stylesheet is generated output the browser reads when a
+// reader prints; its @media print rules are the contract that the route
+// prints alone and fully expanded.
+test('G-35: printing hides everything but the route and incentives, and expands every stop', () => {
+  const blocks = [...css.matchAll(/@media print\s*\{([\s\S]*?\})\s*\}/g)].map((m) => m[1]!).join('\n');
+  assert.ok(blocks.length > 0, 'no @media print block in the built CSS');
+  const hiding = /([^{}]+)\{[^}]*display:\s*none/.exec(blocks)?.[1] ?? '';
+  for (const selector of ['.top', '[data-hero]', '[data-questions]', '#proceso', '#entidades', '#limites']) {
+    assert.ok(hiding.includes(selector), `print does not hide ${selector}`);
+  }
+  assert.match(blocks, /\[data-stop-detail\]\s*\{[^}]*display:\s*block/);
+});
