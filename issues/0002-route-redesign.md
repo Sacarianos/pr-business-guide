@@ -610,6 +610,8 @@ Keyboard, at 1440×900:
 2. After each press, run `document.activeElement.matches(':focus-visible') && getComputedStyle(document.activeElement).outlineStyle !== 'none'`. It expects true for every control.
 3. Reach a `[data-stop-toggle]` and press Enter. Its `aria-expanded` becomes `"true"`.
 
+If the preview pane is hidden, it won't take key presses, and a script's `.focus()` never sets `:focus-visible`. In that case, check coverage in the CSSOM instead. Collect every `:focus-visible` rule whose `cssText` sets an outline. Strip the pseudo-class from each selector, using `*` for the bare rule. Then confirm every visible `a[href], button, select, input, summary` matches at least one. `outlineStyle` can't be used for this, because an `outline` shorthand with `var()` leaves the longhands empty. Expected result: no uncovered controls.
+
 Screen reader structure: each `[data-phase]` has a heading element followed by an `ol` or `ul`. Run:
 ```js
 [...document.querySelectorAll('[data-route] [data-phase]')].every(p => p.querySelector('h3, h4') && p.querySelector('ol, ul'))

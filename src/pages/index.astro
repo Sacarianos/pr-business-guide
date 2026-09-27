@@ -742,6 +742,20 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     -webkit-font-smoothing: antialiased;
   }
 
+  /* G-37: one focus ring for every control on the page, so nothing a
+     keyboard can reach goes unmarked. Links inside injected notes and the
+     footer had no rule of their own. Components may still refine it. */
+  :global(:focus-visible) {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(*) {
+      scroll-behavior: auto !important;
+      transition: none !important;
+    }
+  }
+
   /* G-19: the bilingual toggle. Every string on the page that isn't
      client-rendered by src/scripts/tool.ts (which picks its language
      directly, needing no CSS) is emitted twice, once per `lang`, and this
