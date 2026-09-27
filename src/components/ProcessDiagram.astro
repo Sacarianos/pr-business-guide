@@ -126,36 +126,36 @@ const timelineCaptions: (Bilingual & { x: number })[] = [
       <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
     </marker>
     <marker id="ar-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--sello)" />
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand)" />
     </marker>
   </defs>
 
   {/* Lane A — legal and tax identity */}
-  <text lang="es" x="36" y="44" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">IDENTIDAD LEGAL Y CONTRIBUTIVA</text>
-  <text lang="en" x="36" y="44" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">LEGAL AND TAX IDENTITY</text>
+  <text lang="es" x="36" y="44" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--brand)">IDENTIDAD LEGAL Y CONTRIBUTIVA</text>
+  <text lang="en" x="36" y="44" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--brand)">LEGAL AND TAX IDENTITY</text>
   <text lang="es" x="36" y="61" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">En serie, pero rápido — menos de una semana en total. Unos $150–250 en cargos de gobierno.</text>
   <text lang="en" x="36" y="61" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">Sequential, but fast — under a week total. About $150–250 in government fees.</text>
   <DiagramLane boxY={76} boxHeight={52} nodeY={98} arrowY={102} nodes={laneANodes} />
 
   {/* The ordering rule people get wrong */}
-  <rect x="36" y="152" width="700" height="62" fill="none" stroke="var(--ambar)" stroke-opacity="0.55" />
-  <text lang="es" x="52" y="174" font-size="10" font-family={MONO} letter-spacing="1.2" fill="var(--ambar)">REGLA DE ORDEN QUE SE EQUIVOCA CON FRECUENCIA</text>
-  <text lang="en" x="52" y="174" font-size="10" font-family={MONO} letter-spacing="1.2" fill="var(--ambar)">ORDERING RULE PEOPLE GET WRONG</text>
+  <rect x="36" y="152" width="700" height="62" fill="none" stroke="var(--warn-ink)" stroke-opacity="0.55" />
+  <text lang="es" x="52" y="174" font-size="10" font-family={MONO} letter-spacing="1.2" fill="var(--warn-ink)">REGLA DE ORDEN QUE SE EQUIVOCA CON FRECUENCIA</text>
+  <text lang="en" x="52" y="174" font-size="10" font-family={MONO} letter-spacing="1.2" fill="var(--warn-ink)">ORDERING RULE PEOPLE GET WRONG</text>
   <text lang="es" x="52" y="193" font-size="12.5" font-family={SERIF} fill="currentColor">El Registro de Comerciantes tiene que existir antes de la solicitud del Permiso Único —</text>
   <text lang="en" x="52" y="193" font-size="12.5" font-family={SERIF} fill="currentColor">The Registro de Comerciantes must exist before the Permiso Único application —</text>
   <text lang="es" x="52" y="208" font-size="12.5" font-family={SERIF} fill="currentColor">la radicación exige el certificado como anejo. Hacerlo al revés te deja varado.</text>
   <text lang="en" x="52" y="208" font-size="12.5" font-family={SERIF} fill="currentColor">filing requires the certificate as an attachment. Doing it backwards leaves you stuck.</text>
-  <path d="M 736 183 L 800 183 L 800 140" fill="none" stroke="var(--ambar)" stroke-opacity="0.7" stroke-dasharray="3 3" marker-end="url(#ar)" />
+  <path d="M 736 183 L 800 183 L 800 140" fill="none" stroke="var(--warn-ink)" stroke-opacity="0.7" stroke-dasharray="3 3" marker-end="url(#ar)" />
 
   {/* Lane B — premises and permit, the critical path */}
-  <text lang="es" x="36" y="252" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">LOCAL Y PERMISO — LA RUTA CRÍTICA</text>
-  <text lang="en" x="36" y="252" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">PREMISES AND PERMIT — THE CRITICAL PATH</text>
+  <text lang="es" x="36" y="252" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--brand)">LOCAL Y PERMISO — LA RUTA CRÍTICA</text>
+  <text lang="en" x="36" y="252" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--brand)">PREMISES AND PERMIT — THE CRITICAL PATH</text>
   <text lang="es" x="36" y="269" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">Semanas o meses. Es la única parte que no se acelera por más organizado que seas.</text>
   <text lang="en" x="36" y="269" font-size="11.5" font-family={SERIF} fill="currentColor" opacity="0.62">Weeks or months. It's the one part that can't be sped up no matter how organized you are.</text>
   <DiagramLane boxY={284} boxHeight={52} dashFrom={3} nodeY={306} arrowY={310} nodes={laneBNodes} />
 
   {/* Both chains converge on the Permiso Único */}
-  <rect x="904" y="150" width="240" height="96" fill="var(--sello)" />
+  <rect x="904" y="150" width="240" height="96" fill="var(--brand)" />
   <text x="1024" y="182" font-size="15" font-weight="800" letter-spacing="-0.3" fill="var(--surface)" text-anchor="middle">PERMISO ÚNICO</text>
   <text lang="es" x="1024" y="202" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">OGPe · o municipio autónomo</text>
   <text lang="en" x="1024" y="202" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">OGPe · or autonomous municipality</text>
@@ -163,14 +163,14 @@ const timelineCaptions: (Bilingual & { x: number })[] = [
   <text lang="en" x="1024" y="219" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">with delegated hierarchy</text>
   <text x="1024" y="236" font-size="10.5" font-family={MONO} fill="var(--surface)" opacity="0.85" text-anchor="middle">sbp.ogpe.pr.gov</text>
 
-  <path d="M 840 102 L 872 102 L 872 176 L 898 176" fill="none" stroke="var(--sello)" stroke-width="1.6" marker-end="url(#ar-a)" />
-  <path d="M 840 310 L 872 310 L 872 222 L 898 222" fill="none" stroke="var(--sello)" stroke-width="1.6" marker-end="url(#ar-a)" />
+  <path d="M 840 102 L 872 102 L 872 176 L 898 176" fill="none" stroke="var(--brand)" stroke-width="1.6" marker-end="url(#ar-a)" />
+  <path d="M 840 310 L 872 310 L 872 222 L 898 222" fill="none" stroke="var(--brand)" stroke-width="1.6" marker-end="url(#ar-a)" />
 
   {/* What the permit bundles */}
   <line x1="1024" y1="246" x2="1024" y2="272" stroke="currentColor" stroke-opacity="0.45" />
-  <rect x="904" y="272" width="240" height="132" fill="none" stroke="var(--sello)" stroke-opacity="0.5" />
-  <text lang="es" x="918" y="291" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--sello)">CONSOLIDA EN UNA SOLA SOLICITUD</text>
-  <text lang="en" x="918" y="291" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--sello)">CONSOLIDATES INTO ONE APPLICATION</text>
+  <rect x="904" y="272" width="240" height="132" fill="none" stroke="var(--brand)" stroke-opacity="0.5" />
+  <text lang="es" x="918" y="291" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--brand)">CONSOLIDA EN UNA SOLA SOLICITUD</text>
+  <text lang="en" x="918" y="291" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--brand)">CONSOLIDATES INTO ONE APPLICATION</text>
   <g font-size="11.5" font-family={SERIF} fill="currentColor">
     {bundleItems.map((c, i) => (
       <>
@@ -192,8 +192,8 @@ const timelineCaptions: (Bilingual & { x: number })[] = [
   <path d="M 756 128 L 756 140 L 868 140 L 868 424 L 120 424" fill="none" stroke="currentColor" stroke-opacity="0.38" stroke-dasharray="5 4" />
   <text lang="es" x="884" y="420" font-size="9.5" font-family={MONO} letter-spacing="1" fill="currentColor" opacity="0.55">no bloquean la apertura</text>
   <text lang="en" x="884" y="420" font-size="9.5" font-family={MONO} letter-spacing="1" fill="currentColor" opacity="0.55">don't block opening</text>
-  <text lang="es" x="36" y="452" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">OBLIGACIONES EN PARALELO</text>
-  <text lang="en" x="36" y="452" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--sello)">PARALLEL OBLIGATIONS</text>
+  <text lang="es" x="36" y="452" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--brand)">OBLIGACIONES EN PARALELO</text>
+  <text lang="en" x="36" y="452" font-size="10.5" font-family={MONO} letter-spacing="1.6" fill="var(--brand)">PARALLEL OBLIGATIONS</text>
 
   <g stroke="currentColor" stroke-opacity="0.38" marker-end="url(#ar)">
     {NODE_X.map((x) => (
@@ -207,8 +207,8 @@ const timelineCaptions: (Bilingual & { x: number })[] = [
   {/* Recurring compliance */}
   <line x1="1024" y1="488" x2="1024" y2="512" stroke="currentColor" stroke-opacity="0.45" marker-end="url(#ar)" />
   <rect x="904" y="516" width="240" height="126" fill="none" stroke="var(--rule)" />
-  <text lang="es" x="918" y="535" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--sello)">CUMPLIMIENTO RECURRENTE</text>
-  <text lang="en" x="918" y="535" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--sello)">RECURRING COMPLIANCE</text>
+  <text lang="es" x="918" y="535" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--brand)">CUMPLIMIENTO RECURRENTE</text>
+  <text lang="en" x="918" y="535" font-size="9.5" font-family={MONO} letter-spacing="0.9" fill="var(--brand)">RECURRING COMPLIANCE</text>
   <g font-size="11.5" font-family={SERIF} fill="currentColor">
     {ongoingItems.map((o, i) => (
       <>
@@ -228,9 +228,9 @@ const timelineCaptions: (Bilingual & { x: number })[] = [
       </>
     ))}
   </g>
-  <rect x="36" y="620" width="120" height="8" fill="var(--verificado)" opacity="0.55" />
-  <rect x="160" y="620" width="200" height="8" fill="var(--ambar)" opacity="0.5" />
-  <rect x="364" y="620" width="476" height="8" fill="var(--sello)" opacity="0.55" />
+  <rect x="36" y="620" width="120" height="8" fill="var(--ok)" opacity="0.55" />
+  <rect x="160" y="620" width="200" height="8" fill="var(--warn-ink)" opacity="0.5" />
+  <rect x="364" y="620" width="476" height="8" fill="var(--brand)" opacity="0.55" />
   <g font-size="10.5" font-family={SERIF} fill="currentColor" opacity="0.62">
     {timelineCaptions.map((c) => (
       <>

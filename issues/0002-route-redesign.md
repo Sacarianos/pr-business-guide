@@ -293,10 +293,10 @@ Each item has one objective, the tests that prove it, and the browser checks tha
 At 1440×900 with `colorScheme: "dark"`, on `/`:
 ```js
 ({ bg: getComputedStyle(document.body).backgroundColor,
-   wrap: (r => [Math.round(r.x), Math.round(r.width)])(document.querySelector('header .wrap').getBoundingClientRect()),
+   wrap: (r => [Math.round(r.x - (document.documentElement.clientWidth - r.width) / 2), Math.round(r.width)])(document.querySelector('header .wrap').getBoundingClientRect()),
    overflow: document.documentElement.scrollWidth > innerWidth })
 ```
-expects `{"bg":"rgb(245, 243, 238)","wrap":[80,1280],"overflow":false}`.
+expects `{"bg":"rgb(245, 243, 238)","wrap":[0,1280],"overflow":false}`. The first `wrap` number is the column's offset from center. It's measured against `clientWidth` because a classic vertical scrollbar takes 15px out of the 1440, so the column sits at x 73, not 80.
 
 At 375×812, the same expression expects `wrap` `[0,375]` and `overflow` false. Also run:
 ```js
