@@ -121,49 +121,41 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
       </div>
     </div>
 
-    <main class="tool">
+    <main class="tool" id="ruta">
       <div class="wrap">
-      <div class="section-head">
-        <span class="section-num">1</span>
-        <h2>
-          <span lang="es">Tu ruta</span>
-          <span lang="en">Your path</span>
-        </h2>
+      <div class="tool-head">
+        <div>
+          <p class="eyebrow">
+            <span lang="es">Tu ruta · 2 minutos</span>
+            <span lang="en">Your route · 2 minutes</span>
+          </p>
+          <h2 class="tool-title">
+            <span lang="es">Contesta y la ruta se arma sola.</span>
+            <span lang="en">Answer, and the route builds itself.</span>
+          </h2>
+        </div>
+        {/* G-20: the single-location assumption, stated where the reader
+            starts answering rather than left to be discovered later. */}
+        <p class="assumption-note">
+          <span lang="es">
+            <strong>Supone un solo local en un municipio.</strong> El volumen se atribuye por
+            municipio, el Registro de Comerciantes es por local, y el 1% municipal del IVU sigue
+            el municipio de la venta. Si operas en más de uno, úsala como punto de partida.
+          </span>
+          <span lang="en">
+            <strong>Assumes a single location in one municipality.</strong> Volume is attributed
+            per municipality, the Registro de Comerciantes is per location, and the municipal 1%
+            IVU follows the municipality of the sale. If you operate in more than one, treat this
+            as a starting point.
+          </span>
+        </p>
       </div>
-      <p class="section-dek">
-        <span lang="es">
-          La secuencia de abajo es igual para todo el mundo. Lo que cambia es qué ramas te
-          aplican, cuánto te cuesta la patente de verdad, y cuáles incentivos existen y cuáles son
-          cuento de internet.
-        </span>
-        <span lang="en">
-          The sequence below is the same for everyone. What changes is which branches apply to
-          you, what your patente actually costs, and which incentives are real versus internet
-          folklore.
-        </span>
-      </p>
-      <p class="assumption-note">
-        <span lang="es">
-          <strong>Esta herramienta asume un solo local comercial en un municipio.</strong> La ley
-          no funciona así: el volumen se atribuye por municipio, el Registro de Comerciantes es
-          por local, y el 1% municipal del IVU sigue el municipio donde ocurre la venta. Si operas
-          en más de un local o municipio, esta secuencia es un punto de partida, no el cálculo
-          completo.
-        </span>
-        <span lang="en">
-          <strong>This tool assumes a single commercial location in one municipality.</strong> The
-          law doesn't work that way: volume is attributed per municipality, the Registro de
-          Comerciantes is per location, and the municipal 1% IVU follows the municipality where
-          the sale happens. If you operate more than one location or municipality, this sequence
-          is a starting point, not the full calculation.
-        </span>
-      </p>
       <div class="tool-grid">
         {
           /* G-19: the question panel and results are re-rendered by
           src/scripts/tool.ts on every answer change already, so tool.ts also
-          owns re-labeling this subtree's text on a language change — rather
-          than the dual-span/CSS technique the rest of the page uses — since
+          owns re-labeling this subtree's text on a language change, rather
+          than the dual-span/CSS technique the rest of the page uses, since
           `<select><option>` text and `aria-label` attributes can't hold a
           hidden alternate-language span. `data-i18n` marks the plain static
           strings tool.ts swaps by key (src/scripts/tool.ts's UI_TEXT). */
@@ -178,15 +170,27 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
           {
             content.questions.map((q) => (
               <div class="question" data-question={q.id}>
-                <div class="question-head">
-                  <span class="question-num">{q.order}</span>
-                  <label class="question-label">{q.label.es}</label>
-                </div>
+                <label class="question-label">{q.label.es}</label>
                 {q.hint && <p class="question-hint">{q.hint.es}</p>}
+                {/* G-27: progressive disclosure, GOV.UK `details` pattern,
+                    closed by default so the panel stays scannable, and inline
+                    rather than a tooltip so it works on touch and reads to a
+                    screen reader. Sits between the question and its answers
+                    so an opened explainer reads before the choice it explains. */}
+                {q.help && (
+                  <details class="q-help">
+                    <summary data-help-summary>{q.help.summary.es}</summary>
+                    <div class="q-help-body" data-help-body set:html={q.help.body.es} />
+                  </details>
+                )}
                 {q.input === 'options' && (
-                  <div class="options" role="group" aria-label={q.label.es}>
+                  <div
+                    class:list={['options', { 'options-2': (q.options?.length ?? 0) % 2 === 0 }]}
+                    role="group"
+                    aria-label={q.label.es}
+                  >
                     {q.options?.map((o) => (
-                      <button type="button" class="option" data-option={o.value}>
+                      <button type="button" class="option" data-option={o.value} aria-pressed="false">
                         <span class="option-label">{o.label.es}</span>
                         {o.detail && <span class="option-detail" set:html={o.detail.es} />}
                       </button>
@@ -195,36 +199,27 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
                 )}
                 {q.input === 'select' && (
                   <select aria-label={q.label.es}>
-                    <option value="">—</option>
+                    <option value="" data-i18n="selectPlaceholder">Escoge un municipio</option>
                     {q.options?.map((o) => <option value={o.value}>{o.label.es}</option>)}
                   </select>
                 )}
                 {q.input === 'number' && (
-                  <input type="number" min="0" step="1" aria-label={q.label.es} />
-                )}
-                {/* G-27: progressive disclosure, GOV.UK `details` pattern —
-                    closed by default so the panel stays scannable, and inline
-                    rather than a tooltip so it works on touch and reads to a
-                    screen reader. */}
-                {q.help && (
-                  <details class="q-help">
-                    <summary data-help-summary>{q.help.summary.es}</summary>
-                    <div class="q-help-body" data-help-body set:html={q.help.body.es} />
-                  </details>
+                  <input type="number" min="0" step="1" inputmode="numeric" placeholder="$" aria-label={q.label.es} />
                 )}
               </div>
             ))
           }
           <div class="stage-nav">
-            <button type="button" class="stage-btn" data-stage-prev hidden>Atrás</button>
-            <button type="button" class="stage-btn is-primary" data-stage-next>Siguiente</button>
+            <span class="stage-next-hint" data-stage-hint></span>
+            <button type="button" class="btn btn-ghost" data-stage-prev hidden>Atrás</button>
+            <button type="button" class="btn btn-primary" data-stage-next>Continuar</button>
           </div>
           <button type="button" class="start-over" data-start-over data-i18n="startOver">
             Empezar de nuevo
           </button>
         </div>
 
-        <div class="results">
+        <div class="results" data-route>
           <div class="empty-state" data-empty-state data-i18n="emptyState">
             Contesta al menos tres preguntas para ver tu secuencia.
           </div>
@@ -676,285 +671,376 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
   }
+  /* The tool (0002, G-33): a header row, then questions on the left and
+     the route on the right above 1080px, one column below. */
+  .tool-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 36px;
+  }
+  .tool-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin: 10px 0 0;
+  }
+  .eyebrow {
+    color: var(--ink-3);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+  /* G-20: the single-location assumption, stated where the reader starts
+     answering rather than left to be discovered the hard way. */
+  .assumption-note {
+    margin: 0;
+    max-width: 30em;
+    font-size: var(--fs-small);
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .assumption-note strong {
+    color: var(--ink);
+  }
   .tool-grid {
     display: grid;
-    grid-template-columns: 330px 1fr;
-    gap: 40px;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 48px;
+    align-items: start;
   }
-  @media (max-width: 860px) {
+  @media (max-width: 1080px) {
     .tool-grid {
       grid-template-columns: 1fr;
     }
   }
+  @media (max-width: 720px) {
+    .tool-head {
+      display: block;
+      margin-bottom: 28px;
+    }
+    .tool-title {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+  }
 
+  /* The questions hold still while a long route scrolls past them, which
+     is what lets a reader change an answer and watch the route react. Only
+     above 1080px: stacked, the column would pin itself over the route. */
   .questions {
-    position: sticky;
-    top: 24px;
-    align-self: start;
-    max-height: calc(100vh - 48px);
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 22px;
-    padding-right: 4px;
+    position: sticky;
+    top: 24px;
+  }
+  @media (max-width: 1080px) {
+    .questions {
+      position: static;
+    }
   }
   .question[hidden] {
     display: none;
   }
 
-  /* G-28: the progress rail. Vertical rather than the horizontal
-     breadcrumb the brief sketched — the question column is 330px, which
-     three named stages plus their counts will not fit across without
-     truncating the names into uselessness. */
+  /* G-28: the progress rail, three stages across, each topped by a bar
+     that turns ink when current and brand once complete. */
   .stage-rail {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 28px;
+  }
+  .stage-rail:empty {
+    display: none;
+  }
+  /* `:global()`: tool.ts builds the rail's buttons with innerHTML, so
+     Astro never stamps them with this component's scoping attribute and a
+     scoped selector would silently miss them. That was the bug behind the
+     unstyled stage buttons measured on 2026-09-27. */
+  :global(.stage-step) {
     display: flex;
     flex-direction: column;
-    gap: 1px;
-    background: var(--rule);
-    border: 1px solid var(--rule);
-    margin-bottom: 4px;
-  }
-  .stage-step {
-    display: grid;
-    grid-template-columns: 20px 1fr auto;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 12px;
-    border: none;
-    background: var(--surface);
+    gap: 6px;
+    min-height: 44px;
+    padding: 12px 0 0;
+    border: 0;
+    border-top: 3px solid var(--rule);
+    background: none;
     color: var(--ink-3);
     font-family: var(--font-body);
-    font-size: var(--fs-small);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
     text-align: left;
     cursor: pointer;
-    transition: background 0.12s, color 0.12s;
   }
-  .stage-step:hover {
+  :global(.stage-step:hover) {
     color: var(--ink);
   }
-  .stage-step:focus-visible {
-    outline: 2px solid var(--brand);
-    outline-offset: -2px;
-  }
-  .stage-step.is-current {
-    background: var(--brand-tint);
-    color: var(--ink);
-  }
-  .stage-step.is-done {
-    color: var(--ink-2);
-  }
-  .stage-num {
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    font-weight: 600;
-    text-align: center;
-    color: var(--ink-3);
-  }
-  .stage-step.is-current .stage-num,
-  .stage-step.is-done .stage-num {
-    color: var(--brand);
-  }
-  .stage-name {
-    font-family: var(--font-display);
-    font-weight: 600;
-  }
-  .stage-count {
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    font-variant-numeric: tabular-nums;
-    color: var(--ink-3);
-  }
-
-  .stage-nav {
-    display: flex;
-    gap: 8px;
-    margin-top: 4px;
-  }
-  .stage-btn {
-    font-family: var(--font-display);
-    font-size: var(--fs-small);
-    font-weight: 600;
-    padding: 10px 18px;
-    border: 1.5px solid var(--rule);
-    background: var(--surface);
-    color: var(--ink-2);
-    cursor: pointer;
-  }
-  .stage-btn.is-primary {
-    background: var(--brand);
-    border-color: var(--brand);
-    color: var(--on-brand);
-    margin-left: auto;
-  }
-  .stage-btn:hover {
-    border-color: var(--brand);
-  }
-  .stage-btn:focus-visible {
+  :global(.stage-step:focus-visible) {
     outline: 2px solid var(--brand);
     outline-offset: 2px;
   }
-  .stage-btn[hidden] {
-    display: none;
+  :global(.stage-step[data-state='done']) {
+    border-top-color: var(--brand);
+    color: var(--ink-2);
   }
-  .question-head {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
+  :global(.stage-step[data-state='current']) {
+    border-top-color: var(--ink);
+    color: var(--ink);
   }
-  .question-num {
+  :global(.stage-count) {
     font-family: var(--font-mono);
-    font-weight: 600;
-    color: var(--brand);
+    font-size: 12px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
   }
-  /* The question itself and its hint are the two things a reader has to
-     read to answer, so both sit above the mechanical size the old values
-     mapped to — a 13px label and an 11.5px hint were the smallest text on
-     a panel whose entire job is being answered. */
+
+  /* One rule between each pair of visible questions. `~` over visible
+     siblings rather than `+`, since hidden questions from other stages sit
+     between them in the markup. */
+  .question:not([hidden]) ~ .question:not([hidden]) {
+    border-top: 1px solid var(--rule);
+    padding-top: 28px;
+    margin-top: 28px;
+  }
   .question-label {
+    display: block;
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
     font-size: var(--fs-h3);
     line-height: 1.3;
+    letter-spacing: -0.01em;
   }
   .question-hint {
-    margin: 6px 0 0 26px;
+    margin: 6px 0 0;
     font-size: var(--fs-small);
     line-height: 1.45;
     color: var(--ink-3);
     max-width: 46ch;
   }
-  /* One per row rather than a wrapping pill row (G-27): options now carry
-     a `detail` line explaining what picking them means, which a pill can't
-     hold. Options without one just render as a taller, easier-to-hit
-     target, which is the right trade on a phone anyway. */
+
+  /* Option cards (G-27). Two across when a question has an even number of
+     options, so pairs line up; one across when odd, so no card sits alone
+     in a half-empty row. One across on phones. */
   .options {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 8px;
-    margin: 10px 0 0 26px;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .options.options-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (max-width: 720px) {
+    .options.options-2 {
+      grid-template-columns: 1fr;
+    }
   }
   .option {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    text-align: left;
-    font-family: var(--font-body);
-    font-size: var(--fs-small);
-    padding: 11px 14px;
-    border: 1.5px solid var(--rule);
+    gap: 4px;
+    min-height: 48px;
+    padding: 14px 40px 14px 16px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 10px;
     background: var(--surface);
     color: var(--ink-2);
+    font-family: var(--font-body);
+    text-align: left;
     cursor: pointer;
     transition:
       border-color 0.12s,
       background 0.12s;
   }
   .option-label {
-    font-family: var(--font-display);
     font-weight: 600;
+    font-size: 15px;
+    line-height: 1.35;
     color: var(--ink);
   }
   .option-detail {
-    font-size: var(--fs-meta);
-    line-height: 1.4;
+    font-size: 13px;
+    line-height: 1.45;
     color: var(--ink-3);
   }
   .option:hover {
-    border-color: var(--brand);
+    border-color: var(--ink-3);
   }
   .option:focus-visible {
     outline: 2px solid var(--brand);
     outline-offset: 2px;
   }
-  /* Selected reads as a tint plus a heavier rule rather than a solid fill:
-     a filled swatch would put two lines of text, one of them secondary, on
-     a saturated ground and cost the contrast the palette just bought. */
-  .option.is-selected {
-    background: var(--brand-tint);
+  .option[aria-pressed='true'] {
     border-color: var(--brand);
+    background: var(--brand-tint);
+    box-shadow: 0 0 0 1px var(--brand);
   }
-  .option.is-selected .option-label {
-    color: var(--brand);
+  .option[aria-pressed='true']::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    right: 14px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--brand)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.2l2.3 2.3 4.7-4.9' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      center / 16px no-repeat;
   }
 
   /* G-27: the explainer, closed by default. `<details>` rather than a
      custom widget so it is keyboard- and screen-reader-correct for free,
-     and findable by in-page search even while collapsed in most browsers. */
+     and findable by in-page search even while collapsed in most browsers.
+     The summary reads as a link under the question; some summaries run
+     past 40 characters, too long to share the question's own line. */
   .q-help {
-    margin: 10px 0 0 26px;
+    margin-top: 4px;
   }
   .q-help summary {
-    cursor: pointer;
-    color: var(--brand);
-    font-size: var(--fs-small);
-    font-weight: 600;
-    list-style: none;
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    padding: 3px 0;
+    min-height: 44px;
+    cursor: pointer;
+    color: var(--brand);
+    font-size: 14px;
+    font-weight: 500;
+    list-style: none;
   }
   .q-help summary::-webkit-details-marker {
     display: none;
   }
   .q-help summary::before {
     content: '?';
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    font-weight: 600;
-    width: 17px;
-    height: 17px;
-    border-radius: 50%;
-    border: 1.5px solid currentColor;
+    flex: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    flex: none;
+    width: 17px;
+    height: 17px;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .q-help summary:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
   .q-help summary:focus-visible {
     outline: 2px solid var(--brand);
-    outline-offset: 3px;
-  }
-  .q-help[open] summary {
-    margin-bottom: 9px;
+    outline-offset: 2px;
   }
   .q-help-body {
+    margin: 2px 0 4px;
+    padding-left: 14px;
+    border-left: 2px solid var(--rule-strong);
+    max-width: 52ch;
     font-size: var(--fs-small);
     line-height: 1.55;
     color: var(--ink-2);
-    border-left: 2px solid var(--rule);
-    padding-left: 14px;
-    max-width: 52ch;
   }
   .q-help-body b {
     color: var(--ink);
   }
   select,
   input[type='number'] {
-    margin: 10px 0 0 26px;
-    font-family: var(--font-display);
-    font-size: var(--fs-small);
-    padding: 7px 10px;
-    border: 1px solid var(--rule);
+    display: block;
+    width: 100%;
+    height: 48px;
+    margin-top: 14px;
+    padding: 0 14px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 10px;
     background: var(--surface);
     color: var(--ink);
-    max-width: calc(100% - 26px);
+    font-family: var(--font-body);
+    font-size: 15px;
+  }
+  select:focus-visible,
+  input[type='number']:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 44px;
+    padding: 0 20px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn[hidden] {
+    display: none;
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+  .btn-primary {
+    background: var(--brand);
+    color: var(--on-brand);
+  }
+  .btn-primary:hover {
+    background: var(--brand-hover);
+  }
+  .btn-ghost {
+    background: var(--surface);
+    border-color: var(--rule-strong);
+    color: var(--ink);
+  }
+  .btn-ghost:hover {
+    border-color: var(--ink-3);
+  }
+
+  .stage-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .stage-next-hint {
+    margin-right: auto;
+    font-size: var(--fs-small);
+    color: var(--ink-3);
   }
   .start-over {
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    font-size: var(--fs-label);
-    letter-spacing: 0.6px;
-    padding: 10px 14px;
-    border: 1px solid var(--rule);
-    background: var(--surface);
-    color: var(--ink-2);
-    cursor: pointer;
     align-self: flex-start;
+    min-height: 44px;
+    margin-top: 12px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink-3);
+    font-family: var(--font-body);
+    font-size: 14px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
   }
   .start-over:hover {
-    border-color: var(--brand);
-    color: var(--brand);
+    color: var(--ink);
+  }
+  .start-over:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
   }
 
   .results {
@@ -1204,23 +1290,6 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     max-width: 66ch;
   }
 
-  /* G-20: the single-location assumption, stated aloud rather than left
-     for a reader to discover the hard way (0001: "the UI states the limit
-     rather than being quietly wrong"). Dashed border distinguishes it from
-     `.section-dek`'s plain prose — a caveat about the tool itself, not
-     content about the process. */
-  .assumption-note {
-    margin: -6px 0 32px 27px;
-    max-width: 66ch;
-    padding: 10px 14px;
-    border: 1px dashed var(--rule);
-    font-size: var(--fs-small);
-    line-height: 1.55;
-    color: var(--ink-3);
-  }
-  .assumption-note strong {
-    color: var(--ink-2);
-  }
   .diagram-figure {
     margin: 0;
   }

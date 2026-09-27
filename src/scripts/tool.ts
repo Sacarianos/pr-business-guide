@@ -46,6 +46,8 @@ const startOverBtn = document.querySelector<HTMLButtonElement>('[data-start-over
 const railEl = document.querySelector<HTMLElement>('[data-stage-rail]');
 const prevBtn = document.querySelector<HTMLButtonElement>('[data-stage-prev]');
 const nextBtn = document.querySelector<HTMLButtonElement>('[data-stage-next]');
+const stageHintEl = document.querySelector<HTMLElement>('[data-stage-hint]');
+const routeEl = document.querySelector<HTMLElement>('[data-route]');
 
 if (
   !questionsEl ||
@@ -89,7 +91,11 @@ const UI_TEXT: Record<string, Record<Lang, string>> = {
   blocks: { es: 'Bloquea', en: 'Blocks' },
   consult: { es: 'Consulta con', en: 'Talk to' },
   stagePrev: { es: 'Atrás', en: 'Back' },
-  stageNext: { es: 'Siguiente', en: 'Next' },
+  stageNext: { es: 'Continuar', en: 'Continue' },
+  stageLast: { es: 'Ver mi ruta', en: 'See my route' },
+  stageHint: { es: 'Siguiente:', en: 'Next:' },
+  stageOf: { es: 'de', en: 'of' },
+  selectPlaceholder: { es: 'Escoge un municipio', en: 'Choose a municipality' },
 };
 
 // Stage names are UI chrome, not content — they describe how the form is
@@ -150,12 +156,16 @@ for (const block of questionsEl.querySelectorAll<HTMLElement>('[data-question]')
 startOverBtn?.addEventListener('click', () => {
   answers = emptyAnswers();
   stage = 1;
-  for (const btn of questionsEl.querySelectorAll('[data-option]')) btn.classList.remove('is-selected');
   for (const select of questionsEl.querySelectorAll('select')) select.value = '';
   for (const input of questionsEl.querySelectorAll<HTMLInputElement>('input[type="number"]'))
     input.value = '';
   render();
 });
+
+// Smooth scrolling unless the reader asked the OS for less motion.
+function scrollBehavior(): ScrollBehavior {
+  return matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+}
 
 function goToStage(next: number): void {
   const stages = stageBreakdown(content.questions, answers);
@@ -167,11 +177,22 @@ function goToStage(next: number): void {
   // above a results panel that is often taller than the screen, so
   // advancing a stage without this can leave the reader looking at
   // unchanged results with the new questions somewhere off-screen.
-  questionsEl!.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  questionsEl!.scrollIntoView({ block: 'nearest', behavior: scrollBehavior() });
 }
 
 prevBtn?.addEventListener('click', () => goToStage(stage - 1));
-nextBtn?.addEventListener('click', () => goToStage(stage + 1));
+nextBtn?.addEventListener('click', () => {
+  const stages = stageBreakdown(content.questions, answers);
+  const last = stages[stages.length - 1]?.stage ?? 1;
+  if (stage < last) {
+    goToStage(stage + 1);
+    return;
+  }
+  // The last stage's button reads "Ver mi ruta": the questions are done, so
+  // take the reader to the route. It matters most on a phone, where the
+  // route sits below the whole question column.
+  routeEl?.scrollIntoView({ block: 'start', behavior: scrollBehavior() });
+});
 
 railEl?.addEventListener('click', (event) => {
   const target = (event.target as HTMLElement).closest<HTMLElement>('[data-stage-go]');
@@ -197,13 +218,12 @@ function renderStages(): void {
     railEl.innerHTML = stages
       .map((s) => {
         const name = STAGE_NAMES[s.stage]?.[lang] ?? String(s.stage);
-        const state = s.stage === stage ? 'is-current' : s.complete ? 'is-done' : '';
+        const state = s.stage === stage ? 'current' : s.complete ? 'done' : 'todo';
         return `
-          <button type="button" class="stage-step ${state}" data-stage-go="${s.stage}"
+          <button type="button" class="stage-step" data-stage-go="${s.stage}" data-state="${state}"
                   aria-current="${s.stage === stage ? 'step' : 'false'}">
-            <span class="stage-num">${s.complete && s.stage !== stage ? '✓' : s.stage}</span>
+            <span class="stage-count">${s.stage} · ${s.answered} ${UI_TEXT.stageOf![lang]} ${s.total}</span>
             <span class="stage-name">${escapeHtml(name)}</span>
-            <span class="stage-count">${s.answered}/${s.total}</span>
           </button>`;
       })
       .join('');
@@ -216,8 +236,11 @@ function renderStages(): void {
     prevBtn.textContent = UI_TEXT.stagePrev![lang];
   }
   if (nextBtn) {
-    nextBtn.hidden = stage >= last;
-    nextBtn.textContent = UI_TEXT.stageNext![lang];
+    nextBtn.textContent = (stage >= last ? UI_TEXT.stageLast! : UI_TEXT.stageNext!)[lang];
+  }
+  if (stageHintEl) {
+    const upcoming = STAGE_NAMES[stage + 1]?.[lang];
+    stageHintEl.textContent = stage < last && upcoming ? `${UI_TEXT.stageHint![lang]} ${upcoming}` : '';
   }
 }
 
@@ -332,7 +355,7 @@ function render(): void {
   renderStages();
   for (const block of questionsEl!.querySelectorAll<HTMLElement>('[data-question]')) {
     for (const btn of block.querySelectorAll<HTMLButtonElement>('[data-option]')) {
-      btn.classList.toggle('is-selected', readAnswer(block.dataset.question!) === btn.dataset.option);
+      btn.setAttribute('aria-pressed', String(readAnswer(block.dataset.question!) === btn.dataset.option));
     }
   }
 

@@ -207,7 +207,7 @@ The freshness module gains a short date label: "6 ago 2026" / "Aug 6, 2026".
 - **The patente stat** reads `$240/año` / `$240/yr` for a positive estimate, `$0` for an exemption, and "Sin estimar" / "Not estimated" when there's no estimate. A non-primary estimate also carries its sourcing pill.
 - **What's always visible on a stop:** the title, sourcing pill, agency, timing, cost, the "Bloquea" / "Blocks" line, the professional note, and the practice banner. Only the long `note` sits behind the stop's toggle. Every stop starts collapsed.
 - **Option grid:** two columns when a question has an even number of options, one column when odd. One column for every question at 720px and below.
-- **Explainers** stay as the G-27 `<details>`. The summary text sits on the right of the question's label row, styled as a link.
+- **Explainers** stay as the G-27 `<details>`. The summary sits on its own line under the question, styled as a link. The reference put it on the right of the label row, but some summaries run past 40 characters, such as "¿Qué cambia de un municipio a otro?", and don't fit there beside a long question.
 - **Stage navigation:**
   - The rail shows each stage's number, answered count, total and name, with states `done`, `current` or `todo`.
   - "Continuar" / "Continue" moves to the next stage.
