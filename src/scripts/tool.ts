@@ -395,20 +395,26 @@ function alwaysVisible(s: StepResult): string {
     ${practiceBanner(s.practice)}`;
 }
 
+// Agency and timing are always-visible facts about a stop (0002), whichever
+// of the two shapes it renders as. '—' is the content's "no value", so that
+// part drops out of the line instead of printing a bare dash.
+function metaLine(s: RouteStop): string {
+  const parts = [
+    s.agency[lang] === '—' ? '' : `<b>${escapeHtml(s.agency[lang])}</b>`,
+    s.timing[lang] === '—' ? '' : escapeHtml(s.timing[lang]),
+  ].filter(Boolean);
+  return parts.length ? `<p class="stop-meta">${parts.join(' · ')}</p>` : '';
+}
+
 function stopItem(s: RouteStop): string {
   const marker = s.recurring ? '↻' : String(s.number);
-  const hasAgency = s.agency[lang] !== '—';
-  const hasTiming = s.timing[lang] !== '—';
-  const meta = [hasAgency ? `<b>${escapeHtml(s.agency[lang])}</b>` : '', hasTiming ? escapeHtml(s.timing[lang]) : '']
-    .filter(Boolean)
-    .join(' · ');
   const cost = s.cost[lang] === '—' ? UI_TEXT.costUnknown![lang] : s.cost[lang];
   return `
     <li class="stop" data-stop="${s.id}" data-kind="action" data-severity="${s.severity ?? ''}" data-sourcing="${s.sourcing}">
       <span class="pin${s.recurring ? ' pin-recurring' : ''}" data-stop-num>${marker}</span>
       <div class="stop-head">
         <h5 class="stop-title">${escapeHtml(s.title[lang])} ${sourcingMark(s.sourcing)}</h5>
-        ${meta ? `<p class="stop-meta">${meta}</p>` : ''}
+        ${metaLine(s)}
       </div>
       <div class="stop-cost">${escapeHtml(cost)}</div>
       <div class="stop-body">
@@ -426,6 +432,7 @@ function calloutItem(s: RouteStop): string {
       ${CALLOUT_ICON}
       <div>
         <p class="callout-title">${escapeHtml(s.title[lang])} ${sourcingMark(s.sourcing)}</p>
+        ${metaLine(s)}
         ${alwaysVisible(s)}
         ${detailToggle(s)}
       </div>

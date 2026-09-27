@@ -226,7 +226,6 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
               <h3 class="route-heading" data-route-heading>Tu negocio</h3>
               <p class="route-subline" data-route-subline></p>
             </div>
-            <div class="panel-actions" data-route-actions></div>
           </div>
           {/* Before three answers the panel still shows what's coming: the
               five phases the route will fill, muted. */}
@@ -1105,10 +1104,6 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   .route-subline:empty {
     display: none;
   }
-  .panel-actions {
-    display: flex;
-    gap: 8px;
-  }
   .route-empty,
   .route-body {
     padding: 8px 28px 28px;
@@ -1395,6 +1390,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     color: var(--ink);
     font-weight: 700;
   }
+  :global(.callout .stop-meta),
+  :global(.callout .stop-meta b),
   :global(.callout .stop-toggle) {
     color: inherit;
   }
