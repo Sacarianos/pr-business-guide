@@ -250,7 +250,7 @@ These hooks replace `data-glance`, `data-sequence` and `data-recurring`. `data-i
 - **A good test here checks what a reader or the next module sees:** which stops land in which phase, which numbers they carry, what the URL holds, which pixels meet contrast. It doesn't check how a function builds its answer, and it doesn't pin CSS values that aren't a decision in this spec.
 - **Seam A, in the existing decision-tree suite:**
   - `groupByPhase`, `routeSummary`, `routeHeading`, the query round trip and `SAMPLE_ANSWERS` validity, with the same scenario style as the seven existing scenarios.
-  - Prior art: the `stageBreakdown` and `partitionRecurring` blocks.
+  - Prior art: the `stageBreakdown` block. (G-34 retired `partitionRecurring` and its block, since `groupByPhase` now owns the recurring split.)
 - **Content, in the existing content-schema suite:**
   - the `phase` and `kind` enums
   - the recurring invariant across all real steps

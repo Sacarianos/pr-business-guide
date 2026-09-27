@@ -1559,10 +1559,6 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   .route-subline:empty {
     display: none;
   }
-  .panel-actions {
-    display: flex;
-    gap: 8px;
-  }
   .route-empty,
   .route-body {
     padding: 8px 28px 28px;
@@ -1849,6 +1845,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     color: var(--ink);
     font-weight: 700;
   }
+  :global(.callout .stop-meta),
+  :global(.callout .stop-meta b),
   :global(.callout .stop-toggle) {
     color: inherit;
   }
@@ -2068,6 +2066,10 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     }
   }
 
+  .panel-actions {
+    display: flex;
+    gap: 8px;
+  }
   .panel-actions[hidden] {
     display: none;
   }
