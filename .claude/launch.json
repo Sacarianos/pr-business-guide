@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 4321
+    },
+    {
+      "name": "design reference",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4400", "--directory", "design"],
+      "port": 4400
     }
   ]
 }
