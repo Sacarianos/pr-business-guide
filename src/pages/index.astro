@@ -331,7 +331,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
           </button>
         </div>
 
-        <div class="panel" data-route aria-label="Tu ruta / Your route">
+        <div class="panel" data-route>
           <div class="panel-head">
             <div>
               <p class="eyebrow" data-i18n="routeEyebrow">Tu ruta</p>
@@ -1545,10 +1545,6 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   .route-subline:empty {
     display: none;
   }
-  .panel-actions {
-    display: flex;
-    gap: 8px;
-  }
   .route-empty,
   .route-body {
     padding: 8px 28px 28px;
@@ -1608,6 +1604,10 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     color: var(--ink-3);
   }
   :global(.summary-cell dd) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
     margin: 0;
     font-family: var(--font-mono);
     font-size: 18px;
@@ -1748,6 +1748,9 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     font-weight: 500;
     color: var(--ink-2);
   }
+  :global(.stop-body) {
+    grid-column: 2 / 4;
+  }
   :global(.stop-cost) {
     padding-top: 6px;
     max-width: 16ch;
@@ -1828,6 +1831,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     color: var(--ink);
     font-weight: 700;
   }
+  :global(.callout .stop-meta),
+  :global(.callout .stop-meta b),
   :global(.callout .stop-toggle) {
     color: inherit;
   }
@@ -2047,6 +2052,10 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     }
   }
 
+  .panel-actions {
+    display: flex;
+    gap: 8px;
+  }
   .panel-actions[hidden] {
     display: none;
   }
@@ -2179,8 +2188,11 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     :global(.stop) {
       grid-template-columns: 32px minmax(0, 1fr);
     }
+    :global(.stop-body),
     :global(.stop-cost) {
       grid-column: 2;
+    }
+    :global(.stop-cost) {
       max-width: none;
       padding-top: 4px;
       text-align: left;
