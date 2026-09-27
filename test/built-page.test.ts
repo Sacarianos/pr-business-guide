@@ -78,3 +78,43 @@ test('G-29: :root defines every Verde ruta token with its specified value', () =
     assert.equal(expandHex(tokens.get(name)!), expandHex(value), `${name} has the wrong value`);
   }
 });
+
+// G-32. The built HTML is this test's contract: the hero is static output,
+// so what it says is exactly what a first-time visitor reads.
+const contentJson = JSON.parse(readFileSync(join(dist, 'content.json'), 'utf8')) as {
+  steps: Record<string, unknown>;
+  municipios: Record<string, unknown>;
+};
+
+function between(source: string, start: string, end: string): string {
+  const from = source.indexOf(start);
+  assert.ok(from >= 0, `${start} is missing from the built page`);
+  const to = source.indexOf(end, from);
+  assert.ok(to > from, `${end} does not close ${start}`);
+  return source.slice(from, to);
+}
+
+test('G-32: the page has exactly one hero', () => {
+  assert.equal(html.match(/data-hero/g)?.length, 1);
+});
+
+test('G-32: the sample route shows the first four procedures of the example, in order', () => {
+  const sample = between(html, 'data-sample-route', '</aside>');
+  const titles = [...sample.matchAll(/class="sample-stop-title"[^>]*>\s*<span lang="es"[^>]*>([^<]+)</g)].map(
+    (m) => m[1]!.trim(),
+  );
+  assert.deepEqual(titles, [
+    'Organizar la LLC',
+    'Decidir la clasificación contributiva de la LLC',
+    'Obtener el EIN federal',
+    'Registro de Comerciantes',
+  ]);
+  assert.match(sample, /data-sample-more="8"/);
+});
+
+test('G-32: the proof numbers come from the content and the research date', () => {
+  const proof = (key: string) => new RegExp(`data-proof="${key}"[^>]*>([^<]+)<`).exec(html)?.[1]?.trim();
+  assert.equal(proof('steps'), String(Object.keys(contentJson.steps).length));
+  assert.equal(proof('municipios'), String(Object.keys(contentJson.municipios).filter((id) => id !== 'other').length));
+  assert.equal(proof('date'), '6 ago 2026');
+});

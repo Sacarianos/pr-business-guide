@@ -14,9 +14,37 @@ import {
   professionalLabel,
   sourcingLabel,
 } from '../lib/sourcing-label';
-import { researchDateLabel } from '../lib/freshness';
+import { researchDateLabel, researchDateShort } from '../lib/freshness';
+import {
+  answersToQuery,
+  buildSequence,
+  formatMoney,
+  groupByPhase,
+  routeHeading,
+  routeSummary,
+  SAMPLE_ANSWERS,
+} from '../lib/decision-tree';
 
 const content = await loadContent();
+
+// The hero's sample route (0002, G-32), built here at build time from the
+// same logic and content the tool uses, so the first screen can't drift
+// from what the tool would actually say for these answers.
+const sampleResult = buildSequence(SAMPLE_ANSWERS, content);
+const sampleHeading = routeHeading(SAMPLE_ANSWERS, content);
+const sampleSummary = routeSummary(sampleResult);
+const sampleStops = groupByPhase(sampleResult, content)
+  .flatMap((g) => g.stops)
+  .filter((stop) => stop.number !== null)
+  .slice(0, 4);
+const sampleMore = sampleSummary.steps - sampleStops.length;
+const samplePatente = sampleSummary.patente ? formatMoney(sampleSummary.patente.amount) : null;
+const sampleHref = `?${answersToQuery(SAMPLE_ANSWERS, content.questions)}#ruta`;
+
+// Proof numbers under the headline: how much the guide documents, and when
+// it was last checked. `other` is the catch-all municipio with no rates.
+const proofSteps = Object.keys(content.steps).length;
+const proofMunicipios = Object.keys(content.municipios).filter((id) => id !== 'other').length;
 
 // Sorted by each entry's own `order` field (least to most structure: sole →
 // LLC → corporación) rather than content/entities.yaml's key order, which
@@ -65,7 +93,25 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
   <body>
     <header class="top">
       <div class="wrap top-inner">
-        <span class="brand-mark">GUÍA&nbsp;·&nbsp;PR</span>
+        <a class="brand" href="#">
+          <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+            <rect width="28" height="28" rx="7" fill="var(--brand)" />
+            <circle cx="9" cy="9" r="3" fill="none" stroke="#fff" stroke-width="2" />
+            <circle cx="19" cy="19" r="3" fill="var(--mark)" />
+            <path d="M9 12v2a5 5 0 0 0 5 5h2" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <b>
+            <span lang="es">Guía de Apertura</span>
+            <span lang="en">Opening Guide</span>
+          </b>
+          <span class="brand-place">Puerto Rico</span>
+        </a>
+        <nav class="nav" aria-label="Secciones / Sections">
+          <a href="#ruta"><span lang="es">Arma tu ruta</span><span lang="en">Build your route</span></a>
+          <a href="#proceso"><span lang="es">El proceso</span><span lang="en">The process</span></a>
+          <a href="#entidades"><span lang="es">Formas legales</span><span lang="en">Legal forms</span></a>
+          <a href="#limites"><span lang="es">Lo que no sabemos</span><span lang="en">What we don't know</span></a>
+        </nav>
         <div class="lang-toggle" role="group" aria-label="Idioma / Language">
           <button type="button" class="lang-btn" data-lang-option="es" aria-pressed="true">ES</button>
           <button type="button" class="lang-btn" data-lang-option="en" aria-pressed="false">EN</button>
@@ -73,53 +119,119 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
       </div>
     </header>
 
-    <section class="masthead">
-      <div class="wrap">
-      <p class="eyebrow">
-        <span lang="es">Guía práctica, no asesoría legal</span>
-        <span lang="en">A practical guide, not legal advice</span>
-      </p>
-      <h1>
-        <span lang="es">Guía de Apertura de Negocios en Puerto Rico</span>
-        <span lang="en">Guide to Starting a Business in Puerto Rico</span>
-      </h1>
-      <p class="dek">
-        <span lang="es">
-          Contesta hasta diez preguntas y arma tu propia secuencia — agencia, plazo y costo por
-          cada paso — con los incentivos y la patente municipal que te tocan.
-        </span>
-        <span lang="en">
-          Answer up to ten questions and build your own sequence — agency, deadline, and cost per
-          step — plus the incentives and municipal patente that apply to you.
-        </span>
-      </p>
+    <section class="hero" data-hero>
+      <div class="wrap hero-inner">
+        <div>
+          <p class="eyebrow">
+            <span lang="es">Guía gratuita · No es asesoría legal</span>
+            <span lang="en">Free guide · Not legal advice</span>
+          </p>
+          <h1>
+            <span lang="es">Todo lo que necesitas para abrir tu negocio en Puerto Rico, <em>en orden.</em></span>
+            <span lang="en">Everything you need to open a business in Puerto Rico, <em>in order.</em></span>
+          </h1>
+          <p class="lead">
+            <span lang="es">
+              Contesta diez preguntas y te decimos qué trámites te tocan, en qué agencia, cuánto
+              cuestan y qué va primero. Cada dato enlaza a su fuente oficial.
+            </span>
+            <span lang="en">
+              Answer ten questions and we tell you which procedures apply to you, at which agency,
+              what they cost and what comes first. Every figure links to its official source.
+            </span>
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-primary btn-lg" href="#ruta">
+              <span lang="es">Arma tu ruta</span><span lang="en">Build your route</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </a>
+            <a class="btn btn-ghost btn-lg" href={sampleHref} data-see-example>
+              <span lang="es">Ver un ejemplo</span><span lang="en">See an example</span>
+            </a>
+          </div>
+          <div class="proof">
+            <div>
+              <strong data-proof="steps">{proofSteps}</strong>
+              <span><span lang="es">trámites documentados</span><span lang="en">documented procedures</span></span>
+            </div>
+            <div>
+              <strong data-proof="municipios">{proofMunicipios}</strong>
+              <span><span lang="es">municipios con tarifas</span><span lang="en">municipalities with rates</span></span>
+            </div>
+            <div>
+              <strong>
+                <span lang="es" data-proof="date">{researchDateShort('es')}</span>
+                <span lang="en">{researchDateShort('en')}</span>
+              </strong>
+              <span><span lang="es">última verificación</span><span lang="en">last verified</span></span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="sample" data-sample-route aria-label="Ruta de ejemplo / Sample route">
+          <div class="sample-head">
+            <p class="eyebrow"><span lang="es">Ejemplo</span><span lang="en">Example</span></p>
+            <h2 class="sample-title">
+              <span lang="es">{sampleHeading.title.es}</span>
+              <span lang="en">{sampleHeading.title.en}</span>
+            </h2>
+            <p class="sample-subline">
+              <span lang="es">{sampleHeading.subline.es}</span>
+              <span lang="en">{sampleHeading.subline.en}</span>
+            </p>
+          </div>
+          <dl class="sample-stats">
+            <div>
+              <dt><span lang="es">Trámites</span><span lang="en">Procedures</span></dt>
+              <dd>{sampleSummary.steps}</dd>
+            </div>
+            <div>
+              <dt><span lang="es">Recurrentes</span><span lang="en">Recurring</span></dt>
+              <dd>{sampleSummary.recurring}</dd>
+            </div>
+            <div>
+              <dt><span lang="es">Patente est.</span><span lang="en">Est. patente</span></dt>
+              <dd>
+                <span lang="es">{samplePatente ? `${samplePatente}/año` : 'Sin estimar'}</span>
+                <span lang="en">{samplePatente ? `${samplePatente}/yr` : 'Not estimated'}</span>
+              </dd>
+            </div>
+          </dl>
+          <ol class="sample-route">
+            {
+              sampleStops.map((stop) => (
+                <li class="sample-stop" data-stop={stop.id} data-severity={stop.severity ?? ''}>
+                  <span class="pin">{stop.number}</span>
+                  <div>
+                    <h3 class="sample-stop-title">
+                      <span lang="es">{stop.title.es}</span>
+                      <span lang="en">{stop.title.en}</span>
+                    </h3>
+                    <p class="sample-stop-meta">
+                      <span lang="es">{stop.agency.es}</span>
+                      <span lang="en">{stop.agency.en}</span>
+                    </p>
+                  </div>
+                  <span class="sample-stop-cost">
+                    <span lang="es">{stop.cost.es === '—' ? '' : stop.cost.es}</span>
+                    <span lang="en">{stop.cost.en === '—' ? '' : stop.cost.en}</span>
+                  </span>
+                </li>
+              ))
+            }
+          </ol>
+          <div class="sample-foot" data-sample-more={sampleMore}>
+            <span>
+              <span lang="es">y {sampleMore} trámites más</span>
+              <span lang="en">and {sampleMore} more procedures</span>
+            </span>
+            <a href={sampleHref}>
+              <span lang="es">Ver la ruta completa</span><span lang="en">See the full route</span>
+            </a>
+          </div>
+        </aside>
       </div>
     </section>
-
-    <div class="alert-strip">
-      <div class="wrap alert-inner">
-      <span class="alert-label">
-        <span lang="es">Vigencia</span>
-        <span lang="en">Currency</span>
-      </span>
-      <p class="alert-body">
-        <span lang="es">
-          Investigación compilada el {researchDateLabel('es')}. Mucho de lo que circula en línea
-          cita la Ley 113-1974 (derogada en 2020) para la patente municipal, exige el informe
-          anual que las corporaciones ya no radican desde 2025, o describe términos de la Ley 60
-          anteriores a la enmienda de 2026. Si algo en esta guía entra en conflicto con lo que
-          leíste en otro sitio, confía en la fecha, no en el número de resultados de Google.
-        </span>
-        <span lang="en">
-          Research compiled {researchDateLabel('en')}. Much of what circulates online cites Ley
-          113-1974 (repealed in 2020) for the municipal patente, requires the annual report
-          corporations no longer file since 2025, or describes Act 60 terms predating the 2026
-          amendment. If anything in this guide conflicts with what you read elsewhere, trust the
-          date, not the search-result count.
-        </span>
-      </p>
-      </div>
-    </div>
 
     <main class="tool" id="ruta">
       <div class="wrap">
@@ -270,7 +382,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
       </div>
     </main>
 
-    <section class="diagram-section">
+    <section class="diagram-section" id="proceso">
       <div class="wrap">
       <div class="section-head">
         <span class="section-num">2</span>
@@ -314,7 +426,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
       </div>
     </section>
 
-    <section class="entities-section">
+    <section class="entities-section" id="entidades">
       <div class="wrap">
       <div class="section-head">
         <span class="section-num">3</span>
@@ -431,8 +543,30 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
       </div>
     </section>
 
-    <section class="gaps-section">
+    <section class="gaps-section" id="limites">
       <div class="wrap">
+      {/* G-17: research date and freshness stamp. Moved here from under the
+          old masthead (0002): the hero shows the date, and the reason the
+          date matters belongs with the list of what couldn't be verified. */}
+      <div class="vigencia">
+        <p class="eyebrow"><span lang="es">Vigencia</span><span lang="en">Currency</span></p>
+        <p class="vigencia-body">
+          <span lang="es">
+            Investigación compilada el {researchDateLabel('es')}. Mucho de lo que circula en línea
+            cita la Ley 113-1974, derogada en 2020, para la patente municipal, exige el informe
+            anual que las corporaciones ya no radican desde 2025, o describe términos de la Ley 60
+            anteriores a la enmienda de 2026. Si algo en esta guía choca con lo que leíste en otro
+            sitio, confía en la fecha, no en el número de resultados de Google.
+          </span>
+          <span lang="en">
+            Research compiled {researchDateLabel('en')}. Much of what circulates online cites Ley
+            113-1974, repealed in 2020, for the municipal patente, requires the annual report
+            corporations no longer file since 2025, or describes Act 60 terms predating the 2026
+            amendment. If anything in this guide clashes with what you read elsewhere, trust the
+            date, not the search-result count.
+          </span>
+        </p>
+      </div>
       <div class="section-head">
         <span class="section-num">4</span>
         <h2>
@@ -589,102 +723,367 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     justify-content: space-between;
     height: 64px;
   }
-  .brand-mark {
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    font-weight: 600;
-    letter-spacing: 1.2px;
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .brand svg {
+    flex: none;
+  }
+  .brand b {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .brand-place {
+    font-size: 13px;
+    font-weight: 500;
     color: var(--ink-3);
+  }
+  .nav {
+    display: flex;
+    gap: 24px;
+    margin-left: auto;
+    margin-right: 32px;
+  }
+  .nav a {
+    color: var(--ink-2);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .nav a:hover {
+    color: var(--ink);
+  }
+  .nav a:focus-visible,
+  .brand:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 4px;
   }
   .lang-toggle {
     display: inline-flex;
-    border: 1px solid var(--rule);
+    padding: 2px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 8px;
   }
   .lang-btn {
+    min-width: 44px;
+    min-height: 32px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: var(--ink-3);
     font-family: var(--font-mono);
-    font-size: var(--fs-label);
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.5px;
-    padding: 5px 12px;
-    border: none;
-    background: var(--surface);
-    color: var(--ink-2);
     cursor: pointer;
   }
-  .lang-btn:not(:last-child) {
-    border-right: 1px solid var(--rule);
-  }
   .lang-btn[aria-pressed='true'] {
-    background: var(--brand);
+    background: var(--ink);
     color: var(--surface);
   }
   .lang-btn:focus-visible {
     outline: 2px solid var(--brand);
-    outline-offset: -2px;
+    outline-offset: 2px;
+  }
+  @media (max-width: 720px) {
+    .nav {
+      display: none;
+    }
+    .brand-place {
+      display: none;
+    }
+    .lang-btn {
+      min-height: 44px;
+    }
   }
 
-  .masthead {
+  /* The hero (0002, G-32): the headline and calls to action on the left,
+     a finished sample route on the right, so a first-time visitor sees
+     what the tool gives them before answering anything. */
+  .hero {
+    padding: 72px 0 80px;
     background: var(--paper);
-    padding: 44px 0 32px;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 64px;
+    align-items: center;
   }
   .eyebrow {
+    margin: 0;
     font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    letter-spacing: 1.2px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--brand);
-    margin: 0 0 10px;
+    color: var(--ink-3);
   }
   h1 {
+    margin: 18px 0 22px;
     font-family: var(--font-display);
+    font-size: 58px;
     font-weight: 800;
-    font-size: var(--fs-display);
+    line-height: 1.02;
     letter-spacing: -0.03em;
-    margin: 0 0 12px;
+    text-wrap: balance;
   }
-  .dek {
-    max-width: 62ch;
-    font-size: var(--fs-h3);
+  h1 em {
+    font-style: normal;
+    color: var(--brand);
+  }
+  .lead {
+    max-width: 34em;
+    margin: 0 0 32px;
+    font-size: 19px;
+    line-height: 1.55;
     color: var(--ink-2);
+  }
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .btn-lg {
+    height: 50px;
+    padding: 0 22px;
+    font-size: 16px;
+  }
+  .proof {
+    display: flex;
+    gap: 32px;
+    margin-top: 44px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .proof > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .proof strong {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .proof > div > span {
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+  .sample {
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow:
+      0 1px 2px rgba(20, 24, 27, 0.05),
+      0 4px 16px rgba(20, 24, 27, 0.05);
+  }
+  .sample-head {
+    padding: 20px 24px 18px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .sample-title {
+    margin: 8px 0 0;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .sample-subline {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+  .sample-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     margin: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .sample-stats > div {
+    padding: 14px 24px;
+  }
+  .sample-stats > div + div {
+    border-left: 1px solid var(--rule);
+  }
+  .sample-stats dt {
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+  }
+  .sample-stats dd {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .sample-route {
+    list-style: none;
+    margin: 0;
+    padding: 8px 24px 4px;
+  }
+  .sample-stop {
+    position: relative;
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) auto;
+    gap: 0 16px;
+    padding: 14px 0;
+  }
+  .sample-stop::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--rule-strong);
+  }
+  .sample-stop:first-child::before {
+    top: 24px;
+  }
+  .sample-stop:last-child::before {
+    bottom: calc(100% - 24px);
+  }
+  .sample-stop .pin {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 2px solid var(--rule-strong);
+    border-radius: 50%;
+    background: var(--surface);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .sample-stop[data-severity='key'] .pin {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: var(--on-brand);
+  }
+  .sample-stop[data-severity='warn'] .pin {
+    background: var(--warn-bg);
+    border-color: var(--warn-ink);
+    color: var(--warn-ink);
+  }
+  .sample-stop-title {
+    margin: 4px 0;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .sample-stop-meta {
+    margin: 0;
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+  .sample-stop-cost {
+    max-width: 14ch;
+    padding-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.35;
+    text-align: right;
+  }
+  .sample-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 24px;
+    background: var(--sunk);
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .sample-foot a {
+    color: var(--brand);
+  }
+  @media (max-width: 1080px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+  @media (max-width: 720px) {
+    .hero {
+      padding: 40px 0 48px;
+    }
+    h1 {
+      font-size: 38px;
+    }
+    .lead {
+      font-size: 17px;
+    }
+    .proof {
+      gap: 20px;
+    }
+    .proof strong {
+      font-size: 22px;
+    }
+    .sample-head,
+    .sample-foot {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+    .sample-stats > div {
+      padding: 12px 16px;
+    }
+    .sample-route {
+      padding: 4px 16px;
+    }
+    .sample-stop {
+      grid-template-columns: 32px minmax(0, 1fr);
+    }
+    .sample-stop-cost {
+      grid-column: 2;
+      max-width: none;
+      padding-top: 4px;
+      text-align: left;
+    }
   }
 
-  /* G-17: research date + freshness stamp. Per the design handoff's Alert
-     strip spec — a 210px label column beside the body text, top-ruled —
-     minus the countdown alert cut on 2026-08-07 (0001 amendment); this is
-     the one alert that survives. */
-  .alert-strip {
-    padding: 16px 0;
-    border-top: 1px solid var(--rule);
-    background: var(--paper);
-  }
-  .alert-inner {
-    display: flex;
+  /* G-17's freshness stamp, now at the top of the limits section. */
+  .vigencia {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
     gap: 18px;
+    margin-bottom: 48px;
+    padding: 20px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
   }
-  .alert-label {
-    flex: 0 0 210px;
-    font-family: var(--font-mono);
-    font-size: var(--fs-label);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: var(--brand);
-    padding-top: 2px;
+  .vigencia .eyebrow {
+    padding-top: 3px;
   }
-  .alert-body {
+  .vigencia-body {
+    max-width: 76ch;
     margin: 0;
     font-size: var(--fs-small);
     line-height: 1.55;
     color: var(--ink-2);
-    max-width: 76ch;
   }
-  @media (max-width: 640px) {
-    .alert-inner {
-      flex-direction: column;
-      gap: 6px;
-    }
-    .alert-label {
-      flex: none;
+  @media (max-width: 720px) {
+    .vigencia {
+      grid-template-columns: 1fr;
+      gap: 8px;
     }
   }
 
