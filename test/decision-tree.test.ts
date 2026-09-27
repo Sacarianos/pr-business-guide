@@ -15,6 +15,8 @@ import { join } from 'node:path';
 import { test, describe } from 'node:test';
 import {
   answeredCount,
+  answersFromQuery,
+  answersToQuery,
   buildSequence,
   emptyAnswers,
   groupByPhase,
@@ -536,6 +538,55 @@ describe('groupByPhase and routeSummary (0002, G-30)', () => {
     assert.equal(summary.steps, 12);
     assert.equal(summary.recurring, 4);
     assert.equal(summary.patente?.amount, 240);
+  });
+});
+
+describe('answers in the URL (0002, G-31)', () => {
+  const Q =
+    'type=food&entity=llc&premises=commercial&buildout=no&muni=sanjuan&vol=120000&hiring=yes&driving=no&exportsvc=no&young=no';
+
+  test('no answers make an empty query', () => {
+    assert.equal(answersToQuery(emptyAnswers(), content.questions), '');
+  });
+
+  test('the sample answers make the spec query exactly, in question order', () => {
+    assert.equal(answersToQuery(SAMPLE_ANSWERS, content.questions), Q);
+  });
+
+  test('encoding then decoding gives back the same answers', () => {
+    const sets: Answers[] = [
+      SAMPLE_ANSWERS,
+      answers({ type: 'prof', entity: 'sole', premises: 'home', vol: 3000, hiring: 'no', exportsvc: 'no', young: 'no' }),
+      answers({ type: 'food', entity: 'llc', premises: 'commercial', buildout: 'yes', hiring: 'yes', driving: 'yes', muni: 'sanjuan', vol: 80000 }),
+      answers({ type: 'retail', entity: 'corp', premises: 'commercial', buildout: 'no', hiring: 'no', muni: 'ponce', vol: 600000 }),
+      answers({ type: 'mfg', entity: 'unsure', premises: 'mobile', muni: 'camuy', vol: 4000 }),
+      answers({ type: 'retail', entity: 'llc', premises: 'commercial', muni: 'other', vol: 50000 }),
+      answers({ type: 'prof', entity: 'llc', premises: 'home' }),
+      answers({ hiring: 'yes', driving: 'no' }),
+    ];
+    for (const a of sets) {
+      assert.deepEqual(answersFromQuery(answersToQuery(a, content.questions), content.questions), a);
+    }
+  });
+
+  test('a leading question mark is accepted', () => {
+    assert.deepEqual(answersFromQuery(`?${Q}`, content.questions), SAMPLE_ANSWERS);
+  });
+
+  test('unknown keys and values outside a question\'s options are dropped', () => {
+    assert.deepEqual(
+      answersFromQuery('type=spaceship&muni=sanjuan&foo=1', content.questions),
+      answers({ muni: 'sanjuan' }),
+    );
+    assert.equal(answersFromQuery('muni=atlantis', content.questions).muni, null);
+  });
+
+  test('vol must be a finite number of at least zero', () => {
+    for (const bad of ['vol=-5', 'vol=abc', 'vol=', 'vol=Infinity', 'vol=%20']) {
+      assert.equal(answersFromQuery(bad, content.questions).vol, null, bad);
+    }
+    assert.equal(answersFromQuery('vol=120000', content.questions).vol, 120000);
+    assert.equal(answersFromQuery('vol=0', content.questions).vol, 0);
   });
 });
 

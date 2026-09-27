@@ -13,6 +13,8 @@
 // already regenerates its results HTML on every answer change — so
 // re-rendering in a different language on `langchange` costs nothing extra.
 import {
+  answersFromQuery,
+  answersToQuery,
   buildSequence,
   emptyAnswers,
   formatMoney,
@@ -61,7 +63,9 @@ if (
   throw new Error('tool.ts: expected page markup is missing');
 }
 
-let answers: Answers = emptyAnswers();
+// G-31: the URL is the state. Seeded from the query before the first
+// render, and written back on every render.
+let answers: Answers = answersFromQuery(location.search, content.questions);
 let lang: Lang = currentLang();
 // Which stage the reader is on (G-28). Clamped in showStage() rather than
 // tracked as an index into a fixed list, since `driving` entering or
@@ -151,6 +155,29 @@ for (const block of questionsEl.querySelectorAll<HTMLElement>('[data-question]')
     const n = Number(number.value);
     writeAnswer(id, Number.isNaN(n) ? null : n);
   });
+}
+
+// Fills the select and number inputs from `answers` after a page opened
+// from a link. Option buttons need nothing here: render() already sets
+// aria-pressed from `answers` on every pass.
+function syncInputs(): void {
+  for (const block of questionsEl!.querySelectorAll<HTMLElement>('[data-question]')) {
+    const value = readAnswer(block.dataset.question!);
+    const select = block.querySelector<HTMLSelectElement>('select');
+    if (select) select.value = value === null ? '' : String(value);
+    const number = block.querySelector<HTMLInputElement>('input[type="number"]');
+    if (number) number.value = value === null ? '' : String(value);
+  }
+}
+
+// replaceState, not pushState: one history entry per click would turn the
+// back button into an undo stack for answers, which nobody asked for.
+function syncUrl(): void {
+  const query = answersToQuery(answers, content.questions);
+  const url = `${location.pathname}${query ? `?${query}` : ''}${location.hash}`;
+  if (url !== `${location.pathname}${location.search}${location.hash}`) {
+    history.replaceState(history.state, '', url);
+  }
 }
 
 startOverBtn?.addEventListener('click', () => {
@@ -353,6 +380,7 @@ function render(): void {
   // `driving` filter this loop used to apply, since stageBreakdown() is
   // itself built on visibleQuestions().
   renderStages();
+  syncUrl();
   for (const block of questionsEl!.querySelectorAll<HTMLElement>('[data-question]')) {
     for (const btn of block.querySelectorAll<HTMLButtonElement>('[data-option]')) {
       btn.setAttribute('aria-pressed', String(readAnswer(block.dataset.question!) === btn.dataset.option));
@@ -428,4 +456,5 @@ document.addEventListener('langchange', (event) => {
 });
 
 applyStaticText();
+syncInputs();
 render();

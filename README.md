@@ -78,7 +78,10 @@ install with the script denied.
 
 ## Scope
 
-The guide tells you what to do; it never does it. No filing, no payment, no accounts, no saved progress.
+The guide tells you what to do; it never does it. No filing, no payment, no accounts, nothing saved on a
+server. Your answers ride in the page's URL instead, so a link reopens the same route or hands it to
+someone else.
+
 The flow assumes a single commercial location in a single municipio, and says so on the page rather than
 being quietly wrong — business volume is attributed per municipality and merchant registration is per
 location, which a ten-question flow cannot collect correctly.
