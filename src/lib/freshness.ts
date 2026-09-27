@@ -2,8 +2,9 @@
 // rico.md) records its own compile date in prose ("Research date:
 // 2026-08-06" / "Compiled 2026-08-06."). This constant is the single place
 // that date is duplicated into code — a re-verification pass updates it
-// here, and the masthead alert (src/pages/index.astro) picks it up, along
-// with any other "read on the page" (0001, story 27).
+// here, and src/pages/index.astro picks it up in both places it is read on
+// the page (0001, story 27): the hero's `data-proof="date"` cell and the
+// vigencia paragraph at the top of #limites.
 export const RESEARCH_DATE = '2026-08-06';
 
 const MONTHS_ES = [
