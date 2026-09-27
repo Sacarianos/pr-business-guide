@@ -131,3 +131,43 @@ test('G-35: printing hides everything but the route and incentives, and expands 
   }
   assert.match(blocks, /\[data-stop-detail\]\s*\{[^}]*display:\s*block/);
 });
+
+// G-37. WCAG 2.x relative luminance and contrast ratio, computed from the
+// token values the built CSS actually ships.
+function luminance(hex: string): number {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(expandHex(hex).slice(i, i + 2), 16) / 255).map(
+    (c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4),
+  ) as [number, number, number];
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function contrast(a: string, b: string): number {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x) as [number, number];
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+test('G-37: every text pair on the page meets WCAG AA, 4.5:1', () => {
+  const t = rootTokens();
+  const pairs: [string, string][] = [
+    ...['--ink', '--ink-2', '--ink-3'].flatMap((fg) =>
+      ['--paper', '--surface', '--sunk'].map((bg) => [fg, bg] as [string, string]),
+    ),
+    ['--on-brand', '--brand'],
+    ['--brand', '--surface'],
+    ['--brand', '--paper'],
+    ['--brand', '--brand-tint'],
+    ['--warn-ink', '--warn-bg'],
+    ['--stop-ink', '--stop-bg'],
+    ['--ok', '--ok-bg'],
+    ['--ink', '--mark'],
+  ];
+  for (const [fg, bg] of pairs) {
+    const ratio = contrast(t.get(fg)!, t.get(bg)!);
+    assert.ok(ratio >= 4.5, `${fg} on ${bg} is ${ratio.toFixed(2)}:1`);
+  }
+});
+
+test('G-37: the contrast check itself matches known WCAG values', () => {
+  assert.equal(contrast('#000000', '#ffffff').toFixed(2), '21.00');
+  assert.equal(contrast('#767676', '#ffffff').toFixed(2), '4.54');
+});
