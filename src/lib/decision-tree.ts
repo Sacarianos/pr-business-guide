@@ -407,24 +407,6 @@ function withPatenteEstimate(
   };
 }
 
-// Recurring obligations (monthly IVU, annual CRIM, the semiannual patente,
-// the state's annual fee) read as ongoing duties, not steps in a sequence a
-// reader completes once and moves past — interleaving them with the
-// one-time steps buries that distinction (G-13). This splits an already-
-// built sequence rather than changing what stepIds() produces, so the
-// order within each group still matches the sequence's own ordering; the
-// caller decides how to present the two groups (numbered vs. not, separate
-// sections, etc.).
-export function partitionRecurring(steps: StepResult[]): {
-  oneTime: StepResult[];
-  recurring: StepResult[];
-} {
-  const oneTime: StepResult[] = [];
-  const recurring: StepResult[] = [];
-  for (const s of steps) (s.recurring ? recurring : oneTime).push(s);
-  return { oneTime, recurring };
-}
-
 export function buildSequence(answers: Answers, content: Content): Result {
   const municipio = answers.muni ? (content.municipios[answers.muni] ?? null) : null;
   const estimate = patente(answers.muni, answers.vol, content.municipios);
@@ -537,4 +519,32 @@ export function answersFromQuery(search: string, questions: Content['questions']
     }
   }
   return answers as unknown as Answers;
+}
+
+// The route's heading (0002, G-34): the business type as the title, and
+// the municipio and legal form under it, so a printout or a shared link
+// says whose route it is. Unanswered parts drop out rather than showing
+// a placeholder.
+export function routeHeading(
+  answers: Answers,
+  content: Content,
+): { title: Bilingual; subline: Bilingual } {
+  const label = (questionId: string, value: string | null): Bilingual | null => {
+    if (value === null) return null;
+    const q = content.questions.find((question) => question.id === questionId);
+    return q?.options?.find((o) => o.value === value)?.label ?? null;
+  };
+  const title = label('type', answers.type) ?? { es: 'Tu negocio', en: 'Your business' };
+  const entity =
+    answers.entity === 'unsure'
+      ? { es: 'forma legal por decidir', en: 'legal form undecided' }
+      : label('entity', answers.entity);
+  const parts = [label('muni', answers.muni), entity].filter((p): p is Bilingual => p !== null);
+  return {
+    title,
+    subline: {
+      es: parts.map((p) => p.es).join(' · '),
+      en: parts.map((p) => p.en).join(' · '),
+    },
+  };
 }

@@ -18,13 +18,18 @@ import {
   buildSequence,
   emptyAnswers,
   formatMoney,
+  groupByPhase,
   hasEnoughAnswers,
-  partitionRecurring,
+  routeHeading,
+  routeSummary,
   stageBreakdown,
   type Answers,
   type Content,
+  type PhaseGroup,
+  type RouteStop,
   type StepResult,
 } from '../lib/decision-tree.ts';
+import { researchDateShort } from '../lib/freshness.ts';
 import {
   practiceAttribution,
   practiceHeadline,
@@ -38,11 +43,13 @@ if (!dataEl?.textContent) throw new Error('tool.ts: #tool-content is missing');
 const content: Content = JSON.parse(dataEl.textContent);
 
 const questionsEl = document.querySelector<HTMLElement>('[data-questions]');
-const emptyStateEl = document.querySelector<HTMLElement>('[data-empty-state]');
+const emptyStateEl = document.querySelector<HTMLElement>('[data-route-empty]');
 const resultsEl = document.querySelector<HTMLElement>('[data-results]');
-const glanceEl = document.querySelector<HTMLElement>('[data-glance]');
-const sequenceEl = document.querySelector<HTMLElement>('[data-sequence]');
-const recurringEl = document.querySelector<HTMLElement>('[data-recurring]');
+const headingEl = document.querySelector<HTMLElement>('[data-route-heading]');
+const sublineEl = document.querySelector<HTMLElement>('[data-route-subline]');
+const summaryEl = document.querySelector<HTMLElement>('[data-summary-strip]');
+const patenteNoteEl = document.querySelector<HTMLElement>('[data-patente-note]');
+const zonesEl = document.querySelector<HTMLElement>('[data-zones]');
 const incentivesEl = document.querySelector<HTMLElement>('[data-incentives]');
 const startOverBtn = document.querySelector<HTMLButtonElement>('[data-start-over]');
 const railEl = document.querySelector<HTMLElement>('[data-stage-rail]');
@@ -55,9 +62,11 @@ if (
   !questionsEl ||
   !emptyStateEl ||
   !resultsEl ||
-  !glanceEl ||
-  !sequenceEl ||
-  !recurringEl ||
+  !headingEl ||
+  !sublineEl ||
+  !summaryEl ||
+  !patenteNoteEl ||
+  !zonesEl ||
   !incentivesEl
 ) {
   throw new Error('tool.ts: expected page markup is missing');
@@ -79,19 +88,25 @@ let stage = 1;
 const UI_TEXT: Record<string, Record<Lang, string>> = {
   startOver: { es: 'Empezar de nuevo', en: 'Start over' },
   emptyState: {
-    es: 'Contesta al menos tres preguntas para ver tu secuencia.',
-    en: 'Answer at least three questions to see your sequence.',
+    es: 'Contesta 3 preguntas y tu ruta aparece aquí.',
+    en: 'Answer 3 questions and your route appears here.',
   },
-  sequenceTitle: { es: 'Tu secuencia', en: 'Your sequence' },
-  recurringTitle: { es: 'Obligaciones recurrentes', en: 'Recurring obligations' },
-  recurringDek: {
-    es: 'Estas no son pasos de una sola vez — siguen viniendo mientras el negocio esté abierto, cada una con su propia frecuencia.',
-    en: 'These aren\'t one-time steps — they keep coming as long as the business is open, each on its own schedule.',
-  },
+  routeEyebrow: { es: 'Tu ruta', en: 'Your route' },
   incentivesTitle: { es: 'Incentivos aplicables', en: 'Applicable incentives' },
-  glanceSteps: { es: 'Pasos en tu secuencia', en: 'Steps in your sequence' },
-  glanceIncentives: { es: 'Incentivos aplicables', en: 'Applicable incentives' },
-  glancePatente: { es: 'Patente estimada', en: 'Estimated patente' },
+  summarySteps: { es: 'Trámites', en: 'Procedures' },
+  summaryRecurring: { es: 'Recurrentes', en: 'Recurring' },
+  summaryPatente: { es: 'Patente est.', en: 'Est. patente' },
+  summaryVerified: { es: 'Verificado', en: 'Verified' },
+  patenteNone: { es: 'Sin estimar', en: 'Not estimated' },
+  perYear: { es: '/año', en: '/yr' },
+  costUnknown: { es: 'n/d', en: 'n/a' },
+  showDetail: { es: 'Ver detalles', en: 'Show details' },
+  hideDetail: { es: 'Ocultar detalles', en: 'Hide details' },
+  finishTitle: { es: 'Listo para abrir', en: 'Ready to open' },
+  finishText: {
+    es: 'Revisa los incentivos antes de radicar.',
+    en: 'Check the incentives before you file.',
+  },
   blocks: { es: 'Bloquea', en: 'Blocks' },
   consult: { es: 'Consulta con', en: 'Talk to' },
   stagePrev: { es: 'Atrás', en: 'Back' },
@@ -352,27 +367,104 @@ function practiceBanner(practice: StepResult['practice']): string {
 // G-18: this decision needs a CPA or attorney, not just this guide.
 function professionalNote(professional: StepResult['professional']): string {
   if (!professional) return '';
-  return `<p class="step-professional">→ ${UI_TEXT.consult![lang]} ${escapeHtml(professionalLabel(professional, lang))}</p>`;
+  return `<p class="stop-professional">→ ${UI_TEXT.consult![lang]} ${escapeHtml(professionalLabel(professional, lang))}</p>`;
 }
 
-// Shared by the one-time sequence and the recurring-obligations list
-// (G-13): same card shape either way, differing only in what marks a step's
-// position — a sequence number for the one-time list, the recurring badge
-// (↻) for the other, since recurring duties have no "step N" to be.
-function stepCard(s: StepResult, mark: string): string {
+// Which stops the reader has opened, by step id, so a re-render on an
+// answer change or a language switch doesn't slam them shut again.
+const openStops = new Set<string>();
+
+// The toggle and its detail share an id so aria-controls points at the
+// region it opens (0002, G-34: the route reads as a list per phase, and
+// each detail announces whether it's expanded).
+function detailToggle(s: StepResult): string {
+  const open = openStops.has(s.id);
   return `
-    <li class="step" data-severity="${s.severity ?? ''}">
-      <span class="step-num">${mark}</span>
-      <div class="step-body">
-        <h4 class="step-title">${escapeHtml(s.title[lang])} ${sourcingMark(s.sourcing)}</h4>
-        <p class="step-meta">${escapeHtml(s.agency[lang])} · ${escapeHtml(s.timing[lang])} · ${escapeHtml(s.cost[lang])}</p>
-        ${s.blocks ? `<p class="step-blocks">→ ${UI_TEXT.blocks![lang]}: <b>${escapeHtml(s.blocks[lang])}</b></p>` : ''}
-        ${professionalNote(s.professional)}
-        <p class="step-note">${s.note[lang]}</p>
-        ${practiceBanner(s.practice)}
+    <button type="button" class="stop-toggle" data-stop-toggle="${s.id}"
+            aria-expanded="${open}" aria-controls="detail-${s.id}">${(open ? UI_TEXT.hideDetail! : UI_TEXT.showDetail!)[lang]}</button>
+    <div class="stop-detail" id="detail-${s.id}" data-stop-detail ${open ? '' : 'hidden'}>${s.note[lang]}</div>`;
+}
+
+// What stays visible on a collapsed stop (0002): what it blocks, whether it
+// needs a professional, and above all a practice banner, which G-15 makes
+// the loudest state on the page and so never hides behind a toggle.
+function alwaysVisible(s: StepResult): string {
+  return `
+    ${s.blocks ? `<p class="stop-blocks">${UI_TEXT.blocks![lang]}: ${escapeHtml(s.blocks[lang])}</p>` : ''}
+    ${professionalNote(s.professional)}
+    ${practiceBanner(s.practice)}`;
+}
+
+// Agency and timing are always-visible facts about a stop (0002), whichever
+// of the two shapes it renders as. '—' is the content's "no value", so that
+// part drops out of the line instead of printing a bare dash.
+function metaLine(s: RouteStop): string {
+  const parts = [
+    s.agency[lang] === '—' ? '' : `<b>${escapeHtml(s.agency[lang])}</b>`,
+    s.timing[lang] === '—' ? '' : escapeHtml(s.timing[lang]),
+  ].filter(Boolean);
+  return parts.length ? `<p class="stop-meta">${parts.join(' · ')}</p>` : '';
+}
+
+function stopItem(s: RouteStop): string {
+  const marker = s.recurring ? '↻' : String(s.number);
+  const cost = s.cost[lang] === '—' ? UI_TEXT.costUnknown![lang] : s.cost[lang];
+  return `
+    <li class="stop" data-stop="${s.id}" data-kind="action" data-severity="${s.severity ?? ''}" data-sourcing="${s.sourcing}">
+      <span class="pin${s.recurring ? ' pin-recurring' : ''}" data-stop-num>${marker}</span>
+      <div class="stop-head">
+        <h5 class="stop-title">${escapeHtml(s.title[lang])} ${sourcingMark(s.sourcing)}</h5>
+        ${metaLine(s)}
+      </div>
+      <div class="stop-cost">${escapeHtml(cost)}</div>
+      <div class="stop-body">
+        ${alwaysVisible(s)}
+        ${detailToggle(s)}
       </div>
     </li>`;
 }
+
+const CALLOUT_ICON = `<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5l8 14H2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 8v4M10 14.5v.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+
+function calloutItem(s: RouteStop): string {
+  return `
+    <div class="callout" data-stop="${s.id}" data-kind="advisory" data-severity="${s.severity ?? ''}" data-sourcing="${s.sourcing}">
+      ${CALLOUT_ICON}
+      <div>
+        <p class="callout-title">${escapeHtml(s.title[lang])} ${sourcingMark(s.sourcing)}</p>
+        ${metaLine(s)}
+        ${alwaysVisible(s)}
+        ${detailToggle(s)}
+      </div>
+    </div>`;
+}
+
+function zone(g: PhaseGroup): string {
+  const actions = g.stops.filter((s) => s.kind === 'action');
+  const advisories = g.stops.filter((s) => s.kind === 'advisory');
+  return `
+    <section class="zone" data-phase="${g.phase}">
+      <div class="zone-head">
+        <h4 class="zone-title">${escapeHtml(g.title[lang])}</h4>
+        <span class="zone-count">${actions.length}</span>
+      </div>
+      <ol class="route-list">${actions.map(stopItem).join('')}</ol>
+      ${advisories.map(calloutItem).join('')}
+    </section>`;
+}
+
+zonesEl.addEventListener('click', (event) => {
+  const toggle = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-stop-toggle]');
+  if (!toggle) return;
+  const id = toggle.dataset.stopToggle!;
+  if (openStops.has(id)) openStops.delete(id);
+  else openStops.add(id);
+  const open = openStops.has(id);
+  toggle.setAttribute('aria-expanded', String(open));
+  toggle.textContent = (open ? UI_TEXT.hideDetail! : UI_TEXT.showDetail!)[lang];
+  const detail = document.getElementById(`detail-${id}`);
+  if (detail) detail.hidden = !open;
+});
 
 function render(): void {
   // renderStages() owns which question blocks are shown (G-28) — it hides
@@ -387,6 +479,10 @@ function render(): void {
     }
   }
 
+  const heading = routeHeading(answers, content);
+  headingEl!.textContent = heading.title[lang];
+  sublineEl!.textContent = heading.subline[lang];
+
   if (!hasEnoughAnswers(content.questions, answers)) {
     emptyStateEl!.hidden = false;
     resultsEl!.hidden = true;
@@ -396,51 +492,40 @@ function render(): void {
   resultsEl!.hidden = false;
 
   const result = buildSequence(answers, content);
+  const summary = routeSummary(result);
   const { patente, municipio } = result;
 
-  // Recurring obligations are ongoing duties, not steps in a one-time
-  // sequence (G-13's split — see partitionRecurring in decision-tree.ts for
-  // why). `oneTime.length`, not `result.steps.length`, is what "steps in
-  // your sequence" now means, since the recurring ones moved to their own
-  // section below.
-  const { oneTime, recurring } = partitionRecurring(result.steps);
-
   // G-09: a rate that could not be confirmed "must surface as uncertain
-  // rather than being rendered as plain numbers" — so the mark sits on the
-  // figure itself, which is what a reader takes at face value, not only in
-  // the prose underneath it.
-  const patenteValue = patente ? (patente.amount === 0 ? '$0' : formatMoney(patente.amount)) : '—';
-  const patenteMark = patente ? sourcingMark(patente.sourcing) : '';
+  // rather than being rendered as plain numbers", so the mark sits on the
+  // figure itself, which is what a reader takes at face value.
+  const patenteValue = !patente
+    ? UI_TEXT.patenteNone![lang]
+    : patente.amount === 0
+      ? '$0'
+      : `${formatMoney(patente.amount)}${UI_TEXT.perYear![lang]}`;
 
-  glanceEl!.innerHTML = `
-    <div class="glance-cell">
-      <span class="glance-label">${UI_TEXT.glanceSteps![lang]}</span>
-      <span class="glance-value">${oneTime.length}</span>
-    </div>
-    <div class="glance-cell">
-      <span class="glance-label">${UI_TEXT.glanceIncentives![lang]}</span>
-      <span class="glance-value">${result.incentives.length}</span>
-    </div>
-    <div class="glance-cell">
-      <span class="glance-label">${UI_TEXT.glancePatente![lang]}</span>
-      <span class="glance-value">${patenteValue} ${patenteMark}</span>
-      ${patente ? `<span class="glance-sub">${escapeHtml(patente.why[lang])}</span>` : ''}
-      ${
-        municipio?.note
-          ? `<span class="glance-sub glance-muni-note">${municipio.note[lang]}</span>`
-          : ''
-      }
-    </div>
-  `;
+  // The mark goes beside the value rather than inside [data-summary], so
+  // the value reads cleanly and the mark still sits on the figure itself.
+  const cell = (key: string, label: string, value: string, mark = '') =>
+    `<div class="summary-cell"><dt>${label}</dt><dd><span data-summary="${key}">${value}</span>${mark}</dd></div>`;
+  summaryEl!.innerHTML = [
+    cell('steps', UI_TEXT.summarySteps![lang], String(summary.steps)),
+    cell('recurring', UI_TEXT.summaryRecurring![lang], String(summary.recurring)),
+    cell('patente', UI_TEXT.summaryPatente![lang], escapeHtml(patenteValue), patente ? sourcingMark(patente.sourcing) : ''),
+    cell('verified', UI_TEXT.summaryVerified![lang], researchDateShort(lang)),
+  ].join('');
+  patenteNoteEl!.innerHTML = [
+    patente ? `<p>${escapeHtml(patente.why[lang])}</p>` : '',
+    municipio?.note ? `<p>${municipio.note[lang]}</p>` : '',
+  ].join('');
 
-  sequenceEl!.innerHTML = oneTime.map((s, i) => stepCard(s, String(i + 1))).join('');
-  recurringEl!.innerHTML = recurring.map((s) => stepCard(s, '↻')).join('');
+  zonesEl!.innerHTML = groupByPhase(result, content).map(zone).join('');
 
   incentivesEl!.innerHTML = result.incentives
     .map(
       (inc) => `
     <div class="incentive-card">
-      <h4>${escapeHtml(inc.title[lang])} ${sourcingMark(inc.sourcing)}</h4>
+      <h5>${escapeHtml(inc.title[lang])} ${sourcingMark(inc.sourcing)}</h5>
       ${professionalNote(inc.professional)}
       <p>${inc.note[lang]}</p>
       ${practiceBanner(inc.practice)}

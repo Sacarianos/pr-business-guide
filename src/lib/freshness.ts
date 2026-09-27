@@ -43,3 +43,17 @@ export function researchDateLabel(lang: 'es' | 'en' = 'es'): string {
     ? `${MONTHS_EN[month - 1]} ${day}, ${year}`
     : `${day} de ${MONTHS_ES[month - 1]} de ${year}`;
 }
+
+// The short form, for the route's summary strip (0002, G-34), where the
+// long form doesn't fit a quarter-width cell. Month abbreviations are
+// spelled out here rather than taken from Intl, whose output varies by
+// runtime and locale data.
+const MONTHS_ES_SHORT = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+const MONTHS_EN_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+export function researchDateShort(lang: 'es' | 'en' = 'es'): string {
+  const [year, month, day] = RESEARCH_DATE.split('-').map(Number) as [number, number, number];
+  return lang === 'en'
+    ? `${MONTHS_EN_SHORT[month - 1]} ${day}, ${year}`
+    : `${day} ${MONTHS_ES_SHORT[month - 1]} ${year}`;
+}
