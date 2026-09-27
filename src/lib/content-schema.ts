@@ -46,6 +46,19 @@ export type Sourcing = z.infer<typeof claimFields.sourcing>;
 export const professional = z.enum(['cpa', 'attorney']).optional();
 export type Professional = z.infer<typeof professional>;
 
+// The five phases a route is grouped into (0002, G-30). Titles and order
+// live in content/phases.yaml; the ids are fixed here because both the
+// schema below and groupByPhase() depend on them.
+export const PHASE_IDS = ['formation', 'premises', 'operate', 'people', 'recurring'] as const;
+export const phase = z.enum(PHASE_IDS);
+export type Phase = z.infer<typeof phase>;
+
+export const phaseSchema = z.object({
+  order: z.number().int(),
+  title: bilingual,
+});
+export type PhaseData = z.infer<typeof phaseSchema>;
+
 export const stepSchema = z.object({
   title: bilingual,
   agency: bilingual,
@@ -66,11 +79,13 @@ export const stepSchema = z.object({
   severity: z.enum(['key', 'warn', 'stop']).optional(),
   // Recurring duties (monthly IVU, annual CRIM) vs. one-time steps (G-13).
   recurring: z.boolean().default(false),
-  // Steps are heterogeneous — actions, artifacts, recurring duties,
-  // decisions — but typing them (Trámite / Obligación / Decisión) is
-  // deferred (0001, "Step remains untyped, with a slot reserved"). Kept as
-  // a free string so adding the enum later is additive, not a migration.
-  kind: z.string().optional(),
+  // Which phase of the route this step belongs to (0002, G-30).
+  // `recurring` here exactly when `recurring` above is true.
+  phase,
+  // The slot 0001 reserved for typing steps, filled by 0002: an `advisory`
+  // is a warning with no procedure behind it, rendered as a callout rather
+  // than a numbered stop. Everything else is an `action`.
+  kind: z.enum(['action', 'advisory']).default('action'),
   // G-18: this decision needs a CPA or attorney, not just this guide.
   professional,
   ...claimFields,

@@ -16,6 +16,8 @@ import type {
   GapData,
   IncentiveData,
   MunicipioData,
+  Phase,
+  PhaseData,
   QuestionData,
   StepData,
 } from './content-schema.ts';
@@ -31,6 +33,8 @@ export type Content = {
   // content.json (G-04) keep loading through the one shared path
   // load-content.ts exists to guarantee.
   entities: Record<string, EntityFormData>;
+  // Titles and order of the five route phases (0002, G-30).
+  phases: Record<Phase, PhaseData>;
 };
 
 export type Answers = {
@@ -433,4 +437,71 @@ export function buildSequence(answers: Answers, content: Content): Result {
   const incentives = incentiveIds(answers).map((id) => incentive(content, id));
 
   return { steps, incentives, patente: estimate, municipio };
+}
+
+// The answer set behind the hero's sample route and the "see an example"
+// button (0002). One constant so the two can't disagree, and so a content
+// change that reshapes this route shows up in the built-page test.
+export const SAMPLE_ANSWERS: Answers = {
+  type: 'food',
+  entity: 'llc',
+  premises: 'commercial',
+  buildout: 'no',
+  muni: 'sanjuan',
+  vol: 120_000,
+  hiring: 'yes',
+  driving: 'no',
+  exportsvc: 'no',
+  young: 'no',
+};
+
+export type RouteStop = StepResult & { number: number | null };
+export type PhaseGroup = { phase: Phase; title: Bilingual; stops: RouteStop[] };
+
+// Groups an already-built sequence into the route's phases (0002, G-30).
+// Phases come out in their content `order`, empty ones omitted, and each
+// keeps buildSequence's relative order. One-time actions are numbered
+// 1..n straight across phases: the number says what to do first. Advisories
+// aren't procedures and recurring duties have no "step N", so both get
+// `number: null`.
+export function groupByPhase(result: Result, content: Content): PhaseGroup[] {
+  const order = (Object.keys(content.phases) as Phase[]).sort(
+    (a, b) => content.phases[a].order - content.phases[b].order,
+  );
+  const groups: PhaseGroup[] = order.map((phase) => ({
+    phase,
+    title: content.phases[phase].title,
+    stops: [],
+  }));
+  const byPhase = new Map(groups.map((g) => [g.phase, g]));
+  for (const s of result.steps) {
+    const group = byPhase.get(s.phase);
+    if (!group) throw new Error(`decision-tree: step "${s.id}" names unknown phase "${s.phase}"`);
+    group.stops.push({ ...s, number: null });
+  }
+  let n = 0;
+  for (const g of groups) {
+    for (const stop of g.stops) {
+      if (stop.kind === 'action' && !stop.recurring) stop.number = ++n;
+    }
+  }
+  return groups.filter((g) => g.stops.length > 0);
+}
+
+export type RouteSummary = {
+  steps: number;
+  recurring: number;
+  patente: PatenteEstimate | null;
+};
+
+// The numbers in the route's summary strip (0002): one-time procedures,
+// recurring duties, and the patente estimate. Advisories count as neither.
+export function routeSummary(result: Result): RouteSummary {
+  let steps = 0;
+  let recurring = 0;
+  for (const s of result.steps) {
+    if (s.recurring) recurring++;
+    else if (s.kind === 'action') steps++;
+  }
+  return { steps, recurring, patente: result.patente };
 }

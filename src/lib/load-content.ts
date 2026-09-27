@@ -1,8 +1,9 @@
 // Shared shaping of the content collections into decision-tree.ts's
 // `Content` type — used by both the content.json endpoint (G-04) and the
 // page itself (G-08), so the two never drift into different shapes of the
-// same six collections.
+// same seven collections.
 import { getCollection } from 'astro:content';
+import { PHASE_IDS } from './content-schema.ts';
 import type { Content } from './decision-tree.ts';
 
 function byId<T extends { id: string; data: unknown }>(entries: T[]) {
@@ -10,14 +11,22 @@ function byId<T extends { id: string; data: unknown }>(entries: T[]) {
 }
 
 export async function loadContent(): Promise<Content> {
-  const [steps, questions, municipios, incentives, gaps, entities] = await Promise.all([
+  const [steps, questions, municipios, incentives, gaps, entities, phases] = await Promise.all([
     getCollection('steps'),
     getCollection('questions'),
     getCollection('municipios'),
     getCollection('incentives'),
     getCollection('gaps'),
     getCollection('entities'),
+    getCollection('phases'),
   ]);
+
+  // A per-entry schema can't say "exactly these five entries", so the
+  // collection-level check lives here, where a mismatch fails the build.
+  const phaseIds = phases.map((p) => p.id).sort();
+  if (phaseIds.join() !== [...PHASE_IDS].sort().join()) {
+    throw new Error(`content/phases.yaml must define exactly ${PHASE_IDS.join(', ')}; found ${phaseIds.join(', ')}`);
+  }
 
   return {
     steps: byId(steps) as Content['steps'],
@@ -28,5 +37,6 @@ export async function loadContent(): Promise<Content> {
     incentives: byId(incentives) as Content['incentives'],
     gaps: gaps.map((g) => ({ id: g.id, ...g.data })),
     entities: byId(entities) as Content['entities'],
+    phases: byId(phases) as Content['phases'],
   };
 }

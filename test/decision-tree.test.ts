@@ -17,10 +17,13 @@ import {
   answeredCount,
   buildSequence,
   emptyAnswers,
+  groupByPhase,
   hasEnoughAnswers,
   partitionRecurring,
   stageBreakdown,
   patente,
+  routeSummary,
+  SAMPLE_ANSWERS,
   visibleQuestions,
   type Answers,
   type Content,
@@ -429,6 +432,110 @@ describe('partitionRecurring — recurring obligations split from the one-time s
       recurring.map((s) => s.id),
       ['patente-municipal', 'crim-personal-property-return', 'ivu-monthly-general', 'state-annual-fee-survives'],
     );
+  });
+});
+
+describe('route phases in the content (0002, G-30)', () => {
+  const PHASES: Record<string, string[]> = {
+    formation: [
+      'entity-sole-proprietor', 'entity-organize-llc', 'entity-llc-tax-classification',
+      'entity-incorporate-corp', 'entity-undecided', 'ein-federal', 'merchant-registration',
+    ],
+    premises: ['zoning-verification', 'construction-permit'],
+    operate: [
+      'permiso-unico', 'reglamento-conjunto-legally-unstable', 'fire-inspection', 'sanitary-license',
+      'food-handler-certification', 'home-based-permiso-unico-question',
+      'provisional-patente-occasional-sales', 'confirm-delegated-hierarchy', 'above-3m-obligations-change',
+    ],
+    people: [
+      'employer-registration-dtrh', 'cfse-policy', 'cfse-individual-track', 'drivers-social-security',
+      'new-hire-reporting-asume', 'christmas-bonus-and-21-employee-cliff', 'vacation-sick-leave-accrual',
+    ],
+    recurring: [
+      'patente-municipal', 'crim-personal-property-return', 'crim-personal-property-return-above-ceiling',
+      'ivu-monthly-general', 'ivu-monthly-b2b-professional', 'state-annual-fee-survives',
+    ],
+  };
+  const ADVISORIES = [
+    'entity-undecided', 'reglamento-conjunto-legally-unstable', 'confirm-delegated-hierarchy',
+    'above-3m-obligations-change', 'christmas-bonus-and-21-employee-cliff', 'vacation-sick-leave-accrual',
+  ];
+
+  test('the phase collection holds exactly the five phases, in order', () => {
+    const phases = content.phases;
+    const ids = (Object.keys(phases) as (keyof typeof phases)[]).sort((a, b) => phases[a].order - phases[b].order);
+    assert.deepEqual(ids, ['formation', 'premises', 'operate', 'people', 'recurring']);
+  });
+
+  for (const [phase, ids] of Object.entries(PHASES)) {
+    test(`the ${phase} phase holds exactly its assigned steps`, () => {
+      const actual = Object.entries(content.steps).filter(([, s]) => s.phase === phase).map(([id]) => id);
+      assert.deepEqual(actual.sort(), [...ids].sort());
+    });
+  }
+
+  test('a step is in the recurring phase exactly when it is recurring', () => {
+    for (const [id, s] of Object.entries(content.steps)) {
+      assert.equal(s.phase === 'recurring', s.recurring, `${id}: phase ${s.phase}, recurring ${s.recurring}`);
+    }
+  });
+
+  test('exactly the listed steps are advisories', () => {
+    const actual = Object.entries(content.steps).filter(([, s]) => s.kind === 'advisory').map(([id]) => id);
+    assert.deepEqual(actual.sort(), [...ADVISORIES].sort());
+  });
+});
+
+describe('groupByPhase and routeSummary (0002, G-30)', () => {
+  const sample = buildSequence(SAMPLE_ANSWERS, content);
+  const groups = groupByPhase(sample, content);
+
+  test('the sample route fills all five phases, in order', () => {
+    assert.deepEqual(groups.map((g) => g.phase), ['formation', 'premises', 'operate', 'people', 'recurring']);
+    assert.equal(groups[0]!.title.es, 'Forma el negocio');
+  });
+
+  test('actions, advisories and recurring stops land in the expected phases', () => {
+    const count = (kind: string) => groups.map((g) => g.stops.filter((s) => s.kind === kind && !s.recurring).length);
+    assert.deepEqual(count('action'), [4, 1, 4, 3, 0]);
+    assert.deepEqual(count('advisory'), [0, 0, 1, 2, 0]);
+    assert.equal(groups[4]!.stops.length, 4);
+  });
+
+  test('one-time actions are numbered 1 to 12 across phases; advisories and recurring stops are unnumbered', () => {
+    const stops = groups.flatMap((g) => g.stops);
+    const numbered = stops.filter((s) => s.number !== null).map((s) => s.number);
+    assert.deepEqual(numbered, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    for (const s of stops) {
+      if (s.kind === 'advisory' || s.recurring) assert.equal(s.number, null, `${s.id} should be unnumbered`);
+    }
+  });
+
+  test('stops keep their buildSequence order within each phase', () => {
+    const position = new Map(sample.steps.map((s, i) => [s.id, i]));
+    for (const g of groups) {
+      const positions = g.stops.map((s) => position.get(s.id)!);
+      assert.deepEqual(positions, [...positions].sort((a, b) => a - b), `${g.phase} is out of order`);
+    }
+  });
+
+  test('every step of the sequence appears exactly once across the groups', () => {
+    assert.deepEqual(groups.flatMap((g) => g.stops.map((s) => s.id)).sort(), stepIds(sample).sort());
+  });
+
+  test('a phase with no stops is omitted: the home-based scenario has no premises phase', () => {
+    const r = buildSequence(
+      answers({ type: 'prof', entity: 'sole', premises: 'home', vol: 3000, hiring: 'no', exportsvc: 'no', young: 'no' }),
+      content,
+    );
+    assert.ok(!groupByPhase(r, content).some((g) => g.phase === 'premises'));
+  });
+
+  test('routeSummary counts 12 one-time procedures, 4 recurring duties, and a $240 patente', () => {
+    const summary = routeSummary(sample);
+    assert.equal(summary.steps, 12);
+    assert.equal(summary.recurring, 4);
+    assert.equal(summary.patente?.amount, 240);
   });
 });
 

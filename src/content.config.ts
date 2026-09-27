@@ -17,6 +17,7 @@ import {
   incentiveSchema,
   gapSchema,
   entityFormSchema,
+  phaseSchema,
 } from './lib/content-schema';
 
 const steps = defineCollection({
@@ -49,4 +50,9 @@ const entities = defineCollection({
   schema: entityFormSchema,
 });
 
-export const collections = { steps, questions, municipios, incentives, gaps, entities };
+const phases = defineCollection({
+  loader: file('content/phases.yaml'),
+  schema: phaseSchema,
+});
+
+export const collections = { steps, questions, municipios, incentives, gaps, entities, phases };

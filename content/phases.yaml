@@ -1,0 +1,36 @@
+# The five phases a reader's route is grouped into (0002, G-30). Every step
+# in content/steps.yaml names one of these ids in its `phase` field, and the
+# decision-tree module's groupByPhase() lays them out in `order`.
+#
+# `recurring` holds exactly the steps with `recurring: true`: duties that
+# keep coming back after opening day rather than steps finished once.
+
+formation:
+  order: 1
+  title:
+    es: Forma el negocio
+    en: Form the business
+
+premises:
+  order: 2
+  title:
+    es: El local, antes de firmar
+    en: Your location, before you sign
+
+operate:
+  order: 3
+  title:
+    es: Permisos para operar
+    en: Permits to operate
+
+people:
+  order: 4
+  title:
+    es: Personal y seguro obrero
+    en: Staff and workers' insurance
+
+recurring:
+  order: 5
+  title:
+    es: Lo que se repite
+    en: What repeats

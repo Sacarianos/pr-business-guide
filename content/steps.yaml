@@ -21,6 +21,7 @@
 # ---- Entity formation ----
 
 entity-sole-proprietor:
+  phase: formation
   title:
     es: "Operar como individuo (DBA)"
     en: "Operate as a sole proprietor (DBA)"
@@ -41,6 +42,7 @@ entity-sole-proprietor:
   sourcing: primary
 
 entity-organize-llc:
+  phase: formation
   title:
     es: "Organizar la LLC"
     en: "Organize the LLC"
@@ -67,6 +69,7 @@ entity-organize-llc:
   sourcing: unverified
 
 entity-llc-tax-classification:
+  phase: formation
   title:
     es: "Decidir la clasificación contributiva de la LLC"
     en: "Decide the LLC's PR tax classification"
@@ -95,6 +98,7 @@ entity-llc-tax-classification:
   sourcing: primary
 
 entity-incorporate-corp:
+  phase: formation
   title:
     es: "Incorporar"
     en: "Incorporate"
@@ -121,6 +125,8 @@ entity-incorporate-corp:
   sourcing: unverified
 
 entity-undecided:
+  phase: formation
+  kind: advisory
   title:
     es: "Decidir la forma legal antes de seguir"
     en: "Decide the entity form before anything else"
@@ -149,6 +155,7 @@ entity-undecided:
 # ---- Federal / tax registration ----
 
 ein-federal:
+  phase: formation
   title:
     es: "Obtener el EIN federal"
     en: "Get the federal EIN"
@@ -169,6 +176,7 @@ ein-federal:
   sourcing: primary
 
 merchant-registration:
+  phase: formation
   title:
     es: "Registro de Comerciantes"
     en: "Merchant Registration Certificate"
@@ -213,6 +221,7 @@ merchant-registration:
 # ---- Premises: commercial ----
 
 zoning-verification:
+  phase: premises
   title:
     es: "Verificar la zonificación por número de catastro"
     en: "Verify zoning by cadastral number"
@@ -242,6 +251,7 @@ zoning-verification:
   sourcing: primary
 
 construction-permit:
+  phase: premises
   title:
     es: "Permiso de construcción"
     en: "Construction permit"
@@ -268,6 +278,7 @@ construction-permit:
   sourcing: unverified
 
 permiso-unico:
+  phase: operate
   title:
     es: "Permiso Único"
     en: "Permiso Único"
@@ -314,6 +325,7 @@ permiso-unico:
   sourcing: unverified
 
 fire-inspection:
+  phase: operate
   title:
     es: "Inspección de Bomberos"
     en: "Fire department inspection"
@@ -338,6 +350,7 @@ fire-inspection:
   sourcing: primary
 
 sanitary-license:
+  phase: operate
   title:
     es: "Licencia sanitaria"
     en: "Sanitary license"
@@ -369,6 +382,7 @@ sanitary-license:
   sourcing: secondary
 
 food-handler-certification:
+  phase: operate
   title:
     es: "Certificación de manejo seguro de alimentos"
     en: "Food safety manager certification"
@@ -388,6 +402,7 @@ food-handler-certification:
 # ---- Premises: home ----
 
 home-based-permiso-unico-question:
+  phase: operate
   title:
     es: "¿Se necesita Permiso Único? — pregunta abierta"
     en: "Is a Permiso Único required? — open question"
@@ -420,6 +435,7 @@ home-based-permiso-unico-question:
 # ---- Premises: mobile ----
 
 provisional-patente-occasional-sales:
+  phase: operate
   title:
     es: "Patente provisional para ventas ocasionales"
     en: "Provisional patente for occasional sales"
@@ -445,6 +461,7 @@ provisional-patente-occasional-sales:
 # ---- Municipal / property tax (applies broadly) ----
 
 patente-municipal:
+  phase: recurring
   title:
     es: "Patente municipal"
     en: "Patente municipal"
@@ -486,6 +503,7 @@ patente-municipal:
   sourcing: primary
 
 crim-personal-property-return:
+  phase: recurring
   title:
     es: "Planilla de bienes muebles · CRIM"
     en: "Personal property return · CRIM"
@@ -523,6 +541,7 @@ crim-personal-property-return:
 # which one a reader sees is decision-tree logic (G-06), keyed on the
 # ≤$150,000 net-volume test.
 crim-personal-property-return-above-ceiling:
+  phase: recurring
   title:
     es: "Planilla de bienes muebles · CRIM"
     en: "Personal property return · CRIM"
@@ -551,6 +570,7 @@ crim-personal-property-return-above-ceiling:
 # ---- Hiring: yes ----
 
 employer-registration-dtrh:
+  phase: people
   title:
     es: "Registro de patrono · DTRH"
     en: "Employer registration · DTRH"
@@ -577,6 +597,7 @@ employer-registration-dtrh:
   sourcing: unverified
 
 cfse-policy:
+  phase: people
   title:
     es: "Póliza del CFSE"
     en: "CFSE workers' comp policy"
@@ -603,6 +624,7 @@ cfse-policy:
   sourcing: primary
 
 drivers-social-security:
+  phase: people
   title:
     es: "Seguro Social Choferil"
     en: "Chauffeur's Social Security"
@@ -628,6 +650,7 @@ drivers-social-security:
   sourcing: primary
 
 new-hire-reporting-asume:
+  phase: people
   title:
     es: "Reporte de nuevos empleados · ASUME"
     en: "New hire reporting · ASUME"
@@ -648,6 +671,8 @@ new-hire-reporting-asume:
   sourcing: secondary
 
 christmas-bonus-and-21-employee-cliff:
+  phase: people
+  kind: advisory
   title:
     es: "El bono de Navidad y el precipicio de los 21 empleados"
     en: "The Christmas bonus and the 21-employee cliff"
@@ -674,6 +699,8 @@ christmas-bonus-and-21-employee-cliff:
   sourcing: secondary
 
 vacation-sick-leave-accrual:
+  phase: people
+  kind: advisory
   title:
     es: "Vacaciones y enfermedad acumulan desde el principio"
     en: "Vacation and sick leave accrue from day one"
@@ -698,6 +725,7 @@ vacation-sick-leave-accrual:
 # ---- Hiring: no ----
 
 cfse-individual-track:
+  phase: people
   title:
     es: "CFSE — vía de dueño individual"
     en: "CFSE — individual owner track"
@@ -722,6 +750,7 @@ cfse-individual-track:
 # ---- IVU / SUT ----
 
 ivu-monthly-general:
+  phase: recurring
   title:
     es: "IVU — cobro y remesa mensual"
     en: "IVU — collection and monthly remittance"
@@ -752,6 +781,7 @@ ivu-monthly-general:
   sourcing: primary
 
 ivu-monthly-b2b-professional:
+  phase: recurring
   title:
     es: "IVU — servicios B2B y profesionales designados, 4%"
     en: "IVU — B2B and designated professional services, 4%"
@@ -785,6 +815,8 @@ ivu-monthly-b2b-professional:
 # ---- Cross-cutting warnings ----
 
 reglamento-conjunto-legally-unstable:
+  phase: operate
+  kind: advisory
   title:
     es: "El Reglamento Conjunto está en terreno legalmente inestable"
     en: "The Reglamento Conjunto is on legally unstable ground"
@@ -815,6 +847,8 @@ reglamento-conjunto-legally-unstable:
   sourcing: unverified
 
 confirm-delegated-hierarchy:
+  phase: operate
+  kind: advisory
   title:
     es: "Confirmar si el municipio tiene jerarquía delegada"
     en: "Confirm whether the municipality holds delegated hierarchy"
@@ -840,6 +874,8 @@ confirm-delegated-hierarchy:
   sourcing: unverified
 
 above-3m-obligations-change:
+  phase: operate
+  kind: advisory
   title:
     es: "Sobre $3M cambian las obligaciones"
     en: "Above $3M the obligations change"
@@ -865,6 +901,7 @@ above-3m-obligations-change:
   sourcing: primary
 
 state-annual-fee-survives:
+  phase: recurring
   title:
     es: "El cargo anual del Depto. de Estado sigue vivo aunque el informe murió"
     en: "The State fee survives even though the annual report died"
