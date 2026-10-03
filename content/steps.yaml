@@ -290,8 +290,8 @@ permiso-unico:
   agency: { es: "OGPe o municipio autónomo", en: "OGPe or autonomous municipality" }
   timing: { es: "Semanas — la ruta crítica", en: "Weeks — the critical path" }
   cost:
-    es: "Desde $100: 10% al radicar y el resto al final"
-    en: "From $100: 10% at filing, the rest at the end"
+    es: "Desde $100: 10% al radicar, el 90% tras la validación"
+    en: "From $100: 10% at filing, the other 90% after validation"
   note:
     es: >-
       Todo negocio necesita Permiso Único, opere desde donde opere.
@@ -306,14 +306,24 @@ permiso-unico:
       tenerlo antes de radicar, no después. Coger un Profesional
       Autorizado (PA) es lo normal para cualquier cosa que no sea un
       cambio de nombre, y casi siempre se paga solo en el tiempo que
-      ahorra. El portal cobra <b>10% al radicar</b> y el resto al
-      terminar el trámite. Los cargos que publica el municipio de
-      Bayamón son <b>$100 por radicación</b> ($150 en zona industrial),
-      $150 más si se piden bebidas alcohólicas, $30 por el rótulo y $75
-      por la exclusión categórica, además de la licencia sanitaria y la
-      certificación de Bomberos. El permiso <b>dura un año y se renueva
-      cada año</b>: la continuación de operación (la renovación) se
-      radica cuando faltan 45 días o menos para que venza, y un permiso
+      ahorra. El pago va en dos partes. Según el manual de OGPe
+      (versión 1.2, noviembre de 2023), el primer pago es <b>10% del
+      total de la solicitud</b> y el 90% restante se cobra después de que
+      el analista valida; el Reglamento Conjunto 2020 daba cinco días
+      para pagarlo, y hasta entonces la solicitud no se considera
+      presentada. Si el sistema cobra 100% desde el principio, el caso se
+      clasificó como ministerial, algo que nunca ocurre con los permisos
+      domiciliarios (salvo oficina administrativa) y que tampoco ocurre
+      con cafeterías, bares y otros usos regulados de cerca. Los cargos
+      que publica el municipio de Bayamón son <b>$100 por radicación</b>
+      ($150 en zona industrial), $150 más si se piden bebidas
+      alcohólicas, $30 por el rótulo y $75 por la exclusión categórica,
+      además de la licencia sanitaria y la certificación de Bomberos. El
+      mismo reglamento dice que OGPe, los municipios autónomos de
+      Jerarquía I a III y los PA cobran de una misma Orden Administrativa
+      de Cobro, que no se halló publicada. El permiso <b>dura un año y se
+      renueva cada año</b>: la continuación de operación (la renovación)
+      se radica cuando faltan 45 días o menos para que venza, y un permiso
       vencido tiene hasta 2 años para radicarla, quizás con cargos
       adicionales.
     en: >-
@@ -328,13 +338,23 @@ permiso-unico:
       a mandatory attachment to the application, so it must exist before
       filing, not after. Hiring an Authorized Professional (PA) is
       standard practice for anything beyond a name change and usually
-      pays for itself in elapsed time. The portal charges <b>10% when you
-      file</b> and the rest when the process ends. The fees the
-      Municipality of Bayamón publishes are <b>$100 per filing</b> ($150
-      in industrial zones), $150 more when alcohol sales are requested,
-      $30 for a business sign and $75 for a categorical exclusion, plus
-      the sanitary license and the fire prevention certification. The
-      permit <b>lasts one year and is renewed every year</b>: the
+      pays for itself in elapsed time. Payment comes in two parts. Per
+      OGPe's manual (version 1.2, November 2023), the first payment is
+      <b>10% of the application total</b> and the remaining 90% is
+      collected after the analyst validates; the 2020 Reglamento Conjunto
+      gave five days to pay it, and until then the application does not
+      count as filed. If the system charges 100% up front, the case was
+      classified as ministerial, which never happens with home-based
+      permits (except administrative offices) and does not happen with
+      cafeterias, bars and other closely regulated uses either. The fees
+      the Municipality of Bayamón publishes are <b>$100 per filing</b>
+      ($150 in industrial zones), $150 more when alcohol sales are
+      requested, $30 for a business sign and $75 for a categorical
+      exclusion, plus the sanitary license and the fire prevention
+      certification. The same regulation says OGPe, autonomous
+      municipalities of Hierarchy I to III and PAs charge under one
+      Administrative Order on Fees, which could not be found published.
+      The permit <b>lasts one year and is renewed every year</b>: the
       continuation of operation (the renewal) is filed when 45 days or
       fewer remain before it expires, and an expired permit has up to 2
       years to file one, possibly with extra charges.
@@ -443,8 +463,9 @@ home-based-permiso-unico-question:
       escoge «Domiciliario» como tipo de solicitud; no se escoge el
       Permiso de Uso Residencial, que es para servicio de agua y luz. En
       Bayamón cuesta $100 por radicación, más la licencia sanitaria
-      ($25 a $100) y la certificación de Bomberos (desde $50). No se
-      confirmó que los municipios que radican por OGPe cobren lo mismo.
+      ($25 a $100) y la certificación de Bomberos (desde $50). El
+      Reglamento Conjunto 2020 apunta a que OGPe cobra lo mismo, pero no
+      se pudo ver la orden de cobro.
     en: >-
       Every business needs a Permiso Único, including one run from home.
       That one uses the <b>Domiciliario</b> request type, for commercial
@@ -455,8 +476,9 @@ home-based-permiso-unico-question:
       pick "Domiciliario" as the request type; do not pick the
       Residential Use Permit, which is for water and power service. In
       Bayamón it costs $100 to file, plus the sanitary license ($25 to
-      $100) and the fire prevention certification (from $50). It was not
-      confirmed that municipalities filing through OGPe charge the same.
+      $100) and the fire prevention certification (from $50). The 2020
+      Reglamento Conjunto points to OGPe charging the same, but the fee
+      order could not be seen.
   severity: warn
   sourcing: primary
 
@@ -895,8 +917,9 @@ confirm-delegated-hierarchy:
       artículo de 2018 suma a Fajardo y agrupa a Cidra, Cayey, Coamo,
       Villalba, Salinas, Barranquitas, Aibonito y Comerío en consorcios.
       La autoridad de cada uno depende de su convenio con el gobierno
-      central, así que ser autónomo no garantiza que tramite el Permiso
-      Único. Hay que llamar y confirmar.
+      central, y desde el Código Municipal de 2020 las jerarquías van de
+      la I a la III, así que ser autónomo no garantiza que tramite el
+      Permiso Único. Hay que llamar y confirmar.
     en: >-
       This determines whether to file with OGPe or with the
       municipality — different process, different timeline, different
@@ -906,8 +929,10 @@ confirm-delegated-hierarchy:
       Guaynabo, Humacao, Ponce and San Juan. A 2018 article adds Fajardo
       and groups Cidra, Cayey, Coamo, Villalba, Salinas, Barranquitas,
       Aibonito and Comerío into consortia. Each one's authority depends
-      on its agreement with the central government, so being autonomous
-      does not guarantee it handles the Permiso Único. Call and confirm.
+      on its agreement with the central government, and since the 2020
+      Municipal Code the hierarchies run from I to III, so being
+      autonomous does not guarantee it handles the Permiso Único. Call
+      and confirm.
   severity: warn
   sourcing: unverified
 
