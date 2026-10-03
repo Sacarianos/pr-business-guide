@@ -34,7 +34,6 @@ import {
   practiceAttribution,
   practiceHeadline,
   professionalLabel,
-  sourcingLabel,
 } from '../lib/sourcing-label.ts';
 import { currentLang, type Lang } from './lang-toggle.ts';
 
@@ -348,18 +347,9 @@ function applyStaticText(): void {
   }
 }
 
-// A claim's sourcing mark (G-15/G-09): `primary` is the confirmed default
-// and gets no mark at all. Shared by step cards, incentive cards, and
-// src/pages/index.astro's entity table, via sourcing-label.ts.
-function sourcingMark(sourcing: 'primary' | 'secondary' | 'unverified'): string {
-  return sourcing === 'primary'
-    ? ''
-    : `<span class="mark mark-${sourcing}">${sourcingLabel(sourcing, lang)}</span>`;
-}
-
-// `practice.contradicted` is the loudest state on the page (G-15) — a
-// filled banner, not the bordered `mark` tag `sourcingMark` produces above,
-// so it reads as more urgent than a plain unverified figure.
+// `practice.contradicted` is the loudest state on the page (G-15), a
+// filled banner. Source pills were removed: where the government publishes
+// nothing, "unofficial source" is not something a reader can act on.
 // `practice.unknown` has nothing worth saying and renders nothing.
 function practiceBanner(practice: StepResult['practice']): string {
   if (!practice) return '';
@@ -421,7 +411,7 @@ function stopItem(s: RouteStop): string {
     <li class="stop" data-stop="${s.id}" data-kind="action" data-severity="${s.severity ?? ''}" data-sourcing="${s.sourcing}">
       <span class="pin${s.recurring ? ' pin-recurring' : ''}" data-stop-num>${marker}</span>
       <div class="stop-head">
-        <h5 class="stop-title">${escapeHtml(s.title[lang])} ${sourcingMark(s.sourcing)}</h5>
+        <h5 class="stop-title">${escapeHtml(s.title[lang])}</h5>
         ${metaLine(s)}
       </div>
       <div class="stop-cost">${escapeHtml(cost)}</div>
@@ -432,14 +422,17 @@ function stopItem(s: RouteStop): string {
     </li>`;
 }
 
-const CALLOUT_ICON = `<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5l8 14H2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 8v4M10 14.5v.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+// An advisory with no severity is a plain note and gets a quiet info icon;
+// only `warn` and `stop` advisories get the triangle.
+const CALLOUT_ICON_WARN = `<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5l8 14H2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 8v4M10 14.5v.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+const CALLOUT_ICON_INFO = `<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 9v5M10 6.3v.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
 
 function calloutItem(s: RouteStop): string {
   return `
-    <div class="callout" data-stop="${s.id}" data-kind="advisory" data-severity="${s.severity ?? ''}" data-sourcing="${s.sourcing}">
-      ${CALLOUT_ICON}
+    <div class="callout" data-stop="${s.id}" data-kind="advisory" data-severity="${s.severity ?? 'info'}" data-sourcing="${s.sourcing}">
+      ${s.severity ? CALLOUT_ICON_WARN : CALLOUT_ICON_INFO}
       <div>
-        <p class="callout-title">${escapeHtml(s.title[lang])} ${sourcingMark(s.sourcing)}</p>
+        <p class="callout-title">${escapeHtml(s.title[lang])}</p>
         ${metaLine(s)}
         ${alwaysVisible(s)}
         ${detailToggle(s)}
@@ -514,12 +507,12 @@ function render(): void {
 
   // The mark goes beside the value rather than inside [data-summary], so
   // the value reads cleanly and the mark still sits on the figure itself.
-  const cell = (key: string, label: string, value: string, mark = '') =>
-    `<div class="summary-cell"><dt>${label}</dt><dd><span data-summary="${key}">${value}</span>${mark}</dd></div>`;
+  const cell = (key: string, label: string, value: string) =>
+    `<div class="summary-cell"><dt>${label}</dt><dd data-summary="${key}">${value}</dd></div>`;
   summaryEl!.innerHTML = [
     cell('steps', UI_TEXT.summarySteps![lang], String(summary.steps)),
     cell('recurring', UI_TEXT.summaryRecurring![lang], String(summary.recurring)),
-    cell('patente', UI_TEXT.summaryPatente![lang], escapeHtml(patenteValue), patente ? sourcingMark(patente.sourcing) : ''),
+    cell('patente', UI_TEXT.summaryPatente![lang], escapeHtml(patenteValue)),
     cell('verified', UI_TEXT.summaryVerified![lang], researchDateShort(lang)),
   ].join('');
   patenteNoteEl!.innerHTML = [
@@ -534,7 +527,7 @@ function render(): void {
       (inc) => `
     <article class="card" data-incentive="${inc.id}">
       ${inc.law ? `<span class="card-law" data-law>${escapeHtml(inc.law)}</span>` : ''}
-      <h3>${escapeHtml(inc.title[lang])} ${sourcingMark(inc.sourcing)}</h3>
+      <h3>${escapeHtml(inc.title[lang])}</h3>
       ${professionalNote(inc.professional)}
       <p>${inc.note[lang]}</p>
       ${practiceBanner(inc.practice)}

@@ -646,3 +646,18 @@ describe('bilingual dictionary key parity and cross-language leakage', () => {
     });
   });
 });
+
+describe('advisories read as plain notes unless they change what the reader does next', () => {
+  // These two redirect the reader (which entity to pick, which office to
+  // file with). Every other advisory is information and renders as a
+  // neutral note.
+  const CAUTIONS = ['entity-undecided', 'confirm-delegated-hierarchy'];
+
+  test('only the cautions carry a severity, so only they render as amber callouts', () => {
+    for (const [id, s] of Object.entries(content.steps)) {
+      if (s.kind !== 'advisory') continue;
+      if (CAUTIONS.includes(id)) assert.equal(s.severity, 'warn', id);
+      else assert.equal(s.severity, undefined, `${id} should render as a neutral note`);
+    }
+  });
+});
