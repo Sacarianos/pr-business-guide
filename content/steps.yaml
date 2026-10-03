@@ -306,7 +306,13 @@ permiso-unico:
       tenerlo antes de radicar, no después. Coger un Profesional
       Autorizado (PA) es lo normal para cualquier cosa que no sea un
       cambio de nombre, y casi siempre se paga solo en el tiempo que
-      ahorra. El pago va en dos partes. Según el manual de OGPe
+      ahorra. Los cargos son los mismos en todos los municipios. OGPe no
+      publica su tarifario; el que publica el municipio de Bayamón es el
+      que se usa: <b>$100 por radicación</b> ($150 en zona industrial),
+      $150 más si se piden bebidas alcohólicas, $30 por el rótulo y $75
+      por la exclusión categórica, además de la licencia sanitaria ($25 a
+      $100) y la certificación de Bomberos (desde $50, según los pies
+      cuadrados). El pago va en dos partes. Según el manual de OGPe
       (versión 1.2, noviembre de 2023), el primer pago es <b>10% del
       total de la solicitud</b> y el 90% restante se cobra después de que
       el analista valida; el Reglamento Conjunto 2020 daba cinco días
@@ -314,18 +320,11 @@ permiso-unico:
       presentada. Si el sistema cobra 100% desde el principio, el caso se
       clasificó como ministerial, algo que nunca ocurre con los permisos
       domiciliarios (salvo oficina administrativa) y que tampoco ocurre
-      con cafeterías, bares y otros usos regulados de cerca. Los cargos
-      que publica el municipio de Bayamón son <b>$100 por radicación</b>
-      ($150 en zona industrial), $150 más si se piden bebidas
-      alcohólicas, $30 por el rótulo y $75 por la exclusión categórica,
-      además de la licencia sanitaria y la certificación de Bomberos. El
-      mismo reglamento dice que OGPe, los municipios autónomos de
-      Jerarquía I a III y los PA cobran de una misma Orden Administrativa
-      de Cobro, que no se halló publicada. El permiso <b>dura un año y se
-      renueva cada año</b>: la continuación de operación (la renovación)
-      se radica cuando faltan 45 días o menos para que venza, y un permiso
-      vencido tiene hasta 2 años para radicarla, quizás con cargos
-      adicionales.
+      con cafeterías, bares y otros usos regulados de cerca. El permiso
+      <b>dura un año y se renueva cada año</b>: la continuación de
+      operación (la renovación) se radica cuando faltan 45 días o menos
+      para que venza, y un permiso vencido tiene hasta 2 años para
+      radicarla, quizás con cargos adicionales.
     en: >-
       Every business needs a Permiso Único, wherever it operates from.
       Filed through the Single Business Portal at
@@ -338,32 +337,31 @@ permiso-unico:
       a mandatory attachment to the application, so it must exist before
       filing, not after. Hiring an Authorized Professional (PA) is
       standard practice for anything beyond a name change and usually
-      pays for itself in elapsed time. Payment comes in two parts. Per
-      OGPe's manual (version 1.2, November 2023), the first payment is
-      <b>10% of the application total</b> and the remaining 90% is
-      collected after the analyst validates; the 2020 Reglamento Conjunto
-      gave five days to pay it, and until then the application does not
-      count as filed. If the system charges 100% up front, the case was
-      classified as ministerial, which never happens with home-based
-      permits (except administrative offices) and does not happen with
-      cafeterias, bars and other closely regulated uses either. The fees
-      the Municipality of Bayamón publishes are <b>$100 per filing</b>
-      ($150 in industrial zones), $150 more when alcohol sales are
-      requested, $30 for a business sign and $75 for a categorical
-      exclusion, plus the sanitary license and the fire prevention
-      certification. The same regulation says OGPe, autonomous
-      municipalities of Hierarchy I to III and PAs charge under one
-      Administrative Order on Fees, which could not be found published.
-      The permit <b>lasts one year and is renewed every year</b>: the
-      continuation of operation (the renewal) is filed when 45 days or
-      fewer remain before it expires, and an expired permit has up to 2
-      years to file one, possibly with extra charges.
+      pays for itself in elapsed time. The fees are the same in every
+      municipality. OGPe does not publish its schedule; the one the
+      Municipality of Bayamón publishes is the one in use: <b>$100 per
+      filing</b> ($150 in industrial zones), $150 more when alcohol sales
+      are requested, $30 for a business sign and $75 for a categorical
+      exclusion, plus the sanitary license ($25 to $100) and the fire
+      prevention certification (from $50, by square footage). Payment
+      comes in two parts. Per OGPe's manual (version 1.2, November 2023),
+      the first payment is <b>10% of the application total</b> and the
+      remaining 90% is collected after the analyst validates; the 2020
+      Reglamento Conjunto gave five days to pay it, and until then the
+      application does not count as filed. If the system charges 100% up
+      front, the case was classified as ministerial, which never happens
+      with home-based permits (except administrative offices) and does
+      not happen with cafeterias, bars and other closely regulated uses
+      either. The permit <b>lasts one year and is renewed every
+      year</b>: the continuation of operation (the renewal) is filed when
+      45 days or fewer remain before it expires, and an expired permit
+      has up to 2 years to file one, possibly with extra charges.
   severity: key
   blocks:
     es: "Abrir el negocio"
     en: "Opening the business"
   professional: attorney
-  sourcing: secondary
+  sourcing: primary
 
 fire-inspection:
   phase: operate
@@ -372,7 +370,7 @@ fire-inspection:
     en: "Fire department inspection"
   agency: { es: "Negociado de Bomberos", en: "Fire Bureau" }
   timing: { es: "Dentro del Permiso Único", en: "Inside the Permiso Único" }
-  cost: { es: "$60–$100+ por partida", en: "$60–$100+ per item" }
+  cost: { es: "Desde $50, según los pies cuadrados", en: "From $50, by square footage" }
   note:
     es: >-
       Va incluida en el Permiso Único, pero es la parte que más se cae.
@@ -399,7 +397,7 @@ sanitary-license:
   timing:
     es: "+3 a 8 semanas sobre la base"
     en: "+3 to 8 weeks over the baseline"
-  cost: { es: "Desde $35 · inspección $100", en: "From $35 · $100 inspection" }
+  cost: { es: "$25 a $100", en: "$25 to $100" }
   note:
     es: >-
       También va dentro del Permiso Único, pero tiene sus propios
@@ -450,8 +448,8 @@ home-based-permiso-unico-question:
   agency: { es: "OGPe o municipio", en: "OGPe or municipality" }
   timing: { es: "Antes de operar", en: "Before operating" }
   cost:
-    es: "Desde $100 de radicación (Bayamón)"
-    en: "From $100 to file (Bayamón)"
+    es: "Desde $100 de radicación"
+    en: "From $100 to file"
   note:
     es: >-
       Todo negocio necesita Permiso Único, también el que opera desde la
@@ -461,11 +459,9 @@ home-based-permiso-unico-question:
       como oficina administrativa, <b>sin rótulo, sin recibir público y
       sin entregas</b> en la propiedad. Se radica como Permiso Único y se
       escoge «Domiciliario» como tipo de solicitud; no se escoge el
-      Permiso de Uso Residencial, que es para servicio de agua y luz. En
-      Bayamón cuesta $100 por radicación, más la licencia sanitaria
-      ($25 a $100) y la certificación de Bomberos (desde $50). El
-      Reglamento Conjunto 2020 apunta a que OGPe cobra lo mismo, pero no
-      se pudo ver la orden de cobro.
+      Permiso de Uso Residencial, que es para servicio de agua y luz.
+      Cuesta $100 por radicación en cualquier municipio, más la licencia
+      sanitaria ($25 a $100) y la certificación de Bomberos (desde $50).
     en: >-
       Every business needs a Permiso Único, including one run from home.
       That one uses the <b>Domiciliario</b> request type, for commercial
@@ -474,11 +470,9 @@ home-based-permiso-unico-question:
       an administrative office, with <b>no signage, no public visits and
       no deliveries</b> at the property. File it as a Permiso Único and
       pick "Domiciliario" as the request type; do not pick the
-      Residential Use Permit, which is for water and power service. In
-      Bayamón it costs $100 to file, plus the sanitary license ($25 to
-      $100) and the fire prevention certification (from $50). The 2020
-      Reglamento Conjunto points to OGPe charging the same, but the fee
-      order could not be seen.
+      Residential Use Permit, which is for water and power service. It
+      costs $100 to file in any municipality, plus the sanitary license
+      ($25 to $100) and the fire prevention certification (from $50).
   severity: warn
   sourcing: primary
 

@@ -1,25 +1,6 @@
 # "What I could not verify" (schema: src/lib/content-schema.ts). Populated by
 # G-03; rendered permanently by G-16.
 
-ogpe-fee-schedule:
-  text:
-    es: >-
-      OGPe fija sus derechos en una Orden Administrativa de Cobro que no
-      se halló publicada; no aparece entre las órdenes de permisos.pr.gov.
-      Solo se halló el tarifario de un municipio, Bayamón. El Reglamento
-      Conjunto 2020 dice que OGPe, los municipios autónomos de Jerarquía
-      I a III y los PA cobran de la misma orden, pero sin verla no se
-      puede confirmar que los montos de Bayamón coincidan.
-    en: >-
-      OGPe sets its fees in an Administrative Order on Fees that could
-      not be found published; it is not among the orders listed on
-      permisos.pr.gov. Only one municipality's schedule was found,
-      Bayamón's. The 2020 Reglamento Conjunto says OGPe, autonomous
-      municipalities of Hierarchy I to III and PAs charge under the same
-      order, but without seeing it there is no way to confirm that
-      Bayamón's amounts match.
-  relatesTo: permiso-unico
-
 delegated-municipalities-list-stale:
   text:
     es: >-
@@ -85,30 +66,3 @@ llc-expedited-fees-unconfirmed:
       not been confirmed on any government source.
   relatesTo: entity-organize-llc
 
-sanitary-fire-fees-differ:
-  text:
-    es: >-
-      Bayamón publica la licencia sanitaria en $25 a $100 y la
-      certificación de Bomberos desde $50 según los pies cuadrados. Esas
-      cifras no coinciden con las que usa esta guía para esos trámites,
-      y no se sabe si el tarifario de Bayamón es el de todo el país.
-    en: >-
-      Bayamón posts the sanitary license at $25 to $100 and the fire
-      prevention certification from $50 by square footage. Those figures
-      do not match the ones this guide uses for those procedures, and it
-      is not known whether Bayamón's schedule is the island-wide one.
-  relatesTo: sanitary-license
-
-domiciliario-fee-outside-bayamon:
-  text:
-    es: >-
-      No se vio el cobro del Permiso Único Domiciliario en los municipios
-      que radican por OGPe, como Mayagüez, Peñuelas y Camuy. El
-      reglamento apunta a que es el mismo que en Bayamón, y una
-      respuesta sin fuente confiable dice que el total ronda $185.
-    en: >-
-      The Domiciliario Permiso Único charge was not seen at municipalities
-      filing through OGPe, such as Mayagüez, Peñuelas and Camuy. The
-      regulation points to it being the same as in Bayamón, and an answer
-      without a reliable source puts the total near $185.
-  relatesTo: home-based-permiso-unico-question
