@@ -79,21 +79,39 @@ entity-llc-tax-classification:
   cost: { es: "—", en: "—" }
   note:
     es: >-
-      <b>Una LLC de Puerto Rico tributa como corporación por defecto</b>,
-      al revés de como funciona a nivel federal, y es la trampa más
-      común para quien llega con la costumbre de allá afuera. Se puede
-      elegir tratamiento de sociedad, y <b>la elección de PR es aparte
-      de la federal</b>. Equivocarse es radicar la planilla que no es y
+      <b>Una LLC de Puerto Rico tributa como corporación por defecto</b>
+      (Determinación Administrativa 22-10 de Hacienda), al revés de como
+      funciona a nivel federal, y es la trampa más común para quien
+      llega con la costumbre de allá afuera. Para los años contributivos
+      que empiezan después del 31 de diciembre de 2021 se puede elegir
+      tratamiento de <b>entidad conducto</b> (cualquier LLC) o de
+      <b>entidad ignorada</b> (solo una LLC de un miembro cuyo dueño sea
+      un individuo que cumpla los requisitos de la determinación). La
+      elección se hace con el Modelo SC 6045, que se radica por vía
+      electrónica como evidencia de la planilla, a más tardar en la
+      fecha límite de la planilla, incluyendo prórroga (Determinación
+      Administrativa 23-01). Después de un cambio de clasificación no se
+      puede pedir otro durante 60 meses, salvo que más de 50% de la
+      propiedad cambie de manos. <b>La elección de PR es aparte de la
+      federal</b>. Equivocarse es radicar la planilla que no es y
       terminar pagando contribución dos veces. Esta decisión la debe
       llevar un CPA de Puerto Rico.
     en: >-
-      <b>A Puerto Rico LLC is taxed as a corporation by default</b> —
-      the opposite of the US federal default, and the single most
-      common trap for anyone bringing mainland instincts. Partnership
-      treatment may be elected, and <b>the PR election is separate from
-      the federal one</b>. Getting it wrong means filing the wrong
-      return and possibly stacking two layers of tax. Take this one to
-      a PR CPA.
+      <b>A Puerto Rico LLC is taxed as a corporation by default</b>
+      (Hacienda Administrative Determination 22-10) — the opposite of
+      the US federal default, and the single most common trap for anyone
+      bringing mainland instincts. For tax years beginning after 31
+      December 2021 an LLC can elect <b>pass-through</b> treatment (any
+      LLC) or <b>disregarded entity</b> treatment (only a single-member
+      LLC whose owner is an individual meeting the determination's
+      requirements). The election is made on Form SC 6045, filed
+      electronically as evidence of the tax return, no later than the
+      return's due date including extensions (Administrative
+      Determination 23-01). After a change of classification no other
+      change can be requested for 60 months, unless more than 50% of the
+      ownership changes hands. <b>The PR election is separate from the
+      federal one</b>. Getting it wrong means filing the wrong return and
+      possibly stacking two layers of tax. Take this one to a PR CPA.
   severity: warn
   professional: cpa
   sourcing: primary
@@ -186,7 +204,7 @@ merchant-registration:
   timing:
     es: "ANTES de comenzar a operar"
     en: "BEFORE you begin operating"
-  cost: { es: "$0 (asumido)", en: "$0 (assumed)" }
+  cost: { es: "$0", en: "$0" }
   note:
     es: >-
       En <a href="https://suri.hacienda.pr.gov/">suri.hacienda.pr.gov</a>.
@@ -198,9 +216,8 @@ merchant-registration:
       <b>vence a los dos años</b> sin período de gracia establecido. Al
       aprobarlo, Hacienda clasifica al comerciante como agente retenedor
       o no retenedor para el IVU — que quede bien desde el registro.
-      Ningún cargo aparece en la ley ni en la carta circular; las
-      fuentes secundarias dicen que es gratis, pero ninguna página de
-      gobierno lo afirma.
+      Ningún cargo aparece en la ley ni en la carta circular, y Ayuda
+      Legal PR dice que la solicitud no tiene costo en Hacienda.
     en: >-
       At <a href="https://suri.hacienda.pr.gov/">suri.hacienda.pr.gov</a>.
       The statute is unambiguous — file <b>before</b> beginning to
@@ -212,8 +229,8 @@ merchant-registration:
       grace period. At approval Hacienda classifies the merchant as
       withholding or non-withholding agent for IVU — get that right at
       registration. No fee appears anywhere in the statute or the
-      circular; secondary sources say free, but no government page
-      affirmatively states $0.
+      circular, and Ayuda Legal PR says the application costs nothing
+      at Hacienda.
   severity: key
   blocks:
     es: "El Permiso Único y la póliza del CFSE"
@@ -910,9 +927,12 @@ confirm-delegated-hierarchy:
   note:
     es: >-
       Esto determina si se radica en OGPe o en el municipio — proceso
-      distinto, tiempos distintos, oficina distinta. No hay una lista
-      oficial al día, y las que existen no coinciden. La de <b>agosto de
-      2016</b> nombra a Aguadilla, Barranquitas, Bayamón, Cabo Rojo,
+      distinto, tiempos distintos, oficina distinta. En abril de 2026 se
+      reportaba que 11 municipios tienen jerarquía para otorgar permisos,
+      otros 10 operan mediante consorcios y 57 no tienen estructura
+      propia; el alcalde de Camuy dijo que Camuy no la tiene. No hay una
+      lista con nombres al día, y las publicadas no coinciden. La de
+      <b>agosto de 2016</b> nombra a Aguadilla, Barranquitas, Bayamón, Cabo Rojo,
       Caguas, Carolina, Cidra, Guaynabo, Humacao, Ponce y San Juan. Un
       artículo de 2018 suma a Fajardo y agrupa a Cidra, Cayey, Coamo,
       Villalba, Salinas, Barranquitas, Aibonito y Comerío en consorcios.
@@ -923,8 +943,11 @@ confirm-delegated-hierarchy:
     en: >-
       This determines whether to file with OGPe or with the
       municipality — different process, different timeline, different
-      office. There is no current official list, and the ones that exist
-      disagree. The one from <b>August 2016</b> names Aguadilla,
+      office. In April 2026 it was reported that 11 municipalities hold
+      permit hierarchy, another 10 work through consortia and 57 have no
+      structure of their own; Camuy's mayor said Camuy has none. There is
+      no current list with names, and the published ones disagree. The
+      one from <b>August 2016</b> names Aguadilla,
       Barranquitas, Bayamón, Cabo Rojo, Caguas, Carolina, Cidra,
       Guaynabo, Humacao, Ponce and San Juan. A 2018 article adds Fajardo
       and groups Cidra, Cayey, Coamo, Villalba, Salinas, Barranquitas,
