@@ -4,41 +4,14 @@
 delegated-municipalities-list-stale:
   text:
     es: >-
-      No se halló la lista con nombres al día de los municipios con
-      jerarquía para otorgar permisos. En abril de 2026 se reportaban 11
-      con jerarquía y otros 10 en consorcios, pero las listas publicadas
-      (2015, 2016 y 2018) no coinciden entre sí. Para los nueve
-      municipios de esta guía todas coinciden, y Camuy dijo en 2026 que
-      no tiene jerarquía.
+      Falta identificar uno de los 11 municipios con jerarquía propia. La
+      lista que se recibió incluye a Camuy, pero su alcalde dijo en abril
+      de 2026 que Camuy no tiene jerarquía, así que la guía lo trata como
+      municipio que radica por OGPe.
     en: >-
-      The current list with names of the municipalities that hold permit
-      hierarchy could not be found. In April 2026 it was reported that 11
-      hold hierarchy and another 10 sit in consortia, but the published
-      lists (2015, 2016 and 2018) disagree with each other. For the nine
-      municipalities in this guide they all agree, and Camuy said in
-      2026 that it has none.
+      One of the 11 municipalities with its own hierarchy remains to be
+      identified. The list received includes Camuy, but its mayor said in
+      April 2026 that Camuy has none, so the guide treats it as a
+      municipality that files through OGPe.
   relatesTo: confirm-delegated-hierarchy
 
-cfse-dtrh-rates-2026:
-  text:
-    es: >-
-      Las primas del CFSE y las tasas de desempleo/SINOT del DTRH para
-      2026 no están publicadas — solo se establecen las bases salariales.
-    en: >-
-      CFSE premium rates and 2026 DTRH unemployment/SINOT rates are
-      unpublished — only the wage bases are stated.
-  relatesTo: employer-registration-dtrh
-
-construction-permit-fees-unpublished:
-  text:
-    es: >-
-      No se halló cuánto cuesta un permiso de construcción comercial. La
-      página de Bayamón sobre el Permiso de Construcción Consolidado no
-      lista cargos, y no se pudo confirmar dónde se publica la fórmula
-      de OGPe.
-    en: >-
-      How much a commercial construction permit costs could not be
-      found. Bayamón's page on the Consolidated Construction Permit
-      lists no fees, and where OGPe publishes its formula could not be
-      confirmed.
-  relatesTo: construction-permit
