@@ -391,6 +391,31 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
       </div>
     </main>
 
+    {/* The yearly calendar (G-38): the dated duties the reader's route
+        creates, month by month. Hidden until there are results, like the
+        incentives band below it. */}
+    <section class="year-band" id="calendario" data-year-band hidden>
+      <div class="wrap">
+        <p class="eyebrow"><span lang="es">Tu año</span><span lang="en">Your year</span></p>
+        <h2 class="band-title"><span lang="es">Qué radicar y cuándo.</span><span lang="en">What to file, and when.</span></h2>
+        <p class="band-dek">
+          <span lang="es">Solo las fechas que crean tus trámites, para un año contributivo que corre de enero a diciembre.</span>
+          <span lang="en">Only the dates your procedures create, for a tax year that runs January to December.</span>
+        </p>
+        <div class="year-strips">
+          <section class="year-strip">
+            <h3 class="year-strip-title"><span lang="es">Cada mes</span><span lang="en">Every month</span></h3>
+            <ul class="cal-list" data-year-monthly></ul>
+          </section>
+          <section class="year-strip">
+            <h3 class="year-strip-title"><span lang="es">Según tus propias fechas</span><span lang="en">Set by your own dates</span></h3>
+            <ul class="cal-list" data-year-relative></ul>
+          </section>
+        </div>
+        <ol class="year-grid" data-year-months></ol>
+      </div>
+    </section>
+
     {/* The incentives band (0002, G-36): only the incentives that apply to
         the reader's answers, so it stays hidden until there are results. */}
     <section class="incentives-band" id="incentivos" data-incentives-band hidden>
@@ -1916,6 +1941,153 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     margin: 0 0 12px;
   }
 
+  /* The yearly calendar (G-38). Its items are injected by tool.ts, hence
+     :global() on everything inside the lists. */
+  .year-band {
+    padding: 80px 0;
+    border-top: 1px solid var(--rule);
+    background: var(--surface);
+  }
+  .year-band[hidden] {
+    display: none;
+  }
+  .year-strips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .year-strip {
+    padding: 20px 22px;
+    border-radius: 12px;
+    background: var(--sunk);
+  }
+  .year-strip[hidden] {
+    display: none;
+  }
+  .year-strip-title {
+    margin: 0 0 14px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .cal-list,
+  :global(.month .cal-list) {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  :global(.cal-item) {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  :global(.cal-item[data-relative]) {
+    grid-template-columns: 1fr;
+  }
+  :global(.cal-day) {
+    display: grid;
+    place-items: center;
+    height: 36px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 8px;
+    background: var(--surface);
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+  :global(.cal-when) {
+    display: block;
+    margin-bottom: 2px;
+    font-size: var(--fs-meta);
+    font-weight: 600;
+    color: var(--brand);
+  }
+  :global(.cal-title) {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+  :global(.cal-detail) {
+    margin: 3px 0 0;
+    font-size: var(--fs-small);
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .year-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: start;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  :global(.month) {
+    padding: 18px 18px 20px;
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+  :global(.month[data-empty]) {
+    background: var(--paper);
+  }
+  :global(.month[data-current]) {
+    border-color: var(--brand);
+    box-shadow: inset 0 0 0 1px var(--brand);
+  }
+  :global(.month-head) {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0 0 14px;
+  }
+  :global(.month-name) {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  :global(.month-now) {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--brand-tint);
+    font-size: var(--fs-label);
+    font-weight: 600;
+    color: var(--brand);
+  }
+  :global(.month-empty) {
+    margin: 0;
+    font-size: var(--fs-small);
+    color: var(--ink-3);
+  }
+  @media (max-width: 1080px) {
+    .year-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 720px) {
+    .year-band {
+      padding: 48px 0;
+    }
+    .year-strips,
+    .year-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
   /* Incentive cards (0002, G-36), injected by tool.ts, hence :global(). */
   .incentives-band {
     padding: 80px 0;
@@ -2097,9 +2269,14 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
       display: block !important;
     }
     :global(.tool),
-    :global(.incentives-band) {
+    :global(.incentives-band),
+    :global(.year-band) {
       padding: 0 !important;
       border: 0 !important;
+    }
+    :global(.month),
+    :global(.year-strip) {
+      break-inside: avoid;
     }
     :global(.tool-grid) {
       display: block !important;

@@ -12,6 +12,7 @@
 // each bilingual field.
 import type {
   Bilingual,
+  CalendarEntryData,
   EntityFormData,
   GapData,
   IncentiveData,
@@ -35,6 +36,8 @@ export type Content = {
   entities: Record<string, EntityFormData>;
   // Titles and order of the five route phases (0002, G-30).
   phases: Record<Phase, PhaseData>;
+  // Dated duties for the yearly calendar (G-38), in file order.
+  calendar: (CalendarEntryData & { id: string })[];
 };
 
 export type Answers = {
@@ -364,7 +367,9 @@ function stepIds(answers: Answers, municipio: MunicipioData | null): string[] {
 
   ids.push(answers.type === 'prof' ? 'ivu-monthly-b2b-professional' : 'ivu-monthly-general');
 
-  ids.push('state-annual-fee-survives');
+  // A sole proprietor files nothing with the Departamento de Estado, so
+  // there is no annual fee to keep paying.
+  if (answers.entity !== 'sole') ids.push('state-annual-fee-survives');
 
   return ids;
 }
@@ -571,4 +576,63 @@ export function routeHeading(
       en: parts.map((p) => p.en).join(' · '),
     },
   };
+}
+
+// The yearly calendar (G-38). Which duties a reader has is already decided
+// by buildSequence, so this only reads the route: an entry shows when any
+// of its `steps` is in the sequence, or always when it names none. The
+// result has no notion of today; the page highlights the current month.
+export type CalendarItem = {
+  id: string;
+  title: Bilingual;
+  detail: Bilingual;
+  sourcing: CalendarEntryData['sourcing'];
+  // The day of the month, and what the card prints for it. For a
+  // `relative` entry, `day` is its place in the list and `badge` is null.
+  day: number | null;
+  badge: string | null;
+  // For a `relative` entry, when it falls.
+  when: Bilingual | null;
+};
+
+export type YearCalendar = {
+  monthly: CalendarItem[];
+  // Twelve lists, January first, each sorted by day.
+  months: CalendarItem[][];
+  relative: CalendarItem[];
+};
+
+export function yearCalendar(result: Result, content: Content): YearCalendar {
+  const inRoute = new Set(result.steps.map((s) => s.id));
+  const calendar: YearCalendar = {
+    monthly: [],
+    months: Array.from({ length: 12 }, () => []),
+    relative: [],
+  };
+
+  for (const entry of content.calendar) {
+    if (entry.steps && !entry.steps.some((id) => inRoute.has(id))) continue;
+    const base = { id: entry.id, title: entry.title, detail: entry.detail, sourcing: entry.sourcing };
+    const { when } = entry;
+    if (when.type === 'monthly') {
+      calendar.monthly.push({ ...base, day: when.day, badge: String(when.day), when: null });
+    } else if (when.type === 'relative') {
+      calendar.relative.push({ ...base, day: when.order, badge: null, when: when.text });
+    } else {
+      for (const d of when.dates) {
+        calendar.months[d.month - 1]!.push({ ...base, day: d.day, badge: d.badge ?? String(d.day), when: null });
+      }
+    }
+  }
+
+  // Same-day items sort by id so the order never depends on how the
+  // collection was loaded; a badge that isn't the plain day ("15+") means
+  // "after that day", so it sorts after the items due on it.
+  const after = (i: CalendarItem) => (i.badge === String(i.day) ? 0 : 0.5);
+  const byDay = (a: CalendarItem, b: CalendarItem) =>
+    a.day! + after(a) - (b.day! + after(b)) || a.id.localeCompare(b.id);
+  calendar.monthly.sort(byDay);
+  calendar.relative.sort((a, b) => a.day! - b.day!);
+  for (const month of calendar.months) month.sort(byDay);
+  return calendar;
 }

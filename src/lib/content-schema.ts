@@ -174,6 +174,31 @@ export const incentiveSchema = z.object({
 });
 export type IncentiveData = z.infer<typeof incentiveSchema>;
 
+// The yearly calendar (G-38): one entry per dated duty. `steps` ties an
+// entry to the route, so a reader only sees what their own steps create;
+// an entry with no `steps` applies to every business. `badge` replaces the
+// day number on the card when the due date is not a fixed day (the patente
+// declaration falls a few business days after the 15th).
+const calendarDate = z.object({
+  month: z.number().int().min(1).max(12),
+  day: z.number().int().min(1).max(31),
+  badge: z.string().optional(),
+});
+export const calendarEntrySchema = z.object({
+  title: bilingual,
+  detail: bilingual,
+  steps: z.array(z.string()).min(1).optional(),
+  when: z.discriminatedUnion('type', [
+    z.object({ type: z.literal('monthly'), day: z.number().int().min(1).max(28) }),
+    z.object({ type: z.literal('dates'), dates: z.array(calendarDate).min(1) }),
+    // `order` puts these in the sequence a reader meets them: opening,
+    // hiring, the permit's first anniversary.
+    z.object({ type: z.literal('relative'), order: z.number().int(), text: bilingual }),
+  ]),
+  ...claimFields,
+});
+export type CalendarEntryData = z.infer<typeof calendarEntrySchema>;
+
 // "What I could not verify" (G-16). A gap is itself the disclosure that a
 // claim is unverified, so it doesn't carry its own sourcing mark.
 export const gapSchema = z.object({

@@ -1,7 +1,7 @@
 // Shared shaping of the content collections into decision-tree.ts's
 // `Content` type — used by both the content.json endpoint (G-04) and the
 // page itself (G-08), so the two never drift into different shapes of the
-// same seven collections.
+// same eight collections.
 import { getCollection } from 'astro:content';
 import { PHASE_IDS } from './content-schema.ts';
 import type { Content } from './decision-tree.ts';
@@ -11,7 +11,7 @@ function byId<T extends { id: string; data: unknown }>(entries: T[]) {
 }
 
 export async function loadContent(): Promise<Content> {
-  const [steps, questions, municipios, incentives, gaps, entities, phases] = await Promise.all([
+  const [steps, questions, municipios, incentives, gaps, entities, phases, calendar] = await Promise.all([
     getCollection('steps'),
     getCollection('questions'),
     getCollection('municipios'),
@@ -19,6 +19,7 @@ export async function loadContent(): Promise<Content> {
     getCollection('gaps'),
     getCollection('entities'),
     getCollection('phases'),
+    getCollection('calendar'),
   ]);
 
   // A per-entry schema can't say "exactly these five entries", so the
@@ -38,5 +39,6 @@ export async function loadContent(): Promise<Content> {
     gaps: gaps.map((g) => ({ id: g.id, ...g.data })),
     entities: byId(entities) as Content['entities'],
     phases: byId(phases) as Content['phases'],
+    calendar: calendar.map((c) => ({ id: c.id, ...c.data })),
   };
 }

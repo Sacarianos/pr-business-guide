@@ -18,6 +18,9 @@ import {
   buildSequence,
   emptyAnswers,
   groupByPhase,
+  yearCalendar,
+  type CalendarItem,
+  type YearCalendar,
   hasEnoughAnswers,
   patenteLabel,
   routeHeading,
@@ -52,6 +55,10 @@ const zonesEl = document.querySelector<HTMLElement>('[data-zones]');
 const incentivesEl = document.querySelector<HTMLElement>('[data-incentives]');
 const incentivesBandEl = document.querySelector<HTMLElement>('[data-incentives-band]');
 const actionsEl = document.querySelector<HTMLElement>('[data-route-actions]');
+const yearBandEl = document.querySelector<HTMLElement>('[data-year-band]');
+const yearMonthlyEl = document.querySelector<HTMLElement>('[data-year-monthly]');
+const yearRelativeEl = document.querySelector<HTMLElement>('[data-year-relative]');
+const yearMonthsEl = document.querySelector<HTMLElement>('[data-year-months]');
 const copyBtn = document.querySelector<HTMLButtonElement>('[data-copy-link]');
 const printBtn = document.querySelector<HTMLButtonElement>('[data-print]');
 const copyStatusEl = document.querySelector<HTMLElement>('[data-copy-status]');
@@ -103,6 +110,8 @@ const UI_TEXT: Record<string, Record<Lang, string>> = {
   summaryPatente: { es: 'Patente est.', en: 'Est. patente' },
   summaryVerified: { es: 'Verificado', en: 'Verified' },
   patentePortal: { es: 'Dónde radicar la patente:', en: 'Where to file the patente:' },
+  thisMonth: { es: 'Este mes', en: 'This month' },
+  nothingDue: { es: 'Nada que radicar.', en: 'Nothing to file.' },
   costUnknown: { es: 'n/d', en: 'n/a' },
   showDetail: { es: 'Ver detalles', en: 'Show details' },
   hideDetail: { es: 'Ocultar detalles', en: 'Hide details' },
@@ -489,12 +498,14 @@ function render(): void {
     emptyStateEl!.hidden = false;
     resultsEl!.hidden = true;
     if (incentivesBandEl) incentivesBandEl.hidden = true;
+    if (yearBandEl) yearBandEl.hidden = true;
     if (actionsEl) actionsEl.hidden = true;
     return;
   }
   emptyStateEl!.hidden = true;
   resultsEl!.hidden = false;
   if (incentivesBandEl) incentivesBandEl.hidden = false;
+  if (yearBandEl) yearBandEl.hidden = false;
   if (actionsEl) actionsEl.hidden = false;
 
   const result = buildSequence(answers, content);
@@ -525,6 +536,7 @@ function render(): void {
   ].join('');
 
   zonesEl!.innerHTML = groupByPhase(result, content).map(zone).join('');
+  renderYear(yearCalendar(result, content));
 
   incentivesEl!.innerHTML = result.incentives
     .map(
@@ -537,6 +549,37 @@ function render(): void {
       ${practiceBanner(inc.practice)}
     </article>`,
     )
+    .join('');
+}
+
+// G-38: the yearly calendar. Seam A decides what is due; the clock only
+// decides which month gets the "this month" mark.
+const MONTHS: Record<Lang, string[]> = {
+  es: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+  en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+};
+
+function calItem(item: CalendarItem): string {
+  const when = item.when ? `<span class="cal-when">${escapeHtml(item.when[lang])}</span>` : '';
+  const day = item.badge ? `<span class="cal-day">${escapeHtml(item.badge)}</span>` : '';
+  return `<li class="cal-item" data-cal="${item.id}"${item.when ? ' data-relative' : ''}>${day}<div>${when}<b class="cal-title">${escapeHtml(item.title[lang])}</b><p class="cal-detail">${escapeHtml(item.detail[lang])}</p></div></li>`;
+}
+
+function renderYear(year: YearCalendar): void {
+  if (!yearMonthlyEl || !yearRelativeEl || !yearMonthsEl) return;
+  yearMonthlyEl.innerHTML = year.monthly.map(calItem).join('');
+  yearRelativeEl.innerHTML = year.relative.map(calItem).join('');
+  yearMonthlyEl.closest('section')!.hidden = year.monthly.length === 0;
+  yearRelativeEl.closest('section')!.hidden = year.relative.length === 0;
+  const now = new Date().getMonth();
+  yearMonthsEl.innerHTML = year.months
+    .map((items, i) => {
+      const current = i === now;
+      const body = items.length
+        ? `<ul class="cal-list">${items.map(calItem).join('')}</ul>`
+        : `<p class="month-empty">${UI_TEXT.nothingDue![lang]}</p>`;
+      return `<li class="month" data-month="${i + 1}"${current ? ' data-current' : ''}${items.length ? '' : ' data-empty'}><div class="month-head"><h3 class="month-name">${MONTHS[lang][i]}</h3>${current ? `<span class="month-now">${UI_TEXT.thisMonth![lang]}</span>` : ''}</div>${body}</li>`;
+    })
     .join('');
 }
 
