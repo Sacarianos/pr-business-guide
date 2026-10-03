@@ -39,30 +39,16 @@ llc-classification-determinaciones-administrativas:
       retrieved in full text.
   relatesTo: entity-llc-tax-classification
 
-annual-report-conflict:
+construction-permit-fees-unpublished:
   text:
     es: >-
-      La página de formularios del Departamento de Estado todavía dice
-      que las corporaciones radican un informe anual antes del 15 de
-      abril y lista un costo por tipo, lo que choca con esta guía, que
-      dice que desde 2025 solo se paga el cargo. Falta confirmar cuál de
-      las dos está al día.
+      No se halló cuánto cuesta un permiso de construcción comercial. La
+      página de Bayamón sobre el Permiso de Construcción Consolidado no
+      lista cargos, y no se pudo confirmar dónde se publica la fórmula
+      de OGPe.
     en: >-
-      The Dept. of State forms page still says corporations file an
-      annual report by 15 April and lists a price per type, which clashes
-      with this guide, which says that since 2025 only the fee is owed.
-      Which of the two is current remains to be confirmed.
-  relatesTo: state-annual-fee-survives
-
-llc-expedited-fees-unconfirmed:
-  text:
-    es: >-
-      Los cargos de servicio expedito de $100 (24h), $200 (mismo día) y
-      $500 (2h) no aparecen en la página de formularios del Departamento
-      de Estado y no se han confirmado en ninguna fuente de gobierno.
-    en: >-
-      The expedited-service charges of $100 (24h), $200 (same day) and
-      $500 (2h) do not appear on the Dept. of State forms page and have
-      not been confirmed on any government source.
-  relatesTo: entity-organize-llc
-
+      How much a commercial construction permit costs could not be
+      found. Bayamón's page on the Consolidated Construction Permit
+      lists no fees, and where OGPe publishes its formula could not be
+      confirmed.
+  relatesTo: construction-permit

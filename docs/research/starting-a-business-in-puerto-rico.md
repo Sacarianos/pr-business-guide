@@ -1293,3 +1293,23 @@ Four more answers were pasted in with citations. They came from a search assista
 ## Update 2026-10-03 (fourth): owner's ruling on fees
 
 The project owner ruled that Bayamón's published schedule is the Permiso Único fee schedule for every municipality, because OGPe does not publish its own. The guide now uses it as the price list: $100 filing ($150 in industrial zones), $150 more for alcohol, $30 sign, $75 categorical exclusion, sanitary license $25 to $100, fire prevention certification from $50 by square footage. This replaces the earlier sanitary figure ($35 plus a $100 inspection) and the fire figure ($60 to $100+ per item). The 2020 Reglamento Conjunto points the same way: one Orden Administrativa de Cobro applies to OGPe, Hierarchy I to III municipalities and Authorized Professionals. The Permiso Único step is marked primary-sourced on that basis.
+
+## Update 2026-10-03 (fifth): 21 pasted answers checked
+
+A search assistant's answers to the 21 open questions were checked one by one. Applied, with the source found:
+
+- **Annual report:** Law 65 of 17 July 2025 amended Arts. 15.01, 15.03 and 17.01 of Ley 164-2009. Corporations no longer file the report and still pay the annual charge. The Departamento de Estado forms page still carries the old notice.
+- **Expedited tiers:** the answer said there is no expedited fee. Ley 164-2009 Art. 21.01(B) sets $100, $200 and $500 surcharges, so the guide keeps them. An earlier update here had wrongly called them unconfirmed.
+- **IVU 4%:** Hacienda's own pages describe the 4% special rate for B2B and designated professional services since 1 October 2015.
+- **ASUME:** 20 days from hire or rehire after 60 days of separation (8 LPRA §509a and asume.pr.gov).
+- **Christmas bonus:** Ley 148-1969, $300 cap with 20 or fewer employees and $600 above. The 700-hour and 26 January 2017 conditions were not in the text consulted.
+- **Building code:** the 2018 Puerto Rico Building Code, based on the 2018 IBC, effective 15 November 2018, mandatory for projects filed since 15 February 2019 (ICC adoption map, CIAPR communiqué 2018-05).
+
+Not applied:
+
+- **Bayamón PCOC:** the answer said Bayamón uses no consolidated construction permit. Bayamón's own permits page lists the Permiso de Construcción Consolidado (PCOC), with no fee schedule. Its permit office: Edificio Joaquín Montesino, Suite 102, (787) 269-7730.
+- **Delegated municipalities:** the answer adds Mayagüez and Toa Baja, which appear on none of the three published lists (2015, 2016, 2018).
+- **Patente rates:** the answers for Mayagüez, Ponce, Camuy and Bayamón contradict the site's data without a source. A search result for Ponce agrees with the site's tiers (0.30% up to $499,999, 0.50% from $500,000).
+- **Registro de Comerciantes cost:** Hacienda's page on establishing a business is silent on the fee. CRIM's $150,000 volume condition was not found on the pages checked.
+- **Act 38-2026, the 2% SME rate, DA 22-10 and 23-01 details, and the DTRH, SINOT and CFSE rates:** no source was found.
+- **Vacation and sick leave accrual** during probation: no source was found.
