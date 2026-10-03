@@ -5,9 +5,12 @@ import { defineConfig } from 'astro/config';
 // usable before any JavaScript loads (0001, user story 35). The only hydrated
 // component on the page will be the chat island (G-21).
 //
-// `site` and `base` are deliberately absent until G-24 wires up GitHub Pages —
-// serving from a project page means `base` has to match the repository name,
-// and a wrong value here breaks every asset URL silently.
+// G-24: published as a GitHub Pages project page, so `base` has to match the
+// repository name. Astro prefixes every bundled asset with it; a wrong value
+// breaks every asset URL silently, which is why test/built-page.test.ts
+// checks the built page's asset URLs against it.
 export default defineConfig({
   output: 'static',
+  site: 'https://sacarianos.github.io',
+  base: '/pr-business-guide',
 });

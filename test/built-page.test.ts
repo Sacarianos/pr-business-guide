@@ -176,3 +176,17 @@ test('G-37: every focusable element gets a visible focus ring from a page-wide r
   const rule = /(?:^|[}\s,]):focus-visible\s*\{([^}]*)\}/m.exec(css)?.[1] ?? '';
   assert.match(rule, /outline:\s*2px solid/, 'no bare :focus-visible rule with an outline in the built CSS');
 });
+
+// G-24: the site is a GitHub Pages project page served under the
+// repository name, so every local asset URL must carry that prefix and
+// resolve to a file in dist. A root-absolute URL would 404 once published.
+test('local asset URLs carry the Pages base and exist in the build', () => {
+  const BASE = '/pr-business-guide/';
+  const urls = [...html.matchAll(/(?:src|href)="(\/[^"]*)"/g)].map((m) => m[1]!);
+  assert.ok(urls.length > 0, 'expected bundled assets in the page');
+  for (const url of urls) {
+    assert.ok(url.startsWith(BASE), `${url} is missing the ${BASE} prefix`);
+    const file = join(dist, url.slice(BASE.length).split(/[?#]/)[0]!);
+    assert.doesNotThrow(() => readFileSync(file), `${url} has no file in dist`);
+  }
+});
