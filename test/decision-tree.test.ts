@@ -161,13 +161,13 @@ describe('seven scenarios', () => {
     assert.ok(incIds.includes('act60-not-applicable'));
     assert.ok(!incIds.includes('pridco-industrial-space'), 'retail is not mfg');
 
-    // Ponce is `secondary`-sourced — the estimate must carry that mark, in
-    // the structured field as well as in the prose, so the UI can flag the
-    // number itself rather than only the sentence under it (G-09).
+    // Ponce's tiers are `primary`-sourced since the 2025-2026 CPA table, so
+    // the estimate carries no unconfirmed mark. Scenario 5 covers the mark
+    // for a rate that is still unconfirmed (G-09).
     assert.equal(r.patente?.amount, Math.max(3_500_000 * 0.005, 25));
-    assert.equal(r.patente?.sourcing, 'secondary');
-    assert.match(r.patente!.why.es, /sin confirmar/);
-    assert.match(r.patente!.why.en, /unconfirmed/);
+    assert.equal(r.patente?.sourcing, 'primary');
+    assert.doesNotMatch(r.patente!.why.es, /sin confirmar/);
+    assert.doesNotMatch(r.patente!.why.en, /unconfirmed/);
 
     // Story 10: the agency is resolved from the municipality, not left as
     // the content's generic "Municipio".
@@ -287,7 +287,7 @@ describe('patente() — tier and boundary behavior', () => {
     // confirmed rate — the loudest mark in the set, and the one most likely
     // to be mistaken for a real figure.
     assert.equal(patente('other', 20000, content.municipios)!.sourcing, 'unverified');
-    assert.equal(patente('ponce', 20000, content.municipios)!.sourcing, 'secondary');
+    assert.equal(patente('ponce', 20000, content.municipios)!.sourcing, 'primary');
     assert.equal(patente('bayamon', 20000, content.municipios)!.sourcing, 'primary');
     // The statewide exemption rests on statute, not on any ordinance.
     assert.equal(patente('other', 1000, content.municipios)!.sourcing, 'primary');

@@ -98,7 +98,7 @@ guaynabo:
 
 ponce:
   name: "Ponce"
-  sourcing: secondary
+  sourcing: primary
   rate:
     type: tiered
     tiers:
@@ -110,12 +110,12 @@ ponce:
     es: "ponce.recaudadorvirtual.com"
     en: "ponce.recaudadorvirtual.com"
   note:
-    es: "Tasa leída de una tabla del Colegio de CPA con posible desalineación de columnas — confírmala contra la ordenanza municipal."
-    en: "Rate read from a CPA association table with possible column drift — confirm against the municipal ordinance."
+    es: "Escalonado: 0.30% hasta $499,999 y 0.50% sobre $500,000 (1.50% para negocios financieros), según la tabla 2025-2026 del Colegio de CPA."
+    en: "Tiered: 0.30% up to $499,999 and 0.50% above $500,000 (1.50% for financial businesses), per the CPA association's 2025-2026 table."
 
 mayaguez:
   name: "Mayagüez"
-  sourcing: unverified
+  sourcing: primary
   rate:
     type: flat
     percent: 0.005
@@ -125,8 +125,8 @@ mayaguez:
     es: "mayaguez.recaudadorvirtual.com"
     en: "mayaguez.recaudadorvirtual.com"
   note:
-    es: "Tasa incierta y posiblemente escalonada. No aparece en la lista de 2016 de autoridad delegada, así que asume OGPe hasta confirmar."
-    en: "Rate uncertain and possibly tiered. Not on the 2016 delegated-authority list, so assume OGPe until confirmed."
+    es: "Tasa única de 0.50% para negocios que no son financieros (1.50% para financieros), según la tabla 2025-2026 del Colegio de CPA. No aparece en las listas de autoridad delegada, así que asume OGPe."
+    en: "Single rate of 0.50% for non-financial businesses (1.50% for financial ones), per the CPA association's 2025-2026 table. Not on any delegated-authority list, so assume OGPe."
 
 penuelas:
   name: "Peñuelas"
@@ -152,16 +152,16 @@ camuy:
   minimum: 25
   permits: { delegated: false, ogpe: true }
   portal:
-    es: "Tabla 2024-25"
-    en: "2024-25 table"
+    es: "Tabla 2025-26"
+    en: "2025-26 table"
   note:
     es: >-
-      Escalonado. Cifras de la tabla 2024-25. Bajo $5,000 la tasa es $25
+      Escalonado. Cifras de la tabla 2025-26. Bajo $5,000 la tasa es $25
       fijos (el `tiers` de arriba lo aproxima con 0%, no $0 — ver G-09);
       en la práctica ese volumen ya cae bajo la exención estatal de
       $5,000 del Art. 7.206, que exime del todo.
     en: >-
-      Tiered. Figures from the 2024-25 table. Below $5,000 the charge is
+      Tiered. Figures from the 2025-26 table. Below $5,000 the charge is
       a flat $25 (the `tiers` field above approximates this at 0%, not
       $0 — see G-09); in practice that volume already falls under the
       statewide $5,000 exemption in Art. 7.206, which exempts it entirely.
@@ -174,5 +174,5 @@ other:
     percent: 0.005
   minimum: 25
   note:
-    es: "Techo estatutario general del Art. 7.202(b), no una tasa confirmada para tu municipio específico. Confirma la tasa real antes de presupuestar."
-    en: "The general statutory ceiling from Art. 7.202(b), not a confirmed rate for your specific municipality. Confirm the actual rate before budgeting on it."
+    es: "Techo estatutario general del Art. 7.202(b). En la tabla 2025-2026 del Colegio de CPA, al menos 60 de los 78 municipios cobran 0.50% a los negocios que no son financieros; unos pocos cobran menos o por escalones. Busca el tuyo antes de presupuestar."
+    en: "The general statutory ceiling from Art. 7.202(b). In the CPA association's 2025-2026 table, at least 60 of the 78 municipalities charge 0.50% to non-financial businesses; a few charge less or use tiers. Look yours up before budgeting."

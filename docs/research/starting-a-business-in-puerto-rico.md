@@ -1313,3 +1313,16 @@ Not applied:
 - **Registro de Comerciantes cost:** Hacienda's page on establishing a business is silent on the fee. CRIM's $150,000 volume condition was not found on the pages checked.
 - **Act 38-2026, the 2% SME rate, DA 22-10 and 23-01 details, and the DTRH, SINOT and CFSE rates:** no source was found.
 - **Vacation and sick leave accrual** during probation: no source was found.
+
+## Update 2026-10-03 (sixth): LLC tax, patente table, delegated counts
+
+The owner answered the last 15 questions, some with links. What the linked and cited sources say:
+
+- **LLC tax classification** (hacienda.pr.gov, DA 22-10 and DA 23-01): an LLC is taxed like a corporation by default. From tax years beginning after 31 December 2021 it can elect pass-through treatment, or disregarded-entity treatment if it is a single-member LLC whose owner is an individual meeting the DA's requirements. Form SC 6045 is filed electronically as evidence of the return, by the return's due date including extensions. DA 23-01 took effect 2 March 2023. After a change, no other change for 60 months unless more than 50% of the ownership changes hands. The details in the pasted answer on foreign LLCs were not checked.
+- **Patente rates** (Colegio de CPA, "Tipos Contributivos de Patentes Municipales para negocios financieros y para otros negocios", fiscal year 2025-2026, colegiocpa.com): Ponce is tiered, 0.30% up to $499,999 and 0.50% above, with 1.50% for financial businesses. Mayagüez is 0.50% flat. Bayamón is 0.50% flat. Camuy is 0.40% under $200,000 and 0.50% from $200,000. Peñuelas is 0.40%. San Juan matches the guide. The pasted answers for Ponce (flat 0.30%), Bayamón (tiered 0.20% to 0.45%) and Mayagüez (tiered) were wrong. Other municipios: at least 60 of 78 charge 0.50%; Juncos 0.45%; Peñuelas and Utuado 0.40%; Orocovis 0.30%; about a dozen use tiers.
+- **Registro de Comerciantes:** Ayuda Legal PR states that the application has no cost at Hacienda. Hacienda's own page is silent on the fee.
+- **Delegated municipalities:** Primera Hora (17 April 2026) reports 11 municipios with hierarchy, 10 more in consortia and 57 without. Noticel (16 April 2026) quotes Camuy's mayor saying Camuy has no hierarchy and that Puerto Rico has 11 municipios with hierarchy. Neither article names the municipios. The pasted list includes Camuy, which its own mayor contradicts.
+- **DTRH wage bases:** trabajo.pr.gov gives $7,000 for unemployment and $9,000 for SINOT. It gives no rates. The pasted rates (2.95%, 0.60%) were not found.
+- **Vacation and sick leave:** Ley 4-2017 (official text, bvirtualogp.pr.gov) raised the monthly hours threshold from 115 to 130 and set lower accrual rates for new employees. The pasted claim that vacation accrues retroactively after probation was not found in the text.
+- **CRIM $50,000 exemption:** the CRIM link provided is the agency's 2017-2018 annual report and does not mention the exemption. The guide keeps the Colegio de CPA source.
+- **Not found:** the Act 60 export-services rate after 2026 (the pasted answer cites an Act 38-2026 and a 2% rate for small businesses, with no link), the construction permit fee (the link was a commercial blog), and a working copy of the Justia statute link (HTTP 403).
