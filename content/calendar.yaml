@@ -1,0 +1,208 @@
+# The yearly calendar (G-38; schema: src/lib/content-schema.ts). Every
+# date here is already stated in content/steps.yaml, except the payroll
+# and income tax dates, which come from Hacienda: Form 499 R-1B's own
+# instructions, BI RI 25-08 for the W-2PR, and the 2024 corporate and
+# individual return instructions. See the ninth update in
+# docs/research/starting-a-business-in-puerto-rico.md.
+#
+# `steps` ties an entry to the route: it shows when any of those steps is
+# in the reader's sequence. No `steps` means every business.
+
+withholding-deposit:
+  title:
+    es: "Depositar lo retenido de la nómina"
+    en: "Deposit payroll withholding"
+  detail:
+    es: "La contribución sobre ingresos que retuviste el mes anterior, a Hacienda."
+    en: "The income tax you withheld last month, paid to Hacienda."
+  steps: [employer-registration-dtrh]
+  when: { type: monthly, day: 15 }
+  sourcing: primary
+
+ivu-return:
+  title:
+    es: "Planilla y pago del IVU"
+    en: "IVU return and payment"
+  detail:
+    es: "Por las ventas del mes anterior, en SURI. Se radica aunque no hayas vendido nada."
+    en: "For last month's sales, through SURI. File it even with no sales."
+  steps: [ivu-monthly-general, ivu-monthly-b2b-professional]
+  when: { type: monthly, day: 20 }
+  sourcing: primary
+
+patente-payment:
+  title:
+    es: "Pago semestral de la patente"
+    en: "Semiannual patente payment"
+  detail:
+    es: "Se paga por adelantado. Si pagaste el año completo al radicar la declaración, ya está cubierto."
+    en: "Paid in advance. If you paid the full year when you filed the declaration, it is already covered."
+  steps: [patente-municipal]
+  when:
+    type: dates
+    dates:
+      - { month: 1, day: 2 }
+      - { month: 7, day: 1 }
+  sourcing: primary
+
+w2pr:
+  title:
+    es: "Comprobantes de retención W-2PR"
+    en: "W-2PR withholding statements"
+  detail:
+    es: "Por el año anterior: uno a cada empleado y todos a Hacienda por SURI."
+    en: "For last year: one to each employee, and all of them to Hacienda through SURI."
+  steps: [employer-registration-dtrh]
+  when:
+    type: dates
+    dates:
+      - { month: 1, day: 31 }
+  sourcing: primary
+
+quarterly-499r1b:
+  title:
+    es: "Planilla trimestral del patrono, 499 R-1B"
+    en: "Employer quarterly return, 499 R-1B"
+  detail:
+    es: "Por el trimestre que acaba de cerrar."
+    en: "For the quarter that just closed."
+  steps: [employer-registration-dtrh]
+  when:
+    type: dates
+    dates:
+      - { month: 1, day: 31 }
+      - { month: 4, day: 30 }
+      - { month: 7, day: 31 }
+      - { month: 10, day: 31 }
+  sourcing: primary
+
+income-tax-return:
+  title:
+    es: "Planilla de contribución sobre ingresos"
+    en: "Income tax return"
+  detail:
+    es: "Si tu año contributivo es el natural. Como individuo radicas la tuya; una LLC o corporación radica la suya."
+    en: "If your tax year is the calendar year. As a sole proprietor you file your own; an LLC or corporation files its own."
+  when:
+    type: dates
+    dates:
+      - { month: 4, day: 15 }
+  sourcing: primary
+
+state-annual-fee:
+  title:
+    es: "Cargo anual del Departamento de Estado, $150"
+    en: "Department of State annual fee, $150"
+  detail:
+    es: "Para LLC y corporaciones. Ya no hay informe anual, solo el pago."
+    en: "For LLCs and corporations. No annual report anymore, only the fee."
+  steps: [state-annual-fee-survives]
+  when:
+    type: dates
+    dates:
+      - { month: 4, day: 15 }
+  sourcing: primary
+
+patente-declaration:
+  title:
+    es: "Declaración de volumen de negocios"
+    en: "Business volume declaration"
+  detail:
+    es: "Vence dentro de los 5 días laborables después del 15 de abril. Pagar el año completo al radicar te da 5% de descuento."
+    en: "Due within 5 business days after 15 April. Paying the full year when you file gets a 5% discount."
+  steps: [patente-municipal]
+  when:
+    type: dates
+    dates:
+      - { month: 4, day: 15, badge: "15+" }
+  sourcing: primary
+
+crim-return:
+  title:
+    es: "Planilla de bienes muebles, CRIM"
+    en: "Personal property return, CRIM"
+  detail:
+    es: "Inventario, maquinaria, equipo y muebles del negocio. Tarde, la penalidad sube 5% cada 30 días."
+    en: "The business's inventory, machinery, equipment and furniture. Late, the penalty grows 5% every 30 days."
+  steps: [crim-personal-property-return, crim-personal-property-return-above-ceiling]
+  when:
+    type: dates
+    dates:
+      - { month: 5, day: 15 }
+  sourcing: primary
+
+christmas-bonus-opens:
+  title:
+    es: "Abre el período del bono de Navidad"
+    en: "Christmas bonus window opens"
+  detail:
+    es: "Se paga entre el 15 de noviembre y el 15 de diciembre."
+    en: "It is paid between 15 November and 15 December."
+  steps: [christmas-bonus-and-21-employee-cliff]
+  when:
+    type: dates
+    dates:
+      - { month: 11, day: 15 }
+  sourcing: primary
+
+christmas-bonus-due:
+  title:
+    es: "Último día para pagar el bono de Navidad"
+    en: "Last day to pay the Christmas bonus"
+  detail:
+    es: "2% del salario, con tope de $300 o $600 según cuántos empleados tengas."
+    en: "2% of salary, capped at $300 or $600 depending on your headcount."
+  steps: [christmas-bonus-and-21-employee-cliff]
+  when:
+    type: dates
+    dates:
+      - { month: 12, day: 15 }
+  sourcing: primary
+
+provisional-patente-notice:
+  title:
+    es: "Avisar a Finanzas del municipio"
+    en: "Notify the municipal finance office"
+  detail:
+    es: "Así recibes la patente provisional, exenta de pago por el primer semestre."
+    en: "That gets you the provisional patente, exempt from payment for the first semester."
+  steps: [patente-municipal]
+  when:
+    type: relative
+    order: 1
+    text:
+      es: "Dentro de 30 días de empezar a operar"
+      en: "Within 30 days of starting to operate"
+  sourcing: primary
+
+new-hire-asume:
+  title:
+    es: "Reportar cada empleado nuevo a ASUME"
+    en: "Report each new hire to ASUME"
+  detail:
+    es: "Aunque renuncie o lo despidas antes de que pasen los 20 días."
+    en: "Even if they quit or are let go before the 20 days pass."
+  steps: [new-hire-reporting-asume]
+  when:
+    type: relative
+    order: 2
+    text:
+      es: "Dentro de 20 días de su primer día"
+      en: "Within 20 days of their first day"
+  sourcing: primary
+
+permiso-unico-renewal:
+  title:
+    es: "Renovar el Permiso Único"
+    en: "Renew the Permiso Único"
+  detail:
+    es: "El permiso dura un año. Vencido, tienes hasta 2 años para renovarlo, quizás con cargos adicionales."
+    en: "The permit lasts one year. Once expired, you have up to 2 years to renew it, possibly with extra charges."
+  steps: [permiso-unico, home-based-permiso-unico-question]
+  when:
+    type: relative
+    order: 3
+    text:
+      es: "Cuando falten 45 días o menos para que cumpla un año"
+      en: "When 45 days or fewer remain before it turns one year old"
+  sourcing: primary

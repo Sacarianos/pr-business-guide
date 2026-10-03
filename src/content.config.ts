@@ -18,6 +18,7 @@ import {
   gapSchema,
   entityFormSchema,
   phaseSchema,
+  calendarEntrySchema,
 } from './lib/content-schema';
 
 const steps = defineCollection({
@@ -55,4 +56,9 @@ const phases = defineCollection({
   schema: phaseSchema,
 });
 
-export const collections = { steps, questions, municipios, incentives, gaps, entities, phases };
+const calendar = defineCollection({
+  loader: file('content/calendar.yaml'),
+  schema: calendarEntrySchema,
+});
+
+export const collections = { steps, questions, municipios, incentives, gaps, entities, phases, calendar };

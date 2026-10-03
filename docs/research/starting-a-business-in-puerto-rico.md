@@ -1344,3 +1344,11 @@ The owner supplied answers to the remaining open questions and asked that they b
 - **Departamento de Estado, services page** (statedepartment.pr.gov/services-coporations): LLCs pay a $150 annual fee by 15 April and file no report. The page still says corporations file an annual report, which Law 65 of 2025 removed for 2025 onward. It lists no processing times or expedited charges.
 - **ASUME** (asume.pr.gov, State New Hire Registry page): report within the first 20 days from hire or rehire; rehire applies after 60 or more consecutive days of separation.
 - **Hacienda press release of 7 September 2015:** 4% IVU on services between merchants and designated professional services for services after 30 September 2015, from Laws 72-2015 and 101-2015.
+
+## Update 2026-10-03 (ninth): payroll and income tax dates for the yearly calendar
+
+- **Withholding deposits:** Hacienda's Form 499 R-1B (hacienda.pr.gov/sites/default/files/documentos/499_r-1b.pdf) requires income tax withheld from wages to be deposited by the 15th of the month after the withholding.
+- **Form 499 R-1B:** the employer's quarterly return is due on or before the last day of the month after each quarter closes on 31 March, 30 June, 30 September and 31 December.
+- **Form 499R-2/W-2PR:** Section 1141(n)(2) of the Internal Revenue Code requires every employer to give each employee a withholding statement by 31 January of the following year. BI RI 25-08 (3 October 2025) requires withholding statements and informative returns to be filed only through SURI.
+- **Income tax returns:** Hacienda's 2024 corporate return instructions set the due date at the 15th day of the fourth month after the tax year closes, which is 15 April for a calendar tax year. The 2024 individual instructions set 15 April for individuals.
+- **Not added:** the DTRH quarterly unemployment and SINOT reports, and the federal Form 941. Neither was checked against a primary source in this pass, so the calendar leaves them out.

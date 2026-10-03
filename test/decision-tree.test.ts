@@ -25,6 +25,7 @@ import {
   patente,
   patenteLabel,
   routeHeading,
+  yearCalendar,
   routeSummary,
   SAMPLE_ANSWERS,
   visibleQuestions,
@@ -686,5 +687,51 @@ describe('every municipality is on the list', () => {
     const step = r.steps.find((s) => s.id === 'patente-municipal')!;
     assert.doesNotMatch(step.agency.es, /Municipio por decidir/);
     assert.equal(routeHeading(answers({ entity: 'llc', muni: 'other' }), content).subline.es, 'municipio por decidir · LLC');
+  });
+});
+
+describe('yearCalendar (G-38)', () => {
+  const ids = (items: { id: string }[]) => items.map((i) => i.id);
+  const employer = buildSequence(
+    answers({ type: 'retail', entity: 'llc', premises: 'commercial', buildout: 'no', muni: 'caguas', vol: 120000, hiring: 'yes', driving: 'no' }),
+    content,
+  );
+  const solo = buildSequence(
+    answers({ type: 'prof', entity: 'sole', premises: 'home', muni: 'caguas', vol: 40000, hiring: 'no' }),
+    content,
+  );
+
+  test('every entry ties to steps that exist', () => {
+    for (const entry of content.calendar) {
+      for (const id of entry.steps ?? []) assert.ok(content.steps[id], `${entry.id} names unknown step ${id}`);
+    }
+  });
+
+  test('an employer route gets the payroll dates, in day order', () => {
+    const year = yearCalendar(employer, content);
+    assert.equal(year.months.length, 12);
+    assert.deepEqual(ids(year.monthly), ['withholding-deposit', 'ivu-return']);
+    assert.deepEqual(ids(year.months[0]!), ['patente-payment', 'quarterly-499r1b', 'w2pr']);
+    assert.deepEqual(ids(year.months[3]!), ['income-tax-return', 'state-annual-fee', 'patente-declaration', 'quarterly-499r1b']);
+    assert.deepEqual(ids(year.months[11]!), ['christmas-bonus-due']);
+    assert.deepEqual(ids(year.relative), ['provisional-patente-notice', 'new-hire-asume', 'permiso-unico-renewal']);
+    for (const month of year.months) {
+      const days = month.map((i) => i.day!);
+      assert.deepEqual(days, [...days].sort((a, b) => a - b));
+    }
+  });
+
+  test('a sole proprietor with no hires sees no payroll or State fee dates', () => {
+    const year = yearCalendar(solo, content);
+    const all = [...year.monthly, ...year.relative, ...year.months.flat()].map((i) => i.id);
+    for (const id of ['withholding-deposit', 'w2pr', 'quarterly-499r1b', 'christmas-bonus-due', 'new-hire-asume', 'state-annual-fee']) {
+      assert.ok(!all.includes(id), `${id} should not apply`);
+    }
+    assert.ok(all.includes('income-tax-return'), 'every business files an income tax return');
+  });
+
+  test('the patente declaration prints as after the 15th, not on it', () => {
+    const april = yearCalendar(employer, content).months[3]!;
+    assert.equal(april.find((i) => i.id === 'patente-declaration')!.badge, '15+');
   });
 });
