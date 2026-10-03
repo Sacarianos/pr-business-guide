@@ -1266,3 +1266,15 @@ Three pages were read on 2026-10-03, plus two OGPe manuals re-read. The compile 
 
 **up.codes, 2018 IRC Appendix L** (https://up.codes/viewer/puerto_rico/irc-2018/chapter/L/permit-fees)
 - A model fee table by project valuation. The appendix says it is not mandatory unless a local ordinance adopts it, names no agency, and the International Residential Code covers houses and townhouses, not commercial buildouts. Not usable as a source for Puerto Rico construction permit fees.
+
+## Update 2026-10-03 (second): answers from the project owner
+
+Jaime answered six open questions the same day. These are statements from the project owner, not documents, and they are recorded as such. The site marks the affected Permiso Único step as unconfirmed ("sin confirmar") for that reason.
+
+- **Fee mechanism:** the Single Business Portal charges 10% when the application is filed and the rest when the process ends. The fees are the ones Bayamón publishes. Not settled: whether the 10% is taken on the sum of all charges or only on the filing fee, and whether OGPe's own schedule matches Bayamón's.
+- **Duration:** a Permiso Único lasts one year and is renewed every year. This matches the OGPe renewal manual's 45-day window and the secondary sources that said annual.
+- **Rule in force:** the Reglamento Conjunto de Emergencia of 16 June 2023 is the operational rule today.
+- **Who needs one:** every business needs a Permiso Único, wherever it operates from. Home businesses use the Domiciliario request type.
+- **OGPe towns and Domiciliario:** a pasted answer says municipalities filing through OGPe accept the Domiciliario type at the same $100 base fee as Bayamón. No source was given, and parts of it disagree with Bayamón's own page, so the site records it only as an unconfirmed gap.
+- **Delegated authority:** a pasted answer listed nine standalone municipalities and three consortia. Two sources were checked. A Junta page (copyright 2015) lists 8 autonomous municipalities: Aguadilla, Bayamón, Caguas, Carolina, Cidra, Guaynabo, Humacao and Ponce. A law firm article of 17 February 2018 (buildprlaw.com) lists 10 plus two consortia (Cidra, Cayey, Coamo, Villalba, Salinas; Barranquitas, Aibonito, Comerío) and says each one's authority depends on its agreement with the central government, on a hierarchy of 1 to 5. The pasted third consortium (Naranjito, Orocovis, Corozal) was not found in either. For the nine municipios the guide covers, every list agrees.
+- **Portal address:** permisos.pr.gov still links sbp.ogpe.pr.gov, but that address has an expired security certificate. www.sbp.pr.gov loads the DDEC Single Business Portal login. The site now links the latter.

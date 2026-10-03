@@ -290,10 +290,11 @@ permiso-unico:
   agency: { es: "OGPe o municipio autónomo", en: "OGPe or autonomous municipality" }
   timing: { es: "Semanas — la ruta crítica", en: "Weeks — the critical path" }
   cost:
-    es: "10% al radicar, balance tras evaluación"
-    en: "10% at filing, balance after evaluation"
+    es: "Desde $100: 10% al radicar y el resto al final"
+    en: "From $100: 10% at filing, the rest at the end"
   note:
     es: >-
+      Todo negocio necesita Permiso Único, opere desde donde opere.
       Se radica por el Single Business Portal en
       <a href="https://www.sbp.pr.gov/">sbp.pr.gov</a>, con OGPe o con el
       municipio si tiene autoridad delegada. Una sola solicitud
@@ -305,16 +306,18 @@ permiso-unico:
       tenerlo antes de radicar, no después. Coger un Profesional
       Autorizado (PA) es lo normal para cualquier cosa que no sea un
       cambio de nombre, y casi siempre se paga solo en el tiempo que
-      ahorra. No se halló el tarifario de OGPe. Como referencia, el
-      municipio de Bayamón publica <b>$100 por radicación</b> ($150 en
-      zona industrial), $150 más si se piden bebidas alcohólicas, $30 por
-      el rótulo y $75 por la exclusión categórica, además de la licencia
-      sanitaria y la certificación de Bomberos. La <b>continuación de
-      operación</b> (la renovación) se radica cuando faltan 45 días o
-      menos para que venza el permiso; un permiso vencido tiene hasta 2
-      años para radicarla, quizás con cargos adicionales. No se halló
-      cuánto dura un permiso antes de vencer.
+      ahorra. El portal cobra <b>10% al radicar</b> y el resto al
+      terminar el trámite. Los cargos que publica el municipio de
+      Bayamón son <b>$100 por radicación</b> ($150 en zona industrial),
+      $150 más si se piden bebidas alcohólicas, $30 por el rótulo y $75
+      por la exclusión categórica, además de la licencia sanitaria y la
+      certificación de Bomberos. El permiso <b>dura un año y se renueva
+      cada año</b>: la continuación de operación (la renovación) se
+      radica cuando faltan 45 días o menos para que venza, y un permiso
+      vencido tiene hasta 2 años para radicarla, quizás con cargos
+      adicionales.
     en: >-
+      Every business needs a Permiso Único, wherever it operates from.
       Filed through the Single Business Portal at
       <a href="https://www.sbp.pr.gov/">sbp.pr.gov</a>, with OGPe or with
       the municipality if it holds delegated authority. One application
@@ -325,22 +328,22 @@ permiso-unico:
       a mandatory attachment to the application, so it must exist before
       filing, not after. Hiring an Authorized Professional (PA) is
       standard practice for anything beyond a name change and usually
-      pays for itself in elapsed time. OGPe's own fee schedule could not
-      be located. For reference, the Municipality of Bayamón posts
-      <b>$100 per filing</b> ($150 in industrial zones), $150 more when
-      alcohol sales are requested, $30 for a business sign and $75 for a
-      categorical exclusion, plus the sanitary license and the fire
-      prevention certification. A <b>continuation of operation</b> (the
-      renewal) is filed when 45 days or fewer remain before the permit
-      expires; an expired permit has up to 2 years to file one, possibly
-      with extra charges. How long a permit lasts before it expires
-      could not be found.
+      pays for itself in elapsed time. The portal charges <b>10% when you
+      file</b> and the rest when the process ends. The fees the
+      Municipality of Bayamón publishes are <b>$100 per filing</b> ($150
+      in industrial zones), $150 more when alcohol sales are requested,
+      $30 for a business sign and $75 for a categorical exclusion, plus
+      the sanitary license and the fire prevention certification. The
+      permit <b>lasts one year and is renewed every year</b>: the
+      continuation of operation (the renewal) is filed when 45 days or
+      fewer remain before it expires, and an expired permit has up to 2
+      years to file one, possibly with extra charges.
   severity: key
   blocks:
     es: "Abrir el negocio"
     en: "Opening the business"
   professional: attorney
-  sourcing: unverified
+  sourcing: secondary
 
 fire-inspection:
   phase: operate
@@ -431,32 +434,29 @@ home-based-permiso-unico-question:
     en: "From $100 to file (Bayamón)"
   note:
     es: >-
-      El portal de OGPe ofrece un tipo de solicitud <b>Domiciliario</b>
-      para usos comerciales que no pasen del <b>25% de la residencia</b>.
-      Según Bayamón, es para negocios que no alquilan un local y usan ese
-      25% como oficina administrativa, <b>sin rótulo, sin recibir
-      público y sin entregas</b> en la propiedad. Se radica como Permiso
-      Único y se escoge «Domiciliario» como tipo de solicitud; no se
-      escoge el Permiso de Uso Residencial, que es para servicio de agua
-      y luz. En Bayamón cuesta $100 por radicación, más la licencia
-      sanitaria ($25 a $100) y la certificación de Bomberos (desde $50).
-      Siguen sin respuesta dos cosas: si la ley obliga a sacarlo a quien
-      trabaja desde casa sin clientes, y si los municipios sin autoridad
-      delegada lo tratan igual.
+      Todo negocio necesita Permiso Único, también el que opera desde la
+      casa. Ese usa el tipo de solicitud <b>Domiciliario</b>, para usos
+      comerciales que no pasen del <b>25% de la residencia</b>. Según
+      Bayamón, es para negocios que no alquilan un local y usan ese 25%
+      como oficina administrativa, <b>sin rótulo, sin recibir público y
+      sin entregas</b> en la propiedad. Se radica como Permiso Único y se
+      escoge «Domiciliario» como tipo de solicitud; no se escoge el
+      Permiso de Uso Residencial, que es para servicio de agua y luz. En
+      Bayamón cuesta $100 por radicación, más la licencia sanitaria
+      ($25 a $100) y la certificación de Bomberos (desde $50). No se
+      confirmó que los municipios que radican por OGPe cobren lo mismo.
     en: >-
-      OGPe's portal offers a <b>Domiciliario</b> request type for
-      commercial uses that do not exceed <b>25% of the residence</b>. Per
-      Bayamón, it is for businesses that do not rent premises and use
-      that 25% as an administrative office, with <b>no signage, no
-      public visits and no deliveries</b> at the property. File it as a
-      Permiso Único and pick "Domiciliario" as the request type; do not
-      pick the Residential Use Permit, which is for water and power
-      service. In Bayamón it costs $100 to file, plus the sanitary
-      license ($25 to $100) and the fire prevention certification (from
-      $50). Two things remain unanswered: whether the law requires
-      someone working from home with no client traffic to get one, and
-      whether municipalities without delegated authority treat it the
-      same way.
+      Every business needs a Permiso Único, including one run from home.
+      That one uses the <b>Domiciliario</b> request type, for commercial
+      uses that do not exceed <b>25% of the residence</b>. Per Bayamón,
+      it is for businesses that do not rent premises and use that 25% as
+      an administrative office, with <b>no signage, no public visits and
+      no deliveries</b> at the property. File it as a Permiso Único and
+      pick "Domiciliario" as the request type; do not pick the
+      Residential Use Permit, which is for water and power service. In
+      Bayamón it costs $100 to file, plus the sanitary license ($25 to
+      $100) and the fire prevention certification (from $50). It was not
+      confirmed that municipalities filing through OGPe charge the same.
   severity: warn
   sourcing: primary
 
@@ -856,26 +856,23 @@ reglamento-conjunto-legally-unstable:
       El Tribunal Supremo declaró <b>nulo el Reglamento Conjunto 2020 el
       15 de marzo de 2023</b> por carecer del análisis de costo-beneficio
       que exige la LPAU, y el litigio seguía vivo hasta octubre de 2025.
-      Hoy el municipio de Bayamón cita como base del Permiso Único el
-      <b>Reglamento Conjunto de Emergencia aprobado el 16 de junio de
-      2023</b>; no se pudo confirmar si sigue vigente. Como los cargos y
-      los estándares de inspección del Permiso Único viven en ese
-      reglamento, no se pudo establecer desde ninguna fuente primaria
-      cuánto dura un permiso. Las fuentes secundarias dicen anual. <b>Hay
-      que leer la fecha de vencimiento en el propio documento de
-      permiso</b> y no confiar en un número de memoria.
+      La regla que se usa hoy para el Permiso Único es el <b>Reglamento
+      Conjunto de Emergencia aprobado el 16 de junio de 2023</b>, que
+      Bayamón cita como su base. Como la regla anterior cayó en los
+      tribunales, conviene confirmar con OGPe cualquier cargo o plazo
+      antes de radicar. <b>Hay que leer la fecha de vencimiento en el
+      propio documento de permiso</b> y no confiar en un número de
+      memoria.
     en: >-
       The Tribunal Supremo declared the <b>Reglamento Conjunto 2020 null
       on 15 March 2023</b> for lacking the cost-benefit analysis the
       LPAU requires, and litigation was still live as of October 2025.
-      The Municipality of Bayamón now cites the <b>Reglamento Conjunto de
-      Emergencia approved on 16 June 2023</b> as the basis of the Permiso
-      Único; it could not be confirmed whether that regulation is still
-      in force. Because the Permiso Único's fees and inspection
-      standards live in that regulation, how long a permit lasts could
-      not be established from any primary source. Secondary sources say
-      annual. <b>Read the expiration date off the permit document
-      itself</b> and do not trust a remembered number.
+      The rule in use today for the Permiso Único is the <b>Reglamento
+      Conjunto de Emergencia approved on 16 June 2023</b>, which Bayamón
+      cites as its basis. Because the earlier rule fell in court, it is
+      worth confirming any fee or deadline with OGPe before filing.
+      <b>Read the expiration date off the permit document itself</b> and
+      do not trust a remembered number.
   severity: stop
   sourcing: unverified
 
@@ -891,18 +888,26 @@ confirm-delegated-hierarchy:
   note:
     es: >-
       Esto determina si se radica en OGPe o en el municipio — proceso
-      distinto, tiempos distintos, oficina distinta. La lista
-      autoritativa disponible es de <b>agosto de 2016</b>: Aguadilla,
-      Barranquitas, Bayamón, Cabo Rojo, Caguas, Carolina, Cidra,
-      Guaynabo, Humacao, Ponce y San Juan. Casi seguro está incompleta a
-      estas alturas — hay que llamar y confirmar.
+      distinto, tiempos distintos, oficina distinta. No hay una lista
+      oficial al día, y las que existen no coinciden. La de <b>agosto de
+      2016</b> nombra a Aguadilla, Barranquitas, Bayamón, Cabo Rojo,
+      Caguas, Carolina, Cidra, Guaynabo, Humacao, Ponce y San Juan. Un
+      artículo de 2018 suma a Fajardo y agrupa a Cidra, Cayey, Coamo,
+      Villalba, Salinas, Barranquitas, Aibonito y Comerío en consorcios.
+      La autoridad de cada uno depende de su convenio con el gobierno
+      central, así que ser autónomo no garantiza que tramite el Permiso
+      Único. Hay que llamar y confirmar.
     en: >-
       This determines whether to file with OGPe or with the
       municipality — different process, different timeline, different
-      office. The authoritative list available dates from <b>August
-      2016</b>: Aguadilla, Barranquitas, Bayamón, Cabo Rojo, Caguas,
-      Carolina, Cidra, Guaynabo, Humacao, Ponce and San Juan. Almost
-      certainly incomplete by now — call and confirm.
+      office. There is no current official list, and the ones that exist
+      disagree. The one from <b>August 2016</b> names Aguadilla,
+      Barranquitas, Bayamón, Cabo Rojo, Caguas, Carolina, Cidra,
+      Guaynabo, Humacao, Ponce and San Juan. A 2018 article adds Fajardo
+      and groups Cidra, Cayey, Coamo, Villalba, Salinas, Barranquitas,
+      Aibonito and Comerío into consortia. Each one's authority depends
+      on its agreement with the central government, so being autonomous
+      does not guarantee it handles the Permiso Único. Call and confirm.
   severity: warn
   sourcing: unverified
 

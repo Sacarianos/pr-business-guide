@@ -4,40 +4,33 @@
 ogpe-fee-schedule:
   text:
     es: >-
-      No se halló el tarifario de OGPe para el Permiso Único. Solo se
-      halló el de un municipio, Bayamón, que cobra montos fijos y no
-      menciona el pago de 10% al radicar; hay que confirmar si ese 10%
-      aplica. Cualquier costo del Permiso Único en esta guía es un
-      estimado, no un número sustentado.
+      Solo se halló el tarifario publicado de un municipio, Bayamón, no
+      el de OGPe. Falta confirmar si OGPe cobra lo mismo y si el 10% al
+      radicar se calcula sobre la suma de todos los cargos o solo sobre
+      el cargo de radicación. Cualquier costo del Permiso Único en esta
+      guía es una referencia, no el tarifario de OGPe.
     en: >-
-      OGPe's fee schedule for the Permiso Único could not be found. Only
-      one municipality's schedule was found, Bayamón's, which charges
-      flat amounts and does not mention a 10% payment at filing; whether
-      that 10% applies needs confirming. Any Permiso Único cost figure
-      in this guide is an estimate, not a sourced number.
-  relatesTo: permiso-unico
-
-permiso-unico-renewal-interval:
-  text:
-    es: >-
-      No se halló cuánto dura un Permiso Único antes de vencer. El manual
-      de renovación de OGPe solo dice cuándo radicar la continuación:
-      45 días o menos antes de vencer, o hasta 2 años después.
-    en: >-
-      How long a Permiso Único lasts before it expires could not be
-      found. OGPe's renewal manual only says when to file the
-      continuation: 45 days or fewer before expiry, or up to 2 years
-      after.
+      Only one municipality's published schedule was found, Bayamón's,
+      not OGPe's. It remains to be confirmed whether OGPe charges the
+      same, and whether the 10% at filing is taken on the sum of all
+      charges or only on the filing fee. Any Permiso Único cost figure
+      in this guide is a reference, not OGPe's schedule.
   relatesTo: permiso-unico
 
 delegated-municipalities-list-stale:
   text:
     es: >-
-      La lista de municipios con autoridad delegada de permisos es de
-      agosto de 2016 y casi seguro está desactualizada.
+      No hay una lista oficial al día de los municipios con autoridad
+      delegada de permisos. La de agosto de 2016 tiene 11, una página del
+      gobierno de 2015 tiene 8 y un artículo de 2018 tiene 10 más dos
+      consorcios. Para los nueve municipios de esta guía las listas
+      coinciden, pero ninguna dice qué trámites maneja cada uno.
     en: >-
-      The delegated-permit-authority municipality list dates from August
-      2016 and is almost certainly stale.
+      There is no current official list of the municipalities that hold
+      delegated permit authority. The August 2016 one has 11, a 2015
+      government page has 8, and a 2018 article has 10 plus two
+      consortia. For the nine municipalities in this guide the lists
+      agree, but none says which procedures each one handles.
   relatesTo: confirm-delegated-hierarchy
 
 cfse-dtrh-rates-2026:
@@ -49,20 +42,6 @@ cfse-dtrh-rates-2026:
       CFSE premium rates and 2026 DTRH unemployment/SINOT rates are
       unpublished — only the wage bases are stated.
   relatesTo: employer-registration-dtrh
-
-home-based-permiso-unico-ambiguous:
-  text:
-    es: >-
-      Existe un Permiso Único Domiciliario, pero ninguna fuente dice si
-      es obligatorio para quien trabaja desde casa sin clientes, sin
-      rótulo y sin entregas, ni si los municipios sin autoridad
-      delegada lo tratan igual que Bayamón.
-    en: >-
-      A Domiciliario Permiso Único exists, but no source says whether it
-      is mandatory for someone working from home with no clients, no
-      signage and no deliveries, or whether municipalities without
-      delegated authority treat it the same way Bayamón does.
-  relatesTo: home-based-permiso-unico-question
 
 llc-classification-determinaciones-administrativas:
   text:
@@ -117,15 +96,16 @@ sanitary-fire-fees-differ:
       is not known whether Bayamón's schedule is the island-wide one.
   relatesTo: sanitary-license
 
-emergency-regulation-status:
+domiciliario-fee-outside-bayamon:
   text:
     es: >-
-      Bayamón cita el Reglamento Conjunto de Emergencia del 16 de junio
-      de 2023 como base del Permiso Único. Falta confirmar si sigue
-      vigente hoy y qué cambia respecto al reglamento anulado.
+      No se confirmó que los municipios que radican por OGPe, como
+      Mayagüez, Peñuelas y Camuy, cobren lo mismo que Bayamón por el
+      Permiso Único Domiciliario. Una respuesta sin fuente dice que
+      sí, con $100 de radicación.
     en: >-
-      Bayamón cites the Reglamento Conjunto de Emergencia of 16 June 2023
-      as the basis of the Permiso Único. Whether it is still in force
-      today, and what changes from the voided regulation, remains to be
-      confirmed.
-  relatesTo: reglamento-conjunto-legally-unstable
+      It was not confirmed that municipalities filing through OGPe, such
+      as Mayagüez, Peñuelas and Camuy, charge the same as Bayamón for the
+      Domiciliario Permiso Único. An unsourced answer says they do, at
+      $100 to file.
+  relatesTo: home-based-permiso-unico-question
