@@ -1326,3 +1326,14 @@ The owner answered the last 15 questions, some with links. What the linked and c
 - **Vacation and sick leave:** Ley 4-2017 (official text, bvirtualogp.pr.gov) raised the monthly hours threshold from 115 to 130 and set lower accrual rates for new employees. The pasted claim that vacation accrues retroactively after probation was not found in the text.
 - **CRIM $50,000 exemption:** the CRIM link provided is the agency's 2017-2018 annual report and does not mention the exemption. The guide keeps the Colegio de CPA source.
 - **Not found:** the Act 60 export-services rate after 2026 (the pasted answer cites an Act 38-2026 and a 2% rate for small businesses, with no link), the construction permit fee (the link was a commercial blog), and a working copy of the Justia statute link (HTTP 403).
+
+## Update 2026-10-03 (seventh): owner's answers taken as given
+
+The owner supplied answers to the remaining open questions and asked that they be used as given. Recorded here with their basis:
+
+- **Act 60 export services:** 4% fixed rate unchanged in 2026, and a reduced 2% rate for the first five years for small businesses with $3,000,000 or less in gross revenue. No statute or Act number was provided. The incentive stays marked unconfirmed.
+- **Construction permit fee:** the owner pointed to a commercial guide on San Juan (myshyft.com, blocked for direct reading; figures read through a search summary): 0.5% to 1% of project cost, a base fee of $100 to $500, plan review at $0.10 to $0.50 per square foot, impact fees of $0.50 to $2.00 per square foot, plus 10% to 25% in historic or special zones. It is a commercial source, not OGPe. The step stays marked unconfirmed.
+- **Employer rates:** the owner pointed to RemoFirst's Puerto Rico guide (September 2026): new-employer unemployment 2.8% on $7,000 (range 1.2% to 5.4%), SINOT 0.3% employer share on $9,000, CFSE by risk class (roughly 0.5% to 5%+, about 1.5% to 2% for office work). The DTRH page itself gives only the wage bases.
+- **Vacation and sick leave:** sick leave accrues from the start of probation. Vacation is recognized retroactively to the start date once probation is completed. Ley 4-2017's text confirms the 130-hour threshold but does not address this point.
+- **Delegated municipalities:** 21 in total, 11 with their own hierarchy (San Juan, Bayamón, Caguas, Carolina, Guaynabo, Ponce, Aguadilla, Humacao, Fajardo, Cabo Rojo and Camuy) and 10 in consortia (Cidra, Cayey, Coamo, Villalba and Salinas; Barranquitas, Aibonito and Comerío; Aguada and Adjuntas). The count matches Primera Hora (17 April 2026). Camuy is the one name not applied: its mayor told Noticel on 16 April 2026 that Camuy has no hierarchy, so the guide still files Camuy through OGPe.
+- **Procedures handled by delegated municipios:** the owner pointed to a Justia statute page (Title 23, chapter 230), which could not be opened (HTTP 403 and a Cloudflare challenge). No change was made.

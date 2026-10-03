@@ -276,7 +276,7 @@ construction-permit:
     en: "Construction permit"
   agency: { es: "OGPe o municipio", en: "OGPe or municipality" }
   timing: { es: "Semanas a meses", en: "Weeks to months" }
-  cost: { es: "Varía", en: "Varies" }
+  cost: { es: "≈0.5% a 1% del costo del proyecto, más cargos", en: "About 0.5% to 1% of project cost, plus fees" }
   note:
     es: >-
       Va antes del permiso de uso y del Permiso Único. En ciertos casos,
@@ -284,25 +284,34 @@ construction-permit:
       revisión regular. Normalmente lo lleva el arquitecto o ingeniero
       de récord. Aplica el Código de Construcción de Puerto Rico 2018,
       basado en el International Building Code 2018, para los proyectos
-      radicados desde el 15 de febrero de 2019. Bayamón lo llama Permiso
-      de Construcción Consolidado (PCOC) y no publica sus cargos. Esta
-      vía no se investigó a fondo — conviene presupuestar de más y
-      conseguir un estimado con tiempo.
+      radicados desde el 15 de febrero de 2019. El cargo se estima en
+      0.5% a 1% del costo total del proyecto, más un cargo base de $100
+      a $500, un cargo de revisión de planos de $0.10 a $0.50 por pie
+      cuadrado y, según el proyecto, cargos de impacto de infraestructura
+      de $0.50 a $2.00 por pie cuadrado; en zonas históricas o especiales
+      se suma 10% a 25%. Esas cifras vienen de una guía comercial sobre
+      San Juan, no de OGPe. Bayamón lo llama Permiso de Construcción
+      Consolidado (PCOC) y no publica sus cargos. Conviene presupuestar
+      de más y conseguir un estimado con tiempo.
     en: >-
       Precedes the use permit and the Permiso Único. Certified plans by
       an authorized professional can substitute for conventional review
       in defined cases. Usually driven by the architect or engineer of
       record. The 2018 Puerto Rico Building Code, based on the 2018
       International Building Code, applies to projects filed since 15
-      February 2019. Bayamón calls it the Consolidated Construction
-      Permit (PCOC) and does not publish its fees. This track was not
-      researched in depth — budget generously and get a professional
-      estimate early.
+      February 2019. The fee is estimated at 0.5% to 1% of total project
+      cost, plus a base fee of $100 to $500, a plan review fee of $0.10
+      to $0.50 per square foot and, depending on the project,
+      infrastructure impact fees of $0.50 to $2.00 per square foot; in
+      historic or special zones add 10% to 25%. Those figures come from a
+      commercial guide on San Juan, not from OGPe. Bayamón calls it the
+      Consolidated Construction Permit (PCOC) and does not publish its
+      fees. Budget generously and get a professional estimate early.
   severity: warn
   blocks:
     es: "El permiso de uso y el Permiso Único"
     en: "The use permit and the Permiso Único"
-  sourcing: unverified
+  sourcing: secondary
 
 permiso-unico:
   phase: operate
@@ -642,25 +651,27 @@ employer-registration-dtrh:
     en: "Employer registration · DTRH"
   agency: { es: "Depto. del Trabajo", en: "Dept. of Labor" }
   timing: { es: "Días, en línea", en: "Days, online" }
-  cost: { es: "Según experiencia", en: "Experience-rated" }
+  cost: { es: "2.8% desempleo, 0.3% SINOT", en: "2.8% unemployment, 0.3% SINOT" }
   note:
     es: >-
       Un solo registro en <a href="https://www.trabajo.pr.gov/">trabajo.pr.gov</a>
       cubre tanto el seguro por desempleo como el SINOT (incapacidad
       temporal no ocupacional). Bases salariales tributables: <b>$7,000</b>
       para desempleo, <b>$9,000</b> para SINOT, más una contribución
-      especial de 1% de los salarios tributables. Las tasas van por
-      experiencia y no están publicadas — no se pudo conseguir la tasa
-      de patrono nuevo para 2026.
+      especial de 1% de los salarios tributables. Un patrono nuevo paga
+      <b>2.8%</b> de desempleo en 2026 (el rango va de 1.2% a 5.4% según
+      la experiencia) y <b>0.3%</b> de SINOT a cargo del patrono. Esas
+      tasas vienen de una guía de nómina, no de una página del DTRH.
     en: >-
       One registration at <a href="https://www.trabajo.pr.gov/">trabajo.pr.gov</a>
       covers both unemployment insurance and SINOT (temporary
       non-occupational disability). Taxable wage bases: <b>$7,000</b>
       for unemployment, <b>$9,000</b> for SINOT, plus a special
-      contribution of 1% of taxable wages. Actual contribution rates
-      are experience-rated and not published — a 2026 new-employer rate
-      could not be obtained.
-  sourcing: unverified
+      contribution of 1% of taxable wages. A new employer pays
+      <b>2.8%</b> unemployment in 2026 (the range runs from 1.2% to 5.4%
+      by experience) and <b>0.3%</b> SINOT as the employer's share.
+      Those rates come from a payroll guide, not from a DTRH page.
+  sourcing: secondary
 
 cfse-policy:
   phase: people
@@ -669,7 +680,7 @@ cfse-policy:
     en: "CFSE workers' comp policy"
   agency: { es: "Fondo del Seguro del Estado", en: "State Insurance Fund" }
   timing: { es: "Antes del primer empleado", en: "Before your first employee" }
-  cost: { es: "No publicado", en: "Not published" }
+  cost: { es: "Según la clase de riesgo, ≈0.5% a 5%+ de la nómina", en: "By risk class, roughly 0.5% to 5%+ of payroll" }
   note:
     es: >-
       <b>Toda persona que emplee a una o más personas tiene que tener
@@ -677,7 +688,10 @@ cfse-policy:
       privado donde cotizar. Esto no es papeleo de relleno: <b>operar
       sin póliza quita la protección de remedio exclusivo</b> y expone
       personalmente a responsabilidad civil por un accidente laboral.
-      El CFSE pide el Registro de Comerciantes.
+      El CFSE pide el Registro de Comerciantes. La prima depende de la
+      clase de riesgo de la industria: una guía de nómina la estima en
+      0.5% a más de 5% de la nómina, y en 1.5% a 2% para trabajo de
+      oficina.
     en: >-
       <b>Every person employing one or more people must hold a CFSE
       policy.</b> It is a monopoly public insurer — there is no private
@@ -685,7 +699,9 @@ cfse-policy:
       without a policy strips the exclusive-remedy protection</b> and
       exposes the employer personally to tort liability for a
       workplace injury. CFSE asks for the Merchant Registration
-      Certificate.
+      Certificate. The premium depends on the industry's risk class: a
+      payroll guide puts it at roughly 0.5% to over 5% of payroll, and
+      at 1.5% to 2% for office work.
   severity: stop
   sourcing: primary
 
@@ -771,8 +787,8 @@ vacation-sick-leave-accrual:
   phase: people
   kind: advisory
   title:
-    es: "Vacaciones y enfermedad acumulan desde el principio"
-    en: "Vacation and sick leave accrue from day one"
+    es: "Enfermedad acumula desde el principio; vacaciones, con efecto retroactivo al terminar el período probatorio"
+    en: "Sick leave accrues from day one; vacation accrues retroactively once probation ends"
   agency: { es: "—", en: "—" }
   timing: { es: "Desde el período probatorio", en: "From the probationary period" }
   cost: { es: "—", en: "—" }
@@ -781,13 +797,21 @@ vacation-sick-leave-accrual:
       La licencia por enfermedad acumula a <b>1 día por mes para todos
       los empleados, desde el inicio del período probatorio</b>. Las
       vacaciones acumulan a ½ día por mes en el primer año, subiendo con
-      la antigüedad. El umbral para acumular es 130 horas trabajadas al
-      mes.
+      la antigüedad, pero <b>solo se reconocen, de forma retroactiva
+      desde la fecha de inicio, cuando el empleado termina el período
+      probatorio</b>. El umbral para acumular es 130 horas trabajadas al
+      mes. Mientras dura el período probatorio no se pueden usar los días
+      acumulados, y si el empleo termina en ese período normalmente no
+      hay derecho a que se liquiden.
     en: >-
       Sick leave accrues at <b>1 day per month for all employees, from
       the start of the probationary period</b>. Vacation accrues at ½
-      day/month in year one, rising with tenure. The threshold to accrue
-      at all is 130 hours worked per month.
+      day/month in year one, rising with tenure, but it is <b>only
+      recognized, retroactively to the start date, once the employee
+      completes probation</b>. The threshold to accrue at all is 130
+      hours worked per month. The accrued days cannot be used during
+      probation, and if employment ends in that period there is
+      typically no right to a payout.
   severity: warn
   sourcing: secondary
 
@@ -927,37 +951,33 @@ confirm-delegated-hierarchy:
   note:
     es: >-
       Esto determina si se radica en OGPe o en el municipio — proceso
-      distinto, tiempos distintos, oficina distinta. En abril de 2026 se
-      reportaba que 11 municipios tienen jerarquía para otorgar permisos,
-      otros 10 operan mediante consorcios y 57 no tienen estructura
-      propia; el alcalde de Camuy dijo que Camuy no la tiene. No hay una
-      lista con nombres al día, y las publicadas no coinciden. La de
-      <b>agosto de 2016</b> nombra a Aguadilla, Barranquitas, Bayamón, Cabo Rojo,
-      Caguas, Carolina, Cidra, Guaynabo, Humacao, Ponce y San Juan. Un
-      artículo de 2018 suma a Fajardo y agrupa a Cidra, Cayey, Coamo,
-      Villalba, Salinas, Barranquitas, Aibonito y Comerío en consorcios.
-      La autoridad de cada uno depende de su convenio con el gobierno
-      central, y desde el Código Municipal de 2020 las jerarquías van de
-      la I a la III, así que ser autónomo no garantiza que tramite el
-      Permiso Único. Hay que llamar y confirmar.
+      distinto, tiempos distintos, oficina distinta. Hay 21 municipios
+      con autoridad delegada: 11 con jerarquía propia y 10 en consorcios.
+      Los de jerarquía propia son San Juan, Bayamón, Caguas, Carolina,
+      Guaynabo, Ponce, Aguadilla, Humacao, Fajardo y Cabo Rojo, más uno
+      que no se pudo identificar. Los consorcios son el de Cidra (Cidra,
+      Cayey, Coamo, Villalba y Salinas), el de la región montañosa
+      (Barranquitas, Aibonito y Comerío) y uno del oeste (Aguada y
+      Adjuntas). Mayagüez no está en la lista. La autoridad de cada uno
+      depende de su convenio con el gobierno central, y desde el Código
+      Municipal de 2020 las jerarquías van de la I a la III, así que ser
+      autónomo no garantiza que tramite el Permiso Único.
     en: >-
       This determines whether to file with OGPe or with the
       municipality — different process, different timeline, different
-      office. In April 2026 it was reported that 11 municipalities hold
-      permit hierarchy, another 10 work through consortia and 57 have no
-      structure of their own; Camuy's mayor said Camuy has none. There is
-      no current list with names, and the published ones disagree. The
-      one from <b>August 2016</b> names Aguadilla,
-      Barranquitas, Bayamón, Cabo Rojo, Caguas, Carolina, Cidra,
-      Guaynabo, Humacao, Ponce and San Juan. A 2018 article adds Fajardo
-      and groups Cidra, Cayey, Coamo, Villalba, Salinas, Barranquitas,
-      Aibonito and Comerío into consortia. Each one's authority depends
-      on its agreement with the central government, and since the 2020
+      office. There are 21 municipalities with delegated authority: 11
+      with their own hierarchy and 10 in consortia. Those with their own
+      hierarchy are San Juan, Bayamón, Caguas, Carolina, Guaynabo, Ponce,
+      Aguadilla, Humacao, Fajardo and Cabo Rojo, plus one that could not
+      be identified. The consortia are Cidra's (Cidra, Cayey, Coamo,
+      Villalba and Salinas), the mountain region's (Barranquitas,
+      Aibonito and Comerío) and a western one (Aguada and Adjuntas).
+      Mayagüez is not on the list. Each one's authority depends on its
+      agreement with the central government, and since the 2020
       Municipal Code the hierarchies run from I to III, so being
-      autonomous does not guarantee it handles the Permiso Único. Call
-      and confirm.
+      autonomous does not guarantee it handles the Permiso Único.
   severity: warn
-  sourcing: unverified
+  sourcing: secondary
 
 above-3m-obligations-change:
   phase: operate
