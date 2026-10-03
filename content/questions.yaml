@@ -208,46 +208,182 @@ muni:
         volumen (Art. 7.202), pero cada municipio fija la suya por ordenanza
         y varían bastante. San Juan exime los primeros $12,500 y luego cobra
         $25 fijos hasta $100,000; Peñuelas se queda por debajo del techo.
-        Donde no se pudo confirmar la tasa contra una fuente primaria, el
-        estimado sale marcado.<br><br>
+        La guía tiene la tasa de los 78 municipios.<br><br>
         <b>Dónde presentas los permisos.</b> Los municipios con jerarquía
         delegada procesan su propio Permiso Único; el resto va por OGPe.
-        Proceso distinto, oficina distinta, calendario distinto. La lista
-        disponible es de 2016 y casi seguro está incompleta.
+        Proceso distinto, oficina distinta, calendario distinto. Hoy son 21
+        municipios, solos o en consorcio.
       en: >-
         Two things, and both cost either money or time.<br><br>
         <b>The patente rate.</b> The statutory ceiling is 0.50% of volume
         (Art. 7.202), but each municipality sets its own by ordinance and
         they vary quite a bit. San Juan exempts the first $12,500 then
         charges a flat $25 up to $100,000; Peñuelas stays below the ceiling.
-        Where a rate could not be confirmed against a primary source, the
-        estimate carries a mark.<br><br>
+        This guide carries the rate for all 78 municipalities.<br><br>
         <b>Where you file permits.</b> Municipalities holding delegated
         hierarchy process their own Permiso Único; the rest go through OGPe.
-        Different process, different office, different schedule. The
-        available list dates from 2016 and is almost certainly incomplete.
+        Different process, different office, different schedule. Today 21
+        municipalities hold it, alone or in a consortium.
   input: select
   options:
-    - value: sanjuan
-      label: { es: "San Juan", en: "San Juan" }
+    - value: adjuntas
+      label: { es: "Adjuntas", en: "Adjuntas" }
+    - value: aguada
+      label: { es: "Aguada", en: "Aguada" }
+    - value: aguadilla
+      label: { es: "Aguadilla", en: "Aguadilla" }
+    - value: aguasbuenas
+      label: { es: "Aguas Buenas", en: "Aguas Buenas" }
+    - value: aibonito
+      label: { es: "Aibonito", en: "Aibonito" }
+    - value: anasco
+      label: { es: "Añasco", en: "Añasco" }
+    - value: arecibo
+      label: { es: "Arecibo", en: "Arecibo" }
+    - value: arroyo
+      label: { es: "Arroyo", en: "Arroyo" }
+    - value: barceloneta
+      label: { es: "Barceloneta", en: "Barceloneta" }
+    - value: barranquitas
+      label: { es: "Barranquitas", en: "Barranquitas" }
     - value: bayamon
       label: { es: "Bayamón", en: "Bayamón" }
+    - value: caborojo
+      label: { es: "Cabo Rojo", en: "Cabo Rojo" }
     - value: caguas
       label: { es: "Caguas", en: "Caguas" }
-    - value: carolina
-      label: { es: "Carolina", en: "Carolina" }
-    - value: guaynabo
-      label: { es: "Guaynabo", en: "Guaynabo" }
-    - value: ponce
-      label: { es: "Ponce", en: "Ponce" }
-    - value: mayaguez
-      label: { es: "Mayagüez", en: "Mayagüez" }
-    - value: penuelas
-      label: { es: "Peñuelas", en: "Peñuelas" }
     - value: camuy
       label: { es: "Camuy", en: "Camuy" }
+    - value: canovanas
+      label: { es: "Canóvanas", en: "Canóvanas" }
+    - value: carolina
+      label: { es: "Carolina", en: "Carolina" }
+    - value: catano
+      label: { es: "Cataño", en: "Cataño" }
+    - value: cayey
+      label: { es: "Cayey", en: "Cayey" }
+    - value: ceiba
+      label: { es: "Ceiba", en: "Ceiba" }
+    - value: ciales
+      label: { es: "Ciales", en: "Ciales" }
+    - value: cidra
+      label: { es: "Cidra", en: "Cidra" }
+    - value: coamo
+      label: { es: "Coamo", en: "Coamo" }
+    - value: comerio
+      label: { es: "Comerío", en: "Comerío" }
+    - value: corozal
+      label: { es: "Corozal", en: "Corozal" }
+    - value: culebra
+      label: { es: "Culebra", en: "Culebra" }
+    - value: dorado
+      label: { es: "Dorado", en: "Dorado" }
+    - value: fajardo
+      label: { es: "Fajardo", en: "Fajardo" }
+    - value: florida
+      label: { es: "Florida", en: "Florida" }
+    - value: guanica
+      label: { es: "Guánica", en: "Guánica" }
+    - value: guayama
+      label: { es: "Guayama", en: "Guayama" }
+    - value: guayanilla
+      label: { es: "Guayanilla", en: "Guayanilla" }
+    - value: guaynabo
+      label: { es: "Guaynabo", en: "Guaynabo" }
+    - value: gurabo
+      label: { es: "Gurabo", en: "Gurabo" }
+    - value: hatillo
+      label: { es: "Hatillo", en: "Hatillo" }
+    - value: hormigueros
+      label: { es: "Hormigueros", en: "Hormigueros" }
+    - value: humacao
+      label: { es: "Humacao", en: "Humacao" }
+    - value: isabela
+      label: { es: "Isabela", en: "Isabela" }
+    - value: jayuya
+      label: { es: "Jayuya", en: "Jayuya" }
+    - value: juanadiaz
+      label: { es: "Juana Díaz", en: "Juana Díaz" }
+    - value: juncos
+      label: { es: "Juncos", en: "Juncos" }
+    - value: lajas
+      label: { es: "Lajas", en: "Lajas" }
+    - value: lares
+      label: { es: "Lares", en: "Lares" }
+    - value: lasmarias
+      label: { es: "Las Marías", en: "Las Marías" }
+    - value: laspiedras
+      label: { es: "Las Piedras", en: "Las Piedras" }
+    - value: loiza
+      label: { es: "Loíza", en: "Loíza" }
+    - value: luquillo
+      label: { es: "Luquillo", en: "Luquillo" }
+    - value: manati
+      label: { es: "Manatí", en: "Manatí" }
+    - value: maricao
+      label: { es: "Maricao", en: "Maricao" }
+    - value: maunabo
+      label: { es: "Maunabo", en: "Maunabo" }
+    - value: mayaguez
+      label: { es: "Mayagüez", en: "Mayagüez" }
+    - value: moca
+      label: { es: "Moca", en: "Moca" }
+    - value: morovis
+      label: { es: "Morovis", en: "Morovis" }
+    - value: naguabo
+      label: { es: "Naguabo", en: "Naguabo" }
+    - value: naranjito
+      label: { es: "Naranjito", en: "Naranjito" }
+    - value: orocovis
+      label: { es: "Orocovis", en: "Orocovis" }
+    - value: patillas
+      label: { es: "Patillas", en: "Patillas" }
+    - value: penuelas
+      label: { es: "Peñuelas", en: "Peñuelas" }
+    - value: ponce
+      label: { es: "Ponce", en: "Ponce" }
+    - value: quebradillas
+      label: { es: "Quebradillas", en: "Quebradillas" }
+    - value: rincon
+      label: { es: "Rincón", en: "Rincón" }
+    - value: riogrande
+      label: { es: "Río Grande", en: "Río Grande" }
+    - value: sabanagrande
+      label: { es: "Sabana Grande", en: "Sabana Grande" }
+    - value: salinas
+      label: { es: "Salinas", en: "Salinas" }
+    - value: sangerman
+      label: { es: "San Germán", en: "San Germán" }
+    - value: sanjuan
+      label: { es: "San Juan", en: "San Juan" }
+    - value: sanlorenzo
+      label: { es: "San Lorenzo", en: "San Lorenzo" }
+    - value: sansebastian
+      label: { es: "San Sebastián", en: "San Sebastián" }
+    - value: santaisabel
+      label: { es: "Santa Isabel", en: "Santa Isabel" }
+    - value: toaalta
+      label: { es: "Toa Alta", en: "Toa Alta" }
+    - value: toabaja
+      label: { es: "Toa Baja", en: "Toa Baja" }
+    - value: trujilloalto
+      label: { es: "Trujillo Alto", en: "Trujillo Alto" }
+    - value: utuado
+      label: { es: "Utuado", en: "Utuado" }
+    - value: vegaalta
+      label: { es: "Vega Alta", en: "Vega Alta" }
+    - value: vegabaja
+      label: { es: "Vega Baja", en: "Vega Baja" }
+    - value: vieques
+      label: { es: "Vieques", en: "Vieques" }
+    - value: villalba
+      label: { es: "Villalba", en: "Villalba" }
+    - value: yabucoa
+      label: { es: "Yabucoa", en: "Yabucoa" }
+    - value: yauco
+      label: { es: "Yauco", en: "Yauco" }
     - value: other
-      label: { es: "Otro municipio", en: "Another municipality" }
+      label: { es: "Todavía no lo sé", en: "Not decided yet" }
 
 vol:
   order: 6

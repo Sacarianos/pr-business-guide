@@ -69,20 +69,22 @@ llc:
   defaultTax:
     es: >-
       Tributa como corporación <b>por defecto</b> — al revés de como
-      funciona a nivel federal. Puede elegirse tratamiento de sociedad.
+      funciona a nivel federal. Puede elegir tributar como entidad conducto
+      o, si tiene un solo dueño individual, como entidad ignorada (DA 22-10).
     en: >-
       Taxed as a corporation <b>by default</b> — the opposite of the US
-      federal default. Partnership treatment may be elected.
+      federal default. It can elect pass-through treatment or, with a
+      single individual owner, disregarded-entity treatment (DA 22-10).
   formationCost:
     es: "$250 (Departamento de Estado). Piso legal $50 (Art. 21.01)."
     en: "$250 (Dept. of State). Statutory floor $50 (Art. 21.01)."
   annualObligation:
     es: >-
-      $150/año antes del 15 de abril, confirmado en dos portales .pr.gov.
+      $150/año antes del 15 de abril.
       <b>Nunca ha exigido informe anual</b> — solo el pago (a diferencia de
       la corporación, que sí lo exigía antes de 2025).
     en: >-
-      $150/yr due before April 15, confirmed on two .pr.gov portals.
+      $150/yr due before April 15.
       <b>Never required an annual report</b> — only the fee (unlike the
       corporation, which did require one before 2025).
   note:
@@ -117,15 +119,13 @@ corp:
     en: "$150 for a stock corporation (Dept. of State). Statutory floor $100 (Art. 17.01)."
   annualObligation:
     es: >-
-      $150/año antes del 15 de abril, confirmado en dos portales .pr.gov.
+      $150/año antes del 15 de abril.
       Desde 2025 es solo el pago y ya no exige informe anual (Ley 65 de
-      2025); el aviso anterior sigue en la página de formularios del
-      Departamento.
+      2025).
     en: >-
-      $150/yr due before April 15, confirmed on two .pr.gov portals. Since
+      $150/yr due before April 15. Since
       2025 it's payment only and no annual report is required anymore
-      (Law 65 of 2025); the old notice is still on the Department's forms
-      page.
+      (Law 65 of 2025).
   note:
     es: >-
       Antes de 2025 se exigía un informe anual certificado con hoja de

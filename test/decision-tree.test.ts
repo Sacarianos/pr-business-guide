@@ -661,3 +661,30 @@ describe('advisories read as plain notes unless they change what the reader does
     }
   });
 });
+
+describe('every municipality is on the list', () => {
+  const muni = content.questions.find((q) => q.id === 'muni')!;
+
+  test('all 78 municipios carry a rate, and each one is a choice in the question', () => {
+    const keys = Object.keys(content.municipios).filter((id) => id !== 'other');
+    assert.equal(keys.length, 78);
+    const values = muni.options!.map((o) => o.value);
+    for (const key of keys) assert.ok(values.includes(key), `${key} missing from the muni question`);
+    assert.equal(values.at(-1), 'other', 'the undecided choice stays last');
+  });
+
+  test('every named municipio says where to file its permits and its patente', () => {
+    for (const [id, m] of Object.entries(content.municipios)) {
+      if (id === 'other') continue;
+      assert.ok(m.permits, `${id} has no permits field`);
+      assert.ok(m.portal, `${id} has no portal`);
+    }
+  });
+
+  test('an undecided municipality leaves the patente agency generic', () => {
+    const r = buildSequence(answers({ type: 'retail', entity: 'llc', premises: 'commercial', muni: 'other', vol: 50000 }), content);
+    const step = r.steps.find((s) => s.id === 'patente-municipal')!;
+    assert.doesNotMatch(step.agency.es, /Municipio por decidir/);
+    assert.equal(routeHeading(answers({ entity: 'llc', muni: 'other' }), content).subline.es, 'municipio por decidir · LLC');
+  });
+});

@@ -102,6 +102,7 @@ const UI_TEXT: Record<string, Record<Lang, string>> = {
   summaryRecurring: { es: 'Recurrentes', en: 'Recurring' },
   summaryPatente: { es: 'Patente est.', en: 'Est. patente' },
   summaryVerified: { es: 'Verificado', en: 'Verified' },
+  patentePortal: { es: 'Dónde radicar la patente:', en: 'Where to file the patente:' },
   costUnknown: { es: 'n/d', en: 'n/a' },
   showDetail: { es: 'Ver detalles', en: 'Show details' },
   hideDetail: { es: 'Ocultar detalles', en: 'Hide details' },
@@ -518,6 +519,9 @@ function render(): void {
   patenteNoteEl!.innerHTML = [
     patente ? `<p>${escapeHtml(patente.why[lang])}</p>` : '',
     municipio?.note ? `<p>${municipio.note[lang]}</p>` : '',
+    municipio?.portal
+      ? `<p><b>${UI_TEXT.patentePortal![lang]}</b> ${escapeHtml(municipio.portal[lang])}</p>`
+      : '',
   ].join('');
 
   zonesEl!.innerHTML = groupByPhase(result, content).map(zone).join('');
