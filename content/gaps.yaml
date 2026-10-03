@@ -4,27 +4,30 @@
 ogpe-fee-schedule:
   text:
     es: >-
-      OGPe no publica un tarifario que se pudiera encontrar; solo el
-      mecanismo de pagar 10% al radicar y el balance después de la
-      evaluación. Cualquier costo del Permiso Único en esta guía es un
+      No se halló el tarifario de OGPe para el Permiso Único. Solo se
+      halló el de un municipio, Bayamón, que cobra montos fijos y no
+      menciona el pago de 10% al radicar; hay que confirmar si ese 10%
+      aplica. Cualquier costo del Permiso Único en esta guía es un
       estimado, no un número sustentado.
     en: >-
-      OGPe publishes no fee schedule that could be found — only the
-      mechanic that you pay 10% at filing and the balance after
-      evaluation. Any Permiso Único cost figure in this guide is an
-      estimate, not a sourced number.
+      OGPe's fee schedule for the Permiso Único could not be found. Only
+      one municipality's schedule was found, Bayamón's, which charges
+      flat amounts and does not mention a 10% payment at filing; whether
+      that 10% applies needs confirming. Any Permiso Único cost figure
+      in this guide is an estimate, not a sourced number.
   relatesTo: permiso-unico
 
 permiso-unico-renewal-interval:
   text:
     es: >-
-      El intervalo de renovación del Permiso Único no se pudo establecer
-      desde ninguna fuente primaria, porque el reglamento que lo gobierna
-      lleva en litigio desde 2023.
+      No se halló cuánto dura un Permiso Único antes de vencer. El manual
+      de renovación de OGPe solo dice cuándo radicar la continuación:
+      45 días o menos antes de vencer, o hasta 2 años después.
     en: >-
-      The Permiso Único renewal interval could not be established from
-      any primary source, because the governing regulation has been in
-      litigation since 2023.
+      How long a Permiso Único lasts before it expires could not be
+      found. OGPe's renewal manual only says when to file the
+      continuation: 45 days or fewer before expiry, or up to 2 years
+      after.
   relatesTo: permiso-unico
 
 delegated-municipalities-list-stale:
@@ -50,13 +53,15 @@ cfse-dtrh-rates-2026:
 home-based-permiso-unico-ambiguous:
   text:
     es: >-
-      Si un negocio en casa sin tráfico de clientes necesita Permiso
-      Único es genuinamente ambiguo en la ley — y es justo la pregunta
-      que más le importa a ese lector.
+      Existe un Permiso Único Domiciliario, pero ninguna fuente dice si
+      es obligatorio para quien trabaja desde casa sin clientes, sin
+      rótulo y sin entregas, ni si los municipios sin autoridad
+      delegada lo tratan igual que Bayamón.
     en: >-
-      Whether a home-based business with no client traffic needs a
-      Permiso Único at all is genuinely ambiguous in the statute — and
-      it is the question that matters most to that reader.
+      A Domiciliario Permiso Único exists, but no source says whether it
+      is mandatory for someone working from home with no clients, no
+      signage and no deliveries, or whether municipalities without
+      delegated authority treat it the same way Bayamón does.
   relatesTo: home-based-permiso-unico-question
 
 llc-classification-determinaciones-administrativas:
@@ -70,3 +75,57 @@ llc-classification-determinaciones-administrativas:
       Administrativas 22-10 and 23-01, neither of which could be
       retrieved in full text.
   relatesTo: entity-llc-tax-classification
+
+annual-report-conflict:
+  text:
+    es: >-
+      La página de formularios del Departamento de Estado todavía dice
+      que las corporaciones radican un informe anual antes del 15 de
+      abril y lista un costo por tipo, lo que choca con esta guía, que
+      dice que desde 2025 solo se paga el cargo. Falta confirmar cuál de
+      las dos está al día.
+    en: >-
+      The Dept. of State forms page still says corporations file an
+      annual report by 15 April and lists a price per type, which clashes
+      with this guide, which says that since 2025 only the fee is owed.
+      Which of the two is current remains to be confirmed.
+  relatesTo: state-annual-fee-survives
+
+llc-expedited-fees-unconfirmed:
+  text:
+    es: >-
+      Los cargos de servicio expedito de $100 (24h), $200 (mismo día) y
+      $500 (2h) no aparecen en la página de formularios del Departamento
+      de Estado y no se han confirmado en ninguna fuente de gobierno.
+    en: >-
+      The expedited-service charges of $100 (24h), $200 (same day) and
+      $500 (2h) do not appear on the Dept. of State forms page and have
+      not been confirmed on any government source.
+  relatesTo: entity-organize-llc
+
+sanitary-fire-fees-differ:
+  text:
+    es: >-
+      Bayamón publica la licencia sanitaria en $25 a $100 y la
+      certificación de Bomberos desde $50 según los pies cuadrados. Esas
+      cifras no coinciden con las que usa esta guía para esos trámites,
+      y no se sabe si el tarifario de Bayamón es el de todo el país.
+    en: >-
+      Bayamón posts the sanitary license at $25 to $100 and the fire
+      prevention certification from $50 by square footage. Those figures
+      do not match the ones this guide uses for those procedures, and it
+      is not known whether Bayamón's schedule is the island-wide one.
+  relatesTo: sanitary-license
+
+emergency-regulation-status:
+  text:
+    es: >-
+      Bayamón cita el Reglamento Conjunto de Emergencia del 16 de junio
+      de 2023 como base del Permiso Único. Falta confirmar si sigue
+      vigente hoy y qué cambia respecto al reglamento anulado.
+    en: >-
+      Bayamón cites the Reglamento Conjunto de Emergencia of 16 June 2023
+      as the basis of the Permiso Único. Whether it is still in force
+      today, and what changes from the voided regulation, remains to be
+      confirmed.
+  relatesTo: reglamento-conjunto-legally-unstable

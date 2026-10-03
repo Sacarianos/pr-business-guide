@@ -113,13 +113,11 @@ premises:
         <b>Esta respuesta cambia toda la ruta de permisos.</b> Un local
         comercial te lleva por zonificación, Permiso Único e inspección de
         Bomberos — la parte más larga del proceso, semanas o meses.<br><br>
-        <b>Desde casa, la ley está genuinamente sin resolver.</b> El
-        Art. 8.4A de la Ley 161-2009 alcanza a «todo negocio nuevo o
-        existente», pero el encuadre de OGPe habla de usos no residenciales.
-        Quien trabaja desde un cuarto, sin clientes entrando ni rótulo, cae
-        justo en el medio. No se pudo resolver desde ninguna fuente
-        primaria: llama a OGPe antes de asumir para un lado o para el
-        otro.<br><br>
+        <b>Desde casa hay una vía propia.</b> El Permiso Único
+        Domiciliario cubre usos comerciales que no pasen del 25% de la
+        residencia, sin rótulo, sin recibir público y sin entregas. Falta
+        confirmar si la ley obliga a sacarlo cuando no hay clientes: llama
+        a OGPe o a tu municipio.<br><br>
         <b>Móvil o pop-up</b> tiene su propia vía: patente provisional en
         cada municipio donde vendas, y reporte de volumen a las 24 horas de
         terminar la actividad.
@@ -128,13 +126,11 @@ premises:
         premises take you through zoning, the Permiso Único and a fire
         inspection — the longest part of the process, weeks or
         months.<br><br>
-        <b>Working from home is genuinely unresolved in the statute.</b>
-        Ley 161-2009 Art. 8.4A reaches "todo negocio nuevo o existente" —
-        every business, full stop — but OGPe's own framing is about
-        non-residential uses. Someone working from a spare room with no
-        client traffic and no signage sits precisely in that gap. It could
-        not be resolved from any primary source: call OGPe before assuming
-        either way.<br><br>
+        <b>Working from home has its own track.</b> The Domiciliario
+        Permiso Único covers commercial uses that do not exceed 25% of the
+        residence, with no signage, no public visits and no deliveries.
+        Whether the law requires one when there are no client visits is
+        still unconfirmed: call OGPe or your municipality.<br><br>
         <b>Mobile or pop-up</b> has its own track: a provisional patente in
         every municipality where you sell, plus a volume report 24 hours
         after the activity ends.
@@ -148,8 +144,8 @@ premises:
     - value: home
       label: { es: "Mi casa, sin clientes", en: "My home, no client traffic" }
       detail:
-        es: "Si necesitas Permiso Único es una <b>pregunta abierta</b> en la ley."
-        en: "Whether you need a Permiso Único is an <b>open question</b> in the statute."
+        es: "Hay un Permiso Único <b>Domiciliario</b> para usar hasta el 25% de la casa, sin rótulo ni clientes."
+        en: "There is a <b>Domiciliario</b> Permiso Único for using up to 25% of the home, with no signage or client visits."
     - value: mobile
       label: { es: "Móvil / pop-up", en: "Mobile / pop-up" }
       detail:

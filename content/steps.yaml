@@ -48,25 +48,27 @@ entity-organize-llc:
     en: "Organize the LLC"
   agency: { es: "Depto. de Estado · RCE", en: "Dept. of State · RCE" }
   timing: { es: "1–5 días laborables", en: "1–5 business days" }
-  cost: { es: "~$250 (sin confirmar)", en: "~$250 (unconfirmed)" }
+  cost: { es: "$250", en: "$250" }
   note:
     es: >-
       Se radica en <a href="https://rcp.estado.pr.gov/">rcp.estado.pr.gov</a>.
-      Se necesita un <b>agente residente con dirección física en Puerto
-      Rico</b>; un apartado postal no cumple con el Art. 3.02. Hay
-      servicio expedito de $100 (24h), $200 (mismo día) y $500 (2h). La
-      ley fija un piso de $50, pero el Secretario puede cambiar los
-      cargos por carta circular. La cifra de $250 sale de fuentes
-      secundarias — no se pudo confirmar en ninguna página de gobierno.
+      El Departamento de Estado publica <b>$250</b> por el certificado de
+      formación de una LLC. Se necesita un <b>agente residente con
+      dirección física en Puerto Rico</b>; un apartado postal no cumple con
+      el Art. 3.02. Se han reportado cargos de servicio expedito de $100
+      (24h), $200 (mismo día) y $500 (2h), pero no aparecen en la página
+      del Departamento y siguen sin confirmar. La ley fija un piso de $50,
+      y el Secretario puede cambiar los cargos por carta circular.
     en: >-
       Filed at <a href="https://rcp.estado.pr.gov/">rcp.estado.pr.gov</a>.
-      Requires a <b>registered agent with a physical Puerto Rico
-      address</b> — a P.O. box does not satisfy Art. 3.02. Expedited
-      tiers exist at $100 (24h) / $200 (same day) / $500 (2h). The
-      statute sets a $50 floor, but the Secretary may reset fees by
-      circular letter. The $250 figure comes only from secondary
-      sources — it could not be confirmed on any government page.
-  sourcing: unverified
+      The Dept. of State posts <b>$250</b> for an LLC certificate of
+      formation. Requires a <b>registered agent with a physical Puerto
+      Rico address</b>; a P.O. box does not satisfy Art. 3.02. Expedited
+      charges of $100 (24h), $200 (same day) and $500 (2h) have been
+      reported, but they do not appear on the Department's page and
+      remain unconfirmed. The statute sets a $50 floor, and the Secretary
+      may reset fees by circular letter.
+  sourcing: primary
 
 entity-llc-tax-classification:
   phase: formation
@@ -104,25 +106,28 @@ entity-incorporate-corp:
     en: "Incorporate"
   agency: { es: "Depto. de Estado · RCE", en: "Dept. of State · RCE" }
   timing: { es: "1–5 días laborables", en: "1–5 business days" }
-  cost: { es: "~$150 (sin confirmar)", en: "~$150 (unconfirmed)" }
+  cost: { es: "$150", en: "$150" }
   note:
     es: >-
       Se radica en <a href="https://rcp.estado.pr.gov/">rcp.estado.pr.gov</a>.
-      Se necesita un <b>agente residente con dirección física en Puerto
-      Rico</b>; un apartado postal no cumple con el Art. 3.02. Hay
-      servicio expedito de $100 (24h), $200 (mismo día) y $500 (2h). La
-      ley fija un piso de $100, pero el Secretario puede cambiar los
-      cargos por carta circular. La cifra de $150 sale de fuentes
-      secundarias — no se pudo confirmar en ninguna página de gobierno.
+      El Departamento de Estado publica <b>$150</b> para registrar una
+      corporación con acciones, y $5 para una sin fines de lucro. Se
+      necesita un <b>agente residente con dirección física en Puerto
+      Rico</b>; un apartado postal no cumple con el Art. 3.02. Se han
+      reportado cargos de servicio expedito de $100 (24h), $200 (mismo
+      día) y $500 (2h), pero no aparecen en la página del Departamento y
+      siguen sin confirmar. La ley fija un piso de $100, y el Secretario
+      puede cambiar los cargos por carta circular.
     en: >-
       Filed at <a href="https://rcp.estado.pr.gov/">rcp.estado.pr.gov</a>.
-      Requires a <b>registered agent with a physical Puerto Rico
-      address</b> — a P.O. box does not satisfy Art. 3.02. Expedited
-      tiers exist at $100 (24h) / $200 (same day) / $500 (2h). The
-      statute sets a $100 floor, but the Secretary may reset fees by
-      circular letter. The $150 figure comes only from secondary
-      sources — it could not be confirmed on any government page.
-  sourcing: unverified
+      The Dept. of State posts <b>$150</b> to register a stock
+      corporation, and $5 for a non-stock one. Requires a <b>registered
+      agent with a physical Puerto Rico address</b>; a P.O. box does not
+      satisfy Art. 3.02. Expedited charges of $100 (24h), $200 (same day)
+      and $500 (2h) have been reported, but they do not appear on the
+      Department's page and remain unconfirmed. The statute sets a $100
+      floor, and the Secretary may reset fees by circular letter.
+  sourcing: primary
 
 entity-undecided:
   phase: formation
@@ -290,8 +295,8 @@ permiso-unico:
   note:
     es: >-
       Se radica por el Single Business Portal en
-      <a href="https://sbp.ogpe.pr.gov/">sbp.ogpe.pr.gov</a>, con OGPe o
-      con el municipio si tiene autoridad delegada. Una sola solicitud
+      <a href="https://www.sbp.pr.gov/">sbp.pr.gov</a>, con OGPe o con el
+      municipio si tiene autoridad delegada. Una sola solicitud
       consolida el permiso de uso, la exclusión categórica, la
       certificación de prevención de incendios, la certificación de
       salud ambiental y las licencias sanitarias. <b>No se puede pedir
@@ -300,23 +305,36 @@ permiso-unico:
       tenerlo antes de radicar, no después. Coger un Profesional
       Autorizado (PA) es lo normal para cualquier cosa que no sea un
       cambio de nombre, y casi siempre se paga solo en el tiempo que
-      ahorra. No se halló el tarifario vigente de OGPe en ninguna fuente
-      primaria, y el intervalo de renovación es genuinamente
-      desconocido.
+      ahorra. No se halló el tarifario de OGPe. Como referencia, el
+      municipio de Bayamón publica <b>$100 por radicación</b> ($150 en
+      zona industrial), $150 más si se piden bebidas alcohólicas, $30 por
+      el rótulo y $75 por la exclusión categórica, además de la licencia
+      sanitaria y la certificación de Bomberos. La <b>continuación de
+      operación</b> (la renovación) se radica cuando faltan 45 días o
+      menos para que venza el permiso; un permiso vencido tiene hasta 2
+      años para radicarla, quizás con cargos adicionales. No se halló
+      cuánto dura un permiso antes de vencer.
     en: >-
       Filed through the Single Business Portal at
-      <a href="https://sbp.ogpe.pr.gov/">sbp.ogpe.pr.gov</a>, with OGPe
-      or with the municipality if it holds delegated authority. One
-      application consolidates the use permit, categorical exclusion,
-      fire prevention certification, environmental health certification
-      and sanitary licenses. <b>It cannot be requested without the use
-      authorization for the business</b>, and the Merchant Registration
-      Certificate is a mandatory attachment to the application — it must
-      exist before filing, not after. Hiring an Authorized Professional
-      (PA) is standard practice for anything beyond a name change and
-      usually pays for itself in elapsed time. OGPe's current fee
-      schedule could not be located on any primary source, and the
-      renewal interval is genuinely unknown.
+      <a href="https://www.sbp.pr.gov/">sbp.pr.gov</a>, with OGPe or with
+      the municipality if it holds delegated authority. One application
+      consolidates the use permit, categorical exclusion, fire prevention
+      certification, environmental health certification and sanitary
+      licenses. <b>It cannot be requested without the use authorization
+      for the business</b>, and the Merchant Registration Certificate is
+      a mandatory attachment to the application, so it must exist before
+      filing, not after. Hiring an Authorized Professional (PA) is
+      standard practice for anything beyond a name change and usually
+      pays for itself in elapsed time. OGPe's own fee schedule could not
+      be located. For reference, the Municipality of Bayamón posts
+      <b>$100 per filing</b> ($150 in industrial zones), $150 more when
+      alcohol sales are requested, $30 for a business sign and $75 for a
+      categorical exclusion, plus the sanitary license and the fire
+      prevention certification. A <b>continuation of operation</b> (the
+      renewal) is filed when 45 days or fewer remain before the permit
+      expires; an expired permit has up to 2 years to file one, possibly
+      with extra charges. How long a permit lasts before it expires
+      could not be found.
   severity: key
   blocks:
     es: "Abrir el negocio"
@@ -404,33 +422,43 @@ food-handler-certification:
 home-based-permiso-unico-question:
   phase: operate
   title:
-    es: "¿Se necesita Permiso Único? — pregunta abierta"
-    en: "Is a Permiso Único required? — open question"
-  agency: { es: "OGPe", en: "OGPe" }
-  timing: { es: "Aclarar temprano", en: "Clarify early" }
-  cost: { es: "Desconocido", en: "Unknown" }
+    es: "Permiso Único Domiciliario (negocio desde la casa)"
+    en: "Home-based Permiso Único (Domiciliario)"
+  agency: { es: "OGPe o municipio", en: "OGPe or municipality" }
+  timing: { es: "Antes de operar", en: "Before operating" }
+  cost:
+    es: "Desde $100 de radicación (Bayamón)"
+    en: "From $100 to file (Bayamón)"
   note:
     es: >-
-      <b>Esto está genuinamente sin resolver.</b> El Art. 8.4A de la Ley
-      161-2009 alcanza a <em>«todo negocio nuevo o existente»</em> — todo
-      negocio, punto. Pero el propio encuadre de OGPe habla de
-      <em>usos</em> no residenciales. Alguien trabajando desde un cuarto
-      de la casa, sin clientes entrando ni rótulo, cae justo ahí en el
-      medio. Es la pregunta más frecuente de este arquetipo y no se pudo
-      resolver desde ninguna fuente primaria. Llamar a OGPe y sacar la
-      respuesta para el caso específico antes de asumir para un lado o
-      para el otro.
+      El portal de OGPe ofrece un tipo de solicitud <b>Domiciliario</b>
+      para usos comerciales que no pasen del <b>25% de la residencia</b>.
+      Según Bayamón, es para negocios que no alquilan un local y usan ese
+      25% como oficina administrativa, <b>sin rótulo, sin recibir
+      público y sin entregas</b> en la propiedad. Se radica como Permiso
+      Único y se escoge «Domiciliario» como tipo de solicitud; no se
+      escoge el Permiso de Uso Residencial, que es para servicio de agua
+      y luz. En Bayamón cuesta $100 por radicación, más la licencia
+      sanitaria ($25 a $100) y la certificación de Bomberos (desde $50).
+      Siguen sin respuesta dos cosas: si la ley obliga a sacarlo a quien
+      trabaja desde casa sin clientes, y si los municipios sin autoridad
+      delegada lo tratan igual.
     en: >-
-      <b>This is genuinely unresolved.</b> Ley 161-2009 Art. 8.4A reaches
-      <em>"todo negocio nuevo o existente"</em> — every business, full
-      stop. But OGPe's own framing is about non-residential
-      <em>uses</em>. Someone working from a spare room with no client
-      traffic and no signage sits precisely in that gap. It is the
-      highest-frequency question for this archetype and could not be
-      resolved from any primary source. Call OGPe and get the answer for
-      the specific case before assuming either way.
+      OGPe's portal offers a <b>Domiciliario</b> request type for
+      commercial uses that do not exceed <b>25% of the residence</b>. Per
+      Bayamón, it is for businesses that do not rent premises and use
+      that 25% as an administrative office, with <b>no signage, no
+      public visits and no deliveries</b> at the property. File it as a
+      Permiso Único and pick "Domiciliario" as the request type; do not
+      pick the Residential Use Permit, which is for water and power
+      service. In Bayamón it costs $100 to file, plus the sanitary
+      license ($25 to $100) and the fire prevention certification (from
+      $50). Two things remain unanswered: whether the law requires
+      someone working from home with no client traffic to get one, and
+      whether municipalities without delegated authority treat it the
+      same way.
   severity: warn
-  sourcing: unverified
+  sourcing: primary
 
 # ---- Premises: mobile ----
 
@@ -828,21 +856,26 @@ reglamento-conjunto-legally-unstable:
       El Tribunal Supremo declaró <b>nulo el Reglamento Conjunto 2020 el
       15 de marzo de 2023</b> por carecer del análisis de costo-beneficio
       que exige la LPAU, y el litigio seguía vivo hasta octubre de 2025.
-      Como el <b>período de vigencia, los cargos y los estándares de
-      inspección del Permiso Único viven todos en ese reglamento</b>, el
-      intervalo de renovación no se puede establecer desde ninguna
-      fuente primaria. Las fuentes secundarias dicen anual. <b>Hay que
-      leer la fecha de vencimiento en el propio documento de permiso</b>
-      y no confiar en un número de memoria.
+      Hoy el municipio de Bayamón cita como base del Permiso Único el
+      <b>Reglamento Conjunto de Emergencia aprobado el 16 de junio de
+      2023</b>; no se pudo confirmar si sigue vigente. Como los cargos y
+      los estándares de inspección del Permiso Único viven en ese
+      reglamento, no se pudo establecer desde ninguna fuente primaria
+      cuánto dura un permiso. Las fuentes secundarias dicen anual. <b>Hay
+      que leer la fecha de vencimiento en el propio documento de
+      permiso</b> y no confiar en un número de memoria.
     en: >-
       The Tribunal Supremo declared the <b>Reglamento Conjunto 2020 null
       on 15 March 2023</b> for lacking the cost-benefit analysis the
       LPAU requires, and litigation was still live as of October 2025.
-      Because the Permiso Único's <b>validity period, fees and
-      inspection standards all live in that regulation</b>, the renewal
-      interval cannot be stated from any primary source. Secondary
-      sources say annual. <b>Read the expiration date off the permit
-      document itself</b> and do not trust a remembered number.
+      The Municipality of Bayamón now cites the <b>Reglamento Conjunto de
+      Emergencia approved on 16 June 2023</b> as the basis of the Permiso
+      Único; it could not be confirmed whether that regulation is still
+      in force. Because the Permiso Único's fees and inspection
+      standards live in that regulation, how long a permit lasts could
+      not be established from any primary source. Secondary sources say
+      annual. <b>Read the expiration date off the permit document
+      itself</b> and do not trust a remembered number.
   severity: stop
   sourcing: unverified
 
@@ -907,22 +940,29 @@ state-annual-fee-survives:
     en: "The State fee survives even though the annual report died"
   agency: { es: "Depto. de Estado", en: "Dept. of State" }
   timing: { es: "15 de abril, anual", en: "15 April, annually" }
-  cost: { es: "$150 (observado)", en: "$150 (observed)" }
+  cost: { es: "$150", en: "$150" }
   note:
     es: >-
-      Desde 2025 las corporaciones ya no radican informe anual — pero
-      <b>el cargo anual sigue venciendo</b>, observado en <b>$150 para
-      el 15 de abril</b>. Una LLC que lo pase por alto tres años
-      consecutivos ve su certificado de organización <b>cancelado</b>;
-      una corporación arriesga revocación a los dos. El error más común
-      es asumir que si no hay informe, no se debe nada.
+      Desde 2025 las corporaciones ya no radican informe anual, pero
+      <b>el cargo anual sigue venciendo</b>: el Departamento de Estado
+      publica <b>$150</b> de cuota anual para una LLC y para una
+      corporación con acciones, con fecha límite el <b>15 de abril</b>.
+      Una LLC que lo pase por alto tres años consecutivos ve su
+      certificado de organización <b>cancelado</b>; una corporación
+      arriesga revocación a los dos. El error más común es asumir que si
+      no hay informe, no se debe nada. Ojo: la página del Departamento
+      todavía dice que las corporaciones radican un informe anual antes
+      del 15 de abril. Ver «Lo que no sabemos».
     en: >-
-      For 2025 onward corporations no longer file an annual report —
-      but <b>the annual fee is still due</b>, observed at <b>$150 by 15
-      April</b>. An LLC that misses it for three consecutive years has
-      its certificate of organization <b>cancelled</b>; a corporation
-      risks revocation after two. The most common failure mode is
-      assuming that no report means nothing is owed.
+      For 2025 onward corporations no longer file an annual report, but
+      <b>the annual fee is still due</b>: the Dept. of State posts
+      <b>$150</b> as the annual fee for an LLC and for a stock
+      corporation, due by <b>15 April</b>. An LLC that misses it for
+      three consecutive years has its certificate of organization
+      <b>cancelled</b>; a corporation risks revocation after two. The
+      most common failure mode is assuming that no report means nothing
+      is owed. Note that the Department's page still says corporations
+      file an annual report by 15 April. See "What we don't know".
   severity: warn
   recurring: true
   sourcing: primary
