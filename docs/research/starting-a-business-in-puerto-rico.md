@@ -1241,3 +1241,28 @@ Listed roughly in order of how much they matter to someone actually opening a bu
 ---
 
 *Compiled 2026-08-06. Statutory texts as consolidated by the Oficina de Gerencia y Presupuesto on the revision dates noted. Fees, rates and thresholds change — re-verify anything marked ⚠️ before acting on it.*
+
+---
+
+## Update 2026-10-03: pages read for the LLC, Permiso Único and construction questions
+
+Three pages were read on 2026-10-03, plus two OGPe manuals re-read. The compile date above is unchanged, so the freshness stamp on the site still says 2026-08-06. What each source settled:
+
+**Departamento de Estado, "Forms for Corporation"** (https://www.statedepartment.pr.gov/forms-for-corporation, undated)
+- LLC Certificate of Formation $250. LLC Annual Fee $150. Stock corporation registration $150. Non-stock corporation $5. Close and professional corporations $150. Limited Liability Society $110. LLC name reservation $75.
+- The page notice still says corporations file an annual report by 15 April under Art. 15 of Law 164-2009. That conflicts with the site's claim that the report ended for 2025 onward. Open.
+- The expedited-service tiers ($100, $200, $500) are not on the page. Open.
+
+**Municipio de Bayamón, Permiso Único** (https://www.municipiodebayamon.com/servicios-municipales/oficina-de-permisos/permiso-unico-pu/)
+- Legal basis cited: Reglamento Conjunto de Emergencia, approved 16 June 2023. Filing portal: www.sbp.pr.gov.
+- Filing fees: $100 ($150 in industrial zones), $150 more for alcohol, $30 sign, $75 categorical exclusion, sanitary license $25 to $100, fire prevention certification from $50 by square footage. License costs depend on annual revenue.
+- Permiso Único Domiciliario: for businesses that do not rent premises and use 25% of the home as an office, with no sign, no public visits and no deliveries. Filed as a Permiso Único with request type "Domiciliario". Cost $100 plus sanitary and fire items. Not the Permiso de Uso Residencial, which is for water and power service.
+- The page lists a Permiso de Construcción Consolidado (PCOC) in its menu; that page was not read.
+
+**OGPe manuals** (re-read)
+- PU guide, p. 33: request types are Cambio de dueño, Completo, Domiciliario (uses up to 25% of the residence) and Temporero.
+- Renewal manual, p. 14: a continuation of operation is filed when the permit is 45 days or fewer from expiring. An expired permit has up to 2 years to file one, possibly with extra charges. How long a permit lasts is not stated.
+- The Dec 2023 guide links sbp.ogpe.pr.gov. The renewal manual and Bayamón use www.sbp.pr.gov, which loads the DDEC Single Business Portal login. sbp.ogpe.pr.gov did not load in the browser pane.
+
+**up.codes, 2018 IRC Appendix L** (https://up.codes/viewer/puerto_rico/irc-2018/chapter/L/permit-fees)
+- A model fee table by project valuation. The appendix says it is not mandatory unless a local ordinance adopts it, names no agency, and the International Residential Code covers houses and townhouses, not commercial buildouts. Not usable as a source for Puerto Rico construction permit fees.

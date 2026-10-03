@@ -74,8 +74,8 @@ llc:
       Taxed as a corporation <b>by default</b> — the opposite of the US
       federal default. Partnership treatment may be elected.
   formationCost:
-    es: "Piso legal $50 (Art. 21.01); cifra observada ~$250 (sin confirmar en fuente primaria)."
-    en: "Statutory floor $50 (Art. 21.01); observed figure ~$250 (unconfirmed in a primary source)."
+    es: "$250 (Departamento de Estado). Piso legal $50 (Art. 21.01)."
+    en: "$250 (Dept. of State). Statutory floor $50 (Art. 21.01)."
   annualObligation:
     es: >-
       $150/año antes del 15 de abril, confirmado en dos portales .pr.gov.
@@ -96,7 +96,7 @@ llc:
       one</b>; getting it wrong means filing the wrong return and,
       potentially, stacking two layers of tax. Take this one to a PR CPA.
   professional: cpa
-  sourcing: unverified
+  sourcing: secondary
 
 corp:
   order: 3
@@ -113,15 +113,17 @@ corp:
     es: "Tributa como corporación."
     en: "Taxed as a corporation."
   formationCost:
-    es: "Piso legal $100 (Art. 17.01); cifra observada ~$150 (sin confirmar en fuente primaria)."
-    en: "Statutory floor $100 (Art. 17.01); observed figure ~$150 (unconfirmed in a primary source)."
+    es: "$150 para una corporación con acciones (Departamento de Estado). Piso legal $100 (Art. 17.01)."
+    en: "$150 for a stock corporation (Dept. of State). Statutory floor $100 (Art. 17.01)."
   annualObligation:
     es: >-
       $150/año antes del 15 de abril, confirmado en dos portales .pr.gov.
-      Desde 2025 es solo el pago — ya no exige informe anual.
+      Desde 2025 es solo el pago y ya no exige informe anual, aunque la
+      página del Departamento de Estado todavía menciona uno.
     en: >-
       $150/yr due before April 15, confirmed on two .pr.gov portals. Since
-      2025 it's payment only — no annual report is required anymore.
+      2025 it's payment only and no annual report is required anymore,
+      though the Dept. of State page still mentions one.
   note:
     es: >-
       Antes de 2025 se exigía un informe anual certificado con hoja de
@@ -131,4 +133,4 @@ corp:
       Before 2025 a certified annual report with a balance sheet was
       required; for tax years 2025 onward only the Art. 17.01 fee is
       owed, with no report.
-  sourcing: unverified
+  sourcing: secondary
