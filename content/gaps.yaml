@@ -4,17 +4,20 @@
 ogpe-fee-schedule:
   text:
     es: >-
-      Solo se halló el tarifario publicado de un municipio, Bayamón, no
-      el de OGPe. Falta confirmar si OGPe cobra lo mismo y si el 10% al
-      radicar se calcula sobre la suma de todos los cargos o solo sobre
-      el cargo de radicación. Cualquier costo del Permiso Único en esta
-      guía es una referencia, no el tarifario de OGPe.
+      OGPe fija sus derechos en una Orden Administrativa de Cobro que no
+      se halló publicada; no aparece entre las órdenes de permisos.pr.gov.
+      Solo se halló el tarifario de un municipio, Bayamón. El Reglamento
+      Conjunto 2020 dice que OGPe, los municipios autónomos de Jerarquía
+      I a III y los PA cobran de la misma orden, pero sin verla no se
+      puede confirmar que los montos de Bayamón coincidan.
     en: >-
-      Only one municipality's published schedule was found, Bayamón's,
-      not OGPe's. It remains to be confirmed whether OGPe charges the
-      same, and whether the 10% at filing is taken on the sum of all
-      charges or only on the filing fee. Any Permiso Único cost figure
-      in this guide is a reference, not OGPe's schedule.
+      OGPe sets its fees in an Administrative Order on Fees that could
+      not be found published; it is not among the orders listed on
+      permisos.pr.gov. Only one municipality's schedule was found,
+      Bayamón's. The 2020 Reglamento Conjunto says OGPe, autonomous
+      municipalities of Hierarchy I to III and PAs charge under the same
+      order, but without seeing it there is no way to confirm that
+      Bayamón's amounts match.
   relatesTo: permiso-unico
 
 delegated-municipalities-list-stale:
@@ -99,13 +102,13 @@ sanitary-fire-fees-differ:
 domiciliario-fee-outside-bayamon:
   text:
     es: >-
-      No se confirmó que los municipios que radican por OGPe, como
-      Mayagüez, Peñuelas y Camuy, cobren lo mismo que Bayamón por el
-      Permiso Único Domiciliario. Una respuesta sin fuente dice que
-      sí, con $100 de radicación.
+      No se vio el cobro del Permiso Único Domiciliario en los municipios
+      que radican por OGPe, como Mayagüez, Peñuelas y Camuy. El
+      reglamento apunta a que es el mismo que en Bayamón, y una
+      respuesta sin fuente confiable dice que el total ronda $185.
     en: >-
-      It was not confirmed that municipalities filing through OGPe, such
-      as Mayagüez, Peñuelas and Camuy, charge the same as Bayamón for the
-      Domiciliario Permiso Único. An unsourced answer says they do, at
-      $100 to file.
+      The Domiciliario Permiso Único charge was not seen at municipalities
+      filing through OGPe, such as Mayagüez, Peñuelas and Camuy. The
+      regulation points to it being the same as in Bayamón, and an answer
+      without a reliable source puts the total near $185.
   relatesTo: home-based-permiso-unico-question
