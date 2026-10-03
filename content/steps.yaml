@@ -166,10 +166,10 @@ entity-undecided:
       hundred dollars and puts a wall between the business and the
       owner's home. If the business carries inventory, signs a lease,
       or hires anyone, the wall is usually worth it.
-  severity: warn
   blocks:
     es: "Todos los pasos siguientes"
     en: "Every step that follows"
+  severity: warn
   sourcing: primary
 
 # ---- Federal / tax registration ----
@@ -760,27 +760,28 @@ christmas-bonus-and-21-employee-cliff:
     es: "El bono de Navidad y el precipicio de los 21 empleados"
     en: "The Christmas bonus and the 21-employee cliff"
   agency: { es: "—", en: "—" }
-  timing: { es: "A más tardar el 15 de diciembre", en: "By 15 December" }
+  timing: { es: "Entre el 15 de noviembre y el 15 de diciembre", en: "Between 15 November and 15 December" }
   cost: { es: "—", en: "—" }
   note:
     es: >-
-      La Ley 148 de 1969 fija el bono en <b>2% del salario, con tope de
-      $300</b> si hay 20 empleados o menos y <b>tope de $600</b> con más
-      de 20. Pasar de 20 a 21 duplica el tope por empleado — vale la pena
-      tenerlo presente al planificar el crecimiento. Las condiciones de
-      horas (≥700 en el período del 1 de octubre al 30 de septiembre) y
-      la fecha de contratación (en o después del 26 de enero de 2017)
-      vienen de resúmenes profesionales, no del texto de la ley que se
-      consultó.
+      La Ley 148 de 1969 fija el bono en <b>2% del salario devengado</b>
+      para cada empleado contratado desde el 26 de enero de 2017 que haya
+      trabajado al menos <b>1,350 horas</b> entre el 1 de octubre y el 30
+      de septiembre. El tope es <b>$300</b> si el patrono tiene 20
+      empleados o menos y <b>$600</b> si tiene más de 20 durante más de
+      26 semanas. Pasar de 20 a 21 duplica el tope por empleado — vale la
+      pena tenerlo presente al planificar el crecimiento. El total de
+      bonos no puede pasar de 15% de las ganancias netas anuales del
+      patrono.
     en: >-
-      Ley 148 of 1969 sets the bonus at <b>2% of salary, capped at
-      $300</b> with 20 or fewer employees and <b>capped at $600</b> above
-      20. Crossing from 20 to 21 doubles the per-employee cap — a real
-      planning consideration when growing. The hours condition (≥700 in
-      the 1 Oct–30 Sep period) and the hiring date (on or after 26
-      January 2017) come from professional summaries, not the statute
-      text that was consulted.
-  severity: warn
+      Ley 148 of 1969 sets the bonus at <b>2% of salary earned</b> for
+      each employee hired since 26 January 2017 who has worked at least
+      <b>1,350 hours</b> between 1 October and 30 September. The cap is
+      <b>$300</b> if the employer has 20 employees or fewer and
+      <b>$600</b> if it has more than 20 for more than 26 weeks. Crossing
+      from 20 to 21 doubles the per-employee cap — a real planning
+      consideration when growing. Total bonuses cannot exceed 15% of the
+      employer's annual net earnings.
   sourcing: primary
 
 vacation-sick-leave-accrual:
@@ -812,7 +813,6 @@ vacation-sick-leave-accrual:
       hours worked per month. The accrued days cannot be used during
       probation, and if employment ends in that period there is
       typically no right to a payout.
-  severity: warn
   sourcing: secondary
 
 # ---- Hiring: no ----
@@ -909,35 +909,29 @@ reglamento-conjunto-legally-unstable:
   phase: operate
   kind: advisory
   title:
-    es: "El Reglamento Conjunto está en terreno legalmente inestable"
-    en: "The Reglamento Conjunto is on legally unstable ground"
+    es: "La regla vigente es el Reglamento Conjunto de Emergencia de 2023"
+    en: "The rule in force is the 2023 Emergency Joint Regulation"
   agency: { es: "—", en: "—" }
   timing: { es: "—", en: "—" }
   cost: { es: "—", en: "—" }
   note:
     es: >-
-      El Tribunal Supremo declaró <b>nulo el Reglamento Conjunto 2020 el
-      15 de marzo de 2023</b> por carecer del análisis de costo-beneficio
-      que exige la LPAU, y el litigio seguía vivo hasta octubre de 2025.
       La regla que se usa hoy para el Permiso Único es el <b>Reglamento
       Conjunto de Emergencia aprobado el 16 de junio de 2023</b>, que
-      Bayamón cita como su base. Como la regla anterior cayó en los
-      tribunales, conviene confirmar con OGPe cualquier cargo o plazo
-      antes de radicar. <b>Hay que leer la fecha de vencimiento en el
-      propio documento de permiso</b> y no confiar en un número de
-      memoria.
+      Bayamón cita como su base. Reemplazó al Reglamento Conjunto 2020,
+      que el Tribunal Supremo declaró <b>nulo el 15 de marzo de 2023</b>
+      por carecer del análisis de costo-beneficio que exige la LPAU. <b>La
+      fecha de vencimiento se lee en el propio documento de permiso</b>,
+      no de memoria.
     en: >-
-      The Tribunal Supremo declared the <b>Reglamento Conjunto 2020 null
-      on 15 March 2023</b> for lacking the cost-benefit analysis the
-      LPAU requires, and litigation was still live as of October 2025.
       The rule in use today for the Permiso Único is the <b>Reglamento
       Conjunto de Emergencia approved on 16 June 2023</b>, which Bayamón
-      cites as its basis. Because the earlier rule fell in court, it is
-      worth confirming any fee or deadline with OGPe before filing.
-      <b>Read the expiration date off the permit document itself</b> and
-      do not trust a remembered number.
-  severity: stop
-  sourcing: unverified
+      cites as its basis. It replaced the 2020 Reglamento Conjunto, which
+      the Tribunal Supremo declared <b>null on 15 March 2023</b> for
+      lacking the cost-benefit analysis the LPAU requires. <b>The
+      expiration date is read off the permit document itself</b>, not
+      from memory.
+  sourcing: secondary
 
 confirm-delegated-hierarchy:
   phase: operate
@@ -1003,7 +997,6 @@ above-3m-obligations-change:
       declaration filed without them counts as not filed</b>. It is also
       the threshold at which any Act 60 decree acquires an employment
       requirement.
-  severity: warn
   sourcing: primary
 
 state-annual-fee-survives:
