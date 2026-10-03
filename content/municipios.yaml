@@ -1,5 +1,9 @@
-# Municipal patente comparison (schema: src/lib/content-schema.ts). Populated by
-# G-03; the estimator that consumes this is G-09.
+# Municipal patente rates for all 78 municipalities (schema:
+# src/lib/content-schema.ts). The first nine were researched one by one (G-03);
+# the rest come from the Colegio de CPA table "Tipos Contributivos de Patentes
+# Municipales 2025-2026". `permits.delegated` follows the owner's list of 21
+# delegated municipalities (see the confirm-delegated-hierarchy step). The
+# estimator that consumes this is G-09.
 #
 # Rates are on business volume attributable to the municipality (Ley 107-2020,
 # Código Municipal, Art. 7.202). Art. 7.202(b) sets a 0.50% ceiling on
@@ -24,23 +28,18 @@ sanjuan:
       - { upTo: null, percent: 0.005 }
   permits: { delegated: true, ogpe: false }
   portal:
-    es: "tramite.sanjuan.pr — radicación electrónica obligatoria"
-    en: "tramite.sanjuan.pr — electronic filing compulsory"
+    es: "tramite.sanjuan.pr, radicación electrónica obligatoria"
+    en: "tramite.sanjuan.pr, electronic filing compulsory"
   note:
     es: >-
-      Volumen ≤$12,500 exento. De $12,501 a $100,000, $25 fijos (no un
-      porcentaje — el campo `tiers` de arriba lo aproxima con 0%, pero el
-      cargo real en esa banda es un monto fijo de $25, no $0; ver G-09).
-      De $100,001 a $300,000, 0.20%. Sobre $300,000, 0.50%. Radicación
-      electrónica obligatoria en tramite.sanjuan.pr. También corre un
-      portal de incentivos en emprendimiento.sanjuan.pr.
+      Volumen hasta $12,500 exento. De $12,501 a $100,000 pagas $25 fijos.
+      De $100,001 a $300,000, 0.20%. Sobre $300,000, 0.50%. San Juan
+      también tiene un portal de incentivos en emprendimiento.sanjuan.pr.
     en: >-
-      Volume ≤$12,500 is exempt. From $12,501 to $100,000, a flat $25 (not
-      a percentage — the `tiers` field above approximates this band at
-      0%, but the real charge there is a flat $25, not $0; see G-09). From
-      $100,001 to $300,000, 0.20%. Above $300,000, 0.50%. Electronic
-      filing is compulsory at tramite.sanjuan.pr. It also runs a
-      business-incentive portal at emprendimiento.sanjuan.pr.
+      Volume up to $12,500 is exempt. From $12,501 to $100,000 you pay a
+      flat $25. From $100,001 to $300,000, 0.20%. Above $300,000, 0.50%.
+      San Juan also runs a business-incentive portal at
+      emprendimiento.sanjuan.pr.
 
 bayamon:
   name: "Bayamón"
@@ -66,11 +65,11 @@ caguas:
   minimum: 25
   permits: { delegated: true, ogpe: false }
   portal:
-    es: "Recaudador Virtual"
-    en: "Recaudador Virtual"
+    es: "caguas.recaudadorvirtual.com"
+    en: "caguas.recaudadorvirtual.com"
   note:
-    es: "Radica por Recaudador Virtual."
-    en: "Files through Recaudador Virtual."
+    es: "Tasa única de 0.50% para negocios que no son financieros."
+    en: "Single rate of 0.50% for non-financial businesses."
 
 carolina:
   name: "Carolina"
@@ -136,9 +135,12 @@ penuelas:
     percent: 0.004
   minimum: 25
   permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
   note:
-    es: "Por debajo del techo estatutario — un ahorro genuino, aunque modesto."
-    en: "Below the statutory ceiling — a genuine, if modest, saving."
+    es: "0.40%, por debajo del techo de 0.50%."
+    en: "0.40%, below the 0.50% ceiling."
 
 camuy:
   name: "Camuy"
@@ -152,27 +154,1070 @@ camuy:
   minimum: 25
   permits: { delegated: false, ogpe: true }
   portal:
-    es: "Tabla 2025-26"
-    en: "2025-26 table"
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
   note:
-    es: >-
-      Escalonado. Cifras de la tabla 2025-26. Bajo $5,000 la tasa es $25
-      fijos (el `tiers` de arriba lo aproxima con 0%, no $0 — ver G-09);
-      en la práctica ese volumen ya cae bajo la exención estatal de
-      $5,000 del Art. 7.206, que exime del todo.
-    en: >-
-      Tiered. Figures from the 2025-26 table. Below $5,000 the charge is
-      a flat $25 (the `tiers` field above approximates this at 0%, not
-      $0 — see G-09); in practice that volume already falls under the
-      statewide $5,000 exemption in Art. 7.206, which exempts it entirely.
+    es: "Escalonado: 0.40% bajo $200,000 y 0.50% desde $200,000, según la tabla 2025-2026 del Colegio de CPA."
+    en: "Tiered: 0.40% below $200,000 and 0.50% from $200,000, per the CPA association's 2025-2026 table."
+
+adjuntas:
+  name: "Adjuntas"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+aguada:
+  name: "Aguada"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "aguada.recaudadorvirtual.com"
+    en: "aguada.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+aguadilla:
+  name: "Aguadilla"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "aguadilla.recaudadorvirtual.com"
+    en: "aguadilla.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+aguasbuenas:
+  name: "Aguas Buenas"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "monetonepr.com"
+    en: "monetonepr.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+aibonito:
+  name: "Aibonito"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "monetonepr.com"
+    en: "monetonepr.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+anasco:
+  name: "Añasco"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "monetonepr.com"
+    en: "monetonepr.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+arecibo:
+  name: "Arecibo"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+arroyo:
+  name: "Arroyo"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "arroyo.recaudadorvirtual.com"
+    en: "arroyo.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+barceloneta:
+  name: "Barceloneta"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "monetonepr.com"
+    en: "monetonepr.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+barranquitas:
+  name: "Barranquitas"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "monetonepr.com"
+    en: "monetonepr.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+caborojo:
+  name: "Cabo Rojo"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "caborojo.recaudadorvirtual.com"
+    en: "caborojo.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+canovanas:
+  name: "Canóvanas"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "canovanas.recaudadorvirtual.com"
+    en: "canovanas.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+catano:
+  name: "Cataño"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+cayey:
+  name: "Cayey"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "cayey.recaudadorvirtual.com"
+    en: "cayey.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+ceiba:
+  name: "Ceiba"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+ciales:
+  name: "Ciales"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+cidra:
+  name: "Cidra"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "cidra.recaudadorvirtual.com"
+    en: "cidra.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+coamo:
+  name: "Coamo"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "coamo.recaudadorvirtual.com"
+    en: "coamo.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+comerio:
+  name: "Comerío"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "comerio.recaudadorvirtual.com"
+    en: "comerio.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+corozal:
+  name: "Corozal"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "monetonepr.com"
+    en: "monetonepr.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+culebra:
+  name: "Culebra"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "culebra.recaudadorvirtual.com"
+    en: "culebra.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+dorado:
+  name: "Dorado"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "dorado.recaudadorvirtual.com"
+    en: "dorado.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+fajardo:
+  name: "Fajardo"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "fajardo.recaudadorvirtual.com"
+    en: "fajardo.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+florida:
+  name: "Florida"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+guanica:
+  name: "Guánica"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+guayama:
+  name: "Guayama"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "guayama.recaudadorvirtual.com"
+    en: "guayama.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+guayanilla:
+  name: "Guayanilla"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "guayanilla.recaudadorvirtual.com"
+    en: "guayanilla.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+gurabo:
+  name: "Gurabo"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "gurabo.recaudadorvirtual.com"
+    en: "gurabo.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+hatillo:
+  name: "Hatillo"
+  sourcing: secondary
+  rate:
+    type: tiered
+    tiers:
+      - { upTo: 250000, percent: 0.0003 }
+      - { upTo: 1000000, percent: 0.0004 }
+      - { upTo: null, percent: 0.0005 }
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "hatillo.recaudadorvirtual.com"
+    en: "hatillo.recaudadorvirtual.com"
+  note:
+    es: "La tabla 2025-2026 del Colegio de CPA le da a Hatillo 0.03% hasta $250,000, 0.04% hasta $1,000,000 y 0.05% sobre esa cifra. Son tasas diez veces más bajas que las del resto de la isla y pueden ser un error de la tabla. Si fueran 0.30%, 0.40% y 0.50%, la patente sería diez veces mayor. Llama a Finanzas de Hatillo antes de presupuestar."
+    en: "The CPA association's 2025-2026 table gives Hatillo 0.03% up to $250,000, 0.04% up to $1,000,000 and 0.05% above that. Those rates are ten times lower than the rest of the island and may be a typo in the table. If they are 0.30%, 0.40% and 0.50%, the patente is ten times higher. Call Hatillo's finance office before budgeting."
+
+hormigueros:
+  name: "Hormigueros"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "hormigueros.recaudadorvirtual.com"
+    en: "hormigueros.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+humacao:
+  name: "Humacao"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "monetonepr.com"
+    en: "monetonepr.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+isabela:
+  name: "Isabela"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+jayuya:
+  name: "Jayuya"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+juanadiaz:
+  name: "Juana Díaz"
+  sourcing: primary
+  rate:
+    type: tiered
+    tiers:
+      - { upTo: 150000, percent: 0.004 }
+      - { upTo: null, percent: 0.005 }
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "juanadiaz.recaudadorvirtual.com"
+    en: "juanadiaz.recaudadorvirtual.com"
+  note:
+    es: "Escalonado: 0.40% hasta $150,000, 0.50% sobre $150,000. Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Tiered: 0.40% up to $150,000, 0.50% above $150,000. Per the CPA association's 2025-2026 table."
+
+juncos:
+  name: "Juncos"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.0045
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "juncos.recaudadorvirtual.com"
+    en: "juncos.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+lajas:
+  name: "Lajas"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+lares:
+  name: "Lares"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+lasmarias:
+  name: "Las Marías"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.003
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+laspiedras:
+  name: "Las Piedras"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "laspiedras.recaudadorvirtual.com"
+    en: "laspiedras.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+loiza:
+  name: "Loíza"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "loiza.recaudadorvirtual.com"
+    en: "loiza.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+luquillo:
+  name: "Luquillo"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "luquillo.recaudadorvirtual.com"
+    en: "luquillo.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+manati:
+  name: "Manatí"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+maricao:
+  name: "Maricao"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.003
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+maunabo:
+  name: "Maunabo"
+  sourcing: primary
+  rate:
+    type: tiered
+    tiers:
+      - { upTo: 150000, percent: 0.003 }
+      - { upTo: 500000, percent: 0.004 }
+      - { upTo: null, percent: 0.005 }
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Escalonado: 0.30% hasta $150,000, 0.40% hasta $500,000, 0.50% sobre $500,000. Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Tiered: 0.30% up to $150,000, 0.40% up to $500,000, 0.50% above $500,000. Per the CPA association's 2025-2026 table."
+
+moca:
+  name: "Moca"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "moca.recaudadorvirtual.com"
+    en: "moca.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+morovis:
+  name: "Morovis"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "morovis.recaudadorvirtual.com"
+    en: "morovis.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+naguabo:
+  name: "Naguabo"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "monetonepr.com"
+    en: "monetonepr.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+naranjito:
+  name: "Naranjito"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "naranjito.recaudadorvirtual.com"
+    en: "naranjito.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+orocovis:
+  name: "Orocovis"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.003
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+patillas:
+  name: "Patillas"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+quebradillas:
+  name: "Quebradillas"
+  sourcing: primary
+  rate:
+    type: tiered
+    tiers:
+      - { upTo: 100000, percent: 0.003 }
+      - { upTo: 200000, percent: 0.004 }
+      - { upTo: null, percent: 0.005 }
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Escalonado: 0.30% hasta $100,000, 0.40% hasta $200,000, 0.50% sobre $200,000. Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Tiered: 0.30% up to $100,000, 0.40% up to $200,000, 0.50% above $200,000. Per the CPA association's 2025-2026 table."
+
+rincon:
+  name: "Rincón"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+riogrande:
+  name: "Río Grande"
+  sourcing: primary
+  rate:
+    type: tiered
+    tiers:
+      - { upTo: 100000, percent: 0.003 }
+      - { upTo: 200000, percent: 0.004 }
+      - { upTo: null, percent: 0.005 }
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "riogrande.recaudadorvirtual.com"
+    en: "riogrande.recaudadorvirtual.com"
+  note:
+    es: "Escalonado: 0.30% hasta $100,000, 0.40% hasta $200,000, 0.50% sobre $200,000. Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Tiered: 0.30% up to $100,000, 0.40% up to $200,000, 0.50% above $200,000. Per the CPA association's 2025-2026 table."
+
+sabanagrande:
+  name: "Sabana Grande"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "sabanagrande.recaudadorvirtual.com"
+    en: "sabanagrande.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+salinas:
+  name: "Salinas"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "salinas.recaudadorvirtual.com"
+    en: "salinas.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+sangerman:
+  name: "San Germán"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "sangerman.recaudadorvirtual.com"
+    en: "sangerman.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+sanlorenzo:
+  name: "San Lorenzo"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "sanlorenzo.recaudadorvirtual.com"
+    en: "sanlorenzo.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+sansebastian:
+  name: "San Sebastián"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "sansebastian.recaudadorvirtual.com"
+    en: "sansebastian.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+santaisabel:
+  name: "Santa Isabel"
+  sourcing: primary
+  rate:
+    type: tiered
+    tiers:
+      - { upTo: 100000, percent: 0.004 }
+      - { upTo: null, percent: 0.005 }
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Escalonado: 0.40% hasta $100,000, 0.50% sobre $100,000. Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Tiered: 0.40% up to $100,000, 0.50% above $100,000. Per the CPA association's 2025-2026 table."
+
+toaalta:
+  name: "Toa Alta"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "toaalta.recaudadorvirtual.com"
+    en: "toaalta.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+toabaja:
+  name: "Toa Baja"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "toabaja.recaudadorvirtual.com"
+    en: "toabaja.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+trujilloalto:
+  name: "Trujillo Alto"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "trujilloalto.recaudadorvirtual.com"
+    en: "trujilloalto.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+utuado:
+  name: "Utuado"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.004
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "En persona, en la oficina de Finanzas del municipio"
+    en: "In person, at the municipal finance office"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+vegaalta:
+  name: "Vega Alta"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "vegaalta.recaudadorvirtual.com"
+    en: "vegaalta.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+vegabaja:
+  name: "Vega Baja"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "vegabaja.recaudadorvirtual.com"
+    en: "vegabaja.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+vieques:
+  name: "Vieques"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "vieques.recaudadorvirtual.com"
+    en: "vieques.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+villalba:
+  name: "Villalba"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: true, ogpe: false }
+  portal:
+    es: "villalba.recaudadorvirtual.com"
+    en: "villalba.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+yabucoa:
+  name: "Yabucoa"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "yabucoa.recaudadorvirtual.com"
+    en: "yabucoa.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
+
+yauco:
+  name: "Yauco"
+  sourcing: primary
+  rate:
+    type: flat
+    percent: 0.005
+  minimum: 25
+  permits: { delegated: false, ogpe: true }
+  portal:
+    es: "yauco.recaudadorvirtual.com"
+    en: "yauco.recaudadorvirtual.com"
+  note:
+    es: "Según la tabla 2025-2026 del Colegio de CPA."
+    en: "Per the CPA association's 2025-2026 table."
 
 other:
-  name: "Otro municipio"
+  name: "Municipio por decidir"
   sourcing: unverified
   rate:
     type: flat
     percent: 0.005
   minimum: 25
   note:
-    es: "Techo estatutario general del Art. 7.202(b). En la tabla 2025-2026 del Colegio de CPA, al menos 60 de los 78 municipios cobran 0.50% a los negocios que no son financieros; unos pocos cobran menos o por escalones. Busca el tuyo antes de presupuestar."
-    en: "The general statutory ceiling from Art. 7.202(b). In the CPA association's 2025-2026 table, at least 60 of the 78 municipalities charge 0.50% to non-financial businesses; a few charge less or use tiers. Look yours up before budgeting."
+    es: "Mientras no escojas un municipio, el estimado usa 0.50%, el techo del Art. 7.202(b). Es lo que cobran casi todos los municipios a los negocios que no son financieros."
+    en: "Until you pick a municipality, the estimate uses 0.50%, the Art. 7.202(b) ceiling. It is what almost every municipality charges non-financial businesses."

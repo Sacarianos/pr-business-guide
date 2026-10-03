@@ -58,7 +58,8 @@ entity-organize-llc:
       el Art. 3.02. La ley fija recargos por servicio expedito de $100
       (24h), $200 (mismo día) y $500 (2h) (Art. 21.01(B)). La ley también
       fija un piso de $50, y el Secretario puede cambiar los cargos por
-      carta circular.
+      carta circular. Si quieres apartar el nombre antes de radicar, la
+      reserva cuesta $75. Departamento de Estado: (787) 722-2121.
     en: >-
       Filed at <a href="https://rcp.estado.pr.gov/">rcp.estado.pr.gov</a>.
       The Dept. of State posts <b>$250</b> for an LLC certificate of
@@ -66,7 +67,9 @@ entity-organize-llc:
       Rico address</b>; a P.O. box does not satisfy Art. 3.02. The statute
       sets expedited-service surcharges of $100 (24h), $200 (same day) and
       $500 (2h) (Art. 21.01(B)). It also sets a $50 floor, and the
-      Secretary may reset fees by circular letter.
+      Secretary may reset fees by circular letter. To hold the name
+      before filing, a reservation costs $75. Dept. of State: (787)
+      722-2121.
   sourcing: primary
 
 entity-llc-tax-classification:
@@ -133,7 +136,9 @@ entity-incorporate-corp:
       Rico</b>; un apartado postal no cumple con el Art. 3.02. Se aplican
       recargos por servicio expedito de $100 (24h), $200 (mismo día) y
       $500 (2h). La ley fija un piso de $100, y el Secretario puede
-      cambiar los cargos por carta circular.
+      cambiar los cargos por carta circular. Si quieres apartar el nombre
+      antes de radicar, la reserva cuesta $10. Departamento de Estado:
+      (787) 722-2121.
     en: >-
       Filed at <a href="https://rcp.estado.pr.gov/">rcp.estado.pr.gov</a>.
       The Dept. of State posts <b>$150</b> to register a stock
@@ -141,7 +146,9 @@ entity-incorporate-corp:
       agent with a physical Puerto Rico address</b>; a P.O. box does not
       satisfy Art. 3.02. Expedited-service surcharges of $100 (24h), $200
       (same day) and $500 (2h) apply. The statute sets a $100 floor, and
-      the Secretary may reset fees by circular letter.
+      the Secretary may reset fees by circular letter. To hold the name
+      before filing, a reservation costs $10. Dept. of State: (787)
+      722-2121.
   sourcing: primary
 
 entity-undecided:
@@ -355,7 +362,15 @@ permiso-unico:
       <b>dura un año y se renueva cada año</b>: la continuación de
       operación (la renovación) se radica cuando faltan 45 días o menos
       para que venza, y un permiso vencido tiene hasta 2 años para
-      radicarla, quizás con cargos adicionales.
+      radicarla, quizás con cargos adicionales.<br><br>
+      <b>Qué llevar</b>, según la lista de Bayamón: un memorial
+      explicativo del negocio, un croquis del local con los pies
+      cuadrados, fotos del lugar, la certificación del CRIM con el número
+      de catastro y la escritura o el contrato de arrendamiento. Si eres
+      una LLC o corporación, añade el Certificate of Good Standing y una
+      resolución corporativa que autorice el trámite. OGPe:
+      servicioalclientepermiso@ddec.pr.gov, (787) 758-4747, extensiones
+      25003, 25289 o 25237.
     en: >-
       Every business needs a Permiso Único, wherever it operates from.
       Filed through the Single Business Portal at
@@ -386,7 +401,14 @@ permiso-unico:
       either. The permit <b>lasts one year and is renewed every
       year</b>: the continuation of operation (the renewal) is filed when
       45 days or fewer remain before it expires, and an expired permit
-      has up to 2 years to file one, possibly with extra charges.
+      has up to 2 years to file one, possibly with extra charges.<br><br>
+      <b>What to bring</b>, per Bayamón's list: a written description of
+      the business, a sketch of the premises with its square footage,
+      photos of the place, the CRIM certification with the cadastral
+      number, and the deed or the lease. An LLC or corporation adds its
+      Certificate of Good Standing and a corporate resolution authorizing
+      the filing. OGPe: servicioalclientepermiso@ddec.pr.gov, (787)
+      758-4747, extensions 25003, 25289 or 25237.
   severity: key
   blocks:
     es: "Abrir el negocio"
@@ -559,7 +581,7 @@ patente-municipal:
       no radicada</b>. El pago es semestral, por adelantado, el 1 de
       julio y el 2 de enero, con <b>5% de descuento</b> por pagar
       completo al radicar. La tasa exacta y el mínimo dependen del
-      municipio — ver content/municipios.yaml.
+      municipio; el estimado de arriba usa la del tuyo.
     en: >-
       Notify the Director de Finanzas <b>within 30 days of starting the
       activity</b> and receive a <b>provisional patente exempt from
@@ -572,7 +594,7 @@ patente-municipal:
       that certification, it counts as not filed</b>. Payment is
       semiannual, in advance, on 1 July and 2 January, with a <b>5%
       discount</b> for paying in full at filing. The exact rate and
-      minimum depend on the municipality — see content/municipios.yaml.
+      minimum depend on the municipality; the estimate above uses yours.
   severity: key
   recurring: true
   sourcing: primary
@@ -788,8 +810,8 @@ vacation-sick-leave-accrual:
   phase: people
   kind: advisory
   title:
-    es: "Enfermedad acumula desde el principio; vacaciones, con efecto retroactivo al terminar el período probatorio"
-    en: "Sick leave accrues from day one; vacation accrues retroactively once probation ends"
+    es: "Vacaciones y enfermedad: cómo se acumulan"
+    en: "Vacation and sick leave: how they accrue"
   agency: { es: "—", en: "—" }
   timing: { es: "Desde el período probatorio", en: "From the probationary period" }
   cost: { es: "—", en: "—" }

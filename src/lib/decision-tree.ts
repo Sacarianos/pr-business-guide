@@ -145,13 +145,20 @@ export type PatenteEstimate = {
   sourcing: MunicipioData['sourcing'];
 };
 
+// `unverified` is only the undecided-municipality fallback, so its mark
+// points the reader at the question rather than at a note.
 const unconfirmedSuffix = (m: MunicipioData): Bilingual =>
   m.sourcing === 'primary'
     ? { es: '', en: '' }
-    : {
-        es: ' (tasa sin confirmar — ver la nota del municipio).',
-        en: ' (unconfirmed rate — see the municipality note).',
-      };
+    : m.sourcing === 'unverified'
+      ? {
+          es: ' Tasa sin confirmar hasta que escojas el municipio.',
+          en: ' Unconfirmed rate until you pick the municipality.',
+        }
+      : {
+          es: ' Tasa sin confirmar, lee la nota del municipio.',
+          en: ' Unconfirmed rate, read the municipality note.',
+        };
 
 // The shared tail of every percentage-based bracket, flat or tiered: apply
 // the rate, floor it at the municipio's statutory minimum, and say which
@@ -394,12 +401,12 @@ function withPatenteEstimate(
   estimate: PatenteEstimate | null,
   municipio: MunicipioData | null,
 ): StepResult {
-  const agency = municipio
+  const agency = municipio?.permits
     ? {
-        es: municipio.permits?.delegated
+        es: municipio.permits.delegated
           ? `Municipio de ${municipio.name} (autoridad delegada)`
           : `Municipio de ${municipio.name}`,
-        en: municipio.permits?.delegated
+        en: municipio.permits.delegated
           ? `Municipality of ${municipio.name} (delegated authority)`
           : `Municipality of ${municipio.name}`,
       }
@@ -552,7 +559,11 @@ export function routeHeading(
     answers.entity === 'unsure'
       ? { es: 'forma legal por decidir', en: 'legal form undecided' }
       : label('entity', answers.entity);
-  const parts = [label('muni', answers.muni), entity].filter((p): p is Bilingual => p !== null);
+  const muni =
+    answers.muni === 'other'
+      ? { es: 'municipio por decidir', en: 'municipality undecided' }
+      : label('muni', answers.muni);
+  const parts = [muni, entity].filter((p): p is Bilingual => p !== null);
   return {
     title,
     subline: {

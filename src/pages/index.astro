@@ -132,11 +132,11 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
           <p class="lead">
             <span lang="es">
               Contesta diez preguntas y te decimos qué trámites te tocan, en qué agencia, cuánto
-              cuestan y qué va primero. Cada dato enlaza a su fuente oficial.
+              cuestan y qué va primero. Gratis y sin registrarte.
             </span>
             <span lang="en">
               Answer ten questions and we tell you which procedures apply to you, at which agency,
-              what they cost and what comes first. Every figure links to its official source.
+              what they cost and what comes first. Free, with no sign-up.
             </span>
           </p>
           <div class="cta-row">
@@ -585,19 +585,18 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
       <div class="section-head">
         <p class="eyebrow"><span lang="es">Lo que no sabemos</span><span lang="en">What we don't know</span></p>
         <h2>
-          <span lang="es">Lo que no pude verificar</span>
-          <span lang="en">What I could not verify</span>
+          <span lang="es">Preguntas que siguen abiertas</span>
+          <span lang="en">Questions still open</span>
         </h2>
       </div>
       <p class="section-dek">
         <span lang="es">
-          Esta lista es permanente, no una advertencia de paso — son las preguntas concretas que
-          quedaron abiertas después de revisar la ley y no una admisión genérica de que "puede
-          haber errores."
+          Después de revisar la ley y las fuentes municipales, esto es lo que nadie publica de
+          forma clara. Si te toca, pregunta en la oficina antes de ir.
         </span>
         <span lang="en">
-          This list is permanent, not a step-level warning — it names the concrete open questions
-          left after reviewing the law, not a generic "there could be errors" disclaimer.
+          After going through the law and the municipal sources, this is what nobody publishes
+          clearly. If it applies to you, ask at the office before you go.
         </span>
       </p>
       <div class="gaps-list">
@@ -635,7 +634,7 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
         <div>
           <b><span lang="es">Límites</span><span lang="en">Limits</span></b>
           <p>
-            <a href="#limites"><span lang="es">Lo que no pudimos verificar</span><span lang="en">What we could not verify</span></a>
+            <a href="#limites"><span lang="es">Lo que no sabemos</span><span lang="en">What we don't know</span></a>
           </p>
         </div>
       </div>
@@ -1803,6 +1802,8 @@ const contentJson = JSON.stringify(content).replace(/</g, '\\u003c');
     font-size: 15px;
     line-height: 1.55;
     color: var(--ink-2);
+    /* Email addresses and portal hosts are single long words. */
+    overflow-wrap: anywhere;
   }
   :global(.stop-detail[hidden]) {
     display: none;
