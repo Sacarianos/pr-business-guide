@@ -55,19 +55,18 @@ entity-organize-llc:
       El Departamento de Estado publica <b>$250</b> por el certificado de
       formación de una LLC. Se necesita un <b>agente residente con
       dirección física en Puerto Rico</b>; un apartado postal no cumple con
-      el Art. 3.02. Se han reportado cargos de servicio expedito de $100
-      (24h), $200 (mismo día) y $500 (2h), pero no aparecen en la página
-      del Departamento y siguen sin confirmar. La ley fija un piso de $50,
-      y el Secretario puede cambiar los cargos por carta circular.
+      el Art. 3.02. La ley fija recargos por servicio expedito de $100
+      (24h), $200 (mismo día) y $500 (2h) (Art. 21.01(B)). La ley también
+      fija un piso de $50, y el Secretario puede cambiar los cargos por
+      carta circular.
     en: >-
       Filed at <a href="https://rcp.estado.pr.gov/">rcp.estado.pr.gov</a>.
       The Dept. of State posts <b>$250</b> for an LLC certificate of
       formation. Requires a <b>registered agent with a physical Puerto
-      Rico address</b>; a P.O. box does not satisfy Art. 3.02. Expedited
-      charges of $100 (24h), $200 (same day) and $500 (2h) have been
-      reported, but they do not appear on the Department's page and
-      remain unconfirmed. The statute sets a $50 floor, and the Secretary
-      may reset fees by circular letter.
+      Rico address</b>; a P.O. box does not satisfy Art. 3.02. The statute
+      sets expedited-service surcharges of $100 (24h), $200 (same day) and
+      $500 (2h) (Art. 21.01(B)). It also sets a $50 floor, and the
+      Secretary may reset fees by circular letter.
   sourcing: primary
 
 entity-llc-tax-classification:
@@ -113,20 +112,18 @@ entity-incorporate-corp:
       El Departamento de Estado publica <b>$150</b> para registrar una
       corporación con acciones, y $5 para una sin fines de lucro. Se
       necesita un <b>agente residente con dirección física en Puerto
-      Rico</b>; un apartado postal no cumple con el Art. 3.02. Se han
-      reportado cargos de servicio expedito de $100 (24h), $200 (mismo
-      día) y $500 (2h), pero no aparecen en la página del Departamento y
-      siguen sin confirmar. La ley fija un piso de $100, y el Secretario
-      puede cambiar los cargos por carta circular.
+      Rico</b>; un apartado postal no cumple con el Art. 3.02. Se aplican
+      recargos por servicio expedito de $100 (24h), $200 (mismo día) y
+      $500 (2h). La ley fija un piso de $100, y el Secretario puede
+      cambiar los cargos por carta circular.
     en: >-
       Filed at <a href="https://rcp.estado.pr.gov/">rcp.estado.pr.gov</a>.
       The Dept. of State posts <b>$150</b> to register a stock
       corporation, and $5 for a non-stock one. Requires a <b>registered
       agent with a physical Puerto Rico address</b>; a P.O. box does not
-      satisfy Art. 3.02. Expedited charges of $100 (24h), $200 (same day)
-      and $500 (2h) have been reported, but they do not appear on the
-      Department's page and remain unconfirmed. The statute sets a $100
-      floor, and the Secretary may reset fees by circular letter.
+      satisfy Art. 3.02. Expedited-service surcharges of $100 (24h), $200
+      (same day) and $500 (2h) apply. The statute sets a $100 floor, and
+      the Secretary may reset fees by circular letter.
   sourcing: primary
 
 entity-undecided:
@@ -268,14 +265,22 @@ construction-permit:
       Va antes del permiso de uso y del Permiso Único. En ciertos casos,
       planos certificados por un profesional autorizado sustituyen la
       revisión regular. Normalmente lo lleva el arquitecto o ingeniero
-      de récord. Esta vía no se investigó a fondo — conviene presupuestar
-      de más y conseguir un estimado con tiempo.
+      de récord. Aplica el Código de Construcción de Puerto Rico 2018,
+      basado en el International Building Code 2018, para los proyectos
+      radicados desde el 15 de febrero de 2019. Bayamón lo llama Permiso
+      de Construcción Consolidado (PCOC) y no publica sus cargos. Esta
+      vía no se investigó a fondo — conviene presupuestar de más y
+      conseguir un estimado con tiempo.
     en: >-
       Precedes the use permit and the Permiso Único. Certified plans by
       an authorized professional can substitute for conventional review
       in defined cases. Usually driven by the architect or engineer of
-      record. This track was not researched in depth — budget generously
-      and get a professional estimate early.
+      record. The 2018 Puerto Rico Building Code, based on the 2018
+      International Building Code, applies to projects filed since 15
+      February 2019. Bayamón calls it the Consolidated Construction
+      Permit (PCOC) and does not publish its fees. This track was not
+      researched in depth — budget generously and get a professional
+      estimate early.
   severity: warn
   blocks:
     es: "El permiso de uso y el Permiso Único"
@@ -704,15 +709,16 @@ new-hire-reporting-asume:
   note:
     es: >-
       Hay que reportarlo <b>aunque el empleado renuncie o sea despedido
-      antes de que pasen los 20 días</b>. La regla de 20 días viene de
-      guías de suplidores de nómina; no se encontró una página primaria
-      de ASUME o DTRH que la establezca.
+      antes de que pasen los 20 días</b>. La regla de 20 días está en la
+      Ley 5 de 1986 (8 LPRA §509a) y en la página del Registro Estatal de
+      Nuevos Empleados de ASUME. También se reporta a quien se recontrata
+      tras 60 días seguidos de separación.
     en: >-
       Must be reported <b>even if the employee quits or is fired before
-      the 20 days elapse</b>. The 20-day rule comes from payroll-vendor
-      guides — a primary ASUME or DTRH page stating it could not be
-      found.
-  sourcing: secondary
+      the 20 days elapse</b>. The 20-day rule is in Ley 5 of 1986 (8 LPRA
+      §509a) and on ASUME's State New Hire Registry page. A person
+      rehired after 60 consecutive days of separation is also reported.
+  sourcing: primary
 
 christmas-bonus-and-21-employee-cliff:
   phase: people
@@ -725,22 +731,24 @@ christmas-bonus-and-21-employee-cliff:
   cost: { es: "—", en: "—" }
   note:
     es: >-
-      Para empleados contratados en o después del 26 de enero de 2017
-      que trabajen ≥700 horas en el período del 1 de octubre al 30 de
-      septiembre: <b>2% del salario, con tope de $300</b> si hay 20
-      empleados o menos, <b>tope de $600</b> con 21 o más. Pasar de 20 a
-      21 duplica el tope por empleado — vale la pena tenerlo presente al
-      planificar el crecimiento. Estas cifras vienen de resúmenes
-      profesionales, no del texto de la ley.
+      La Ley 148 de 1969 fija el bono en <b>2% del salario, con tope de
+      $300</b> si hay 20 empleados o menos y <b>tope de $600</b> con más
+      de 20. Pasar de 20 a 21 duplica el tope por empleado — vale la pena
+      tenerlo presente al planificar el crecimiento. Las condiciones de
+      horas (≥700 en el período del 1 de octubre al 30 de septiembre) y
+      la fecha de contratación (en o después del 26 de enero de 2017)
+      vienen de resúmenes profesionales, no del texto de la ley que se
+      consultó.
     en: >-
-      For employees hired on or after 26 January 2017 and working ≥700
-      hours in the 1 Oct–30 Sep period: <b>2% of salary, capped at
-      $300</b> with 20 or fewer employees, <b>capped at $600</b> at 21
-      or more. Crossing from 20 to 21 doubles the per-employee cap — a
-      real planning consideration when growing. These figures come from
-      professional summaries, not the statute text.
+      Ley 148 of 1969 sets the bonus at <b>2% of salary, capped at
+      $300</b> with 20 or fewer employees and <b>capped at $600</b> above
+      20. Crossing from 20 to 21 doubles the per-employee cap — a real
+      planning consideration when growing. The hours condition (≥700 in
+      the 1 Oct–30 Sep period) and the hiring date (on or after 26
+      January 2017) come from professional summaries, not the statute
+      text that was consulted.
   severity: warn
-  sourcing: secondary
+  sourcing: primary
 
 vacation-sick-leave-accrual:
   phase: people
@@ -834,27 +842,25 @@ ivu-monthly-b2b-professional:
   cost: { es: "—", en: "—" }
   note:
     es: >-
-      <b>La tasa probablemente es 4%, no 11.5%.</b> Los servicios
+      <b>La tasa es 4%, no 11.5%.</b> Hacienda estableció desde el 1 de
+      octubre de 2015 un IVU estatal especial de 4% para los servicios
       prestados a otros comerciantes (B2B) y los servicios profesionales
-      designados cargan un IVU estatal especial de 4% — y <b>nada de eso
-      va al municipio</b>. Los servicios profesionales designados
-      incluyen legales, CPA, ingeniería y agrimensura, arquitectura,
-      agronomía, geología, corretaje y tasación de bienes raíces. Cobrar
-      11.5% por error es cobrarle de más al cliente y radicar mal. No se
-      encontró que lo hayan derogado, pero tampoco una confirmación de
-      Hacienda de 2025 o 2026 de que el 4% siga en pie.
+      designados — y <b>nada de eso va al municipio</b>. Los servicios
+      profesionales designados incluyen legales, CPA, ingeniería y
+      agrimensura, arquitectura, agronomía, geología, corretaje y
+      tasación de bienes raíces. Cobrar 11.5% por error es cobrarle de
+      más al cliente y radicar mal. No se encontró que lo hayan derogado.
     en: >-
-      <b>The rate is probably 4%, not 11.5%.</b> Services rendered to
-      other merchants (B2B) and designated professional services carry
-      a special 4% state IVU — and <b>none of it goes to the
-      municipality</b>. Designated professional services include legal,
-      CPA, engineering and surveying, architecture, agronomy, geology,
-      real estate brokerage and appraisal. Charging 11.5% by mistake is
-      both an overcharge to the client and a filing error. No repeal was
-      found, but also no 2025- or 2026-dated Hacienda confirmation that
-      the 4% regime still stands.
+      <b>The rate is 4%, not 11.5%.</b> Since 1 October 2015 Hacienda has
+      set a special 4% state IVU for services rendered to other
+      merchants (B2B) and for designated professional services — and
+      <b>none of it goes to the municipality</b>. Designated professional
+      services include legal, CPA, engineering and surveying,
+      architecture, agronomy, geology, real estate brokerage and
+      appraisal. Charging 11.5% by mistake is both an overcharge to the
+      client and a filing error. No repeal was found.
   recurring: true
-  sourcing: secondary
+  sourcing: primary
 
 # ---- Cross-cutting warnings ----
 
@@ -967,26 +973,26 @@ state-annual-fee-survives:
   cost: { es: "$150", en: "$150" }
   note:
     es: >-
-      Desde 2025 las corporaciones ya no radican informe anual, pero
+      Desde 2025 las corporaciones ya no radican informe anual (Ley 65
+      de 2025), pero
       <b>el cargo anual sigue venciendo</b>: el Departamento de Estado
       publica <b>$150</b> de cuota anual para una LLC y para una
       corporación con acciones, con fecha límite el <b>15 de abril</b>.
       Una LLC que lo pase por alto tres años consecutivos ve su
       certificado de organización <b>cancelado</b>; una corporación
       arriesga revocación a los dos. El error más común es asumir que si
-      no hay informe, no se debe nada. Ojo: la página del Departamento
-      todavía dice que las corporaciones radican un informe anual antes
-      del 15 de abril. Ver «Lo que no sabemos».
+      no hay informe, no se debe nada. El aviso anterior sigue en la
+      página de formularios del Departamento.
     en: >-
-      For 2025 onward corporations no longer file an annual report, but
+      For 2025 onward corporations no longer file an annual report (Law
+      65 of 2025), but
       <b>the annual fee is still due</b>: the Dept. of State posts
       <b>$150</b> as the annual fee for an LLC and for a stock
       corporation, due by <b>15 April</b>. An LLC that misses it for
       three consecutive years has its certificate of organization
       <b>cancelled</b>; a corporation risks revocation after two. The
       most common failure mode is assuming that no report means nothing
-      is owed. Note that the Department's page still says corporations
-      file an annual report by 15 April. See "What we don't know".
+      is owed. The old notice is still on the Department's forms page.
   severity: warn
   recurring: true
   sourcing: primary

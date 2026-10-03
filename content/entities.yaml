@@ -118,12 +118,14 @@ corp:
   annualObligation:
     es: >-
       $150/año antes del 15 de abril, confirmado en dos portales .pr.gov.
-      Desde 2025 es solo el pago y ya no exige informe anual, aunque la
-      página del Departamento de Estado todavía menciona uno.
+      Desde 2025 es solo el pago y ya no exige informe anual (Ley 65 de
+      2025); el aviso anterior sigue en la página de formularios del
+      Departamento.
     en: >-
       $150/yr due before April 15, confirmed on two .pr.gov portals. Since
-      2025 it's payment only and no annual report is required anymore,
-      though the Dept. of State page still mentions one.
+      2025 it's payment only and no annual report is required anymore
+      (Law 65 of 2025); the old notice is still on the Department's forms
+      page.
   note:
     es: >-
       Antes de 2025 se exigía un informe anual certificado con hoja de
@@ -133,4 +135,4 @@ corp:
       Before 2025 a certified annual report with a balance sheet was
       required; for tax years 2025 onward only the Art. 17.01 fee is
       owed, with no report.
-  sourcing: secondary
+  sourcing: primary
